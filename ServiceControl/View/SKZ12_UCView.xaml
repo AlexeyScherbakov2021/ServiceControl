@@ -6,7 +6,7 @@
              xmlns:vm="clr-namespace:ServiceControl.ViewModel"
              xmlns:local="clr-namespace:ServiceControl.View"
              mc:Ignorable="d" 
-             Background="Gainsboro" Width="1012" Height="595">
+             d:Width="1012" d:Height="595">
     <UserControl.DataContext>
         <vm:SKZ12_UCViewModel/>
     </UserControl.DataContext>
@@ -15,52 +15,117 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="360"/>
+            <RowDefinition Height="239*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="310"/>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="345"/>
         </Grid.ColumnDefinitions>
-        <ItemsControl ItemsSource="{Binding device.ListInput}" Margin="10,10,10,123" >
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"  VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding Value, StringFormat=0.00}" Width="50" VerticalAlignment="Center"
-                                   Margin="1" Padding="2"
-                                   TextAlignment="Right" Background="White"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
 
-        <ItemsControl ItemsSource="{Binding device.ListInputDK}" Margin="10,10,10,10" Grid.Column="1" >
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="160"  VerticalAlignment="Center"/>
-                        <TextBlock Text="{Binding Value, StringFormat=0.00}" Width="50" 
-                                   Margin="1" Padding="2"  VerticalAlignment="Center"
-                                   TextAlignment="Right" Background="White"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        <!--<TextBlock HorizontalAlignment="Left" Margin="31,340,0,0" Text="{Binding device.ListInputShort[0].Name}" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="31,360,0,0" Text="{Binding device.ListInputShort[0].ValueString}" VerticalAlignment="Top"/>-->
+        <Border Background="Gainsboro" Margin="10" >
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>
+            <GroupBox Header="Выходные параметры" Margin="4"  BorderBrush="Black" >
+                <ItemsControl ItemsSource="{Binding device.ListInput}" Margin="8" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"  VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding Value, StringFormat=0.00}" Width="50" VerticalAlignment="Top"
+                                Margin="1" Padding="2"
+                                TextAlignment="Right" Background="White"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+        </Border>
 
-        <ItemsControl ItemsSource="{Binding device.ListInputShort}" Margin="10,10,10,10" Grid.Column="2" >
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock Text="{Binding Name}" Width="200"  VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                        <TextBlock Text="{Binding ValueString}" Width="250" 
-                                   Margin="1" Padding="0"  VerticalAlignment="Center" HorizontalAlignment="Left"
-                                   Background="White"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Border Background="Gainsboro" Margin="10" Grid.Column="1" >
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>
+            <GroupBox Header="Сигнализация о текущем состоянии" Margin="4"  BorderBrush="Black" >
+                <ItemsControl ItemsSource="{Binding device.ListDiscret}" Margin="8" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="190"  VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding ValueString}" Width="120" VerticalAlignment="Top"
+                                Margin="4,1" Padding="2"
+                                Background="White" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+        </Border>
+        
+        <Border Background="Gainsboro" Margin="10" Grid.Column="2" >
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>
+            <GroupBox Header="Управление" Margin="4"  BorderBrush="Black" >
+                <ItemsControl ItemsSource="{Binding device.ListHolding}" Margin="8" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"  VerticalAlignment="Top"/>
+                                <TextBox Text="{Binding Value, StringFormat=0.00}" Width="50" VerticalAlignment="Top"
+                                Margin="4,1" Padding="2"
+                                TextAlignment="Right" Background="White" />
+                                <Button Content="-->" Width="30" Margin="1" VerticalAlignment="Top"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+        </Border>
 
+        <Border Background="Gainsboro" Margin="10" Grid.Column="0" Grid.Row="1" >
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>
+            <GroupBox Header="Силовые модули" Margin="4"  BorderBrush="Black" >
+                <ItemsControl ItemsSource="{Binding device.ListInputMS}" Margin="8" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" Width="200"  VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding Value}" Width="50" VerticalAlignment="Top"
+                                Margin="4,1" Padding="2"
+                                TextAlignment="Right" Background="White" />
+                                <Button Content="-->" Width="30" Margin="1" VerticalAlignment="Top"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+        </Border>
+
+        <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.Row="1" >
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>
+            <GroupBox Header="Индикаторы скорости коррозии" Margin="4"  BorderBrush="Black" >
+                <ItemsControl ItemsSource="{Binding device.ListInputDK}" Margin="8" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" Width="200"  VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding Value}" Width="50" VerticalAlignment="Top"
+                                Margin="4,1" Padding="2"
+                                TextAlignment="Right" Background="White" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+        </Border>
 
 
     </Grid>

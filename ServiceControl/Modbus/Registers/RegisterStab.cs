@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ServiceControl.Modbus.Registers
 {
-    public enum RezhStab : ushort { StabCurrent, StabSummPot, StabPolPot, StabNapr };
+    public enum RezhStab { StabCurrent, StabSummPot, StabPolPot, StabNapr };
 
     internal class RegisterStab : UshortRegister
     {

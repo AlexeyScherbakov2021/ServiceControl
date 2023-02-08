@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ServiceControl.Modbus.Registers
 {
+    public enum StatusMS { On, Off, Absent, Avar };
+
     internal class RegisterMS : UshortRegister
     {
         private string _ValueString;
@@ -14,23 +16,23 @@ namespace ServiceControl.Modbus.Registers
 
         public override ushort GetResult(ushort[] val)
         {
-            RezhStab result = (RezhStab)base.GetResult(val);
+            StatusMS result = (StatusMS)base.GetResult(val);
 
             switch (result)
             {
-                case RezhStab.StabCurrent:
+                case StatusMS.On:
                     ValueString = "00 - включен";
                     break;
 
-                case RezhStab.StabSummPot:
+                case StatusMS.Off:
                     ValueString = "01 - выключен";
                     break;
 
-                case RezhStab.StabPolPot:
+                case StatusMS.Absent:
                     ValueString = "02 - отсутствует";
                     break;
 
-                case RezhStab.StabNapr:
+                case StatusMS.Avar:
                     ValueString = "03 - авария";
                     break;
             }

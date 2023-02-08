@@ -7,8 +7,8 @@
         xmlns:view="clr-namespace:ServiceControl.View"
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"
-        Background="WhiteSmoke"
-        Title="Service Control" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Background="Gainsboro"
+        Title="Service Control" Height="900" Width="1200" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -20,19 +20,19 @@
             <RowDefinition Height="30.003"/>
         </Grid.RowDefinitions>
 
-        <ToolBar>
-            <ComboBox SelectedIndex="0" >
+        <ToolBar >
+            <ComboBox SelectedIndex="0" Width="102" >
                 <ComboBoxItem Content="КС СКЗ 11"/>
                 <ComboBoxItem Content="КС СКЗ 12"/>
                 <ComboBoxItem Content="КС СКЗ 13"/>
                 <ComboBoxItem Content="КС СТ(ИКП)"/>
             </ComboBox>
-            <TextBlock Text="Адрес TCP:"/>
+            <TextBlock Text="Адрес TCP:" VerticalAlignment="Center" Margin="13,0,0,0" />
             <TextBox Text="{Binding HostName}" Width="150"/>
-            <TextBlock Text="Порт TCP:"/>
+            <TextBlock Text="Порт TCP:" VerticalAlignment="Center" Margin="14,0,0,0" />
             <TextBox Text="{Binding Port}" Width="60"/>
 
-            <Button Content="Соединение" Command="{Binding ConnectCommand}"/>
+            <Button Content="Соединение" Command="{Binding ConnectCommand}" Margin="16,0,0,0" />
         </ToolBar>
 
         <StatusBar Grid.Row="2">

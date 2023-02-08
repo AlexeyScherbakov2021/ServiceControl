@@ -11,9 +11,13 @@ namespace ServiceControl.Modbus.Registers
         public string ResultText0;
         public string ResultText1;
 
+        private string _ValueString;
+        public string ValueString { get => _ValueString; set { Set(ref _ValueString, value); } }
+
         public override bool GetResult(bool[] val)
         {
             bool res = val[0] != false;
+            ValueString = res ? ResultText1 : ResultText0;
             return res;
         }
 

@@ -10,6 +10,7 @@ namespace ServiceControl.Modbus.Registers
     internal class Device216 : Device
     {
         public List<DoubleRegister> ListInputDK { get; set; }
+        public List<UshortRegister> ListInputMS { get; set; }
 
         //----------------------------------------------------------------------------------------------
         // Конструктор
@@ -56,6 +57,10 @@ namespace ServiceControl.Modbus.Registers
             ListInputShort = new List<UshortRegister>()
             {
                 new RegisterStab() { Address = 0x10, CodeFunc = ModbusFunc.InputReg, Name = "Режим управления станцией", Description = "", MinValue = 0, MaxValue = 3},
+            };
+
+            ListInputMS = new List<UshortRegister>()
+            {
                 new RegisterMS() { Address = 0x11, CodeFunc = ModbusFunc.InputReg, Name = "Состояние модуля силового 1", Description = "ССМ1", MinValue = 0, MaxValue = 3},
                 new RegisterMS() { Address = 0x12, CodeFunc = ModbusFunc.InputReg, Name = "Состояние модуля силового 2", Description = "ССМ2", MinValue = 0, MaxValue = 3},
                 new RegisterMS() { Address = 0x13, CodeFunc = ModbusFunc.InputReg, Name = "Состояние модуля силового 3", Description = "ССМ3", MinValue = 0, MaxValue = 3},
@@ -68,8 +73,6 @@ namespace ServiceControl.Modbus.Registers
                 new RegisterMS() { Address = 0x1A, CodeFunc = ModbusFunc.InputReg, Name = "Состояние модуля силового 10", Description = "ССМ10", MinValue = 0, MaxValue = 3},
                 new RegisterMS() { Address = 0x1B, CodeFunc = ModbusFunc.InputReg, Name = "Состояние модуля силового 11", Description = "ССМ11", MinValue = 0, MaxValue = 3},
                 new RegisterMS() { Address = 0x1C, CodeFunc = ModbusFunc.InputReg, Name = "Состояние модуля силового 12", Description = "ССМ12", MinValue = 0, MaxValue = 3},
-              
-
             };
 
 
@@ -80,7 +83,7 @@ namespace ServiceControl.Modbus.Registers
                 new BoolRegister() { Address = 0x02, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Режи упр. станцией", Description = "ТС2 (ДУ)", ResultText0 = "местный", ResultText1 = "дистанционный"},
                 new BoolRegister() { Address = 0x03, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Неисправность станции", Description = "ТС3 (Неисправность СКЗ)", ResultText0 = "исправна (работа)", ResultText1 = "неисправна (авария)"},
                 new BoolRegister() { Address = 0x04, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Обрыв изм. цепей", Description = "ТС4 (Обрыв ЭС/Т)", ResultText0 = "норма (нет обрыва)", ResultText1 = "неисправна (авария)"},
-                new BoolRegister() { Address = 0x05, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Включение группы осн. или рез. МС (СКЗ)", Description = "ТС5 (основные-резервные)", ResultText0 = "основнык", ResultText1 = "резервные"},
+                new BoolRegister() { Address = 0x05, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Включение группы осн. или рез. МС (СКЗ)", Description = "ТС5 (основные-резервные)", ResultText0 = "основные", ResultText1 = "резервные"},
                 new BoolRegister() { Address = 0x06, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Индикатор скорости корр. 1", Description = "ТС6-1 (ДСК1)", ResultText0 = "разрыв", ResultText1 = "замкнут"},
                 new BoolRegister() { Address = 0x07, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Индикатор скорости корр. 2", Description = "ТС6-2 (ДСК2)", ResultText0 = "разрыв", ResultText1 = "замкнут"},
                 new BoolRegister() { Address = 0x08, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Индикатор скорости корр. 3", Description = "ТС6-3 (ДСК3)", ResultText0 = "разрыв", ResultText1 = "замкнут"},
@@ -103,7 +106,7 @@ namespace ServiceControl.Modbus.Registers
 
             ListCoil = new List<BoolRegister>() 
             {
-                new BoolRegister() { Address = 0x81, CodeFunc = ModbusFunc.CoilRead, Size = 1, Name = "Дистанц. откл. вкл. модулей силовых", Description = "ТУ1 (ДО СМ)", ResultText0 = "выключить", ResultText1 = "включить"},
+                new BoolRegister() { Address = 0x81, CodeFunc = ModbusFunc.CoilRead, Size = 1, Name = "Дистанц.откл.вкл.модулей силовых", Description = "ТУ1 (ДО СМ)", ResultText0 = "выключить", ResultText1 = "включить"},
             };
         }
 
