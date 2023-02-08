@@ -9,81 +9,63 @@ using System.Threading.Tasks;
 using ServiceControl.Commands;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Windows.Media;
+using System.Windows.Controls;
+using ServiceControl.View;
 
 namespace ServiceControl.ViewModel
 {
     internal class MainWindowViewModel : Observable
     {
+
+
+
+        #region Переменные класса
+
         public Device device { get; set; }
         DispatcherTimer timer;
 
-        public bool IsCurrentStab
-        {
-            get => device?.ListInputShort[0].Value == (ushort)RezhStab.StabCurrent;
-            set
-            {
-                device.ListInputShort[0].Value = value ? (ushort)RezhStab.StabCurrent : (ushort)0;
-                OnPropertyChanged(nameof(IsCurrentStab));
-            }
-        }
-            
-        public bool IsSummPotStab
-        {
-            get => device?.ListInputShort[0].Value == (ushort)RezhStab.StabSummPot;
-            set
-            {
-                device.ListInputShort[0].Value = value ? (ushort)RezhStab.StabSummPot : (ushort)0;
-                OnPropertyChanged(nameof(IsSummPotStab));
-            }
-        }
+        #endregion
 
-        public bool IsPolPotStab
+        #region Экранные переменные
+
+        private UserControl _SControl { get; set; }
+        public UserControl SControl { get => _SControl; set { _SControl = value; OnPropertyChanged(nameof(SControl)); } }
+
+
+        public int Slave { get; set; } = 1;
+
+        public string HostName { get; set; } = "localhost";
+        public int Port { get; set; } = 8800;
+        public string ComPort { get; set; }
+
+        private bool _IsConnected = false;
+        public bool IsConnected
         {
-            get => device?.ListInputShort[0].Value == (ushort)RezhStab.StabPolPot;
+            get => _IsConnected;
             set
             {
-                device.ListInputShort[0].Value = value ? (ushort)RezhStab.StabPolPot : (ushort)0;
-                OnPropertyChanged(nameof(IsPolPotStab));
+                if (_IsConnected == value) return;
+                _IsConnected = value;
+                ConnectedString = _IsConnected ? "соединено" : "нет соединения";
+                ConnectedColor = _IsConnected ? Brushes.Green : Brushes.Red;
             }
         }
 
-        public bool IsNaprStab
-        {
-            get => device?.ListInputShort[0].Value == (ushort)RezhStab.StabNapr;
-            set
-            {
-                device.ListInputShort[0].Value = value ? (ushort)RezhStab.StabNapr : (ushort)0;
-                OnPropertyChanged(nameof(IsNaprStab));
-            }
-        }
+        private string _ConnectedString = "нет соединения";
+        public string ConnectedString { get => _ConnectedString; set { Set(ref _ConnectedString, value); } }
+
+        private Brush _ConnectedColor = Brushes.Red;
+        public Brush ConnectedColor { get => _ConnectedColor; set { Set(ref _ConnectedColor, value); } }
+
+        #endregion
 
 
-
-
+        //--------------------------------------------------------------------------------------------
+        // конструктор
+        //--------------------------------------------------------------------------------------------
         public MainWindowViewModel()
         {
-            MbWork work = new MbWork(8800);
-
-            device = new Device216(work, 1);
-            timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0, 1, 0);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            device.ReadRegisters(device.ListInput);
-            device.ReadRegisters(device.ListHolding);
-            device.ReadRegisters(device.ListInputShort);
-            device.ReadRegisters(device.ListHoldingShort);
-            device.ReadRegistersBool(device.ListDiscret);
-            device.ReadRegistersBool(device.ListCoil);
-
-            OnPropertyChanged(nameof(IsCurrentStab));
-            OnPropertyChanged(nameof(IsSummPotStab));
-            OnPropertyChanged(nameof(IsNaprStab));
-
         }
 
 
@@ -100,12 +82,21 @@ namespace ServiceControl.ViewModel
             device.WriteRegister(device.ListHolding[0]);
         }
         //--------------------------------------------------------------------------------
-        // Команда Кнопка Отменить
+        // Команда Кнопка Соединение
         //--------------------------------------------------------------------------------
-        public ICommand CancelCommand => new LambdaCommand(OnCancelCommandExecuted, CanCancelCommand);
-        private bool CanCancelCommand(object p) => true;
-        private void OnCancelCommandExecuted(object p)
+        public ICommand ConnectCommand => new LambdaCommand(OnConnectCommandExecuted, CanConnectCommand);
+        private bool CanConnectCommand(object p) => !IsConnected;
+        private void OnConnectCommandExecuted(object p)
         {
+            MbWork work = new MbWork(HostName, Port);
+
+            IsConnected = work.CreateConnect();
+
+            if (!IsConnected) return;
+
+            SControl = new SKZ12_UCView();
+            SControl.DataContext = new SKZ12_UCViewModel(work, Slave);
+
 
         }
 

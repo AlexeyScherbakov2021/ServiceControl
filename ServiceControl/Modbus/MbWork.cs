@@ -4,11 +4,13 @@ using Modbus.IO;
 using ServiceControl.Modbus.Registers;
 using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace ServiceControl.Modbus
 {
@@ -16,13 +18,49 @@ namespace ServiceControl.Modbus
 
     internal class MbWork
     {
-        ModbusIpMaster master;
+        ModbusMaster master;
+        private string Host;
+        private int Port;
+        private string ComPort;
 
-        public MbWork(int Port)
+        public MbWork(string host,  int port)
         {
-            TcpClient tcp = new TcpClient("localhost", Port);
-            master = ModbusIpMaster.CreateIp(tcp);
+            Host = host;
+            Port = port;
+
         }
+
+        public MbWork(string comPort)
+        {
+            ComPort = comPort;
+        }
+
+
+        public  bool CreateConnect()
+        {
+            try
+            {
+                if (Port != 0)
+                {
+                    TcpClient tcp = new TcpClient(Host, Port);
+                    master = ModbusIpMaster.CreateIp(tcp);
+                }
+                else
+                {
+                    SerialPort com = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
+                    master = ModbusSerialMaster.CreateRtu(com);
+                }
+
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+
+        }
+
+
 
         //----------------------------------------------------------------------------------------------
         // чтение регистра

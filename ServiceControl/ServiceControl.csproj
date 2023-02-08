@@ -58,6 +58,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Modbus\Registers\RegisterMS.cs" />
+    <Compile Include="ViewModel\SKZ12_UCViewModel.cs" />
+    <Compile Include="View\SKZ12_UCView.xaml.cs">
+      <DependentUpon>SKZ12_UCView.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,13 +73,19 @@
     </Compile>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\LambdaCommand.cs" />
+    <Compile Include="Infrastructure\KIPData.cs" />
     <Compile Include="Infrastructure\Observable.cs" />
-    <Compile Include="Modbus\Registers\IntRegister.cs" />
+    <Compile Include="Modbus\Registers\RegisterStab.cs" />
+    <Compile Include="Modbus\Registers\UshortRegister.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\SKZ12_UCView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modbus\MbWork.cs" />

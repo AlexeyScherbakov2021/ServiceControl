@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServiceControl"
+        xmlns:view="clr-namespace:ServiceControl.View"
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"
         Background="WhiteSmoke"
@@ -13,16 +14,32 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TextBlock Text="{Binding device.ListInput[7].Name}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="130" Margin="10,61,0,0"/>
-        <TextBlock Text="{Binding device.ListInput[8].Name, StringFormat=0.0}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="130" Margin="10,88,0,0"/>
-        <TextBlock Text="{Binding device.ListInput[9].Name}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="130" Margin="10,119,0,0"/>
-        <TextBox Text="{Binding device.ListInput[7].Value, StringFormat=0.0}" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Margin="172,60,0,0"/>
-        <TextBox Text="{Binding device.ListHolding[0].Value, Mode=TwoWay, StringFormat=0.0}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Margin="280,60,0,0"/>
-        <TextBox Text="{Binding device.ListInput[8].Value, StringFormat=0.0}" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Margin="172,88,0,0"/>
-        <TextBox Text="{Binding device.ListInput[9].Value, StringFormat=0.00}" IsReadOnly="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Margin="172,117,0,0"/>
-        <Button Content=">>" Command="{Binding OkCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="364,58,0,0"/>
-        <RadioButton IsChecked="{Binding IsCurrentStab}" Content="Ток" HorizontalAlignment="Left" Margin="470,68,0,0" VerticalAlignment="Top"/>
-        <RadioButton IsChecked="{Binding IsSummPotStab}" Content="Потенциал" HorizontalAlignment="Left" Margin="470,89,0,0" VerticalAlignment="Top"/>
-        <RadioButton IsChecked="{Binding IsNaprStab}" Content="Напряжение" HorizontalAlignment="Left" Margin="470,109,0,0" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
+            <RowDefinition/>
+            <RowDefinition Height="30.003"/>
+        </Grid.RowDefinitions>
+
+        <ToolBar>
+            <ComboBox SelectedIndex="0" >
+                <ComboBoxItem Content="КС СКЗ 11"/>
+                <ComboBoxItem Content="КС СКЗ 12"/>
+                <ComboBoxItem Content="КС СКЗ 13"/>
+                <ComboBoxItem Content="КС СТ(ИКП)"/>
+            </ComboBox>
+            <TextBlock Text="Адрес TCP:"/>
+            <TextBox Text="{Binding HostName}" Width="150"/>
+            <TextBlock Text="Порт TCP:"/>
+            <TextBox Text="{Binding Port}" Width="60"/>
+
+            <Button Content="Соединение" Command="{Binding ConnectCommand}"/>
+        </ToolBar>
+
+        <StatusBar Grid.Row="2">
+            <StatusBarItem Content="Статус соединения:" Margin="10,0"/>
+            <StatusBarItem Content="{Binding ConnectedString}" Foreground="{Binding ConnectedColor}"/>
+        </StatusBar>
+
+        <ContentPresenter Content="{Binding SControl}" Grid.Row="1"/>
     </Grid>
 </Window>

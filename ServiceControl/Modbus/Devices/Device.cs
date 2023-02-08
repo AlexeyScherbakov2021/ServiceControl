@@ -21,10 +21,10 @@ namespace ServiceControl.Modbus.Registers
         //----------------------------------------------------------------------------------------------
         // Конструктор
         //----------------------------------------------------------------------------------------------
-        public Device(MbWork modb, byte slave)
+        public Device(MbWork modb, int slave)
         {
             modbus = modb;
-            Slave = slave;
+            Slave = (byte)slave;
         }
 
 
