@@ -49,6 +49,7 @@ namespace ServiceControl.Modbus
                 {
                     //string[] ports = SerialPort.GetPortNames();
                     SerialPort com = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
+                    com.ReadTimeout = 1000;
                     com.Open();
                     if (!com.IsOpen)
                         return false;
