@@ -21,16 +21,16 @@
         </Grid.RowDefinitions>
 
         <ToolBar >
-            <ComboBox SelectedIndex="0" Width="102" >
-                <ComboBoxItem Content="КС СКЗ 11"/>
-                <ComboBoxItem Content="КС СКЗ 12"/>
-                <ComboBoxItem Content="КС СКЗ 13"/>
-                <ComboBoxItem Content="КС СТ(ИКП)"/>
-            </ComboBox>
+            <ComboBox SelectedIndex="1" Width="200" ItemsSource="{Binding ListDeviceType}" 
+                      FontWeight="Bold" FontSize="16" SelectedItem="{Binding SelectedDevice}"
+                      DisplayMemberPath="Name"/>
+
             <TextBlock Text="Адрес TCP:" VerticalAlignment="Center" Margin="13,0,0,0" />
             <TextBox Text="{Binding HostName}" Width="150"/>
             <TextBlock Text="Порт TCP:" VerticalAlignment="Center" Margin="14,0,0,0" />
             <TextBox Text="{Binding Port}" Width="60"/>
+            <TextBlock Text="Slave:" VerticalAlignment="Center" Margin="14,0,0,0" />
+            <TextBox Text="{Binding Slave}" Width="60"/>
 
             <Button Content="Соединение" Command="{Binding ConnectCommand}" Margin="16,0,0,0" />
         </ToolBar>

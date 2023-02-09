@@ -20,7 +20,9 @@ namespace ServiceControl.Modbus.Registers
             int res = (short)val[0];
             for(int i = 1; i < val.Length; i++)
             {
-                res <<= 16;
+                int res2 = val[i];
+                res2 <<= 16 * i;
+                //res <<= 16;
                 res |= (int)(short)val[i];
             }
             Value = (int)res * Scale;

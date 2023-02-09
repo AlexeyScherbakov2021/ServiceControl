@@ -58,11 +58,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Modbus\Devices\DeviceType.cs" />
     <Compile Include="Modbus\Registers\RegisterMS.cs" />
-    <Compile Include="ViewModel\SKZ12_UCViewModel.cs" />
-    <Compile Include="View\SKZ12_UCView.xaml.cs">
-      <DependentUpon>SKZ12_UCView.xaml</DependentUpon>
+    <Compile Include="Modbus\Registers\RegisterStatus.cs" />
+    <Compile Include="ViewModel\KS216_UCViewModel.cs" />
+    <Compile Include="ViewModel\KS261_UCViewModel.cs" />
+    <Compile Include="View\KS216_UCView.xaml.cs">
+      <DependentUpon>KS216_UCView.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\KS261_UCView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,11 +85,14 @@
     <Compile Include="Modbus\Registers\RegisterStab.cs" />
     <Compile Include="Modbus\Registers\UshortRegister.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="View\KS261_UCView.xaml.cs">
+      <DependentUpon>KS261_UCView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\SKZ12_UCView.xaml">
+    <Page Include="View\KS216_UCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

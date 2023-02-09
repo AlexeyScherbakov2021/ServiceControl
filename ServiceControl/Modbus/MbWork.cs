@@ -47,13 +47,18 @@ namespace ServiceControl.Modbus
                 }
                 else
                 {
+                    //string[] ports = SerialPort.GetPortNames();
                     SerialPort com = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
+                    com.Open();
+                    if (!com.IsOpen)
+                        return false;
+
                     master = ModbusSerialMaster.CreateRtu(com);
                 }
 
                 return true;
             }
-            catch(Exception e)
+            catch(Exception )
             {
                 return false;
             }
@@ -122,6 +127,15 @@ namespace ServiceControl.Modbus
         // запись регистра
         //----------------------------------------------------------------------------------------------
         public void WriteRegister(Register<ushort, double> reg, byte Slave)
+        {
+            ushort res = reg.SetUshort();
+            master.WriteSingleRegister(Slave, reg.Address, res);
+        }
+
+        //----------------------------------------------------------------------------------------------
+        // запись регистра
+        //----------------------------------------------------------------------------------------------
+        public void WriteRegister(Register<ushort, ushort> reg, byte Slave)
         {
             ushort res = reg.SetUshort();
             master.WriteSingleRegister(Slave, reg.Address, res);

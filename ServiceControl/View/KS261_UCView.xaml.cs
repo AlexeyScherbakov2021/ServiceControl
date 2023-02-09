@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ServiceControl.View
 {
     /// <summary>
-    /// Логика взаимодействия для SKZ12_UCView.xaml
+    /// Логика взаимодействия для KS261_UCView.xaml
     /// </summary>
-    public partial class SKZ12_UCView : UserControl
+    public partial class KS261_UCView : UserControl
     {
-        public SKZ12_UCView()
+        public KS261_UCView()
         {
             InitializeComponent();
         }

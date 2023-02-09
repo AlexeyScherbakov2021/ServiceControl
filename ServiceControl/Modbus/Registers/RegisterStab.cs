@@ -11,16 +11,40 @@ namespace ServiceControl.Modbus.Registers
     internal class RegisterStab : UshortRegister
     {
         private bool _IsCurrentStab;
-        public bool IsCurrentStab { get => _IsCurrentStab; set { Set(ref _IsCurrentStab, value); } }
+        public bool IsCurrentStab { get => _IsCurrentStab; 
+            set 
+            {
+                if (Set(ref _IsCurrentStab, value) && value)
+                    Value = (ushort)RezhStab.StabCurrent;
+            } 
+        }
 
         private bool _IsSummPotStab;
-        public bool IsSummPotStab { get => _IsSummPotStab; set { Set(ref _IsSummPotStab, value); } }
+        public bool IsSummPotStab { get => _IsSummPotStab; 
+            set 
+            {
+                if (Set(ref _IsSummPotStab, value) && value)
+                    Value = (ushort)RezhStab.StabSummPot;
+            } 
+        }
 
         private bool _IsPolPotStab;
-        public bool IsPolPotStab { get => _IsPolPotStab; set { Set(ref _IsPolPotStab, value); } }
+        public bool IsPolPotStab { get => _IsPolPotStab; 
+            set 
+            { 
+                if(Set(ref _IsPolPotStab, value) && value)
+                    Value = (ushort)RezhStab.StabPolPot;
+            }
+        }
 
         private bool _IsNaprStab;
-        public bool IsNaprStab { get => _IsNaprStab; set { Set(ref _IsNaprStab, value); } }
+        public bool IsNaprStab { get => _IsNaprStab; 
+            set 
+            { 
+                if(Set(ref _IsNaprStab, value) && value)
+                    Value = (ushort)RezhStab.StabNapr;
+            }
+        }
 
 
         private string _ValueString;

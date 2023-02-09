@@ -38,7 +38,7 @@ namespace ServiceControl.Modbus.Registers
             {
                 new DoubleRegister() { Address = 0x1D, CodeFunc = ModbusFunc.InputReg, Name = "Скорость коррозии ИСК1", Description = "СК_ИКП1", Scale = 0.001, MinValue = 0, MaxValue = 65535},
                 new DoubleRegister() { Address = 0x1E, CodeFunc = ModbusFunc.InputReg, Name = "Глубина коррозии ИСК1", Description = "ГК_ИКП1", Scale = 0.001, MinValue = 0, MaxValue = 65535},
-                new DoubleRegister() { Address = 0xFE, CodeFunc = ModbusFunc.InputReg, Name = "Скорость коррозии ИСК2", Description = "СК_ИКП2", Scale = 0.001, MinValue = 0, MaxValue = 65535},
+                new DoubleRegister() { Address = 0x1F, CodeFunc = ModbusFunc.InputReg, Name = "Скорость коррозии ИСК2", Description = "СК_ИКП2", Scale = 0.001, MinValue = 0, MaxValue = 65535},
                 new DoubleRegister() { Address = 0x20, CodeFunc = ModbusFunc.InputReg, Name = "Глубина коррозии ИСК2", Description = "ГК_ИКП2", Scale = 0.001, MinValue = 0, MaxValue = 65535},
                 new DoubleRegister() { Address = 0x21, CodeFunc = ModbusFunc.InputReg, Name = "Скорость коррозии ИСК3", Description = "СК_ИКП3", Scale = 0.001, MinValue = 0, MaxValue = 65535},
                 new DoubleRegister() { Address = 0x22, CodeFunc = ModbusFunc.InputReg, Name = "Глубина коррозии ИСК3", Description = "ГК_ИКП3", Scale = 0.001, MinValue = 0, MaxValue = 65535},
@@ -100,7 +100,7 @@ namespace ServiceControl.Modbus.Registers
 
             ListHoldingShort = new List<UshortRegister>()
             {
-                new UshortRegister() { Address = 0x84, CodeFunc = ModbusFunc.Holding, Name = "Управление режимами стабилизации станции", Description = "Упр.", MinValue = 0, MaxValue = 3},
+                new RegisterStab() { Address = 0x84, CodeFunc = ModbusFunc.Holding, Name = "Управление режимами стабилизации станции", Description = "Упр.", MinValue = 0, MaxValue = 3},
             };
 
 
@@ -110,7 +110,15 @@ namespace ServiceControl.Modbus.Registers
             };
         }
 
+        public override Task RequestValue()
+        {
+            ReadRegisters(ListInput);
+            ReadRegisters(ListInputShort);
+            ReadRegistersBool(ListDiscret);
+            ReadRegisters(ListInputMS);
+            ReadRegisters(ListInputDK);
 
-
+            return Task.CompletedTask;
+        }
     }
 }

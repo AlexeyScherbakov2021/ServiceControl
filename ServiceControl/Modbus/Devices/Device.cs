@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace ServiceControl.Modbus.Registers
 {
     internal abstract class Device
     {
-        public string Name;
+        //public string Name;
         public List<DoubleRegister> ListInput { get; set; }
         public List<DoubleRegister> ListHolding { get; set; }
         public List<UshortRegister> ListInputShort { get; set; }
@@ -18,6 +20,8 @@ namespace ServiceControl.Modbus.Registers
         public byte Slave;
         protected MbWork modbus;
 
+        private DispatcherTimer timer;
+
         //----------------------------------------------------------------------------------------------
         // Конструктор
         //----------------------------------------------------------------------------------------------
@@ -25,7 +29,12 @@ namespace ServiceControl.Modbus.Registers
         {
             modbus = modb;
             Slave = (byte)slave;
+            timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 2);
+            timer.Tick += Timer_Tick;
+            timer.Start();
         }
+
 
 
         //----------------------------------------------------------------------------------------------
@@ -71,12 +80,38 @@ namespace ServiceControl.Modbus.Registers
         }
 
         //----------------------------------------------------------------------------------------------
-        // запись списка регистров
+        // запись регистроа
         //----------------------------------------------------------------------------------------------
         public void WriteRegister(Register<ushort, double> Reg)
         {
             modbus.WriteRegister(Reg, Slave);
         }
 
+
+        //----------------------------------------------------------------------------------------------
+        // запись регистроа
+        //----------------------------------------------------------------------------------------------
+        public void WriteRegister(Register<ushort, ushort> Reg)
+        {
+            modbus.WriteRegister(Reg, Slave);
+        }
+
+
+        private async void Timer_Tick(object sender, EventArgs e)
+        {
+            timer.Stop();
+            await Task.Run(() => RequestValue());
+            timer.Start();
+        }
+
+
+        //public Task RequestValue()
+        //{
+        //    Thread.Sleep(4000);
+
+        //    return Task.CompletedTask;
+        //}
+
+        public abstract Task RequestValue();
     }
 }

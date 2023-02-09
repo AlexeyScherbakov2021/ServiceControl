@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="ServiceControl.View.KS261_UCView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:ServiceControl.ViewModel"
+             xmlns:local="clr-namespace:ServiceControl.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:KS261_UCViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <DataGrid ItemsSource="{Binding ListKIP}" AutoGenerateColumns="False" Margin="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number}"/>
+                <DataGridTextColumn Header="Ток полр." Binding="{Binding RegCurrentPolyar.Value}"/>
+                <DataGridTextColumn Header="Полр.пот." Binding="{Binding RegPolyarPot.Value}"/>
+                <DataGridTextColumn Header="Сумм.пот." Binding="{Binding RegSummPot.Value}"/>
+                <DataGridTextColumn Header="Сопр.ДК1" Binding="{Binding RegtResistDK1.Value}"/>
+                <DataGridTextColumn Header="Сопр.ДК2" Binding="{Binding RegtResistDK2.Value}"/>
+                <DataGridTextColumn Header="Сопр.ДК3" Binding="{Binding RegtResistDK3.Value}"/>
+                <DataGridTextColumn Header="Защит.ток" Binding="{Binding RegProtectCurrent.Value}"/>
+                <DataGridTextColumn Header="Глуб.корр." Binding="{Binding RegDeepCorr.Value}"/>
+                <DataGridTextColumn Header="Скор.корр." Binding="{Binding RegSpeedCorr.Value}"/>
+                <DataGridTextColumn Header="Вскрыт." Binding="{Binding RegStatus.IsSensorOpen}"/>
+                <DataGridTextColumn Header="Стат.блока" Binding="{Binding RegStatus.StatusBlock}"/>
+                <DataGridTextColumn Header="ДК1" Binding="{Binding RegStatus.IsDK1Break}"/>
+                <DataGridTextColumn Header="ДК2" Binding="{Binding RegStatus.IsDK2Break}"/>
+                <DataGridTextColumn Header="ДК3" Binding="{Binding RegStatus.IsDK3Break}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

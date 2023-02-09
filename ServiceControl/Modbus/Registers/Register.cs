@@ -11,7 +11,8 @@ namespace ServiceControl.Modbus.Registers
 
     internal abstract class Register<T1, T2> : Observable
     {
-        public ushort Address;
+        public int Number { get; set; }
+        public ushort Address { get; set; }
         public string Name { get; set; }
         public string Description;
         public ModbusFunc CodeFunc;
