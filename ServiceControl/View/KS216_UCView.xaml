@@ -166,6 +166,29 @@
             </GroupBox>
         </Border>
 
+        <Border Background="Gainsboro" Margin="10" Grid.Column="2" Grid.Row="1" >
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>
+            <GroupBox Margin="4"  BorderBrush="Black" >
+                <GroupBox.Header>
+                    <TextBlock Text="Служебные регистры" FontSize="16" FontWeight="Bold"/>
+                </GroupBox.Header>
+                <ItemsControl ItemsSource="{Binding device.ListService}" Margin="8" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" Width="200"  VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding Value}" Width="50" VerticalAlignment="Top"
+                                Margin="4,1" Padding="2"
+                                TextAlignment="Right" Background="White" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+        </Border>
+
 
     </Grid>
 </UserControl>

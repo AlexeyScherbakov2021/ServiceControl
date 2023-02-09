@@ -11,6 +11,7 @@ namespace ServiceControl.Modbus.Registers
     {
         public List<DoubleRegister> ListInputDK { get; set; }
         public List<UshortRegister> ListInputMS { get; set; }
+        public List<UshortRegister> ListService { get; set; }
 
         //----------------------------------------------------------------------------------------------
         // Конструктор
@@ -108,7 +109,21 @@ namespace ServiceControl.Modbus.Registers
             {
                 new BoolRegister() { Address = 0x81, CodeFunc = ModbusFunc.CoilRead, Size = 1, Name = "Дистанц.откл.вкл.модулей силовых", Description = "ТУ1 (ДО СМ)", ResultText0 = "выключить", ResultText1 = "включить"},
             };
+
+
+            ListService = new List<UshortRegister>()
+            {
+                new UshortRegister() { Address = 0xC5, CodeFunc = ModbusFunc.Holding, Name = "Температура включения вентилятора", Description = "Твкл.вент.", MinValue = 0, MaxValue = 65535},
+                new UshortRegister() { Address = 0xC6, CodeFunc = ModbusFunc.Holding, Name = "Температура выключения вентилятора", Description = "Твыкл.вент.", MinValue = 0, MaxValue = 65535},
+                new UshortRegister() { Address = 0xCB, CodeFunc = ModbusFunc.Holding, Name = "Год выпуска устройства", Description = "Год", MinValue = 0, MaxValue = 65535},
+                new UshortRegister() { Address = 0xCC, CodeFunc = ModbusFunc.Holding, Name = "Порядковый номер устройства", Description = "Номер", MinValue = 0, MaxValue = 65535},
+                new RegisterNapr4896() { Address = 0xCD, CodeFunc = ModbusFunc.Holding, Name = "Режим выходного напряжения", Description = "Uрежим", MinValue = 0, MaxValue = 1},
+            };
+
         }
+
+
+
 
         public override Task RequestValue()
         {
@@ -117,6 +132,7 @@ namespace ServiceControl.Modbus.Registers
             ReadRegistersBool(ListDiscret);
             ReadRegisters(ListInputMS);
             ReadRegisters(ListInputDK);
+            ReadRegisters(ListService);
 
             return Task.CompletedTask;
         }

@@ -60,6 +60,7 @@
     </ApplicationDefinition>
     <Compile Include="Modbus\Devices\DeviceType.cs" />
     <Compile Include="Modbus\Registers\RegisterMS.cs" />
+    <Compile Include="Modbus\Registers\RegisterNapr4896.cs" />
     <Compile Include="Modbus\Registers\RegisterStatus.cs" />
     <Compile Include="ViewModel\KS216_UCViewModel.cs" />
     <Compile Include="ViewModel\KS261_UCViewModel.cs" />
