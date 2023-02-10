@@ -118,6 +118,9 @@ namespace ServiceControl.ViewModel
                     SControl.DataContext = new KS216_UCViewModel(work, Slave);
                     break;
                 case DevType.KS356:
+                    SControl = new KS356_UCView();
+                    SControl.DataContext = new KS356_UCViewModel(work, Slave);
+
                     break;
                 case DevType.KS261:
                     SControl = new KS261_UCView();

@@ -8,17 +8,17 @@ namespace ServiceControl.Modbus.Registers
 {
     public enum StatusMS { On, Off, Absent, Avar };
 
-    internal class RegisterMS : UshortRegister
+    internal class RegisterMS : RegisterInt
     {
-        private string _ValueString;
-        public string ValueString { get => _ValueString; set { Set(ref _ValueString, value); } }
+        //private string _ValueString;
+        //public string ValueString { get => _ValueString; set { Set(ref _ValueString, value); } }
 
 
-        public override ushort GetResult(ushort[] val)
+        public override void SetResultValues(ushort[] val)
         {
-            StatusMS result = (StatusMS)base.GetResult(val);
+            base.SetResultValues(val);
 
-            switch (result)
+            switch ((StatusMS)ValueInt)
             {
                 case StatusMS.On:
                     ValueString = "00 - включен";
@@ -37,7 +37,8 @@ namespace ServiceControl.Modbus.Registers
                     break;
             }
 
-            return (ushort)result;
+
+            //return (ushort)result;
         }
 
     }

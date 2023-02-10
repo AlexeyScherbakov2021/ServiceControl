@@ -14,15 +14,15 @@
         <DataGrid ItemsSource="{Binding ListKIP}" AutoGenerateColumns="False" Margin="8">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number}"/>
-                <DataGridTextColumn Header="Ток полр." Binding="{Binding RegCurrentPolyar.Value}"/>
-                <DataGridTextColumn Header="Полр.пот." Binding="{Binding RegPolyarPot.Value}"/>
-                <DataGridTextColumn Header="Сумм.пот." Binding="{Binding RegSummPot.Value}"/>
-                <DataGridTextColumn Header="Сопр.ДК1" Binding="{Binding RegtResistDK1.Value}"/>
-                <DataGridTextColumn Header="Сопр.ДК2" Binding="{Binding RegtResistDK2.Value}"/>
-                <DataGridTextColumn Header="Сопр.ДК3" Binding="{Binding RegtResistDK3.Value}"/>
-                <DataGridTextColumn Header="Защит.ток" Binding="{Binding RegProtectCurrent.Value}"/>
-                <DataGridTextColumn Header="Глуб.корр." Binding="{Binding RegDeepCorr.Value}"/>
-                <DataGridTextColumn Header="Скор.корр." Binding="{Binding RegSpeedCorr.Value}"/>
+                <DataGridTextColumn Header="Ток полр." Binding="{Binding RegCurrentPolyar.ValueDouble}"/>
+                <DataGridTextColumn Header="Полр.пот." Binding="{Binding RegPolyarPot.ValueDouble}"/>
+                <DataGridTextColumn Header="Сумм.пот." Binding="{Binding RegSummPot.ValueDouble}"/>
+                <DataGridTextColumn Header="Сопр.ДК1" Binding="{Binding RegtResistDK1.ValueDouble}"/>
+                <DataGridTextColumn Header="Сопр.ДК2" Binding="{Binding RegtResistDK2.ValueDouble}"/>
+                <DataGridTextColumn Header="Сопр.ДК3" Binding="{Binding RegtResistDK3.ValueDouble}"/>
+                <DataGridTextColumn Header="Защит.ток" Binding="{Binding RegProtectCurrent.ValueDouble}"/>
+                <DataGridTextColumn Header="Глуб.корр." Binding="{Binding RegDeepCorr.ValueDouble}"/>
+                <DataGridTextColumn Header="Скор.корр." Binding="{Binding RegSpeedCorr.ValueDouble}"/>
                 <DataGridTextColumn Header="Вскрыт." Binding="{Binding RegStatus.IsSensorOpen}"/>
                 <DataGridTextColumn Header="Стат.блока" Binding="{Binding RegStatus.StatusBlock}"/>
                 <DataGridTextColumn Header="ДК1" Binding="{Binding RegStatus.IsDK1Break}"/>

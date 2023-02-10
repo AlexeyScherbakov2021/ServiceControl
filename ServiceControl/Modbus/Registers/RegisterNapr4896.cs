@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace ServiceControl.Modbus.Registers
 {
-    internal class RegisterNapr4896 : UshortRegister
+    internal class RegisterNapr4896 : RegisterInt
     {
-        private string _ValueString;
-        public string ValueString { get => _ValueString; set { Set(ref _ValueString, value); } }
 
-        public override ushort GetResult(ushort[] val)
+        public override void SetResultValues(ushort[] val)
         {
-            if (val.Length < 1) return 0;
-            Value = val[0];
-            ValueString = Value == 0 ? "48 В" : "96 В";
-            return Value;
+            if (val.Length < 1) return;
+            ValueInt = val[0];
+            ValueString = ValueInt == 0 ? "48 В" : "96 В";
         }
 
     }

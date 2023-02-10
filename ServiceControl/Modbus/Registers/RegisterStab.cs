@@ -8,14 +8,14 @@ namespace ServiceControl.Modbus.Registers
 {
     public enum RezhStab { StabCurrent, StabSummPot, StabPolPot, StabNapr };
 
-    internal class RegisterStab : UshortRegister
+    internal class RegisterStab : RegisterInt
     {
         private bool _IsCurrentStab;
         public bool IsCurrentStab { get => _IsCurrentStab; 
             set 
             {
                 if (Set(ref _IsCurrentStab, value) && value)
-                    Value = (ushort)RezhStab.StabCurrent;
+                    ValueInt = (ushort)RezhStab.StabCurrent;
             } 
         }
 
@@ -24,7 +24,7 @@ namespace ServiceControl.Modbus.Registers
             set 
             {
                 if (Set(ref _IsSummPotStab, value) && value)
-                    Value = (ushort)RezhStab.StabSummPot;
+                    ValueInt = (ushort)RezhStab.StabSummPot;
             } 
         }
 
@@ -33,7 +33,7 @@ namespace ServiceControl.Modbus.Registers
             set 
             { 
                 if(Set(ref _IsPolPotStab, value) && value)
-                    Value = (ushort)RezhStab.StabPolPot;
+                    ValueInt = (ushort)RezhStab.StabPolPot;
             }
         }
 
@@ -42,19 +42,16 @@ namespace ServiceControl.Modbus.Registers
             set 
             { 
                 if(Set(ref _IsNaprStab, value) && value)
-                    Value = (ushort)RezhStab.StabNapr;
+                    ValueInt = (ushort)RezhStab.StabNapr;
             }
         }
 
 
-        private string _ValueString;
-        public string ValueString { get => _ValueString; set { Set(ref _ValueString, value); } }
-
-        public override ushort GetResult(ushort[] val)
+        public override void SetResultValues(ushort[] val)
         {
-            RezhStab result = (RezhStab)base.GetResult(val);
+            base.SetResultValues(val);
 
-            switch(result)
+            switch((RezhStab)ValueInt)
             {
                 case RezhStab.StabCurrent:
                     ValueString = "00 - стабилизация тока";
@@ -77,7 +74,7 @@ namespace ServiceControl.Modbus.Registers
                     break;
             }
 
-            return (ushort)result;
+            //return (ushort)result;
         }
 
     }

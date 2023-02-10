@@ -1,6 +1,7 @@
 ﻿using Modbus.Device;
 using Modbus.Extensions.Enron;
 using Modbus.IO;
+using Modbus.Message;
 using ServiceControl.Modbus.Registers;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace ServiceControl.Modbus
                 {
                     //string[] ports = SerialPort.GetPortNames();
                     SerialPort com = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
-                    com.ReadTimeout = 1000;
+                    //com.ReadTimeout = 1000;
                     com.Open();
                     if (!com.IsOpen)
                         return false;
@@ -67,79 +68,98 @@ namespace ServiceControl.Modbus
         }
 
 
-
         //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
-        public double ReadRegisterInput(Register<ushort, double> reg, byte Slave)
+        public ushort[] ReadRegisterInput(ushort Address, ushort Size, byte Slave)
         {
-            ushort[] read = master.ReadInputRegisters(Slave, reg.Address, reg.Size);
-            return reg.GetResult(read); 
+            try
+            {
+                ushort[] read = master.ReadInputRegisters(Slave, Address, Size);
+                return read;
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
         }
 
         //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
-        public double ReadRegisterHolding(Register<ushort, double> reg, byte Slave)
+        public ushort[] ReadRegisterHolding(ushort Address, ushort Size, byte Slave)
         {
-            ushort[] read = master.ReadHoldingRegisters(Slave, reg.Address, reg.Size);
-            return reg.GetResult(read); 
+            try
+            {
+                ushort[] read = master.ReadHoldingRegisters(Slave, Address, Size);
+                return read;
+            }
+            catch (Exception e)
+            {
+                
+                return null;
+            }
         }
 
         //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
-        public double ReadRegisterInput(Register<ushort, ushort> reg, byte Slave)
+        public void ReadRegister(ushort Address, ushort Size, byte Slave)
         {
-            ushort[] read = master.ReadInputRegisters(Slave, reg.Address, reg.Size);
-            return reg.GetResult(read); 
+            //    ushort[] read = master.ReadInputRegisters(Slave, Address, Size);
+            //    return read;
+            //reg.SetResultValues(read); 
         }
 
         //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
-        public double ReadRegisterHolding(Register<ushort, ushort> reg, byte Slave)
-        {
-            ushort[] read = master.ReadHoldingRegisters(Slave, reg.Address, reg.Size);
-            return reg.GetResult(read); 
-        }
+        //public ushort[] ReadRegisterHolding(ushort Address, ushort Size, byte Slave)
+        //{
+        //    ushort[] read = master.ReadHoldingRegisters(Slave, Address, Size);
+        //    return read;
+        //    //return reg.SetResultValues(read); 
+        //}
 
 
         //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
-        public bool ReadRegisterCoil(Register<bool, bool> reg, byte Slave)
+        public bool[] ReadRegisterCoil(ushort Address, ushort Size, byte Slave)
         {
-            bool[] read = master.ReadCoils(Slave, reg.Address, reg.Size);
-            return reg.GetResult(read);
+            bool[] read = master.ReadCoils(Slave, Address, Size);
+            return read; 
 
         }
 
         //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
-        public bool ReadRegisterDiscret(Register<bool, bool> reg, byte Slave)
+        public bool[] ReadRegisterDiscret(ushort Address, ushort Size, byte Slave)
         {
-            bool[] read = master.ReadInputs(Slave, reg.Address, reg.Size);
-            return reg.GetResult(read);
+            bool[] read = master.ReadInputs(Slave, Address, Size);
+            return read;
         }
 
         //----------------------------------------------------------------------------------------------
         // запись регистра
         //----------------------------------------------------------------------------------------------
-        public void WriteRegister(Register<ushort, double> reg, byte Slave)
+        public void WriteRegister(ushort Address, ushort val, byte Slave)
         {
-            ushort res = reg.SetUshort();
-            master.WriteSingleRegister(Slave, reg.Address, res);
+            master.WriteSingleRegister(Slave, Address, val);
+        }
+
+        public void WriteRegister(ushort Address, ushort[] val, byte Slave)
+        {
+            master.WriteMultipleRegisters(Slave, Address, val);
         }
 
         //----------------------------------------------------------------------------------------------
         // запись регистра
         //----------------------------------------------------------------------------------------------
-        public void WriteRegister(Register<ushort, ushort> reg, byte Slave)
+        public void WriteRegister(ushort Address, bool val, byte Slave)
         {
-            ushort res = reg.SetUshort();
-            master.WriteSingleRegister(Slave, reg.Address, res);
+            master.WriteSingleCoil(Slave, Address, val);
         }
 
     }

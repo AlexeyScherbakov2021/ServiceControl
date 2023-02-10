@@ -20,7 +20,7 @@ namespace ServiceControl.Modbus.Registers
 
     public enum BlockStatus { Good, Opened, Absent, Alarm };
 
-    internal class RegisterStatus : UshortRegister
+    internal class RegisterStatus : RegisterInt
     {
         private bool _IsSensorOpen;
         public bool IsSensorOpen { get => _IsSensorOpen; set { Set(ref _IsSensorOpen, value); } }
@@ -38,14 +38,14 @@ namespace ServiceControl.Modbus.Registers
         public BlockStatus StatusBlock { get => _StatusBlock; set { Set(ref _StatusBlock, value); } }
 
 
-        public override ushort GetResult(ushort[] val)
+        public override void SetResultValues(ushort[] val)
         {
-            if (val.Length < 1) return 0;
-            Value = val[0];
+            if (val.Length < 1) return;
+            ValueInt = val[0];
 
-            IsSensorOpen = (Value & (ushort)RegStatus.SensorOpened) != 0;
+            IsSensorOpen = (ValueInt & (ushort)RegStatus.SensorOpened) != 0;
 
-            int block = Value & 0b000110;
+            int block = ValueInt.Value & 0b000110;
             if (block == (int)RegStatus.BlockOpened)
                 StatusBlock = BlockStatus.Opened;
             else if (block == (ushort)RegStatus.BlockAbsent)
@@ -55,11 +55,11 @@ namespace ServiceControl.Modbus.Registers
             else
                 StatusBlock = BlockStatus.Good;
 
-            IsDK1Break = (Value & (ushort)RegStatus.DK1Break) != 0;
-            IsDK2Break = (Value & (ushort)RegStatus.DK2Break) != 0;
-            IsDK3Break = (Value & (ushort)RegStatus.DK3Break) != 0;
+            IsDK1Break = (ValueInt & (ushort)RegStatus.DK1Break) != 0;
+            IsDK2Break = (ValueInt & (ushort)RegStatus.DK2Break) != 0;
+            IsDK3Break = (ValueInt & (ushort)RegStatus.DK3Break) != 0;
 
-            return Value;
+            //return Value;
 
         }
 

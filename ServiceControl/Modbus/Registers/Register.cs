@@ -7,22 +7,16 @@ using System.Threading.Tasks;
 
 namespace ServiceControl.Modbus.Registers
 {
-    //public enum TypeValue {Bool, Int16, Int32, Uint16};
 
-    internal abstract class Register<T1, T2> : Observable
+    internal abstract class Register : RegisterBase
     {
-        public int Number { get; set; }
-        public ushort Address { get; set; }
-        public string Name { get; set; }
-        public string Description;
-        public ModbusFunc CodeFunc;
-        public ushort Size = 1;
-        
-        private T2 _Value;
-        public T2 Value { get => _Value; set { Set(ref _Value, value); } }
+        public int MinValue = int.MinValue;
+        public int MaxValue = int.MaxValue;
+        public string Measure { get; set; }
 
-        public abstract T2 GetResult(T1[] val);
-        public abstract ushort SetUshort();
+        public abstract void SetResultValues(ushort[] val);
+
+        public abstract ushort[] SetOutput();
 
     }
 }
