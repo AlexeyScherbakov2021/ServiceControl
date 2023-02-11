@@ -55,6 +55,7 @@ namespace ServiceControl.Modbus.Registers
                 ushort[] res = modbus.ReadRegisterInput(Reg.Address, Reg.Size, Slave);
                 Reg.SetResultValues(res);
             }
+
         }
         //----------------------------------------------------------------------------------------------
         // чтение списка регистров

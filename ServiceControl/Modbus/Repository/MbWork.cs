@@ -85,6 +85,24 @@ namespace ServiceControl.Modbus
         }
 
         //----------------------------------------------------------------------------------------------
+        // чтение регистра любой функции
+        //----------------------------------------------------------------------------------------------
+        public ushort[] ReadAnyFunctionRegister(ushort Address, int Func, ushort Size, byte Slave)
+        {
+            try
+            {
+                ushort[] read = master.ReadFunctionRegisters(Slave, Func, Address, Size);
+                return read;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+
+
+        //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
         public ushort[] ReadRegisterHolding(ushort Address, ushort Size, byte Slave)
@@ -103,11 +121,12 @@ namespace ServiceControl.Modbus
         //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
-        public ushort[] ReadFuncRegister(ushort Address, int Func, ushort Size, byte Slave)
-        {
-            ushort[] read = master.ReadFunctionRegisters(Slave, (byte)Func, Address, Size);
-            return read;
-        }
+        //public void ReadRegister(ushort Address, ushort Size, byte Slave)
+        //{
+            //    ushort[] read = master.ReadInputRegisters(Slave, Address, Size);
+            //    return read;
+            //reg.SetResultValues(read); 
+        //}
 
         //----------------------------------------------------------------------------------------------
         // чтение регистра
