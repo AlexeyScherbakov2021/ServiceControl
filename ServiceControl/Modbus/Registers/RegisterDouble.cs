@@ -36,7 +36,7 @@ namespace ServiceControl.Modbus.Registers
         {
 
             ushort[] res = new ushort[Size];
-            int val = (int)(ValueDouble * Scale);
+            int val = (int)(ValueDouble / Scale);
 
             for (int i = Size - 1; i >= 0; i--)
             {

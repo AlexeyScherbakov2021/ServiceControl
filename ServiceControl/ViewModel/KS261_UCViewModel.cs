@@ -31,6 +31,7 @@ namespace ServiceControl.ViewModel
         public KS261_UCViewModel(MbWork work, int Slave)
         {
             device = new Device261(work, Slave);
+            device.Start();
 
             ListKIP = new List<KIPData>();
             for(int i = 0; i < Device261.CountKIP; i++)

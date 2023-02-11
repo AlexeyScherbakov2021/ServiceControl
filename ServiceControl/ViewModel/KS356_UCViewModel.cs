@@ -39,7 +39,8 @@ namespace ServiceControl.ViewModel
         public KS356_UCViewModel(MbWork work, int Slave)
         {
             device = new Device356(work, Slave);
-            
+            device.Start();
+
             ListInput = new List<Register>()
             {
                 device.NaprSeti1, device.CountEE1, device.NaprSeti2, device.CountEE2, device.Temper, device.TimeWork,

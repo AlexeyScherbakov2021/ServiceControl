@@ -38,8 +38,8 @@ namespace ServiceControl.ViewModel
 
         public int Slave { get; set; } = 1;
 
-        public string HostName { get; set; } = "COM3";
-        public int Port { get; set; } = 0;
+        public string HostName { get; set; } = "localhost";
+        public int Port { get; set; } = 8800;
         public string ComPort { get; set; }
 
         private bool _IsConnected = false;

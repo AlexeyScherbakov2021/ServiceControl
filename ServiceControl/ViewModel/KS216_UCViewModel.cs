@@ -42,6 +42,7 @@ namespace ServiceControl.ViewModel
         public KS216_UCViewModel(MbWork work, int Slave)
         {
             device = new Device216(work, Slave);
+            device.Start();
 
             ListInput = new List<Register>()
             {

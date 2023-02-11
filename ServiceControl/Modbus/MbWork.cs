@@ -37,7 +37,7 @@ namespace ServiceControl.Modbus
         }
 
 
-        public  bool CreateConnect()
+        public bool CreateConnect()
         {
             try
             {
@@ -96,7 +96,6 @@ namespace ServiceControl.Modbus
             }
             catch (Exception e)
             {
-                
                 return null;
             }
         }
@@ -104,12 +103,12 @@ namespace ServiceControl.Modbus
         //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
-        public void ReadRegister(ushort Address, ushort Size, byte Slave)
-        {
+        //public void ReadRegister(ushort Address, ushort Size, byte Slave)
+        //{
             //    ushort[] read = master.ReadInputRegisters(Slave, Address, Size);
             //    return read;
             //reg.SetResultValues(read); 
-        }
+        //}
 
         //----------------------------------------------------------------------------------------------
         // чтение регистра

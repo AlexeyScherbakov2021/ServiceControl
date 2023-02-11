@@ -1,9 +1,11 @@
-﻿using System;
+﻿using ServiceControl.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace ServiceControl.Modbus.Registers
@@ -11,8 +13,9 @@ namespace ServiceControl.Modbus.Registers
     internal abstract class Device
     {
         //public string Name;
-        public byte Slave;
+        protected byte Slave;
         protected MbWork modbus;
+        protected IEnumerable<List<RegisterBase>> ListList;
 
         private DispatcherTimer timer;
 
@@ -21,13 +24,23 @@ namespace ServiceControl.Modbus.Registers
         //----------------------------------------------------------------------------------------------
         public Device(MbWork modb, int slave)
         {
+            ListList = new List<List<RegisterBase>>();
             modbus = modb;
             Slave = (byte)slave;
             timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 1);
-            timer.Tick += Timer_TickStart;
+        }
+
+        public async void Start()
+        {
+            CheckListRegister();
+            //StartRequestValue();
+            await Task.Run(() => StartRequestValue());
+
+            timer.Interval = new TimeSpan(0, 0, 2);
+            timer.Tick += Timer_Tick;
             timer.Start();
         }
+
 
 
         public void ReadRegister(Register Reg)
@@ -48,19 +61,30 @@ namespace ServiceControl.Modbus.Registers
         //----------------------------------------------------------------------------------------------
         public void ReadRegisters(IEnumerable<Register> listReg)
         {
-            foreach (var item in listReg)
+            if (listReg == null || listReg.Count() == 0) return;
+
+            RegisterBase reg = listReg.First();
+            ushort[] res = null;
+
+            ushort AllSize = (ushort)listReg.Sum(it => it.Size);
+            if (reg.CodeFunc == ModbusFunc.Holding)
+                res = modbus.ReadRegisterHolding(reg.Address, AllSize, Slave);
+            
+            if (reg.CodeFunc == ModbusFunc.InputReg)
+                res = modbus.ReadRegisterInput(reg.Address, AllSize, Slave);
+
+            if (res?.Length != AllSize) return;
+
+            int pos = 0;
+            foreach(var it in listReg)
             {
-                if (item.CodeFunc == ModbusFunc.Holding)
-                {
-                    ushort[] res = modbus.ReadRegisterHolding(item.Address, item.Size,  Slave);
-                    item.SetResultValues(res);
-                }
-                if (item.CodeFunc == ModbusFunc.InputReg)
-                {
-                    ushort[] res = modbus.ReadRegisterInput(item.Address, item.Size, Slave);
-                    item.SetResultValues(res);
-                }
+                ushort[] res2 = new ushort[it.Size];
+                for (int i = 0; i < it.Size; i++)
+                    res2[i] = res[pos + i];
+                it.SetResultValues(res2);
+                pos += it.Size;
             }
+
         }
 
         //----------------------------------------------------------------------------------------------
@@ -68,18 +92,29 @@ namespace ServiceControl.Modbus.Registers
         //----------------------------------------------------------------------------------------------
         public void ReadRegisters(IEnumerable<RegisterBool> listReg)
         {
-            foreach (var item in listReg)
+            if (listReg == null || listReg.Count() == 0) return;
+
+            RegisterBase reg = listReg.First();
+            bool[] res = null;
+
+            ushort AllSize = (ushort)listReg.Sum(it => it.Size);
+
+            if (reg.CodeFunc == ModbusFunc.CoilRead)
+                res = modbus.ReadRegisterCoil(reg.Address, AllSize, Slave);
+
+            if (reg.CodeFunc == ModbusFunc.Discrete)
+                res = modbus.ReadRegisterDiscret(reg.Address, AllSize, Slave);
+
+            if (res?.Length != AllSize) return;
+
+            int pos = 0;
+            foreach (var it in listReg)
             {
-                if (item.CodeFunc == ModbusFunc.CoilRead)
-                {
-                    bool[] res = modbus.ReadRegisterCoil(item.Address, item.Size, Slave);
-                    item.SetResultValues(res);
-                }
-                if (item.CodeFunc == ModbusFunc.Discrete)
-                {
-                    bool[] res = modbus.ReadRegisterDiscret(item.Address, item.Size, Slave);
-                    item.SetResultValues(res);
-                }
+                bool[] res2 = new bool[it.Size];
+                for (int i = 0; i < it.Size; i++)
+                    res2[i] = res[pos + i];
+                it.SetResultValues(res2);
+                pos += it.Size;
             }
         }
 
@@ -114,15 +149,15 @@ namespace ServiceControl.Modbus.Registers
         //----------------------------------------------------------------------------------------------
         // стартовое событие таймера для чтения
         //----------------------------------------------------------------------------------------------
-        private async void Timer_TickStart(object sender, EventArgs e)
-        {
-            timer.Stop();
-            await Task.Run(() => StartRequestValue());
-            timer.Tick -= Timer_TickStart;
-            timer.Tick += Timer_Tick;
-            timer.Interval = new TimeSpan(0,0,2);
-            timer.Start();
-        }
+        //private async void Timer_TickStart(object sender, EventArgs e)
+        //{
+        //    timer.Stop();
+        //    await Task.Run(() => StartRequestValue());
+        //    timer.Tick -= Timer_TickStart;
+        //    timer.Tick += Timer_Tick;
+        //    timer.Interval = new TimeSpan(0,0,2);
+        //    timer.Start();
+        //}
 
         //----------------------------------------------------------------------------------------------
         // событие таймера для чтения
@@ -134,9 +169,30 @@ namespace ServiceControl.Modbus.Registers
             timer.Start();
         }
 
+        protected void CheckReg(IEnumerable<RegisterBase> ListReg)
+        {
+
+            ushort StartAddress = 0;
+            ModbusFunc PrevFunc = ModbusFunc.None;
+            foreach (var it in ListReg)
+            {
+                if (StartAddress == 0)
+                {
+                    StartAddress = it.Address;
+                    PrevFunc = it.CodeFunc;
+                }
+
+                if (it.Address != StartAddress || it.CodeFunc != PrevFunc)
+                    throw new Exception($"Список с размером {ListReg.Count()} должен быть непрерывным.");
+
+                StartAddress += it.Size;
+            }
+        }
+
+
 
         public abstract Task StartRequestValue();
-
         public abstract Task RequestValue();
+        protected abstract void CheckListRegister();
     }
 }

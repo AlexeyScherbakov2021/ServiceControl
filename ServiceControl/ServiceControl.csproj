@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Infrastructure\ListExt.cs" />
     <Compile Include="Modbus\Devices\Device356.cs" />
     <Compile Include="Modbus\Devices\DeviceType.cs" />
     <Compile Include="Modbus\Registers\Register.cs" />

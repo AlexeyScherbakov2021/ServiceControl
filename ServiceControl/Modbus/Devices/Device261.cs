@@ -71,11 +71,14 @@ namespace ServiceControl.Modbus.Registers
 
             }
 
+            //CheckListRegister();
+            //StartRequestValue();
         }
 
         public override Task StartRequestValue()
         {
-            return Task.CompletedTask;
+            return RequestValue();
+
         }
 
         public override Task RequestValue()
@@ -93,5 +96,20 @@ namespace ServiceControl.Modbus.Registers
 
             return Task.CompletedTask;
         }
+
+        protected override void CheckListRegister()
+        {
+            CheckReg(ListStatus);
+            CheckReg(ListCurrentPol);
+            CheckReg(ListPolPot);
+            CheckReg(ListSummPot);
+            CheckReg(ListResistDK1);
+            CheckReg(ListResistDK2);
+            CheckReg(ListResistDK3);
+            CheckReg(ListProtectCurrent);
+            CheckReg(ListDeepCorr);
+            CheckReg(ListSpeedCorr);
+        }
+
     }
 }
