@@ -64,6 +64,7 @@
     <Compile Include="Modbus\Devices\DeviceType.cs" />
     <Compile Include="Modbus\Registers\Register.cs" />
     <Compile Include="Modbus\Registers\RegisterBase.cs" />
+    <Compile Include="Modbus\Registers\RegisterInfo.cs" />
     <Compile Include="Modbus\Registers\RegisterMS.cs" />
     <Compile Include="Modbus\Registers\RegisterNapr4896.cs" />
     <Compile Include="Modbus\Registers\RegisterRT.cs" />

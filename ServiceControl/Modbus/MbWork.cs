@@ -5,6 +5,7 @@ using Modbus.Message;
 using ServiceControl.Modbus.Registers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.Ports;
 using System.Linq;
 using System.Net.Sockets;
@@ -80,6 +81,7 @@ namespace ServiceControl.Modbus
             }
             catch(Exception e)
             {
+                Debug.WriteLine(e.Message);
                 return null;
             }
         }
@@ -96,6 +98,7 @@ namespace ServiceControl.Modbus
             }
             catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 return null;
             }
         }
@@ -103,21 +106,19 @@ namespace ServiceControl.Modbus
         //----------------------------------------------------------------------------------------------
         // чтение регистра
         //----------------------------------------------------------------------------------------------
-        public ushort[] ReadFuncRegister(ushort Address, int Func, ushort Size, byte Slave)
+        public ushort[] ReadInfoRegister(ushort Size, byte Slave)
         {
-            ushort[] read = master.ReadFunctionRegisters(Slave, (byte)Func, Address, Size);
-            return read;
+            try
+            {
+                ushort[] read = master.ReadInfoRegisters(Slave, Size);
+                return read;
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return null;
+            }
         }
-
-        //----------------------------------------------------------------------------------------------
-        // чтение регистра
-        //----------------------------------------------------------------------------------------------
-        //public ushort[] ReadRegisterHolding(ushort Address, ushort Size, byte Slave)
-        //{
-        //    ushort[] read = master.ReadHoldingRegisters(Slave, Address, Size);
-        //    return read;
-        //    //return reg.SetResultValues(read); 
-        //}
 
 
         //----------------------------------------------------------------------------------------------
@@ -125,8 +126,16 @@ namespace ServiceControl.Modbus
         //----------------------------------------------------------------------------------------------
         public bool[] ReadRegisterCoil(ushort Address, ushort Size, byte Slave)
         {
-            bool[] read = master.ReadCoils(Slave, Address, Size);
-            return read; 
+            try
+            {
+                bool[] read = master.ReadCoils(Slave, Address, Size);
+                return read;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return null;
+            }
 
         }
 
@@ -135,8 +144,17 @@ namespace ServiceControl.Modbus
         //----------------------------------------------------------------------------------------------
         public bool[] ReadRegisterDiscret(ushort Address, ushort Size, byte Slave)
         {
-            bool[] read = master.ReadInputs(Slave, Address, Size);
-            return read;
+            try
+            {
+                bool[] read = master.ReadInputs(Slave, Address, Size);
+                return read;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return null;
+            }
+
         }
 
         //----------------------------------------------------------------------------------------------

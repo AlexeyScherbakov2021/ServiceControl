@@ -36,11 +36,10 @@ namespace ServiceControl.Modbus.Registers
             //StartRequestValue();
             await Task.Run(() => StartRequestValue());
 
-            timer.Interval = new TimeSpan(0, 0, 2);
+            timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
-
 
 
         public void ReadRegister(Register Reg)
@@ -57,6 +56,16 @@ namespace ServiceControl.Modbus.Registers
             }
 
         }
+
+        //----------------------------------------------------------------------------------------------
+        // чтение информационного регистра
+        //----------------------------------------------------------------------------------------------
+        public void ReadInfoRegister(Register Reg)
+        {
+            ushort[] res = modbus.ReadInfoRegister(10, Slave);
+            Reg.SetResultValues(res);
+        }
+
         //----------------------------------------------------------------------------------------------
         // чтение списка регистров
         //----------------------------------------------------------------------------------------------
@@ -184,7 +193,7 @@ namespace ServiceControl.Modbus.Registers
                 }
 
                 if (it.Address != StartAddress || it.CodeFunc != PrevFunc)
-                    throw new Exception($"Список с размером {ListReg.Count()} должен быть непрерывным.");
+                    throw new Exception($"Список адрес {ListReg.First().Address} с размером {ListReg.Count()} должен быть непрерывным.");
 
                 StartAddress += it.Size;
             }

@@ -16,7 +16,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="400"/>
+            <RowDefinition Height="420"/>
             <RowDefinition Height="239*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -50,6 +50,9 @@
                     <TextBlock Text="{Binding device.Stabil.ValueString}"  HorizontalAlignment="Stretch" Margin="0,2"
                                 Padding="2"
                                 TextAlignment="Left" Background="White"/>
+
+                    <TextBlock Text="{Binding DeviceInfo}" />
+
                 </StackPanel>
             </GroupBox>
         </Border>
@@ -172,18 +175,24 @@
                 <GroupBox.Header>
                     <TextBlock Text="Служебные регистры" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <ItemsControl ItemsSource="{Binding ListService}" Margin="8" >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" Width="220"  VerticalAlignment="Top"/>
-                                <TextBlock Text="{Binding ValueInt, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
-                                Margin="4,1" Padding="2"
-                                TextAlignment="Right" Background="White" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <StackPanel Margin="8,0,8,0" Orientation="Vertical">
+                    <ItemsControl ItemsSource="{Binding ListService}" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}" Width="220"  VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding ValueInt, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                                        Margin="4,1" Padding="2"
+                                        TextAlignment="Right" Background="White" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="200" HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding device.RealTime.ValueString}"  HorizontalAlignment="Stretch" Margin="0,2"
+                                Padding="2"
+                                TextAlignment="Left" Background="White"/>
+                </StackPanel>
             </GroupBox>
         </Border>
 

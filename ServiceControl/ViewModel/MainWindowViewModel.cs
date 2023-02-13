@@ -38,8 +38,8 @@ namespace ServiceControl.ViewModel
 
         public int Slave { get; set; } = 1;
 
-        public string HostName { get; set; } = "localhost";
-        public int Port { get; set; } = 8800;
+        public string HostName { get; set; } = "COM3";// "localhost";
+        public int Port { get; set; } = 0;
         public string ComPort { get; set; }
 
         private bool _IsConnected = false;
@@ -50,12 +50,12 @@ namespace ServiceControl.ViewModel
             {
                 if (_IsConnected == value) return;
                 _IsConnected = value;
-                ConnectedString = _IsConnected ? "соединено" : "нет соединения";
+                ConnectedString = _IsConnected ? "подключено" : "не подключено";
                 ConnectedColor = _IsConnected ? Brushes.Green : Brushes.Red;
             }
         }
 
-        private string _ConnectedString = "нет соединения";
+        private string _ConnectedString = "не подключено";
         public string ConnectedString { get => _ConnectedString; set { Set(ref _ConnectedString, value); } }
 
         private Brush _ConnectedColor = Brushes.Red;

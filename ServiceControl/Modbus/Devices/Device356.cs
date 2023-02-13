@@ -63,9 +63,9 @@ namespace ServiceControl.Modbus.Devices
         public RegisterInt ResistPlast1;
         public RegisterInt ResistPlast2;
         public RegisterInt ResistPlast3;
-
-
         RegisterDouble CurrPolyar;
+        public RegisterInfo InfoReg { get; set; }
+
 
         public RegisterStab Stabil { get; set; }
         public RegisterDouble SetCurrOutput;
@@ -214,14 +214,22 @@ namespace ServiceControl.Modbus.Devices
             SetNaprOutput = new RegisterDouble() { Address = 0x85, CodeFunc = ModbusFunc.Holding, Size = 1, Name = "Задание выходного напряжения", Measure = "В", Description = "Uуст", Scale = 0.01, MinValue = 0, MaxValue = 10000 };
             ListWriteControl.Add(SetNaprOutput);
 
-            RealTime = new RegisterRT() { Address = 0xC1, CodeFunc = ModbusFunc.Holding, Name = "Реальное время", Measure = "сек", Size = 4, Description = "РВ", MinValue = 0, MaxValue = 65535 };
-            ListWriteControl.Add(RealTime);
+            //List<Register> ListWriteControl2 = new List<Register>();
 
-            WorkedTime = new RegisterInt() { Address = 0xC7, CodeFunc = ModbusFunc.Holding, Name = "Время наработки", Measure = "ч", Size = 2, Description = "СВН", MinValue = -596522, MaxValue = 596522 };
-            ListWriteControl.Add(WorkedTime);
+            //RealTime = new RegisterRT() { Address = 0xC1, CodeFunc = ModbusFunc.Holding, Name = "Реальное время", Measure = "сек", Size = 4, Description = "РВ", MinValue = 0, MaxValue = 65535 };
+            //ListWriteControl2.Add(RealTime);
 
-            ProtectTime = new RegisterInt() { Address = 0xC9, CodeFunc = ModbusFunc.Holding, Name = "Время защиты сооружения", Measure = "ч", Size = 2, Description = "СВЗ", MinValue = -596522, MaxValue = 596522 };
-            ListWriteControl.Add(ProtectTime);
+            //TempCoolerOn = new RegisterInt() { Address = 0xC5, CodeFunc = ModbusFunc.Holding, Name = "Температура включения вентилятора", Measure = "°С", Description = "Твкл.вент.", MinValue = 0, MaxValue = 65535 };
+            //ListWriteControl2.Add(TempCoolerOn);
+
+            //TempCoolerOff = new RegisterInt() { Address = 0xC6, CodeFunc = ModbusFunc.Holding, Name = "Температура выключения вентилятора", Measure = "°С", Description = "Твыкл.вент.", MinValue = 0, MaxValue = 65535 };
+            //ListWriteControl2.Add(TempCoolerOff);
+
+            //WorkedTime = new RegisterInt() { Address = 0xC7, CodeFunc = ModbusFunc.Holding, Name = "Время наработки", Measure = "ч", Size = 2, Description = "СВН", MinValue = -596522, MaxValue = 596522 };
+            //ListWriteControl2.Add(WorkedTime);
+
+            //ProtectTime = new RegisterInt() { Address = 0xC9, CodeFunc = ModbusFunc.Holding, Name = "Время защиты сооружения", Measure = "ч", Size = 2, Description = "СВЗ", MinValue = -596522, MaxValue = 596522 };
+            //ListWriteControl2.Add(ProtectTime);
 
 
             // список управляющих статусов
@@ -243,8 +251,11 @@ namespace ServiceControl.Modbus.Devices
             TempCoolerOff = new RegisterInt() { Address = 0xC6, CodeFunc = ModbusFunc.Holding, Name = "Температура выключения вентилятора", Measure = "°С", Description = "Твыкл.вент.", MinValue = 0, MaxValue = 65535 };
             ListServices.Add(TempCoolerOff);
 
-            //var stab = new RegisterInt() { Address = 0xC7, CodeFunc = ModbusFunc.Holding, Name = "Заглушка", Size = 4, Description = "", MinValue = 0, MaxValue = 65535 };
-            //ListServices.Add(stab);
+            var stab = new RegisterInt() { Address = 0xC7, CodeFunc = ModbusFunc.Holding, Name = "Заглушка", Size = 2, Description = "", MinValue = 0, MaxValue = 65535 };
+            ListServices.Add(stab);
+
+            ProtectTime = new RegisterInt() { Address = 0xC9, CodeFunc = ModbusFunc.Holding, Name = "Время защиты сооружения", Measure = "ч", Size = 2, Description = "СВЗ", MinValue = -596522, MaxValue = 596522 };
+            ListServices.Add(ProtectTime);
 
             Year = new RegisterInt() { Address = 0xCB, CodeFunc = ModbusFunc.Holding, Name = "Год выпуска устройства", Description = "Год", MinValue = 0, MaxValue = 65535 };
             ListServices.Add(Year);
@@ -265,10 +276,13 @@ namespace ServiceControl.Modbus.Devices
             CurrPolyar = new RegisterDouble() { Address = 0x48, CodeFunc = ModbusFunc.InputReg, Name = "Ток поляризации", Measure = "мА", Description = "Iпол", MinValue = -100, MaxValue = 100 };
             ListDop.Add(CurrPolyar);
 
+            InfoReg = new RegisterInfo() { Name = "Информация" };
+
         }
 
         public override Task StartRequestValue()
         {
+            ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
             ReadRegisters(ListCoil);
 

@@ -32,11 +32,11 @@
             <TextBlock Text="Slave:" VerticalAlignment="Center" Margin="14,0,0,0" />
             <TextBox Text="{Binding Slave}" Width="60"/>
 
-            <Button Content="Соединение" Command="{Binding ConnectCommand}" Margin="16,0,0,0" />
+            <Button Content="Подключение" Command="{Binding ConnectCommand}" Margin="16,0,0,0" />
         </ToolBar>
 
         <StatusBar Grid.Row="2">
-            <StatusBarItem Content="Статус соединения:" Margin="10,0"/>
+            <StatusBarItem Content="Статус подключения:" Margin="10,0"/>
             <StatusBarItem Content="{Binding ConnectedString}" Foreground="{Binding ConnectedColor}"/>
         </StatusBar>
 

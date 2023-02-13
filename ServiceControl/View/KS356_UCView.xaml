@@ -10,7 +10,7 @@
              d:DesignHeight="600" d:DesignWidth="1020">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="400"/>
+            <RowDefinition Height="420"/>
             <RowDefinition Height="250*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -44,6 +44,7 @@
                     <TextBlock Text="{Binding device.Stabil.ValueString}"  HorizontalAlignment="Stretch" Margin="0,2"
                                 Padding="2"
                                 TextAlignment="Left" Background="White"/>
+                    <TextBlock Text="{Binding DeviceInfo}" />
                 </StackPanel>
             </GroupBox>
         </Border>

@@ -42,9 +42,11 @@ namespace ServiceControl.Modbus.Registers
         public RegisterBool OnOffMS;
         public RegisterInt TempCoolerOn;
         public RegisterInt TempCoolerOff;
-        public RegisterInt Year;
-        public RegisterInt Number;
+        //public RegisterInt Year;
+        //public RegisterInt Number;
         public RegisterNapr4896 ModeNaprOutput;
+        public RegisterRT RealTime { get; set; }
+        //public RegisterInt ProtectTime;
 
         public RegisterStab Stabil { get; set; }
         public RegisterDouble SetCurrOutput;
@@ -52,13 +54,20 @@ namespace ServiceControl.Modbus.Registers
         public RegisterDouble SetPolPotOutput;
         public RegisterStab SetMode { get; set; }
         public RegisterDouble SetNaprOutput;
+        public RegisterInt ResistPlast1;
+        public RegisterInt ResistPlast2;
+        public RegisterInt ResistPlast3;
+        RegisterDouble CurrPolyar;
+
+        public RegisterInfo InfoReg { get; set; }
 
         List<Register> ListInput;
         List<RegisterBool> ListStatus;
         List<Register> ListWriteControl;
         List<RegisterBool> ListCoil;
         List<Register> ListServices;
-        List<Register> ListServices2;
+        //List<Register> ListServices2;
+        List<Register> ListDop;
 
         //----------------------------------------------------------------------------------------------
         // Конструктор
@@ -145,6 +154,7 @@ namespace ServiceControl.Modbus.Registers
             ListStatus.Add(SpeedCorr3);
 
 
+
             // список управляющих регистров
             //--------------------------------------------------------------------------------------------------------------------------------------
             ListWriteControl = new List<Register>();
@@ -172,24 +182,46 @@ namespace ServiceControl.Modbus.Registers
             //--------------------------------------------------------------------------------------------------------------------------------------
             ListServices = new List<Register>();
 
+            RealTime = new RegisterRT() { Address = 0xC1, CodeFunc = ModbusFunc.Holding, Name = "Реальное время", Measure = "сек", Size = 4, Description = "РВ", MinValue = 0, MaxValue = 65535 };
+            ListServices.Add(RealTime);
+
             TempCoolerOn = new RegisterInt() { Address = 0xC5, CodeFunc = ModbusFunc.Holding, Name = "Температура включения вентилятора", Measure = "°С", Description = "Твкл.вент.", MinValue = 0, MaxValue = 65535 };
             ListServices.Add(TempCoolerOn);
 
             TempCoolerOff = new RegisterInt() { Address = 0xC6, CodeFunc = ModbusFunc.Holding, Name = "Температура выключения вентилятора", Measure = "°С", Description = "Твыкл.вент.", MinValue = 0, MaxValue = 65535 };
             ListServices.Add(TempCoolerOff);
 
+            //var stab = new RegisterInt() { Address = 0xC7, CodeFunc = ModbusFunc.Holding, Name = "Заглушка", Size = 2, Description = "", MinValue = 0, MaxValue = 65535 };
+            //ListServices.Add(stab);
+
+            //ProtectTime = new RegisterInt() { Address = 0xC9, CodeFunc = ModbusFunc.Holding, Name = "Время защиты сооружения", Measure = "ч", Size = 2, Description = "СВЗ", MinValue = -596522, MaxValue = 596522 };
+            //ListServices.Add(ProtectTime);
+
 
             // список сервисных регистров 2
             //--------------------------------------------------------------------------------------------------------------------------------------
-            ListServices2 = new List<Register>();
-            Year = new RegisterInt() { Address = 0xCB, CodeFunc = ModbusFunc.Holding, Name = "Год выпуска устройства", Description = "Год", MinValue = 0, MaxValue = 65535 };
-            ListServices2.Add(Year);
+            //ListServices2 = new List<Register>();
+            //Year = new RegisterInt() { Address = 0xCB, CodeFunc = ModbusFunc.InputReg, Name = "Год выпуска устройства", Description = "Год", MinValue = 0, MaxValue = 65535 };
+            //ListServices2.Add(Year);
 
-            Number = new RegisterInt() { Address = 0xCC, CodeFunc = ModbusFunc.Holding, Name = "Порядковый номер устройства", Description = "Номер", MinValue = 0, MaxValue = 65535 };
-            ListServices2.Add(Number);
+            //Number = new RegisterInt() { Address = 0xCC, CodeFunc = ModbusFunc.InputReg, Name = "Порядковый номер устройства", Description = "Номер", MinValue = 0, MaxValue = 65535 };
+            //ListServices2.Add(Number);
 
             ModeNaprOutput = new RegisterNapr4896() { Address = 0xCD, CodeFunc = ModbusFunc.Holding, Name = "Режим выходного напряжения", Description = "Uрежим", MinValue = 0, MaxValue = 1 };
-            ListServices2.Add(ModeNaprOutput);
+            //ListServices2.Add(ModeNaprOutput);
+
+
+            ListDop = new List<Register>();
+            ResistPlast1 = new RegisterInt() { Address = 0x45, CodeFunc = ModbusFunc.InputReg, Name = "Сопротивление пластины 1", Measure = "Ом", Description = "Rn1", MinValue = 0, MaxValue = 404 };
+            ListDop.Add(ResistPlast1);
+            ResistPlast2 = new RegisterInt() { Address = 0x46, CodeFunc = ModbusFunc.InputReg, Name = "Сопротивление пластины 2", Measure = "Ом", Description = "Rn2", MinValue = 0, MaxValue = 404 };
+            ListDop.Add(ResistPlast2);
+            ResistPlast3 = new RegisterInt() { Address = 0x47, CodeFunc = ModbusFunc.InputReg, Name = "Сопротивление пластины 3", Measure = "Ом", Description = "Rn3", MinValue = 0, MaxValue = 404 };
+            ListDop.Add(ResistPlast3);
+            CurrPolyar = new RegisterDouble() { Address = 0x48, CodeFunc = ModbusFunc.InputReg, Name = "Ток поляризации", Measure = "мА", Description = "Iпол", MinValue = -100, MaxValue = 100 };
+            ListDop.Add(CurrPolyar);
+
+            InfoReg = new RegisterInfo() { Name = "Информация" };
 
             //CheckListRegister();
 
@@ -201,6 +233,7 @@ namespace ServiceControl.Modbus.Registers
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
+            ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
             ReadRegisters(ListCoil);
             ReadRegister(SetMode);
@@ -208,8 +241,12 @@ namespace ServiceControl.Modbus.Registers
             ReadRegisters(ListInput);
             ReadRegisters(ListStatus);
             ReadRegisters(ListCoil);
+
             ReadRegisters(ListServices);
-            ReadRegisters(ListServices2);
+            ReadRegister(ModeNaprOutput);
+
+            //ReadRegisters(ListServices2);
+            ReadRegisters(ListDop);
 
             return Task.CompletedTask;
 
@@ -225,7 +262,9 @@ namespace ServiceControl.Modbus.Registers
             ReadRegisters(ListStatus);
             ReadRegisters(ListCoil);
             ReadRegisters(ListServices);
-            ReadRegisters(ListServices2);
+            //ReadRegisters(ListServices2);
+            ReadRegisters(ListDop);
+            ReadRegister(ModeNaprOutput);
 
             return Task.CompletedTask;
         }
@@ -240,7 +279,7 @@ namespace ServiceControl.Modbus.Registers
             CheckReg(ListWriteControl);
             CheckReg(ListCoil);
             CheckReg(ListServices);
-            CheckReg(ListServices2);
+            //CheckReg(ListServices2);
         }
     }
 }

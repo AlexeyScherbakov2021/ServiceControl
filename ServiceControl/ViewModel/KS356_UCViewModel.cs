@@ -24,6 +24,12 @@ namespace ServiceControl.ViewModel
         public List<Register> ListWriteControlInt { get; set; }
         public List<Register> ListService { get; set; }
 
+        public string DeviceInfo =>
+            "Версия " + device?.InfoReg.VersionDev
+            + "; Верстия ПО " + device?.InfoReg.VersionPO
+            + "; Год " + device?.InfoReg.Year
+            + "; № " + device?.InfoReg.NumberDev;
+
 
         //--------------------------------------------------------------------------------------------
         // конструктор
@@ -39,6 +45,7 @@ namespace ServiceControl.ViewModel
         public KS356_UCViewModel(MbWork work, int Slave)
         {
             device = new Device356(work, Slave);
+            device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;
             device.Start();
 
             ListInput = new List<Register>()
@@ -82,6 +89,12 @@ namespace ServiceControl.ViewModel
             };
 
         }
+
+        private void InfoReg_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(DeviceInfo));
+        }
+
 
         #region Команды =================================
 

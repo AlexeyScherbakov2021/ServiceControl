@@ -28,6 +28,11 @@ namespace ServiceControl.ViewModel
         public List<Register> ListWriteControl { get; set; }
         public List<Register> ListService { get; set; }
 
+        public string DeviceInfo =>
+            "Версия платы " + device?.InfoReg.VersionDev
+            + "; Верстия ПО " + device?.InfoReg.VersionPO
+            + "; Год " + device?.InfoReg.Year
+            + "; № " + device?.InfoReg.NumberDev;
 
         //--------------------------------------------------------------------------------------------
         // конструктор
@@ -42,6 +47,8 @@ namespace ServiceControl.ViewModel
         public KS216_UCViewModel(MbWork work, int Slave)
         {
             device = new Device216(work, Slave);
+            device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;
+
             device.Start();
 
             ListInput = new List<Register>()
@@ -61,15 +68,18 @@ namespace ServiceControl.ViewModel
                 ListInputDK.Add(device.DeepDK[i]);
             }
 
-
             ListStatus = new List<RegisterBool>() { device.IllegalAccess, device.ControlMode, device.Fault, device.BreakCirc, device.OnMS, 
                 device.SpeedCorr1, device.SpeedCorr2, device.SpeedCorr3 };
 
             ListWriteControl = new List<Register>() { device.SetCurrOutput, device.SetSummPotOutput, device.SetPolPotOutput, device.SetNaprOutput };
             ListCoil = new List<RegisterBool>() { device.OnOffMS };
-            ListService = new List<Register>() { device.TempCoolerOn, device.TempCoolerOff, device.Year, device.Number, device.ModeNaprOutput };
+            ListService = new List<Register>() { device.TempCoolerOn, device.TempCoolerOff, device.ModeNaprOutput };
 
+        }
 
+        private void InfoReg_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(DeviceInfo));
         }
 
         #region Команды =================================
