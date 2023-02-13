@@ -17,6 +17,7 @@ using System.Windows.Media;
 namespace ServiceControl.Modbus
 {
     public enum ModbusFunc { None, CoilRead, Discrete, Holding, InputReg, CoilWrite, HoldingWrite };
+    public enum Protocol { COM, TCP};
 
     internal class MbWork
     {
@@ -24,18 +25,26 @@ namespace ServiceControl.Modbus
         private string Host;
         private int Port;
         private string ComPort;
+        private int TimeOut;
 
-        public MbWork(string host,  int port)
+        public MbWork(string connect, int val, Protocol proto)
         {
-            Host = host;
-            Port = port;
-
+            if (proto == Protocol.TCP)
+            {
+                Host = connect;
+                Port = val;
+            }
+            else
+            {
+                ComPort = connect;
+                TimeOut = val;
+            }
         }
 
-        public MbWork(string comPort)
-        {
-            ComPort = comPort;
-        }
+        //public MbWork(string comPort)
+        //{
+        //    ComPort = comPort;
+        //}
 
 
         public bool CreateConnect()
@@ -51,7 +60,9 @@ namespace ServiceControl.Modbus
                 {
                     //string[] ports = SerialPort.GetPortNames();
                     SerialPort com = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
-                    //com.ReadTimeout = 1000;
+                    if(TimeOut != 0)
+                        com.ReadTimeout = TimeOut;
+
                     com.Open();
                     if (!com.IsOpen)
                         return false;

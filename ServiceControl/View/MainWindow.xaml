@@ -15,13 +15,23 @@
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="38"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition Height="30.003"/>
         </Grid.RowDefinitions>
 
-        <ToolBar >
-            <ComboBox SelectedIndex="1" Width="200" ItemsSource="{Binding ListDeviceType}" 
+        <StackPanel Orientation="Vertical">
+
+            <ToolBar  >
+                <Menu>
+                    <MenuItem Header="Настройка">
+                        <MenuItem Header="Настройка соединения" Command="{Binding SetConnCommand}"/>
+                        <MenuItem Header="Выбор языка"/>
+                    </MenuItem>
+                    <MenuItem Header="О программе"/>
+
+                </Menu>
+                <!--<ComboBox SelectedIndex="1" Width="200" ItemsSource="{Binding ListDeviceType}" 
                       FontWeight="Bold" FontSize="16" SelectedItem="{Binding SelectedDevice}"
                       DisplayMemberPath="Name"/>
 
@@ -30,10 +40,15 @@
             <TextBlock Text="Порт TCP:" VerticalAlignment="Center" Margin="14,0,0,0" />
             <TextBox Text="{Binding Port}" Width="60"/>
             <TextBlock Text="Slave:" VerticalAlignment="Center" Margin="14,0,0,0" />
-            <TextBox Text="{Binding Slave}" Width="60"/>
+            <TextBox Text="{Binding Slave}" Width="60"/>-->
 
-            <Button Content="Подключение" Command="{Binding ConnectCommand}" Margin="16,0,0,0" />
-        </ToolBar>
+            </ToolBar>
+            <ToolBar >
+                <TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+                <Button Content="Подключиться" Command="{Binding ConnectCommand}" Padding="6" Margin="16,0,0,0" BorderBrush="Black" />
+            </ToolBar>
+
+        </StackPanel>
 
         <StatusBar Grid.Row="2">
             <StatusBarItem Content="Статус подключения:" Margin="10,0"/>

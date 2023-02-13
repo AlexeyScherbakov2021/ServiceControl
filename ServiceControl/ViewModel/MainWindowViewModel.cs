@@ -13,24 +13,33 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using ServiceControl.View;
 using ServiceControl.Modbus.Devices;
+using System.IO;
+using System.Windows;
+using System.Reflection;
 
 namespace ServiceControl.ViewModel
 {
     internal class MainWindowViewModel : Observable
     {
 
-
         #region Переменные класса
 
+        INIManager iniFile;
         public Device device { get; set; }
         //DispatcherTimer timer;
 
         public List<DeviceType> ListDeviceType { get; set; }
-        public DeviceType SelectedDevice { get; set; }
+        private DevType deviceType;
+        private int TimeOutCOM;
+        private bool IsSelectTCP;
+
 
         #endregion
 
         #region Экранные переменные
+
+        private string _StringConnect;
+        public string StringConnect { get => _StringConnect; set { Set(ref _StringConnect, value);  } }
 
         private UserControl _SControl { get; set; }
         public UserControl SControl { get => _SControl; set { _SControl = value; OnPropertyChanged(nameof(SControl)); } }
@@ -69,6 +78,9 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         public MainWindowViewModel()
         {
+            LoadFromIni();
+            FormatStringConnect();
+
             ListDeviceType = new List<DeviceType>()
             {
                 new DeviceType() { Name = "ДЕШК.301411.131", deviceType = DevType.KS131},
@@ -80,17 +92,88 @@ namespace ServiceControl.ViewModel
 
 
 
+        private void FormatStringConnect()
+        {
+            StringConnect = IsSelectTCP
+                ? $"Тип:{deviceType}  Адрес:{Slave}  IP адрес:{HostName}  Порт:{Port}"
+                : $"Тип:{deviceType}  Адрес:{Slave}  Порт:{ComPort}  Таймаут:{TimeOutCOM}";
+        }
+
+        private void LoadFromIni()
+        {
+            string nameFile = Assembly.GetExecutingAssembly().Location;
+            string path = Path.GetDirectoryName(nameFile);
+            nameFile = path + "\\" + Path.GetFileNameWithoutExtension(nameFile) + ".ini";
+            iniFile = new INIManager(nameFile);
+
+            int.TryParse(iniFile.GetPrivateString("Main", "NumberDevice"), out int resInt);
+            Slave = resInt;
+
+            string select = iniFile.GetPrivateString("Main", "SelectConnect");
+            IsSelectTCP = select == "tcp";
+
+            int.TryParse(iniFile.GetPrivateString("Main", "Device"), out resInt);
+            deviceType = (DevType)resInt;
+
+            ComPort = iniFile.GetPrivateString("COM", "COMPort");
+            int.TryParse(iniFile.GetPrivateString("COM", "Timeout"), out resInt);
+            TimeOutCOM = resInt;
+
+            HostName = iniFile.GetPrivateString("TCP", "Host");
+
+            int.TryParse(iniFile.GetPrivateString("TCP", "Port"), out resInt);
+            Port = resInt;
+
+        }
+
+
+
         #region Команды =================================
 
         //--------------------------------------------------------------------------------
-        // Команда Кнопка ОК
+        // Команда Настройка соединения
         //--------------------------------------------------------------------------------
-        //public ICommand OkCommand => new LambdaCommand(OnOkCommandExecuted, CanOkCommand);
-        //private bool CanOkCommand(object p) => true;
-        //private void OnOkCommandExecuted(object p)
-        //{
-        //    device.WriteRegister(device.ListHolding[0]);
-        //}
+        public ICommand SetConnCommand => new LambdaCommand(OnSetConnCommandExecuted, CanSetConnCommand);
+        private bool CanSetConnCommand(object p) => true;
+        private void OnSetConnCommandExecuted(object p)
+        {
+            SettingConnect win = new SettingConnect();
+            SettingConnectViewModel vm = new SettingConnectViewModel(win);
+            win.DataContext = vm;
+
+            vm.Slave = Slave;
+            vm.IsSelectTCP = IsSelectTCP;
+            vm.DeviceIndex = (int)deviceType;
+            vm.SelectedCOM = ComPort;
+            vm.TimeOut= TimeOutCOM;
+            vm.HostTCP = HostName;
+            vm.PortTCP = Port;
+
+            if (win.ShowDialog() == true)
+            {
+                HostName = vm.HostTCP;
+                Port = vm.PortTCP;
+                ComPort = vm.SelectedCOM;
+                TimeOutCOM = vm.TimeOut;
+                Slave = vm.Slave;
+                IsSelectTCP = vm.IsSelectTCP;
+                deviceType = (DevType)vm.DeviceIndex;
+
+                iniFile.WritePrivateString("Main", "NumberDevice", Slave.ToString());
+                string SelectConnect = vm.IsSelectTCP ? "tcp" : "com";
+                iniFile.WritePrivateString("Main", "SelectConnect", SelectConnect);
+                iniFile.WritePrivateString("Main", "Device", vm.DeviceIndex.ToString());
+
+                iniFile.WritePrivateString("COM", "COMPort", ComPort);
+                iniFile.WritePrivateString("COM", "Timeout", TimeOutCOM.ToString());
+
+                iniFile.WritePrivateString("TCP", "Host", HostName);
+                iniFile.WritePrivateString("TCP", "Port", Port.ToString());
+
+                FormatStringConnect();
+            }
+        }
+
         //--------------------------------------------------------------------------------
         // Команда Кнопка Соединение
         //--------------------------------------------------------------------------------
@@ -100,16 +183,16 @@ namespace ServiceControl.ViewModel
         {
             MbWork work;
 
-            if (Port == 0)
-                work = new MbWork(HostName);
+            if (IsSelectTCP)
+                work = new MbWork(HostName, Port, Protocol.TCP);
             else
-                work = new MbWork(HostName, Port);
+                work = new MbWork(ComPort, Port, Protocol.COM);
 
             IsConnected = work.CreateConnect();
 
             if (!IsConnected) return;
 
-            switch(SelectedDevice.deviceType)
+            switch(deviceType)
             {
                 case DevType.KS131:
                     break;
