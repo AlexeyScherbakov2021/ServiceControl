@@ -12,7 +12,7 @@ namespace ServiceControl.Modbus.Registers
     {
         //private string _ValueString;
         //public string ValueString { get => _ValueString; set { Set(ref _ValueString, value); } }
-
+        //public StatusMS Status { get; set; }
 
         public override void SetResultValues(ushort[] val)
         {

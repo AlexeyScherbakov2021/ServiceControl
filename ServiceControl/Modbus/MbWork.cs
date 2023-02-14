@@ -53,7 +53,11 @@ namespace ServiceControl.Modbus
             {
                 if (Port != 0)
                 {
-                    TcpClient tcp = new TcpClient(Host, Port);
+                    TcpClient tcp = new TcpClient();
+                    tcp.Connect(Host, Port);
+                    if(!tcp.Connected)
+                        return false;
+
                     master = ModbusIpMaster.CreateIp(tcp);
                 }
                 else

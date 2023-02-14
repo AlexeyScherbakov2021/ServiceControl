@@ -51,6 +51,8 @@ namespace ServiceControl.Modbus.Registers
         {
             base.SetResultValues(val);
 
+            if (ValueInt == null) return;
+
             switch((RezhStab)ValueInt)
             {
                 case RezhStab.StabCurrent:
@@ -73,8 +75,6 @@ namespace ServiceControl.Modbus.Registers
                     IsNaprStab = true;
                     break;
             }
-
-            //return (ushort)result;
         }
 
     }

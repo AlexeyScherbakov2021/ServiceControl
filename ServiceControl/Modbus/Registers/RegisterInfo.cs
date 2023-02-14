@@ -17,6 +17,7 @@ namespace ServiceControl.Modbus.Registers
 
         public override void SetResultValues(ushort[] val)
         {
+            if (val == null || val.Length < 4) return;
             VersionPO = val[2].ToString();
             Year = (val[3] + 2000).ToString();
             NumberDev = val[4].ToString();

@@ -91,7 +91,6 @@ namespace ServiceControl.ViewModel
         }
 
 
-
         private void FormatStringConnect()
         {
             StringConnect = IsSelectTCP
@@ -186,7 +185,7 @@ namespace ServiceControl.ViewModel
             if (IsSelectTCP)
                 work = new MbWork(HostName, Port, Protocol.TCP);
             else
-                work = new MbWork(ComPort, Port, Protocol.COM);
+                work = new MbWork(ComPort, TimeOutCOM, Protocol.COM);
 
             IsConnected = work.CreateConnect();
 

@@ -117,7 +117,7 @@ namespace ServiceControl.Modbus.Registers
             MS = new RegisterMS[CountMS];
             for (int i = 0; i < CountMS; i++)
             {
-                MS[i] = new RegisterMS() { Address = (ushort)(0x11 + i), CodeFunc = ModbusFunc.InputReg, Name = $"Состояние модуля силового {i + 1}", Description = $"ССМ{i + 1}", MinValue = 0, MaxValue = 3 };
+                MS[i] = new RegisterMS() { Number = i + 1, Address = (ushort)(0x11 + i), CodeFunc = ModbusFunc.InputReg, Name = $"Состояние модуля силового {i + 1}", Description = $"ССМ{i + 1}", MinValue = 0, MaxValue = 3 };
                 ListInput.Add(MS[i]);
             }
 
@@ -233,12 +233,19 @@ namespace ServiceControl.Modbus.Registers
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
-            ReadInfoRegister(InfoReg);
+            //ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
             ReadRegisters(ListCoil);
             ReadRegister(SetMode);
 
             ReadRegisters(ListInput);
+
+            MS[1].ValueInt = (int)StatusMS.Off;
+            MS[3].ValueInt = (int)StatusMS.Off;
+            MS[5].ValueInt = (int)StatusMS.Avar;
+            MS[6].ValueInt = (int)StatusMS.Absent;
+
+
             ReadRegisters(ListStatus);
             ReadRegisters(ListCoil);
 
@@ -258,13 +265,17 @@ namespace ServiceControl.Modbus.Registers
         //-------------------------------------------------------------------------------------------
         public override Task RequestValue()
         {
-            ReadRegisters(ListInput);
+
+
+            //ReadRegisters(ListInput);
+
             ReadRegisters(ListStatus);
             ReadRegisters(ListCoil);
             ReadRegisters(ListServices);
             //ReadRegisters(ListServices2);
             ReadRegisters(ListDop);
             ReadRegister(ModeNaprOutput);
+
 
             return Task.CompletedTask;
         }

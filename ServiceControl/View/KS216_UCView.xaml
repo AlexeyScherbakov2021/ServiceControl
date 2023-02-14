@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:ServiceControl.ViewModel"
+             xmlns:conv="clr-namespace:ServiceControl.Converters"
              xmlns:local="clr-namespace:ServiceControl.View"
              mc:Ignorable="d" 
              d:Width="1012" d:Height="595">
@@ -12,6 +13,35 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
+        <conv:StatusMSConverter x:Key="StatusMSConverter"/>
+        
+        <DataTemplate x:Key="ItemsControlItemTemplate1">
+            <Grid x:Name="grid">
+                <Rectangle x:Name="rect" Fill="Silver" Height="50" Margin="0" Stroke="Black" Width="30"/>
+                <Rectangle Height="48" Margin="0" Stroke="White" Width="28"/>
+                <TextBlock x:Name="font" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Text="{Binding Number}"/>
+                <Image x:Name="img" Margin="0,4" Source="{Binding ValueInt, Converter={StaticResource StatusMSConverter}}" VerticalAlignment="Bottom" Width="20"/>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding ValueInt}" Value="0">
+                    <Setter Property="ToolTip" Value="Включен" TargetName="img"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ValueInt}" Value="1">
+                    <Setter Property="ToolTip" Value="Выключен" TargetName="img"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ValueInt}" Value="2">
+                    <Setter Property="Fill" Value="DarkSlateGray" TargetName="rect"/>
+                    <Setter Property="ToolTip" Value="Отсутствует" TargetName="img"/>
+                    <Setter Property="Foreground" Value="White" TargetName="font"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding ValueInt}" Value="3">
+                    <Setter Property="ToolTip" Value="Авария" TargetName="img"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+        
+        
+        
     </UserControl.Resources>
 
     <Grid>
@@ -128,18 +158,13 @@
                 <GroupBox.Header>
                     <TextBlock Text="Силовые модули" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <ItemsControl ItemsSource="{Binding ListInputMS}" Margin="8" >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" Width="200"  VerticalAlignment="Top"/>
-                                <TextBlock Text="{Binding ValueString}" Width="100" VerticalAlignment="Top"
-                                Margin="4,1" Padding="2"
-                                Background="White" />
-                               
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
+                <ItemsControl ItemTemplate="{StaticResource ItemsControlItemTemplate1}" 
+                              ItemsSource="{Binding ListInputMS}" Margin="8" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
                 </ItemsControl>
             </GroupBox>
         </Border>
