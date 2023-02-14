@@ -11,6 +11,10 @@ namespace ServiceControl.Modbus.Registers
     {
         public string ResultText0 { get; set; }
         public string ResultText1 { get; set; }
+        public bool IsCorrectValue;
+       
+        private bool _IsAlarm;
+        public bool IsAlarm { get => _IsAlarm; set { Set(ref _IsAlarm, value); } }
 
         private bool _ValueBool;
         public bool ValueBool { get => _ValueBool; set { Set(ref _ValueBool, value); } }
@@ -20,6 +24,7 @@ namespace ServiceControl.Modbus.Registers
         {
             ValueBool = val[0] != false;
             ValueString = ValueBool ? ResultText1 : ResultText0;
+            IsAlarm = ValueBool != IsCorrectValue;
         }
 
         public bool SetOutput()

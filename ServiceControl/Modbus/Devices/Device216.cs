@@ -136,21 +136,37 @@ namespace ServiceControl.Modbus.Registers
             //--------------------------------------------------------------------------------------------------------------------------------------
             ListStatus = new List<RegisterBool>();
 
-            IllegalAccess = new RegisterBool() { Address = 0x01, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Несанкционированный доступ в шкаф", Description = "ТС1 (Дверь)", ResultText0 = "дверь закрыта", ResultText1 = "дверь открыта" };
+            IllegalAccess = new RegisterBool() { Address = 0x01, CodeFunc = ModbusFunc.Discrete, Size = 1, 
+                Name = "Несанкционированный доступ в шкаф", Description = "ТС1 (Дверь)", 
+                ResultText0 = "дверь закрыта", ResultText1 = "дверь открыта", IsCorrectValue = false };
             ListStatus.Add(IllegalAccess);
-            ControlMode = new RegisterBool() { Address = 0x02, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Режим упр. станцией", Description = "ТС2 (ДУ)", ResultText0 = "местный", ResultText1 = "дистанционный" };
+            ControlMode = new RegisterBool() { Address = 0x02, CodeFunc = ModbusFunc.Discrete, Size = 1, 
+                Name = "Режим упр. станцией", Description = "ТС2 (ДУ)", 
+                ResultText0 = "местный", ResultText1 = "дистанционный", IsCorrectValue = true };
             ListStatus.Add(ControlMode);
-            Fault = new RegisterBool() { Address = 0x03, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Неисправность станции", Description = "ТС3 (Неисправность СКЗ)", ResultText0 = "исправна (работа)", ResultText1 = "неисправна (авария)" };
+            Fault = new RegisterBool() { Address = 0x03, CodeFunc = ModbusFunc.Discrete, Size = 1, 
+                Name = "Неисправность станции", Description = "ТС3 (Неисправность СКЗ)", 
+                ResultText0 = "исправна (работа)", ResultText1 = "неисправна (авария)", IsCorrectValue = false};
             ListStatus.Add(Fault);
-            BreakCirc = new RegisterBool() { Address = 0x04, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Обрыв изм. цепей", Description = "ТС4 (Обрыв ЭС/Т)", ResultText0 = "норма (нет обрыва)", ResultText1 = "неисправна (авария)" };
+            BreakCirc = new RegisterBool() { Address = 0x04, CodeFunc = ModbusFunc.Discrete, Size = 1, 
+                Name = "Обрыв изм. цепей", Description = "ТС4 (Обрыв ЭС/Т)", 
+                ResultText0 = "норма (нет обрыва)", ResultText1 = "неисправна (авария)", IsCorrectValue = false };
             ListStatus.Add(BreakCirc);
-            OnMS = new RegisterBool() { Address = 0x05, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Включение группы осн. или рез. МС (СКЗ)", Description = "ТС5 (основные-резервные)", ResultText0 = "основные", ResultText1 = "резервные" };
+            OnMS = new RegisterBool() { Address = 0x05, CodeFunc = ModbusFunc.Discrete, Size = 1, 
+                Name = "Включение группы осн. или рез. МС (СКЗ)", Description = "ТС5 (основные-резервные)", 
+                ResultText0 = "основные", ResultText1 = "резервные", IsCorrectValue = false };
             ListStatus.Add(OnMS);
-            SpeedCorr1 = new RegisterBool() { Address = 0x06, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Индикатор скорости корр. 1", Description = "ТС6-1 (ДСК1)", ResultText0 = "разрыв", ResultText1 = "замкнут" };
+            SpeedCorr1 = new RegisterBool() { Address = 0x06, CodeFunc = ModbusFunc.Discrete, Size = 1, 
+                Name = "Индикатор скорости корр. 1", Description = "ТС6-1 (ДСК1)", 
+                ResultText0 = "разрыв", ResultText1 = "замкнут", IsCorrectValue = true };
             ListStatus.Add(SpeedCorr1);
-            SpeedCorr2 = new RegisterBool() { Address = 0x07, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Индикатор скорости корр. 2", Description = "ТС6-2 (ДСК2)", ResultText0 = "разрыв", ResultText1 = "замкнут" };
+            SpeedCorr2 = new RegisterBool() { Address = 0x07, CodeFunc = ModbusFunc.Discrete, Size = 1, 
+                Name = "Индикатор скорости корр. 2", Description = "ТС6-2 (ДСК2)", 
+                ResultText0 = "разрыв", ResultText1 = "замкнут", IsCorrectValue = true };
             ListStatus.Add(SpeedCorr2);
-            SpeedCorr3 = new RegisterBool() { Address = 0x08, CodeFunc = ModbusFunc.Discrete, Size = 1, Name = "Индикатор скорости корр. 3", Description = "ТС6-3 (ДСК3)", ResultText0 = "разрыв", ResultText1 = "замкнут" };
+            SpeedCorr3 = new RegisterBool() { Address = 0x08, CodeFunc = ModbusFunc.Discrete, Size = 1, 
+                Name = "Индикатор скорости корр. 3", Description = "ТС6-3 (ДСК3)", 
+                ResultText0 = "разрыв", ResultText1 = "замкнут", IsCorrectValue = true };
             ListStatus.Add(SpeedCorr3);
 
 
@@ -245,14 +261,9 @@ namespace ServiceControl.Modbus.Registers
             MS[5].ValueInt = (int)StatusMS.Avar;
             MS[6].ValueInt = (int)StatusMS.Absent;
 
-
             ReadRegisters(ListStatus);
-            ReadRegisters(ListCoil);
-
             ReadRegisters(ListServices);
             ReadRegister(ModeNaprOutput);
-
-            //ReadRegisters(ListServices2);
             ReadRegisters(ListDop);
 
             return Task.CompletedTask;
@@ -267,7 +278,7 @@ namespace ServiceControl.Modbus.Registers
         {
 
 
-            //ReadRegisters(ListInput);
+            ReadRegisters(ListInput);
 
             ReadRegisters(ListStatus);
             ReadRegisters(ListCoil);

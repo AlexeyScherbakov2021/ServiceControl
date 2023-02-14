@@ -17,6 +17,9 @@ namespace ServiceControl.Converters
         {
             BitmapImage Source = null;
 
+            if(value != null)
+            { 
+
             StatusMS status = (StatusMS)value;
 
             //if (value is StatusMS status)
@@ -41,7 +44,7 @@ namespace ServiceControl.Converters
                         break;
                 }
 
-            //}
+            }
 
             return Source;
         }
