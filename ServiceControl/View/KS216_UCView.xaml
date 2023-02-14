@@ -56,8 +56,8 @@
             <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100*"/>
-            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="84*"/>
+            <ColumnDefinition Width="94*"/>
             <ColumnDefinition Width="100*"/>
         </Grid.ColumnDefinitions>
 
@@ -80,6 +80,7 @@
                                     <TextBlock Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" 
                                                VerticalAlignment="Top" Margin="1" Padding="2"
                                         TextAlignment="Right" Background="White"/>
+                                    <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Margin="2,3,0,0"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -88,8 +89,8 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding device.ModeNaprOutput.Name}"  Width="200"  HorizontalAlignment="Left"/>
                         <TextBlock Text="{Binding device.ModeNaprOutput.ValueString}" Width="74" Background="White"
-                                   Padding="2"  Margin="1"
-                               HorizontalAlignment="Left" />
+                                   Padding="2"  Margin="1"  TextAlignment="Right" />
+                        <TextBlock Text="{Binding device.ModeNaprOutput.Measure}" VerticalAlignment="Top" Margin="2,3,0,0"/>
                     </StackPanel>
 
                     <TextBlock Text="{Binding device.Stabil.Name}" TextWrapping="Wrap" Width="200" HorizontalAlignment="Left" />
@@ -150,6 +151,7 @@
                                     <TextBox Text="{Binding Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" />
+                                    <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" 
                                             CommandParameter="{Binding Address}" Padding="3"
                                             Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}">
