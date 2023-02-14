@@ -6,6 +6,7 @@
              xmlns:vm="clr-namespace:ServiceControl.ViewModel"
              xmlns:conv="clr-namespace:ServiceControl.Converters"
              xmlns:local="clr-namespace:ServiceControl.View"
+             xmlns:fa="http://schemas.fontawesome.com/icons/"
              mc:Ignorable="d" 
              d:Width="1012" d:Height="595">
     <UserControl.DataContext>
@@ -17,26 +18,28 @@
         
         <DataTemplate x:Key="ItemsControlItemTemplate1">
             <Grid x:Name="grid">
-                <Rectangle x:Name="rect" Fill="Silver" Height="50" Margin="0" Stroke="Black" Width="30"/>
+                <Rectangle x:Name="rect" Fill="DarkGray" Height="50" Margin="0" Stroke="Black" Width="30"/>
                 <Rectangle Height="48" Margin="0" Stroke="White" Width="28"/>
                 <TextBlock x:Name="font" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Text="{Binding Number}"/>
-                <Image x:Name="img" Margin="0,4" Source="{Binding Value, Converter={StaticResource StatusMSConverter}}" VerticalAlignment="Bottom" Width="20"/>
+                <ContentPresenter Content="{Binding Value, Converter={StaticResource StatusMSConverter}}"
+                                  VerticalAlignment="Bottom" Width="16" Height="16" Margin="0,6" />
+                <!--<Image x:Name="img" Margin="0,4" Source="{Binding Value, Converter={StaticResource StatusMSConverter}}" VerticalAlignment="Bottom" Width="20"/>-->
             </Grid>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding Value}" Value="0">
+                <!--<DataTrigger Binding="{Binding Value}" Value="0">
                     <Setter Property="ToolTip" Value="Включен" TargetName="img"/>
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Value}" Value="1">
+                </DataTrigger>-->
+                <!--<DataTrigger Binding="{Binding Value}" Value="1">
                     <Setter Property="ToolTip" Value="Выключен" TargetName="img"/>
-                </DataTrigger>
+                </DataTrigger>-->
                 <DataTrigger Binding="{Binding Value}" Value="2">
-                    <Setter Property="Fill" Value="DarkSlateGray" TargetName="rect"/>
-                    <Setter Property="ToolTip" Value="Отсутствует" TargetName="img"/>
+                    <Setter Property="Fill" Value="DimGray" TargetName="rect"/>
+                    <!--<Setter Property="ToolTip" Value="Отсутствует" TargetName="img"/>-->
                     <Setter Property="Foreground" Value="White" TargetName="font"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding Value}" Value="3">
+                <!--<DataTrigger Binding="{Binding Value}" Value="3">
                     <Setter Property="ToolTip" Value="Авария" TargetName="img"/>
-                </DataTrigger>
+                </DataTrigger>-->
             </DataTemplate.Triggers>
         </DataTemplate>
         
@@ -46,16 +49,19 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="420"/>
-            <RowDefinition Height="239*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="360"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="345"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="100*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Background="Gainsboro" Margin="10" >
+        <Border Background="Gainsboro" Margin="10" Grid.Row="0" Grid.RowSpan="5" >
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -71,23 +77,34 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"  VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" VerticalAlignment="Top"
-                                        Margin="1" Padding="2"
+                                    <TextBlock Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" 
+                                               VerticalAlignment="Top" Margin="1" Padding="2"
                                         TextAlignment="Right" Background="White"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding device.ModeNaprOutput.Name}"  Width="200"  HorizontalAlignment="Left"/>
+                        <TextBlock Text="{Binding device.ModeNaprOutput.ValueString}" Width="74" Background="White"
+                                   Padding="2"  Margin="1"
+                               HorizontalAlignment="Left" />
+                    </StackPanel>
+
                     <TextBlock Text="{Binding device.Stabil.Name}" TextWrapping="Wrap" Width="200" HorizontalAlignment="Left" />
                     <TextBlock Text="{Binding device.Stabil.ValueString}"  HorizontalAlignment="Stretch" Margin="0,2"
                                 Padding="2"
                                 TextAlignment="Left" Background="White"/>
-
+                    <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="200" HorizontalAlignment="Left" />
+                    <TextBlock Text="{Binding device.RealTime.ValueString}"  HorizontalAlignment="Stretch" Margin="0,2"
+                                Padding="2"
+                                TextAlignment="Left" Background="White"/>
                 </StackPanel>
             </GroupBox>
         </Border>
 
-        <Border Background="Gainsboro" Margin="10" Grid.Column="1" >
+        <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.RowSpan="2">
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -116,7 +133,7 @@
             </GroupBox>
         </Border>
         
-        <Border Background="Gainsboro" Margin="10" Grid.Column="2" >
+        <Border Background="Gainsboro" Margin="10" Grid.Column="2" Grid.RowSpan="4" >
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -129,13 +146,15 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"  VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="240"  VerticalAlignment="Top"/>
                                     <TextBox Text="{Binding Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" />
-                                    <Button Content="--&gt;" Width="30" Margin="1" VerticalAlignment="Top" 
-                                            CommandParameter="{Binding Address}"
-                                            Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}"/>
+                                    <Button Width="30" Margin="1" VerticalAlignment="Top" 
+                                            CommandParameter="{Binding Address}" Padding="3"
+                                            Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}">
+                                        <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" Foreground="DarkSlateBlue"/>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -143,7 +162,9 @@
 
                     <GroupBox Header="Режим стабилизации" Padding="8" BorderBrush="Black" Margin="0,4">
                         <DockPanel>
-                            <Button Content="--&gt;" DockPanel.Dock="Right" Width="40" Command="{Binding WriteModeCommand}"/>
+                            <Button DockPanel.Dock="Right" Width="40" Command="{Binding WriteModeCommand}">
+                                <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="16" Foreground="DarkSlateBlue"/>
+                            </Button>
                             <StackPanel>
                                 <RadioButton Content="Выходной ток" IsChecked="{Binding device.SetMode.IsCurrentStab}"/>
                                 <RadioButton Content="Суммарный потенциал" IsChecked="{Binding device.SetMode.IsSummPotStab}"/>
@@ -156,7 +177,7 @@
             </GroupBox>
         </Border>
 
-        <Border Background="Gainsboro" Margin="10" Grid.Column="0" Grid.Row="1" >
+        <Border Background="Gainsboro" Margin="10" Grid.Column="2" Grid.Row="4" >
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -164,7 +185,6 @@
                 <GroupBox.Header>
                     <TextBlock Text="Силовые модули" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-
                 <StackPanel>
                     <!--<ToggleButton Content="{Binding device.OnOffMS.CurrentStringValue}" IsChecked="{Binding device.OnOffMS.ValueBool}" Margin="34,4" />-->
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,7,0,0">
@@ -189,7 +209,7 @@
         </Border>
 
 
-        <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.Row="1" >
+        <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.Row="2"  Grid.RowSpan="3">
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -238,7 +258,7 @@
             </GroupBox>
         </Border>
 
-        <Border Background="Gainsboro" Margin="10" Grid.Column="2" Grid.Row="1" >
+        <!--<Border Background="Gainsboro" Margin="10" Grid.Column="2" Grid.Row="4" >
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -252,7 +272,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" Width="220"  VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding Value, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                                    <TextBlock Text="{Binding Value, TargetNullValue=}" Width="50" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" />
                                 </StackPanel>
@@ -265,7 +285,7 @@
                                 TextAlignment="Left" Background="White"/>
                 </StackPanel>
             </GroupBox>
-        </Border>
+         </Border>-->
 
 
     </Grid>

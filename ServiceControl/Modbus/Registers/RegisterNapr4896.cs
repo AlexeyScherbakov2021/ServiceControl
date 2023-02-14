@@ -13,7 +13,7 @@ namespace ServiceControl.Modbus.Registers
         {
             if (val.Length < 1) return;
             Value = val[0];
-            ValueString = Value == 0 ? "48 В" : "96 В";
+            ValueString = Value == 0 ? "48" : "96";
         }
 
     }

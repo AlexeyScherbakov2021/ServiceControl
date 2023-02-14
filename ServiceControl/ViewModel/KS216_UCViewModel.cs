@@ -81,7 +81,9 @@ namespace ServiceControl.ViewModel
             ListInput = new List<Register>()
             {
                 device.NaprSeti1, device.CountEE1, device.NaprSeti2, device.CountEE2, device.Temper, device.TimeWork,
-                device.TimeProtect, device.CurrOutput, device.NaprOutput, device.ProtectPotenSumm, device.ProtectPotenPol
+                device.TimeProtect, device.CurrOutput, device.NaprOutput, device.ProtectPotenSumm, device.ProtectPotenPol,
+                device.TempCoolerOn, device.TempCoolerOff,
+                device.ResistPlast1, device.ResistPlast2, device.ResistPlast3, device.CurrPolyar
             };
 
             ListInputMS = new List<Register>();
@@ -98,9 +100,13 @@ namespace ServiceControl.ViewModel
             ListStatus = new List<RegisterBool>() { device.IllegalAccess, device.ControlMode, device.Fault, device.BreakCirc, device.OnMS, 
                 device.SpeedCorr1, device.SpeedCorr2, device.SpeedCorr3 };
 
-            ListWriteControl = new List<Register>() { device.SetCurrOutput, device.SetSummPotOutput, device.SetPolPotOutput, device.SetNaprOutput };
+            ListWriteControl = new List<Register>() { device.SetCurrOutput, device.SetSummPotOutput, 
+                device.SetPolPotOutput, device.SetNaprOutput, device.TempCoolerOn, device.TempCoolerOff,
+                device.TimeWork, device.TimeProtect
+            };
+
             ListCoil = new List<RegisterBool>() { device.OnOffMS };
-            ListService = new List<Register>() { device.TempCoolerOn, device.TempCoolerOff, device.ModeNaprOutput };
+            //ListService = new List<Register>() { device.TempCoolerOn, device.TempCoolerOff, device.ModeNaprOutput };
 
         }
 

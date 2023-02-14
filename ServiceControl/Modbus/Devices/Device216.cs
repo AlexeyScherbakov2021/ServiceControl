@@ -44,7 +44,7 @@ namespace ServiceControl.Modbus.Registers
         public RegisterInt TempCoolerOff;
         //public RegisterInt Year;
         //public RegisterInt Number;
-        public RegisterNapr4896 ModeNaprOutput;
+        public RegisterNapr4896 ModeNaprOutput { get; set; }
         public RegisterRT RealTime { get; set; }
         //public RegisterInt ProtectTime;
 
@@ -57,7 +57,7 @@ namespace ServiceControl.Modbus.Registers
         public RegisterInt ResistPlast1;
         public RegisterInt ResistPlast2;
         public RegisterInt ResistPlast3;
-        RegisterDouble CurrPolyar;
+        public RegisterDouble CurrPolyar;
 
         public RegisterInfo InfoReg { get; set; }
 
@@ -273,7 +273,7 @@ namespace ServiceControl.Modbus.Registers
             //ListServices2.Add(Number);
 
             ModeNaprOutput = new RegisterNapr4896() { Address = 0xCD, CodeFunc = ModbusFunc.Holding, 
-                Name = "Режим выходного напряжения", Description = "Uрежим", MinValue = 0, MaxValue = 1 };
+                Name = "Режим выходного напряжения", Description = "Uрежим", Measure = "В", MinValue = 0, MaxValue = 1 };
             //ListServices2.Add(ModeNaprOutput);
 
 
@@ -303,17 +303,17 @@ namespace ServiceControl.Modbus.Registers
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
-            //ReadInfoRegister(InfoReg);
+            ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
             ReadRegister(OnOffMS);
             ReadRegister(SetMode);
 
             ReadRegisters(ListInput);
 
-            //MS[1].ValueInt = (int)StatusMS.Off;
-            //MS[3].ValueInt = (int)StatusMS.Off;
-            //MS[5].ValueInt = (int)StatusMS.Avar;
-            //MS[6].ValueInt = (int)StatusMS.Absent;
+            //MS[1].Value = (int)StatusMS.Off;
+            //MS[3].Value = (int)StatusMS.Off;
+            //MS[5].Value = (int)StatusMS.Avar;
+            //MS[6].Value = (int)StatusMS.Absent;
 
             ReadRegisters(ListStatus);
             ReadRegisters(ListServices);
@@ -332,6 +332,11 @@ namespace ServiceControl.Modbus.Registers
         {
 
             ReadRegisters(ListInput);
+
+            //MS[1].Value = (int)StatusMS.Off;
+            //MS[3].Value = (int)StatusMS.Off;
+            //MS[5].Value = (int)StatusMS.Avar;
+            //MS[6].Value = (int)StatusMS.Absent;
 
             //SpeedDK[0].ValueDouble = 2.334;
             //DeepDK[0].ValueDouble = 4.674;
