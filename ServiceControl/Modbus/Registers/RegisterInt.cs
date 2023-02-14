@@ -12,31 +12,31 @@ namespace ServiceControl.Modbus.Registers
         public int MaxValue = int.MaxValue;
 
         private int? _ValueInt;
-        public int? ValueInt { get => _ValueInt; set { Set(ref _ValueInt, value); } }
+        public int? Value { get => _ValueInt; set { Set(ref _ValueInt, value); } }
 
 
         public override void SetResultValues(ushort[] val)
         {
             if (val == null || val.Length < 1)
             {
-                ValueInt = null;
+                Value = null;
                 return;
             }
-            int res = (short)val[0];
+            uint res = (ushort)val[0];
 
             for (int i = 1; i < val.Length; i++)
             {
-                int res2 = val[i];
+                uint res2 = val[i];
                 res2 <<= 16 * i;
                 res |= res2;
             }
-            ValueInt = res;
+            Value = (int)res;
         }
 
         public override ushort[] SetOutput()
         {
             ushort[] res = new ushort[Size]; 
-            int val = ValueInt.Value;
+            int val = Value.Value;
 
             for(int i = 0; i < Size; i++)
             {
@@ -45,8 +45,6 @@ namespace ServiceControl.Modbus.Registers
             }
 
             return res;
-
-            //return (ushort)ValueInt;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace ServiceControl.Modbus.Registers
         protected byte Slave;
         protected MbWork modbus;
         protected IEnumerable<List<RegisterBase>> ListList;
+
+        public event EventHandler<EventArgs> EndStartRead;
 
         private DispatcherTimer timer;
 
@@ -36,6 +39,8 @@ namespace ServiceControl.Modbus.Registers
             //StartRequestValue();
             await Task.Run(() => StartRequestValue());
 
+            EndStartRead.Invoke(null, null);
+
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += Timer_Tick;
             timer.Start();
@@ -53,6 +58,21 @@ namespace ServiceControl.Modbus.Registers
             {
                 ushort[] res = modbus.ReadRegisterInput(Reg.Address, Reg.Size, Slave);
                 Reg.SetResultValues(res);
+            }
+
+        }
+
+        public void ReadRegister(RegisterBool reg)
+        {
+            if (reg.CodeFunc == ModbusFunc.CoilRead)
+            {
+                bool[] res = modbus.ReadRegisterCoil(reg.Address, reg.Size, Slave);
+                reg.SetResultValues(res);
+            }
+            if (reg.CodeFunc == ModbusFunc.Discrete)
+            {
+                bool[] res = modbus.ReadRegisterDiscret(reg.Address, reg.Size, Slave);
+                reg.SetResultValues(res);
             }
 
         }

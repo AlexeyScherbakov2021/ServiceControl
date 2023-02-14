@@ -20,21 +20,21 @@
                 <Rectangle x:Name="rect" Fill="Silver" Height="50" Margin="0" Stroke="Black" Width="30"/>
                 <Rectangle Height="48" Margin="0" Stroke="White" Width="28"/>
                 <TextBlock x:Name="font" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Text="{Binding Number}"/>
-                <Image x:Name="img" Margin="0,4" Source="{Binding ValueInt, Converter={StaticResource StatusMSConverter}}" VerticalAlignment="Bottom" Width="20"/>
+                <Image x:Name="img" Margin="0,4" Source="{Binding Value, Converter={StaticResource StatusMSConverter}}" VerticalAlignment="Bottom" Width="20"/>
             </Grid>
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding ValueInt}" Value="0">
+                <DataTrigger Binding="{Binding Value}" Value="0">
                     <Setter Property="ToolTip" Value="Включен" TargetName="img"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ValueInt}" Value="1">
+                <DataTrigger Binding="{Binding Value}" Value="1">
                     <Setter Property="ToolTip" Value="Выключен" TargetName="img"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ValueInt}" Value="2">
+                <DataTrigger Binding="{Binding Value}" Value="2">
                     <Setter Property="Fill" Value="DarkSlateGray" TargetName="rect"/>
                     <Setter Property="ToolTip" Value="Отсутствует" TargetName="img"/>
                     <Setter Property="Foreground" Value="White" TargetName="font"/>
                 </DataTrigger>
-                <DataTrigger Binding="{Binding ValueInt}" Value="3">
+                <DataTrigger Binding="{Binding Value}" Value="3">
                     <Setter Property="ToolTip" Value="Авария" TargetName="img"/>
                 </DataTrigger>
             </DataTemplate.Triggers>
@@ -64,12 +64,14 @@
                     <TextBlock Text="Выходные параметры" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel Margin="8" >
+                    <TextBlock Text="{Binding DeviceInfo}" Margin="0,6" />
+                    
                     <ItemsControl ItemsSource="{Binding ListInput}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"  VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding ValueDouble, StringFormat=0.##, TargetNullValue=--}" Width="74" VerticalAlignment="Top"
+                                    <TextBlock Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" VerticalAlignment="Top"
                                         Margin="1" Padding="2"
                                         TextAlignment="Right" Background="White"/>
                                 </StackPanel>
@@ -80,8 +82,6 @@
                     <TextBlock Text="{Binding device.Stabil.ValueString}"  HorizontalAlignment="Stretch" Margin="0,2"
                                 Padding="2"
                                 TextAlignment="Left" Background="White"/>
-
-                    <TextBlock Text="{Binding DeviceInfo}" />
 
                 </StackPanel>
             </GroupBox>
@@ -100,14 +100,14 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="190"  VerticalAlignment="Top"/>
-                                <Border x:Name="border" Background="LightGreen" Margin="1" CornerRadius="10" BorderBrush="Black" BorderThickness="1">
-                                    <TextBlock Text="{Binding ValueString}" Width="120" VerticalAlignment="Center"
+                                <Border x:Name="border" Background="#c0FFc0" Margin="1" CornerRadius="8" BorderBrush="Black" BorderThickness="1">
+                                    <TextBlock Text="{Binding ValueString}" Width="140" VerticalAlignment="Center"
                                         Padding="2" TextAlignment="Center"/>
                                 </Border>
                             </StackPanel>
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding IsAlarm}" Value="true">
-                                    <Setter Property="Background" Value="Orange" TargetName="border"/>
+                                    <Setter Property="Background" Value="#FFf0f0" TargetName="border"/>
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>
@@ -130,7 +130,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"  VerticalAlignment="Top"/>
-                                    <TextBox Text="{Binding ValueDouble, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                                    <TextBox Text="{Binding Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" />
                                     <Button Content="--&gt;" Width="30" Margin="1" VerticalAlignment="Top" 
@@ -164,14 +164,27 @@
                 <GroupBox.Header>
                     <TextBlock Text="Силовые модули" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <ItemsControl ItemTemplate="{StaticResource ItemsControlItemTemplate1}" 
+
+                <StackPanel>
+                    <!--<ToggleButton Content="{Binding device.OnOffMS.CurrentStringValue}" IsChecked="{Binding device.OnOffMS.ValueBool}" Margin="34,4" />-->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,7,0,0">
+                        <CheckBox Content="Включено" IsChecked="{Binding device.OnOffMS.ValueBool}" Margin="20,0,40,0"/>
+
+                        <TextBlock Text="Откл. "/>
+                        <Slider Width="50" Maximum="1" SmallChange="1" IsSnapToTickEnabled="True" Value="{Binding IsOn}"/>
+                        <TextBlock Text=" Вкл."/>
+                    </StackPanel>
+                            
+                            
+                    <ItemsControl ItemTemplate="{StaticResource ItemsControlItemTemplate1}" Width="200"
                               ItemsSource="{Binding ListInputMS}" Margin="8" >
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                </ItemsControl>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
             </GroupBox>
         </Border>
 
@@ -196,10 +209,10 @@
 
                                     <Grid Height="20" Margin="0,2">
                                         <ProgressBar x:Name="pb1" Maximum="65.535" Width="100" 
-                                                 Value="{Binding SpeedIKP.ValueDouble}" BorderBrush="Gray"
+                                                 Value="{Binding SpeedIKP.Value}" BorderBrush="Gray"
                                              Background="Gainsboro" Margin="1"  Foreground="DarkGray"
                                              />
-                                        <TextBlock Text="{Binding SpeedIKP.ValueDouble, StringFormat=0.###}" 
+                                        <TextBlock Text="{Binding SpeedIKP.Value, StringFormat=0.###}" 
                                                VerticalAlignment="Center"
                                                Width="{Binding ActualWidth, ElementName=pb1}" TextAlignment="Center"/>
                                     </Grid>
@@ -207,10 +220,10 @@
 
                                     <Grid Height="20" Margin="0,2">
                                         <ProgressBar x:Name="pb2" Maximum="65.535" Width="100" 
-                                                 Value="{Binding DeepIKP.ValueDouble}" BorderBrush="Gray"
+                                                 Value="{Binding DeepIKP.Value}" BorderBrush="Gray"
                                              Background="Gainsboro" Margin="1"  Foreground="DarkGray" Minimum="0"
                                              />
-                                        <TextBlock Text="{Binding DeepIKP.ValueDouble, StringFormat=0.###}" 
+                                        <TextBlock Text="{Binding DeepIKP.Value, StringFormat=0.###}" 
                                                VerticalAlignment="Center"
                                                Width="{Binding ActualWidth, ElementName=pb2}" TextAlignment="Center"/>
                                     </Grid>
@@ -239,7 +252,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" Width="220"  VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding ValueInt, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                                    <TextBlock Text="{Binding Value, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" />
                                 </StackPanel>

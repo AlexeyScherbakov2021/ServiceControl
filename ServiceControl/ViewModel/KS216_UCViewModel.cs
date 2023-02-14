@@ -26,6 +26,23 @@ namespace ServiceControl.ViewModel
         }
 
 
+        private bool _IsOn;
+        public bool IsOn 
+        {
+            get => _IsOn;
+            set
+            {
+                if(Set(ref _IsOn, value))
+                {
+                    if (device.OnOffMS.ValueBool != _IsOn)
+                    {
+                        device.OnOffMS.ValueBool = _IsOn;
+                        OnOnOffCommandExecuted(null);
+                    }
+                }
+            }
+        }
+
         public Device216 device { get; set; }
 
         public List<Register> ListInput { get; set; }
@@ -57,6 +74,8 @@ namespace ServiceControl.ViewModel
             device = new Device216(work, Slave);
             device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;
 
+            device.EndStartRead += OnStartFinish;
+
             device.Start();
 
             ListInput = new List<Register>()
@@ -83,6 +102,11 @@ namespace ServiceControl.ViewModel
             ListCoil = new List<RegisterBool>() { device.OnOffMS };
             ListService = new List<Register>() { device.TempCoolerOn, device.TempCoolerOff, device.ModeNaprOutput };
 
+        }
+
+        private void OnStartFinish(object sender, EventArgs e)
+        {
+            IsOn = device.OnOffMS.ValueBool;
         }
 
         private void InfoReg_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -126,6 +150,15 @@ namespace ServiceControl.ViewModel
         private void OnWriteModeCommandExecuted(object p)
         {
             device.WriteRegister(device.SetMode);
+        }
+
+        //--------------------------------------------------------------------------------
+        // Команда Вкл - откл силовых модулей
+        //--------------------------------------------------------------------------------
+        //public ICommand OnOffCommand => new LambdaCommand(OnOnOffCommandExecuted);
+        private void OnOnOffCommandExecuted(object p)
+        {
+            device.WriteRegister(device.OnOffMS);
         }
 
         #endregion

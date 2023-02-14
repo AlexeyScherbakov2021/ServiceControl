@@ -12,8 +12,8 @@ namespace ServiceControl.Modbus.Registers
         public override void SetResultValues(ushort[] val)
         {
             base.SetResultValues(val);
-            long sek = (long)ValueInt.Value * 10000000;
-            DateTime dt = new DateTime(1970, 01, 01).AddSeconds(ValueInt.Value);
+            long sek = (long)Value.Value * 10000000;
+            DateTime dt = new DateTime(1970, 01, 01).AddSeconds(Value.Value);
             ValueString = dt.ToString("dd.MM.yyyy HH:mm.ss");
         }
 

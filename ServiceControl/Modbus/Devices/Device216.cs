@@ -39,7 +39,7 @@ namespace ServiceControl.Modbus.Registers
         public RegisterBool SpeedCorr1;
         public RegisterBool SpeedCorr2;
         public RegisterBool SpeedCorr3;
-        public RegisterBool OnOffMS;
+        public RegisterBool OnOffMS { get; set; }
         public RegisterInt TempCoolerOn;
         public RegisterInt TempCoolerOff;
         //public RegisterInt Year;
@@ -64,7 +64,7 @@ namespace ServiceControl.Modbus.Registers
         List<Register> ListInput;
         List<RegisterBool> ListStatus;
         List<Register> ListWriteControl;
-        List<RegisterBool> ListCoil;
+        //List<RegisterBool> ListCoil;
         List<Register> ListServices;
         //List<Register> ListServices2;
         List<Register> ListDop;
@@ -230,10 +230,11 @@ namespace ServiceControl.Modbus.Registers
 
             // список управляющих статусов
             //--------------------------------------------------------------------------------------------------------------------------------------
-            ListCoil = new List<RegisterBool>();
+            //ListCoil = new List<RegisterBool>();
             OnOffMS = new RegisterBool() { Address = 0x81, CodeFunc = ModbusFunc.CoilRead, Size = 1, 
-                Name = "Дистанц.откл.вкл.модулей силовых", Description = "ТУ1 (ДО СМ)", ResultText0 = "выключить", ResultText1 = "включить" };
-            ListCoil.Add(OnMS);
+                Name = "Дистанц.откл.вкл.модулей силовых", Description = "ТУ1 (ДО СМ)", 
+                ResultText0 = "выключен", ResultText1 = "включен" };
+            //ListCoil.Add(OnMS);
 
 
 
@@ -304,7 +305,7 @@ namespace ServiceControl.Modbus.Registers
         {
             //ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
-            ReadRegisters(ListCoil);
+            ReadRegister(OnOffMS);
             ReadRegister(SetMode);
 
             ReadRegisters(ListInput);
@@ -330,21 +331,18 @@ namespace ServiceControl.Modbus.Registers
         public override Task RequestValue()
         {
 
-
             ReadRegisters(ListInput);
 
-            SpeedDK[0].ValueDouble = 2.334;
-            DeepDK[0].ValueDouble = 4.674;
-            SpeedDK[1].ValueDouble = 16.334;
-            DeepDK[1].ValueDouble = 65.500;
+            //SpeedDK[0].ValueDouble = 2.334;
+            //DeepDK[0].ValueDouble = 4.674;
+            //SpeedDK[1].ValueDouble = 16.334;
+            //DeepDK[1].ValueDouble = 65.500;
 
             ReadRegisters(ListStatus);
-            ReadRegisters(ListCoil);
+            ReadRegister(OnOffMS);
             ReadRegisters(ListServices);
-            //ReadRegisters(ListServices2);
             ReadRegisters(ListDop);
             ReadRegister(ModeNaprOutput);
-
 
             return Task.CompletedTask;
         }
@@ -357,9 +355,8 @@ namespace ServiceControl.Modbus.Registers
             CheckReg(ListInput);
             CheckReg(ListStatus);
             CheckReg(ListWriteControl);
-            CheckReg(ListCoil);
             CheckReg(ListServices);
-            //CheckReg(ListServices2);
+            //CheckReg(ListCoil);
         }
     }
 }

@@ -14,13 +14,13 @@ namespace ServiceControl.Modbus.Registers
         public double MaxValue = double.MaxValue;
 
         private double? _ValueDouble;
-        public double? ValueDouble { get => _ValueDouble; set { Set(ref _ValueDouble, value); } }
+        public double? Value { get => _ValueDouble; set { Set(ref _ValueDouble, value); } }
 
         public override void SetResultValues(ushort[] val)
         {
             if (val == null || val.Length < 1)
             {
-                ValueDouble = null;
+                Value = null;
                 return;
             }
 
@@ -31,14 +31,14 @@ namespace ServiceControl.Modbus.Registers
                 res2 <<= 16 * i;
                 res |= (int)(short)val[i];
             }
-            ValueDouble = (int)res * Scale;
+            Value = (int)res * Scale;
         }
 
         public override ushort[] SetOutput()
         {
 
             ushort[] res = new ushort[Size];
-            int val = (int)(ValueDouble / Scale);
+            int val = (int)(Value / Scale);
 
             for (int i = Size - 1; i >= 0; i--)
             {

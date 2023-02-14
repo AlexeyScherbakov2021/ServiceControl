@@ -12,8 +12,8 @@ namespace ServiceControl.Modbus.Registers
         public override void SetResultValues(ushort[] val)
         {
             if (val.Length < 1) return;
-            ValueInt = val[0];
-            ValueString = ValueInt == 0 ? "48 В" : "96 В";
+            Value = val[0];
+            ValueString = Value == 0 ? "48 В" : "96 В";
         }
 
     }

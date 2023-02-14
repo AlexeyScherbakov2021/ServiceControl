@@ -15,7 +15,7 @@ namespace ServiceControl.Modbus.Registers
             set 
             {
                 if (Set(ref _IsCurrentStab, value) && value)
-                    ValueInt = (ushort)RezhStab.StabCurrent;
+                    Value = (ushort)RezhStab.StabCurrent;
             } 
         }
 
@@ -24,7 +24,7 @@ namespace ServiceControl.Modbus.Registers
             set 
             {
                 if (Set(ref _IsSummPotStab, value) && value)
-                    ValueInt = (ushort)RezhStab.StabSummPot;
+                    Value = (ushort)RezhStab.StabSummPot;
             } 
         }
 
@@ -33,7 +33,7 @@ namespace ServiceControl.Modbus.Registers
             set 
             { 
                 if(Set(ref _IsPolPotStab, value) && value)
-                    ValueInt = (ushort)RezhStab.StabPolPot;
+                    Value = (ushort)RezhStab.StabPolPot;
             }
         }
 
@@ -42,7 +42,7 @@ namespace ServiceControl.Modbus.Registers
             set 
             { 
                 if(Set(ref _IsNaprStab, value) && value)
-                    ValueInt = (ushort)RezhStab.StabNapr;
+                    Value = (ushort)RezhStab.StabNapr;
             }
         }
 
@@ -51,9 +51,9 @@ namespace ServiceControl.Modbus.Registers
         {
             base.SetResultValues(val);
 
-            if (ValueInt == null) return;
+            if (Value == null) return;
 
-            switch((RezhStab)ValueInt)
+            switch((RezhStab)Value)
             {
                 case RezhStab.StabCurrent:
                     ValueString = "00 - стабилизация тока";

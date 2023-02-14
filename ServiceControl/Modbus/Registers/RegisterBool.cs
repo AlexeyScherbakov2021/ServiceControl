@@ -11,6 +11,7 @@ namespace ServiceControl.Modbus.Registers
     {
         public string ResultText0 { get; set; }
         public string ResultText1 { get; set; }
+        public string CurrentStringValue => _ValueBool ? ResultText1 : ResultText0;
         public bool IsCorrectValue;
        
         private bool _IsAlarm;

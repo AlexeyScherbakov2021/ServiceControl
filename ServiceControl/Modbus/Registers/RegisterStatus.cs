@@ -41,11 +41,11 @@ namespace ServiceControl.Modbus.Registers
         public override void SetResultValues(ushort[] val)
         {
             if (val.Length < 1) return;
-            ValueInt = val[0];
+            Value = val[0];
 
-            IsSensorOpen = (ValueInt & (ushort)RegStatus.SensorOpened) != 0;
+            IsSensorOpen = (Value & (ushort)RegStatus.SensorOpened) != 0;
 
-            int block = ValueInt.Value & 0b000110;
+            int block = Value.Value & 0b000110;
             if (block == (int)RegStatus.BlockOpened)
                 StatusBlock = BlockStatus.Opened;
             else if (block == (ushort)RegStatus.BlockAbsent)
@@ -55,9 +55,9 @@ namespace ServiceControl.Modbus.Registers
             else
                 StatusBlock = BlockStatus.Good;
 
-            IsDK1Break = (ValueInt & (ushort)RegStatus.DK1Break) != 0;
-            IsDK2Break = (ValueInt & (ushort)RegStatus.DK2Break) != 0;
-            IsDK3Break = (ValueInt & (ushort)RegStatus.DK3Break) != 0;
+            IsDK1Break = (Value & (ushort)RegStatus.DK1Break) != 0;
+            IsDK2Break = (Value & (ushort)RegStatus.DK2Break) != 0;
+            IsDK3Break = (Value & (ushort)RegStatus.DK3Break) != 0;
 
             //return Value;
 

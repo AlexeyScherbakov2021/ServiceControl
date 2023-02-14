@@ -18,7 +18,7 @@ namespace ServiceControl.Modbus.Registers
         {
             base.SetResultValues(val);
 
-            switch ((StatusMS)ValueInt)
+            switch ((StatusMS)Value)
             {
                 case StatusMS.On:
                     ValueString = "00 - включен";
