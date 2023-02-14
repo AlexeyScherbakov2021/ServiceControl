@@ -8,6 +8,9 @@ namespace ServiceControl.Modbus.Registers
 {
     internal class RegisterInt : Register
     {
+        public int MinValue = int.MinValue;
+        public int MaxValue = int.MaxValue;
+
         private int? _ValueInt;
         public int? ValueInt { get => _ValueInt; set { Set(ref _ValueInt, value); } }
 

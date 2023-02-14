@@ -164,16 +164,17 @@
                 <GroupBox.Header>
                     <TextBlock Text="Силовые модули" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <!--<ItemsControl ItemTemplate="{StaticResource ItemsControlItemTemplate1}" 
+                <ItemsControl ItemTemplate="{StaticResource ItemsControlItemTemplate1}" 
                               ItemsSource="{Binding ListInputMS}" Margin="8" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel Orientation="Horizontal"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
-                </ItemsControl>-->
+                </ItemsControl>
             </GroupBox>
         </Border>
+
 
         <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.Row="1" >
             <Border.Effect>
@@ -183,18 +184,44 @@
                 <GroupBox.Header>
                     <TextBlock Text="Индикаторы скорости коррозии" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <ItemsControl ItemsSource="{Binding ListInputDK}" Margin="8" >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" Width="200"  VerticalAlignment="Top"/>
-                                <TextBlock Text="{Binding ValueDouble, StringFormat=0.###, TargetNullValue=--}" Width="80" VerticalAlignment="Top"
-                                Margin="4,1" Padding="2"
-                                TextAlignment="Right" Background="White" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+
+                <Grid>
+                    <TextBlock Text="Скорость коррозии" Margin="50,5"/>
+                    <TextBlock Text="Глубина коррозии" Margin="220,5,0,0"/>
+                    <ItemsControl ItemsSource="{Binding ListInputDK}" Margin="8,24,0,0" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding SpeedIKP.Number, StringFormat=ИКП {0}}" Width="48"  VerticalAlignment="Center"/>
+
+                                    <Grid Height="20" Margin="0,2">
+                                        <ProgressBar x:Name="pb1" Maximum="65.535" Width="100" 
+                                                 Value="{Binding SpeedIKP.ValueDouble}" BorderBrush="Gray"
+                                             Background="Gainsboro" Margin="1"  Foreground="DarkGray"
+                                             />
+                                        <TextBlock Text="{Binding SpeedIKP.ValueDouble, StringFormat=0.###}" 
+                                               VerticalAlignment="Center"
+                                               Width="{Binding ActualWidth, ElementName=pb1}" TextAlignment="Center"/>
+                                    </Grid>
+                                    <TextBlock Text="{Binding SpeedIKP.Measure}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+
+                                    <Grid Height="20" Margin="0,2">
+                                        <ProgressBar x:Name="pb2" Maximum="65.535" Width="100" 
+                                                 Value="{Binding DeepIKP.ValueDouble}" BorderBrush="Gray"
+                                             Background="Gainsboro" Margin="1"  Foreground="DarkGray" Minimum="0"
+                                             />
+                                        <TextBlock Text="{Binding DeepIKP.ValueDouble, StringFormat=0.###}" 
+                                               VerticalAlignment="Center"
+                                               Width="{Binding ActualWidth, ElementName=pb2}" TextAlignment="Center"/>
+                                    </Grid>
+                                    <TextBlock Text="{Binding DeepIKP.Measure}" VerticalAlignment="Center"/>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+                
             </GroupBox>
         </Border>
 

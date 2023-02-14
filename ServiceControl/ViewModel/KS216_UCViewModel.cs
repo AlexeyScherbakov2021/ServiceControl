@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
@@ -18,11 +19,18 @@ namespace ServiceControl.ViewModel
 {
     internal class KS216_UCViewModel : Observable
     {
+        public class IKP
+        {
+            public RegisterDouble SpeedIKP { get; set; }
+            public RegisterDouble DeepIKP { get; set; }
+        }
+
+
         public Device216 device { get; set; }
 
         public List<Register> ListInput { get; set; }
         public List<Register> ListInputMS { get; set; }
-        public List<Register> ListInputDK { get; set; }
+        public List<IKP> ListInputDK { get; set; }
         public List<RegisterBool> ListStatus { get; set; }
         public List<RegisterBool> ListCoil { get; set; }
         public List<Register> ListWriteControl { get; set; }
@@ -61,11 +69,11 @@ namespace ServiceControl.ViewModel
             for (int i = 0; i < Device216.CountMS; i++)
                 ListInputMS.Add(device.MS[i]);
 
-            ListInputDK = new List<Register>();
+            ListInputDK = new List<IKP>();
             for (int i = 0; i < Device216.CountDK; i++)
             {
-                ListInputDK.Add(device.SpeedDK[i]);
-                ListInputDK.Add(device.DeepDK[i]);
+                ListInputDK.Add( new IKP() { SpeedIKP = device.SpeedDK[i], DeepIKP = device.DeepDK[i] });
+                //ListInputDK.Add(device.DeepDK[i]);
             }
 
             ListStatus = new List<RegisterBool>() { device.IllegalAccess, device.ControlMode, device.Fault, device.BreakCirc, device.OnMS, 

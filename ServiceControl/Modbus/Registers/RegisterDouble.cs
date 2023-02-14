@@ -10,6 +10,8 @@ namespace ServiceControl.Modbus.Registers
     internal class RegisterDouble : Register
     {
         public double Scale;
+        public double MinValue = double.MinValue;
+        public double MaxValue = double.MaxValue;
 
         private double? _ValueDouble;
         public double? ValueDouble { get => _ValueDouble; set { Set(ref _ValueDouble, value); } }
