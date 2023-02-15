@@ -98,7 +98,7 @@
                                 Padding="2"
                                 TextAlignment="Left" Background="White"/>
                     <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="200" HorizontalAlignment="Left" />
-                    <TextBlock Text="{Binding device.RealTime.ValueString}"  HorizontalAlignment="Stretch" Margin="0,2"
+                    <TextBlock Text="{Binding device.RealTime.RealTimeValue, StringFormat=dd.MM.yyyy HH:mm:ss, TargetNullValue=--}"  HorizontalAlignment="Stretch" Margin="0,2"
                                 Padding="2"
                                 TextAlignment="Left" Background="White"/>
                 </StackPanel>
@@ -134,6 +134,7 @@
             </GroupBox>
         </Border>
         
+        <!--Группа регистров управления-->
         <Border Background="Gainsboro" Margin="10" Grid.Column="2" Grid.RowSpan="4" >
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
@@ -153,7 +154,7 @@
                                         TextAlignment="Right" Background="White" />
                                     <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" 
-                                            CommandParameter="{Binding Address}" Padding="3"
+                                            CommandParameter="{Binding}" Padding="3"
                                             Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}">
                                         <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" Foreground="DarkSlateBlue"/>
                                     </Button>
@@ -162,9 +163,42 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
+                    <!--Запись режима выходного напряжения-->
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding device.ModeNaprOutputWrite.Name}" Width="240"  VerticalAlignment="Top"/>
+
+                        <ComboBox Width="50" SelectedIndex="{Binding device.ModeNaprOutputWrite.Value}" Margin="4,1">
+                            <ComboBoxItem Content="48"/>
+                            <ComboBoxItem Content="96"/>
+                        </ComboBox>
+                        <TextBlock Text="{Binding device.ModeNaprOutputWrite.Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
+                        <Button Width="30" Margin="1" VerticalAlignment="Top" 
+                                            CommandParameter="{Binding device.ModeNaprOutputWrite}" Padding="3"
+                                            Command="{Binding WriteValueCommand}">
+                            <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" Foreground="DarkSlateBlue"/>
+                        </Button>
+                    </StackPanel>
+
+                    <!--Запись реального времени-->
+                    <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="240" 
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Text="{Binding device.RealTimeWrite.RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" Width="292" VerticalAlignment="Top"
+                                        Margin="4,1,24,1" Padding="2"
+                                        TextAlignment="Right" Background="White" InputScope="Date" />
+                        <Button Width="30" Margin="1" VerticalAlignment="Top" 
+                                            CommandParameter="{Binding device.RealTimeWrite}" Padding="3"
+                                            Command="{Binding WriteValueCommand}">
+                            <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" Foreground="DarkSlateBlue"/>
+                        </Button>
+                    </StackPanel>
+
+                    <!--Запись режима стабилизации-->
                     <GroupBox Header="Режим стабилизации" Padding="8" BorderBrush="Black" Margin="0,4">
                         <DockPanel>
-                            <Button DockPanel.Dock="Right" Width="40" Command="{Binding WriteModeCommand}">
+                            <Button DockPanel.Dock="Right" Width="40" Command="{Binding WriteValueCommand}"
+                                    CommandParameter="{Binding device.SetMode}">
                                 <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="16" Foreground="DarkSlateBlue"/>
                             </Button>
                             <StackPanel>

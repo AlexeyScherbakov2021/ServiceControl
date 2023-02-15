@@ -29,9 +29,9 @@ namespace ServiceControl.ViewModel
         //DispatcherTimer timer;
 
         public List<DeviceType> ListDeviceType { get; set; }
-        private DevType deviceType;
-        private int TimeOutCOM;
-        private bool IsSelectTCP;
+        private DevType deviceType { get; set; }
+        private int TimeOutCOM { get; set; }
+        private bool IsSelectTCP { get; set; }
 
 
         #endregion
@@ -78,6 +78,11 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         public MainWindowViewModel()
         {
+            byte[] n = new byte[4] { 0x02, 0x03, 0x11, 0x44 };
+
+            //var s2 = n.Select(it => $"{it:X}").ToList();
+            string s = $"RX: {string.Join(", ", n.Select(it => $"{it:X2}"))}";
+
             LoadFromIni();
             FormatStringConnect();
 
@@ -94,8 +99,8 @@ namespace ServiceControl.ViewModel
         private void FormatStringConnect()
         {
             StringConnect = IsSelectTCP
-                ? $"Тип:{deviceType}  Адрес:{Slave}  IP адрес:{HostName}  Порт:{Port}"
-                : $"Тип:{deviceType}  Адрес:{Slave}  Порт:{ComPort}  Таймаут:{TimeOutCOM}";
+                ? $"Тип устройства: {deviceType}   Адрес: {Slave}    IP адрес: {HostName}   Порт: {Port}"
+                : $"Тип: {deviceType}   Адрес:{Slave}   Порт: {ComPort}   Таймаут: {TimeOutCOM}";
         }
 
         private void LoadFromIni()

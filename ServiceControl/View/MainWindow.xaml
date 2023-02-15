@@ -43,10 +43,10 @@
             <TextBox Text="{Binding Slave}" Width="60"/>-->
 
             </ToolBar>
-            <ToolBar >
+            <StatusBar >
                 <TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                 <Button Content="Подключиться" Command="{Binding ConnectCommand}" Padding="6" Margin="16,0,0,0" BorderBrush="Black" />
-            </ToolBar>
+            </StatusBar>
 
         </StackPanel>
 

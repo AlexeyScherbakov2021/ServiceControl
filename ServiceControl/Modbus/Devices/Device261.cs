@@ -10,30 +10,30 @@ namespace ServiceControl.Modbus.Registers
     {
         public static readonly int CountKIP = 32;
         public List<RegisterStatus> ListStatus { get; set; }
-        public List<RegisterDouble> ListCurrentPol { get; set; }
-        public List<RegisterDouble> ListPolPot { get; set; }
-        public List<RegisterDouble> ListSummPot { get; set; }
-        public List<RegisterDouble> ListResistDK1 { get; set; }
-        public List<RegisterDouble> ListResistDK2 { get; set; }
-        public List<RegisterDouble> ListResistDK3 { get; set; }
-        public List<RegisterDouble> ListProtectCurrent { get; set; }
-        public List<RegisterDouble> ListDeepCorr { get; set; }
-        public List<RegisterDouble> ListSpeedCorr { get; set; }
+        public List<RegisterFloat> ListCurrentPol { get; set; }
+        public List<RegisterFloat> ListPolPot { get; set; }
+        public List<RegisterFloat> ListSummPot { get; set; }
+        public List<RegisterFloat> ListResistDK1 { get; set; }
+        public List<RegisterFloat> ListResistDK2 { get; set; }
+        public List<RegisterFloat> ListResistDK3 { get; set; }
+        public List<RegisterFloat> ListProtectCurrent { get; set; }
+        public List<RegisterFloat> ListDeepCorr { get; set; }
+        public List<RegisterFloat> ListSpeedCorr { get; set; }
 
 
 
         public Device261(MbWork modb, int slave) : base(modb, slave)
         {
             ListStatus = new List<RegisterStatus>();
-            ListCurrentPol = new List<RegisterDouble>();
-            ListPolPot = new List<RegisterDouble>();
-            ListSummPot = new List<RegisterDouble>();
-            ListResistDK1 = new List<RegisterDouble>();
-            ListResistDK2 = new List<RegisterDouble>();
-            ListResistDK3 = new List<RegisterDouble>();
-            ListProtectCurrent = new List<RegisterDouble>();
-            ListDeepCorr = new List<RegisterDouble>();
-            ListSpeedCorr = new List<RegisterDouble>();
+            ListCurrentPol = new List<RegisterFloat>();
+            ListPolPot = new List<RegisterFloat>();
+            ListSummPot = new List<RegisterFloat>();
+            ListResistDK1 = new List<RegisterFloat>();
+            ListResistDK2 = new List<RegisterFloat>();
+            ListResistDK3 = new List<RegisterFloat>();
+            ListProtectCurrent = new List<RegisterFloat>();
+            ListDeepCorr = new List<RegisterFloat>();
+            ListSpeedCorr = new List<RegisterFloat>();
 
             //ListHolding = new List<DoubleRegister>();
 
@@ -42,31 +42,31 @@ namespace ServiceControl.Modbus.Registers
                 RegisterStatus regStat = new RegisterStatus() { Number = i,  Address = (ushort)(i + 3000), CodeFunc = ModbusFunc.Holding, Name = "Состояние НГК-БИ(ИКП)" };
                 ListStatus.Add(regStat);
 
-                RegisterDouble reg = new RegisterDouble() { Number = i, Address = (ushort)(i + 3100), CodeFunc = ModbusFunc.Holding, Name = "Ток поляризации", Scale = 0.001 };
+                RegisterFloat reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3100), CodeFunc = ModbusFunc.Holding, Name = "Ток поляризации", Scale = 0.001f };
                 ListCurrentPol.Add(reg);
 
-                reg = new RegisterDouble() { Number = i, Address = (ushort)(i + 3200), CodeFunc = ModbusFunc.Holding, Name = "Поляризационный потенциал", Scale = 0.001 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3200), CodeFunc = ModbusFunc.Holding, Name = "Поляризационный потенциал", Scale = 0.001f };
                 ListPolPot.Add(reg);
 
-                reg = new RegisterDouble() { Number = i, Address = (ushort)(i + 3300), CodeFunc = ModbusFunc.Holding, Name = "Суммарный потенциал", Scale = 0.01 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3300), CodeFunc = ModbusFunc.Holding, Name = "Суммарный потенциал", Scale = 0.01f };
                 ListSummPot.Add(reg);
 
-                reg = new RegisterDouble() { Number = i, Address = (ushort)(i + 3400), CodeFunc = ModbusFunc.Holding, Name = "Сопротивление 1 платины ДК", Scale = 0.01 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3400), CodeFunc = ModbusFunc.Holding, Name = "Сопротивление 1 платины ДК", Scale = 0.01f };
                 ListResistDK1.Add(reg);
 
-                reg = new RegisterDouble() { Number = i, Address = (ushort)(i + 3500), CodeFunc = ModbusFunc.Holding, Name = "Сопротивление 2 платины ДК", Scale = 0.01 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3500), CodeFunc = ModbusFunc.Holding, Name = "Сопротивление 2 платины ДК", Scale = 0.01f };
                 ListResistDK2.Add(reg);
 
-                reg = new RegisterDouble() { Number = i, Address = (ushort)(i + 3600), CodeFunc = ModbusFunc.Holding, Name = "Сопротивление 3 платины ДК", Scale = 0.01 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3600), CodeFunc = ModbusFunc.Holding, Name = "Сопротивление 3 платины ДК", Scale = 0.01f };
                 ListResistDK3.Add(reg);
 
-                reg = new RegisterDouble() { Number = i, Address = (ushort)(i + 3700), CodeFunc = ModbusFunc.Holding, Name = "Защитный ток", Scale = 0.01 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3700), CodeFunc = ModbusFunc.Holding, Name = "Защитный ток", Scale = 0.01f };
                 ListProtectCurrent.Add(reg);
 
-                reg = new RegisterDouble() { Number = i, Address = (ushort)(i + 3900), CodeFunc = ModbusFunc.Holding, Name = "Глубина коррозии", Scale = 1 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3900), CodeFunc = ModbusFunc.Holding, Name = "Глубина коррозии", Scale = 1 };
                 ListDeepCorr.Add(reg);
 
-                reg = new RegisterDouble() { Number = i, Address = (ushort)(i + 4000), CodeFunc = ModbusFunc.Holding, Name = "Скорость коррозии", Scale = 1 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 4000), CodeFunc = ModbusFunc.Holding, Name = "Скорость коррозии", Scale = 1 };
                 ListSpeedCorr.Add(reg);
 
             }

@@ -21,8 +21,8 @@ namespace ServiceControl.ViewModel
     {
         public class IKP
         {
-            public RegisterDouble SpeedIKP { get; set; }
-            public RegisterDouble DeepIKP { get; set; }
+            public RegisterFloat SpeedIKP { get; set; }
+            public RegisterFloat DeepIKP { get; set; }
         }
 
 
@@ -37,7 +37,7 @@ namespace ServiceControl.ViewModel
                     if (device.OnOffMS.ValueBool != _IsOn)
                     {
                         device.OnOffMS.ValueBool = _IsOn;
-                        OnOnOffCommandExecuted(null);
+                        WriteValueBoolCommand(device.OnOffMS);
                     }
                 }
             }
@@ -101,8 +101,8 @@ namespace ServiceControl.ViewModel
                 device.SpeedCorr1, device.SpeedCorr2, device.SpeedCorr3 };
 
             ListWriteControl = new List<Register>() { device.SetCurrOutput, device.SetSummPotOutput, 
-                device.SetPolPotOutput, device.SetNaprOutput, device.TempCoolerOn, device.TempCoolerOff,
-                device.TimeWork, device.TimeProtect
+                device.SetPolPotOutput, device.SetNaprOutput, device.TempCoolerOnWrite, device.TempCoolerOffWrite,
+                device.TimeWorkWrite, device.TimeProtectWrite
             };
 
             ListCoil = new List<RegisterBool>() { device.OnOffMS };
@@ -129,42 +129,52 @@ namespace ServiceControl.ViewModel
         private bool CanWriteValueCommand(object p) => true;
         private void OnWriteValueCommandExecuted(object p)
         {
-            int address = int.Parse(p.ToString());
+            Register reg = p as Register;
+            device.WriteRegister(reg);
 
-            switch (address)
-            {
-                case 0x81:
-                    device.WriteRegister(device.SetCurrOutput);
-                    break;
-                case 0x82:
-                    device.WriteRegister(device.SetSummPotOutput);
-                    break;
-                case 0x83:
-                    device.WriteRegister(device.SetPolPotOutput);
-                    break;
-                case 0x85:
-                    device.WriteRegister(device.SetNaprOutput);
-                    break;
-            }
+            //return;
+
+            //int address = int.Parse(p.ToString());
+
+            //switch (address)
+            //{
+            //    case 0x81:
+            //        device.WriteRegister(device.SetCurrOutput);
+            //        break;
+            //    case 0x82:
+            //        device.WriteRegister(device.SetSummPotOutput);
+            //        break;
+            //    case 0x83:
+            //        device.WriteRegister(device.SetPolPotOutput);
+            //        break;
+            //    case 0x85:
+            //        device.WriteRegister(device.SetNaprOutput);
+            //        break;
+            //    case 0xCD:
+            //        device.WriteRegister(device.ModeNaprOutput);
+            //        break;
+
+            //}
         }
 
         //--------------------------------------------------------------------------------
         // Команда Установить режим
         //--------------------------------------------------------------------------------
-        public ICommand WriteModeCommand => new LambdaCommand(OnWriteModeCommandExecuted, CanWriteModeCommand);
-        private bool CanWriteModeCommand(object p) => true;
-        private void OnWriteModeCommandExecuted(object p)
-        {
-            device.WriteRegister(device.SetMode);
-        }
+        //public ICommand WriteModeCommand => new LambdaCommand(OnWriteModeCommandExecuted, CanWriteModeCommand);
+        //private bool CanWriteModeCommand(object p) => true;
+        //private void OnWriteModeCommandExecuted(object p)
+        //{
+        //    device.WriteRegister(device.SetMode);
+        //}
 
         //--------------------------------------------------------------------------------
         // Команда Вкл - откл силовых модулей
         //--------------------------------------------------------------------------------
         //public ICommand OnOffCommand => new LambdaCommand(OnOnOffCommandExecuted);
-        private void OnOnOffCommandExecuted(object p)
+        private void WriteValueBoolCommand(object p)
         {
-            device.WriteRegister(device.OnOffMS);
+            RegisterBool reg = p as RegisterBool;
+            device.WriteRegister(reg);
         }
 
         #endregion

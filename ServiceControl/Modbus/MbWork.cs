@@ -25,7 +25,7 @@ namespace ServiceControl.Modbus
         private string Host;
         private int Port;
         private string ComPort;
-        private int TimeOut;
+        private int TimeOut = 1000;
 
         public MbWork(string connect, int val, Protocol proto)
         {
@@ -177,12 +177,27 @@ namespace ServiceControl.Modbus
         //----------------------------------------------------------------------------------------------
         public void WriteRegister(ushort Address, ushort val, byte Slave)
         {
-            master.WriteSingleRegister(Slave, Address, val);
+            try
+            {
+                master.WriteSingleRegister(Slave, Address, val);
+            }
+            catch(Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+            }
         }
 
         public void WriteRegister(ushort Address, ushort[] val, byte Slave)
         {
-            master.WriteMultipleRegisters(Slave, Address, val);
+            try
+            {
+                master.WriteMultipleRegisters(Slave, Address, val);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
         }
 
         //----------------------------------------------------------------------------------------------

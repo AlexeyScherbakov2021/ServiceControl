@@ -4,6 +4,7 @@ using ServiceControl.Modbus.Devices;
 using ServiceControl.View;
 using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
@@ -50,11 +51,12 @@ namespace ServiceControl.ViewModel
                 new DeviceType() { Name = "ДЕШК.301411.261 (KS261)", deviceType = DevType.KS261},
         };
 
-        public List<string> ListCOM { get; set; } = new List<string>()
-        {
-            "COM1", "COM2", "COM3", "COM4"
-        };
-        public string SelectedCOM { get; set; }
+        public List<string> ListCOM { get; set; } // = new List<string>()
+        //{
+        //    "COM1", "COM2", "COM3", "COM4"
+        //};
+        private string _SelectedCOM;
+        public string SelectedCOM { get => _SelectedCOM; set { Set(ref _SelectedCOM, value); } }
 
         #endregion
 
@@ -65,6 +67,8 @@ namespace ServiceControl.ViewModel
         public SettingConnectViewModel(SettingConnect win)
         {
             setWindow = win;
+            ListCOM = SerialPort.GetPortNames().ToList();
+
         }
 
         #region Команды =================================

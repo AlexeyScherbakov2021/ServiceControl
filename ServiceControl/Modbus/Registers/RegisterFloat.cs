@@ -7,14 +7,14 @@ using System.Windows.Shapes;
 
 namespace ServiceControl.Modbus.Registers
 {
-    internal class RegisterDouble : Register
+    internal class RegisterFloat : Register
     {
-        public double Scale;
-        public double MinValue = double.MinValue;
-        public double MaxValue = double.MaxValue;
+        public float Scale = 1;
+        public float MinValue = float.MinValue;
+        public float MaxValue = float.MaxValue;
 
-        private double? _ValueDouble;
-        public double? Value { get => _ValueDouble; set { Set(ref _ValueDouble, value); } }
+        private float? _ValueDouble;
+        public float? Value { get => _ValueDouble; set { Set(ref _ValueDouble, value); } }
 
         public override void SetResultValues(ushort[] val)
         {

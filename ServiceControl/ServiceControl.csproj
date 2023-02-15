@@ -135,7 +135,7 @@
     <Compile Include="Modbus\Devices\Device.cs" />
     <Compile Include="Modbus\Devices\Device216.cs" />
     <Compile Include="Modbus\Devices\Device261.cs" />
-    <Compile Include="Modbus\Registers\RegisterDouble.cs" />
+    <Compile Include="Modbus\Registers\RegisterFloat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

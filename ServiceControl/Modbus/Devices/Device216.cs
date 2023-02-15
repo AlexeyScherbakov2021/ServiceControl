@@ -14,21 +14,23 @@ namespace ServiceControl.Modbus.Registers
         public const int CountMS = 12;
 
 
-        public RegisterDouble NaprSeti1;
-        public RegisterDouble CountEE1;
-        public RegisterDouble NaprSeti2;
-        public RegisterDouble CountEE2;
+        public RegisterFloat NaprSeti1;
+        public RegisterFloat CountEE1;
+        public RegisterFloat NaprSeti2;
+        public RegisterFloat CountEE2;
         public RegisterInt Temper;
         public RegisterInt TimeWork;
         public RegisterInt TimeProtect;
-        public RegisterDouble CurrOutput;
-        public RegisterDouble NaprOutput;
-        public RegisterDouble ProtectPotenSumm;
-        public RegisterDouble ProtectPotenPol;
+        public RegisterInt TimeWorkWrite;
+        public RegisterInt TimeProtectWrite;
+        public RegisterFloat CurrOutput;
+        public RegisterFloat NaprOutput;
+        public RegisterFloat ProtectPotenSumm;
+        public RegisterFloat ProtectPotenPol;
 
         public RegisterMS[] MS;
-        public RegisterDouble[] SpeedDK;
-        public RegisterDouble[] DeepDK;
+        public RegisterFloat[] SpeedDK;
+        public RegisterFloat[] DeepDK;
 
 
         public RegisterBool IllegalAccess;
@@ -40,30 +42,32 @@ namespace ServiceControl.Modbus.Registers
         public RegisterBool SpeedCorr2;
         public RegisterBool SpeedCorr3;
         public RegisterBool OnOffMS { get; set; }
+        public RegisterInt TempCoolerOnWrite;
         public RegisterInt TempCoolerOn;
+        public RegisterInt TempCoolerOffWrite;
         public RegisterInt TempCoolerOff;
-        //public RegisterInt Year;
-        //public RegisterInt Number;
         public RegisterNapr4896 ModeNaprOutput { get; set; }
+        public RegisterNapr4896 ModeNaprOutputWrite { get; set; }
         public RegisterRT RealTime { get; set; }
-        //public RegisterInt ProtectTime;
+        public RegisterRT RealTimeWrite { get; set; }
 
         public RegisterStab Stabil { get; set; }
-        public RegisterDouble SetCurrOutput;
-        public RegisterDouble SetSummPotOutput;
-        public RegisterDouble SetPolPotOutput;
+        public RegisterFloat SetCurrOutput;
+        public RegisterFloat SetSummPotOutput;
+        public RegisterFloat SetPolPotOutput;
         public RegisterStab SetMode { get; set; }
-        public RegisterDouble SetNaprOutput;
+        public RegisterFloat SetNaprOutput;
         public RegisterInt ResistPlast1;
         public RegisterInt ResistPlast2;
         public RegisterInt ResistPlast3;
-        public RegisterDouble CurrPolyar;
+        public RegisterFloat CurrPolyar;
 
         public RegisterInfo InfoReg { get; set; }
 
         List<Register> ListInput;
         List<RegisterBool> ListStatus;
         List<Register> ListWriteControl;
+        List<Register> ListWriteControl2;
         //List<RegisterBool> ListCoil;
         List<Register> ListServices;
         //List<Register> ListServices2;
@@ -78,24 +82,24 @@ namespace ServiceControl.Modbus.Registers
             //--------------------------------------------------------------------------------------------------------------------------------------
             ListInput = new List<Register>();
 
-            NaprSeti1 = new RegisterDouble() { Address = 0x01, CodeFunc = ModbusFunc.InputReg, Size = 1, 
+            NaprSeti1 = new RegisterFloat() { Address = 0x01, CodeFunc = ModbusFunc.InputReg, Size = 1, 
                 Name = "Напряжение питающей сети 1 (основное)", Measure = "В", Description = "Uc1", 
-                Scale = 0.1, MinValue = 0, MaxValue = 300 };
+                Scale = 0.1f, MinValue = 0, MaxValue = 300 };
             ListInput.Add(NaprSeti1);
 
-            CountEE1 = new RegisterDouble() { Address = 0x02, CodeFunc = ModbusFunc.InputReg, Size = 2, 
+            CountEE1 = new RegisterFloat() { Address = 0x02, CodeFunc = ModbusFunc.InputReg, Size = 2, 
                 Name = "Значение счетчика эл.энергии сети 1 (осн.)", Measure = "кВт*ч", Description = "Сч.ЭЭ.1", 
-                Scale = 0.1, MinValue = 0, MaxValue = 999999.9 };
+                Scale = 0.1f, MinValue = 0, MaxValue = 999999.9f };
             ListInput.Add(CountEE1);
 
-            NaprSeti2 = new RegisterDouble() { Address = 0x04, CodeFunc = ModbusFunc.InputReg, Size = 1, 
+            NaprSeti2 = new RegisterFloat() { Address = 0x04, CodeFunc = ModbusFunc.InputReg, Size = 1, 
                 Name = "Напряжение питающей сети 2 (резервное)", Measure = "В", Description = "Uc2", 
-                Scale = 0.1, MinValue = 0, MaxValue = 300 };
+                Scale = 0.1f, MinValue = 0, MaxValue = 300 };
             ListInput.Add(NaprSeti2);
 
-            CountEE2 = new RegisterDouble() { Address = 0x05, CodeFunc = ModbusFunc.InputReg, Size = 2, 
+            CountEE2 = new RegisterFloat() { Address = 0x05, CodeFunc = ModbusFunc.InputReg, Size = 2, 
                 Name = "Значение счетчика эл.энергии сети 1 (рез.)", Measure = "кВт*ч", Description = "Сч.ЭЭ.2", 
-                Scale = 0.1, MinValue = 0, MaxValue = 999999.9 };
+                Scale = 0.1f, MinValue = 0, MaxValue = 999999.9f };
             ListInput.Add(CountEE2);
 
             Temper = new RegisterInt() { Address = 0x07, CodeFunc = ModbusFunc.InputReg, Size = 1, 
@@ -113,24 +117,24 @@ namespace ServiceControl.Modbus.Registers
                 MinValue = 0, MaxValue = 999999 };
             ListInput.Add(TimeProtect);
 
-            CurrOutput = new RegisterDouble() { Address = 0x0C, CodeFunc = ModbusFunc.InputReg, Size = 1, 
+            CurrOutput = new RegisterFloat() { Address = 0x0C, CodeFunc = ModbusFunc.InputReg, Size = 1, 
                 Name = "Выходной ток", Measure = "А", Description = "Iвых", 
-                Scale = 0.01, MinValue = 0, MaxValue = 150 };
+                Scale = 0.01f, MinValue = 0, MaxValue = 150 };
             ListInput.Add(CurrOutput);
 
-            NaprOutput = new RegisterDouble() { Address = 0x0D, CodeFunc = ModbusFunc.InputReg, Size = 1, 
+            NaprOutput = new RegisterFloat() { Address = 0x0D, CodeFunc = ModbusFunc.InputReg, Size = 1, 
                 Name = "Выходное напряжение", Measure = "В", Description = "Uвых", 
-                Scale = 0.01, MinValue = 0, MaxValue = 100 };
+                Scale = 0.01f, MinValue = 0, MaxValue = 100 };
             ListInput.Add(NaprOutput);
 
-            ProtectPotenSumm = new RegisterDouble() { Address = 0x0E, CodeFunc = ModbusFunc.InputReg, Size = 1, 
+            ProtectPotenSumm = new RegisterFloat() { Address = 0x0E, CodeFunc = ModbusFunc.InputReg, Size = 1, 
                 Name = "Защитный потенциал суммарный", Measure = "В", Description = "Uсп", 
-                Scale = 0.01, MinValue = -5, MaxValue = 5 };
+                Scale = 0.01f, MinValue = -5, MaxValue = 5 };
             ListInput.Add(ProtectPotenSumm);
 
-            ProtectPotenPol = new RegisterDouble() { Address = 0x0F, CodeFunc = ModbusFunc.InputReg, Size = 1, 
+            ProtectPotenPol = new RegisterFloat() { Address = 0x0F, CodeFunc = ModbusFunc.InputReg, Size = 1, 
                 Name = "Защитный потенциал поляризационный", Measure = "В", Description = "Uпп", 
-                Scale = 0.01, MinValue = -5, MaxValue = 5 };
+                Scale = 0.01f, MinValue = -5, MaxValue = 5 };
             ListInput.Add(ProtectPotenPol);
 
             Stabil = new RegisterStab() { Address = 0x10, CodeFunc = ModbusFunc.InputReg, 
@@ -145,18 +149,18 @@ namespace ServiceControl.Modbus.Registers
                 ListInput.Add(MS[i]);
             }
 
-            SpeedDK = new RegisterDouble[CountDK];
-            DeepDK = new RegisterDouble[CountDK];
+            SpeedDK = new RegisterFloat[CountDK];
+            DeepDK = new RegisterFloat[CountDK];
             for (int i = 0; i < CountDK; i++)
             {
-                SpeedDK[i] = new RegisterDouble() { Address = (ushort)(0x1D + i * 2), CodeFunc = ModbusFunc.InputReg, 
+                SpeedDK[i] = new RegisterFloat() { Address = (ushort)(0x1D + i * 2), CodeFunc = ModbusFunc.InputReg, 
                     Name = $"Скорость коррозии ИКП{i + 1}", Measure = "мм в год", Description = $"СК_ИКП{i + 1}", 
-                    Scale = 0.001, MinValue = 0, MaxValue = 65.535, Number = i + 1 };
+                    Scale = 0.001f, MinValue = 0, MaxValue = 65.535f, Number = i + 1 };
                 ListInput.Add(SpeedDK[i]);
 
-                DeepDK[i] = new RegisterDouble() { Address = (ushort)(0x1E + i * 2), CodeFunc = ModbusFunc.InputReg, 
+                DeepDK[i] = new RegisterFloat() { Address = (ushort)(0x1E + i * 2), CodeFunc = ModbusFunc.InputReg, 
                     Name = $"Глубина коррозии ИКП{i + 1}", Measure = "мм", Description = $"ГК_ИКП{i + 1}", 
-                    Scale = 0.001, MinValue = 0, MaxValue = 65.535, Number = i + 1 };
+                    Scale = 0.001f, MinValue = 0, MaxValue = 65.535f, Number = i + 1 };
                 ListInput.Add(DeepDK[i]);
 
             }
@@ -204,29 +208,110 @@ namespace ServiceControl.Modbus.Registers
             //--------------------------------------------------------------------------------------------------------------------------------------
             ListWriteControl = new List<Register>();
 
-            SetCurrOutput = new RegisterDouble() { Address = 0x81, CodeFunc = ModbusFunc.Holding, Size = 1, 
+            SetCurrOutput = new RegisterFloat() { Address = 0x81, CodeFunc = ModbusFunc.Holding, Size = 1, 
                 Name = "Задание выходного тока", Measure = "А", Description = "Iуст", 
-                Scale = 0.01, MinValue = 0, MaxValue = 150 };
+                Scale = 0.01f, MinValue = 0, MaxValue = 150 };
             ListWriteControl.Add(SetCurrOutput);
 
-            SetSummPotOutput = new RegisterDouble() { Address = 0x82, CodeFunc = ModbusFunc.Holding, Size = 1, 
+            SetSummPotOutput = new RegisterFloat() { Address = 0x82, CodeFunc = ModbusFunc.Holding, Size = 1, 
                 Name = "Задание суммарного потенциала", Measure = "В", Description = "Uпотс", 
-                Scale = 0.01, MinValue = -5, MaxValue = 0 };
+                Scale = 0.01f, MinValue = -5, MaxValue = 0 };
             ListWriteControl.Add(SetSummPotOutput);
 
-            SetPolPotOutput = new RegisterDouble() { Address = 0x83, CodeFunc = ModbusFunc.Holding, Size = 1, 
+            SetPolPotOutput = new RegisterFloat() { Address = 0x83, CodeFunc = ModbusFunc.Holding, Size = 1, 
                 Name = "Задание поляризационного потенциала", Measure = "В", Description = "Uпотп", 
-                Scale = 0.01, MinValue = -5, MaxValue = 0 };
+                Scale = 0.01f, MinValue = -5, MaxValue = 0 };
             ListWriteControl.Add(SetPolPotOutput);
 
             SetMode = new RegisterStab() { Address = 0x84, CodeFunc = ModbusFunc.Holding, 
                 Name = "Управление режимами стабилизации станции", Description = "Упр.", MinValue = 0, MaxValue = 3 };
             ListWriteControl.Add(SetMode);
 
-            SetNaprOutput = new RegisterDouble() { Address = 0x85, CodeFunc = ModbusFunc.Holding, Size = 1, 
+            SetNaprOutput = new RegisterFloat() { Address = 0x85, CodeFunc = ModbusFunc.Holding, Size = 1, 
                 Name = "Задание выходного напряжения", Measure = "В", Description = "Uуст", 
-                Scale = 0.01, MinValue = 0, MaxValue = 100 };
+                Scale = 0.01f, MinValue = 0, MaxValue = 100 };
             ListWriteControl.Add(SetNaprOutput);
+
+
+            ListWriteControl2 = new List<Register>();
+            // Отдельные регистры для записи
+            RealTimeWrite = new RegisterRT()
+            {
+                Address = 0xC1,
+                CodeFunc = ModbusFunc.Holding,
+                Name = "Реальное время",
+                Measure = "сек",
+                Size = 4,
+                Description = "РВ",
+                MinValue = 0,
+                MaxValue = int.MaxValue
+            };
+            ListWriteControl2.Add(RealTimeWrite);
+
+
+            TempCoolerOnWrite = new RegisterInt()
+            {
+                Address = 0xC5,
+                CodeFunc = ModbusFunc.Holding,
+                Name = "Температура включения вентилятора",
+                Measure = "°С",
+                Description = "Твкл.вент.",
+                MinValue = -32769,
+                MaxValue = 32678
+            };
+            ListWriteControl2.Add(TempCoolerOnWrite);
+
+            TempCoolerOffWrite = new RegisterInt()
+            {
+                Address = 0xC6,
+                CodeFunc = ModbusFunc.Holding,
+                Name = "Температура выключения вентилятора",
+                Measure = "°С",
+                Description = "Твыкл.вент.",
+                MinValue = -32769,
+                MaxValue = 32768
+            };
+            ListWriteControl2.Add(TempCoolerOffWrite);
+
+
+
+            TimeWorkWrite = new RegisterInt()
+            {
+                Address = 0xC7,
+                CodeFunc = ModbusFunc.InputReg,
+                Size = 2,
+                Name = "Время наработки",
+                Measure = "ч",
+                Description = "СВН",
+                MinValue = 0,
+                MaxValue = 999999
+            };
+
+
+            TimeProtectWrite = new RegisterInt()
+            {
+                Address = 0xC9,
+                CodeFunc = ModbusFunc.InputReg,
+                Size = 2,
+                Name = "Время защиты сооружения",
+                Measure = "ч",
+                Description = "СВЗ",
+                MinValue = 0,
+                MaxValue = 999999
+            };
+
+
+            ModeNaprOutputWrite = new RegisterNapr4896()
+            {
+                Address = 0xCD,
+                CodeFunc = ModbusFunc.Holding,
+                Name = "Режим выходного напряжения",
+                Description = "Uрежим",
+                Measure = "В",
+                MinValue = 0,
+                MaxValue = 1
+            };
+
 
             // список управляющих статусов
             //--------------------------------------------------------------------------------------------------------------------------------------
@@ -242,8 +327,17 @@ namespace ServiceControl.Modbus.Registers
             //--------------------------------------------------------------------------------------------------------------------------------------
             ListServices = new List<Register>();
 
-            RealTime = new RegisterRT() { Address = 0xC1, CodeFunc = ModbusFunc.Holding, 
-                Name = "Реальное время", Measure = "сек", Size = 4, Description = "РВ", MinValue = 0, MaxValue = int.MaxValue };
+            RealTime = new RegisterRT()
+            {
+                Address = 0xC1,
+                CodeFunc = ModbusFunc.Holding,
+                Name = "Реальное время",
+                Measure = "сек",
+                Size = 4,
+                Description = "РВ",
+                MinValue = 0,
+                MaxValue = int.MaxValue
+            };
             ListServices.Add(RealTime);
 
             TempCoolerOn = new RegisterInt() { Address = 0xC5, CodeFunc = ModbusFunc.Holding, 
@@ -278,6 +372,19 @@ namespace ServiceControl.Modbus.Registers
 
 
             ListDop = new List<Register>();
+            //RealTime = new RegisterRT()
+            //{
+            //    Address = 0x41,
+            //    CodeFunc = ModbusFunc.InputReg,
+            //    Name = "Реальное время",
+            //    Measure = "сек",
+            //    Size = 4,
+            //    Description = "РВ",
+            //    MinValue = 0,
+            //    MaxValue = int.MaxValue
+            //};
+            //ListDop.Add(RealTime);
+
             ResistPlast1 = new RegisterInt() { Address = 0x45, CodeFunc = ModbusFunc.InputReg, 
                 Name = "Сопротивление пластины 1", Measure = "Ом", Description = "Rn1", MinValue = 0, MaxValue = 404 };
             ListDop.Add(ResistPlast1);
@@ -287,7 +394,7 @@ namespace ServiceControl.Modbus.Registers
             ResistPlast3 = new RegisterInt() { Address = 0x47, CodeFunc = ModbusFunc.InputReg, 
                 Name = "Сопротивление пластины 3", Measure = "Ом", Description = "Rn3", MinValue = 0, MaxValue = 404 };
             ListDop.Add(ResistPlast3);
-            CurrPolyar = new RegisterDouble() { Address = 0x48, CodeFunc = ModbusFunc.InputReg, Scale = 0.1,
+            CurrPolyar = new RegisterFloat() { Address = 0x48, CodeFunc = ModbusFunc.InputReg, Scale = 0.1f,
                 Name = "Ток поляризации", Measure = "мА", Description = "Iпол", MinValue = -10, MaxValue = 10 };
             ListDop.Add(CurrPolyar);
 
@@ -305,16 +412,16 @@ namespace ServiceControl.Modbus.Registers
         {
             ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
+            ReadRegisters(ListWriteControl2);
             ReadRegister(OnOffMS);
             ReadRegister(SetMode);
+            ReadRegister(ModeNaprOutputWrite);
 
             ReadRegisters(ListInput);
-
             //MS[1].Value = (int)StatusMS.Off;
             //MS[3].Value = (int)StatusMS.Off;
             //MS[5].Value = (int)StatusMS.Avar;
             //MS[6].Value = (int)StatusMS.Absent;
-
             ReadRegisters(ListStatus);
             ReadRegisters(ListServices);
             ReadRegister(ModeNaprOutput);
@@ -338,10 +445,10 @@ namespace ServiceControl.Modbus.Registers
             //MS[5].Value = (int)StatusMS.Avar;
             //MS[6].Value = (int)StatusMS.Absent;
 
-            //SpeedDK[0].ValueDouble = 2.334;
-            //DeepDK[0].ValueDouble = 4.674;
-            //SpeedDK[1].ValueDouble = 16.334;
-            //DeepDK[1].ValueDouble = 65.500;
+            //SpeedDK[0].Value = 2.334f;
+            //DeepDK[0].Value = 4.674f;
+            //SpeedDK[1].Value = 16.334f;
+            //DeepDK[1].Value = 65.500f;
 
             ReadRegisters(ListStatus);
             ReadRegister(OnOffMS);
@@ -360,6 +467,7 @@ namespace ServiceControl.Modbus.Registers
             CheckReg(ListInput);
             CheckReg(ListStatus);
             CheckReg(ListWriteControl);
+            CheckReg(ListWriteControl2);
             CheckReg(ListServices);
             //CheckReg(ListCoil);
         }

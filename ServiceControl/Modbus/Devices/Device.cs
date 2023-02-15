@@ -39,7 +39,7 @@ namespace ServiceControl.Modbus.Registers
             //StartRequestValue();
             await Task.Run(() => StartRequestValue());
 
-            EndStartRead.Invoke(null, null);
+            EndStartRead?.Invoke(null, null);
 
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += Timer_Tick;
