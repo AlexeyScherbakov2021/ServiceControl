@@ -23,6 +23,7 @@ namespace ServiceControl.Modbus.Registers
 
         public void SetResultValues(bool[] val)
         {
+            if (val == null) return;
             ValueBool = val[0] != false;
             ValueString = ValueBool ? ResultText1 : ResultText0;
             IsAlarm = ValueBool != IsCorrectValue;

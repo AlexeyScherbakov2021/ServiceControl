@@ -49,7 +49,7 @@ namespace ServiceControl.Converters
                     case StatusMS.Absent:
                         img.Icon = EFontAwesomeIcon.Solid_Times;
                         img.ToolTip = "Отсутствует";
-                        img.Foreground = Brushes.Coral;
+                        img.Foreground = Brushes.LightSalmon;
                         //Source = new BitmapImage(new Uri("/ServiceControl;component/Resources/Absent.png", UriKind.Relative));
                         break;
 

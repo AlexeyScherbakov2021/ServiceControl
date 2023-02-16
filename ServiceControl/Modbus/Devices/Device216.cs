@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace ServiceControl.Modbus.Registers
@@ -12,7 +13,6 @@ namespace ServiceControl.Modbus.Registers
     {
         public const int CountDK = 8;
         public const int CountMS = 12;
-
 
         public RegisterFloat NaprSeti1;
         public RegisterFloat CountEE1;
@@ -34,7 +34,7 @@ namespace ServiceControl.Modbus.Registers
 
 
         public RegisterBool IllegalAccess;
-        public RegisterBool ControlMode;
+        public RegisterBool DistanceMode { get; set; }
         public RegisterBool Fault;
         public RegisterBool BreakCirc;
         public RegisterBool OnMS;
@@ -42,6 +42,7 @@ namespace ServiceControl.Modbus.Registers
         public RegisterBool SpeedCorr2;
         public RegisterBool SpeedCorr3;
         public RegisterBool OnOffMS { get; set; }
+        public RegisterBool OnOffMSWrite { get; set; }
         public RegisterInt TempCoolerOnWrite;
         public RegisterInt TempCoolerOn;
         public RegisterInt TempCoolerOffWrite;
@@ -154,7 +155,7 @@ namespace ServiceControl.Modbus.Registers
             for (int i = 0; i < CountDK; i++)
             {
                 SpeedDK[i] = new RegisterFloat() { Address = (ushort)(0x1D + i * 2), CodeFunc = ModbusFunc.InputReg, 
-                    Name = $"Скорость коррозии ИКП{i + 1}", Measure = "мм в год", Description = $"СК_ИКП{i + 1}", 
+                    Name = $"Скорость коррозии ИКП{i + 1}", Measure = "мм/год", Description = $"СК_ИКП{i + 1}", 
                     Scale = 0.001f, MinValue = 0, MaxValue = 65.535f, Number = i + 1 };
                 ListInput.Add(SpeedDK[i]);
 
@@ -170,23 +171,27 @@ namespace ServiceControl.Modbus.Registers
             ListStatus = new List<RegisterBool>();
 
             IllegalAccess = new RegisterBool() { Address = 0x01, CodeFunc = ModbusFunc.Discrete, Size = 1, 
-                Name = "Несанкционированный доступ в шкаф", Description = "ТС1 (Дверь)", 
+                Name = "Дверь шкафа", Description = "ТС1 (Дверь)", 
                 ResultText0 = "дверь закрыта", ResultText1 = "дверь открыта", IsCorrectValue = false };
             ListStatus.Add(IllegalAccess);
-            ControlMode = new RegisterBool() { Address = 0x02, CodeFunc = ModbusFunc.Discrete, Size = 1, 
+            DistanceMode = new RegisterBool() { Address = 0x02, CodeFunc = ModbusFunc.Discrete, Size = 1, 
                 Name = "Режим упр. станцией", Description = "ТС2 (ДУ)", 
                 ResultText0 = "местный", ResultText1 = "дистанционный", IsCorrectValue = true };
-            ListStatus.Add(ControlMode);
+            ListStatus.Add(DistanceMode);
             Fault = new RegisterBool() { Address = 0x03, CodeFunc = ModbusFunc.Discrete, Size = 1, 
-                Name = "Неисправность станции", Description = "ТС3 (Неисправность СКЗ)", 
-                ResultText0 = "исправна (работа)", ResultText1 = "неисправна (авария)", IsCorrectValue = false};
+                Name = "Неисправность станции", Description = "ТС3 (Неисправность СКЗ)",
+                ResultText0 = "норма",
+                ResultText1 = "авария",
+                IsCorrectValue = false};
             ListStatus.Add(Fault);
             BreakCirc = new RegisterBool() { Address = 0x04, CodeFunc = ModbusFunc.Discrete, Size = 1, 
-                Name = "Обрыв изм. цепей", Description = "ТС4 (Обрыв ЭС/Т)", 
-                ResultText0 = "норма (нет обрыва)", ResultText1 = "неисправна (авария)", IsCorrectValue = false };
+                Name = "Обрыв изм. цепей", Description = "ТС4 (Обрыв ЭС/Т)",
+                ResultText0 = "норма",
+                ResultText1 = "авария",
+                IsCorrectValue = false };
             ListStatus.Add(BreakCirc);
             OnMS = new RegisterBool() { Address = 0x05, CodeFunc = ModbusFunc.Discrete, Size = 1, 
-                Name = "Включение группы осн. или рез. МС (СКЗ)", Description = "ТС5 (основные-резервные)", 
+                Name = "Силовые модули", Description = "ТС5 (основные-резервные)", 
                 ResultText0 = "основные", ResultText1 = "резервные", IsCorrectValue = false };
             ListStatus.Add(OnMS);
             SpeedCorr1 = new RegisterBool() { Address = 0x06, CodeFunc = ModbusFunc.Discrete, Size = 1, 
@@ -239,7 +244,7 @@ namespace ServiceControl.Modbus.Registers
             {
                 Address = 0xC1,
                 CodeFunc = ModbusFunc.Holding,
-                Name = "Реальное время",
+                Name = "Время устройства",
                 Measure = "сек",
                 Size = 4,
                 Description = "РВ",
@@ -305,7 +310,7 @@ namespace ServiceControl.Modbus.Registers
             {
                 Address = 0xCD,
                 CodeFunc = ModbusFunc.Holding,
-                Name = "Режим выходного напряжения",
+                Name = "Режим работы СКЗ",
                 Description = "Uрежим",
                 Measure = "В",
                 MinValue = 0,
@@ -317,6 +322,10 @@ namespace ServiceControl.Modbus.Registers
             //--------------------------------------------------------------------------------------------------------------------------------------
             //ListCoil = new List<RegisterBool>();
             OnOffMS = new RegisterBool() { Address = 0x81, CodeFunc = ModbusFunc.CoilRead, Size = 1, 
+                Name = "Дистанц.откл.вкл.модулей силовых", Description = "ТУ1 (ДО СМ)", 
+                ResultText0 = "выключен", ResultText1 = "включен" };
+            
+            OnOffMSWrite = new RegisterBool() { Address = 0x81, CodeFunc = ModbusFunc.CoilRead, Size = 1, 
                 Name = "Дистанц.откл.вкл.модулей силовых", Description = "ТУ1 (ДО СМ)", 
                 ResultText0 = "выключен", ResultText1 = "включен" };
             //ListCoil.Add(OnMS);
@@ -331,7 +340,7 @@ namespace ServiceControl.Modbus.Registers
             {
                 Address = 0xC1,
                 CodeFunc = ModbusFunc.Holding,
-                Name = "Реальное время",
+                Name = "Время устройства",
                 Measure = "сек",
                 Size = 4,
                 Description = "РВ",
@@ -367,7 +376,7 @@ namespace ServiceControl.Modbus.Registers
             //ListServices2.Add(Number);
 
             ModeNaprOutput = new RegisterNapr4896() { Address = 0xCD, CodeFunc = ModbusFunc.Holding, 
-                Name = "Режим выходного напряжения", Description = "Uрежим", Measure = "В", MinValue = 0, MaxValue = 1 };
+                Name = "Режим работы СКЗ", Description = "Uрежим", Measure = "В", MinValue = 0, MaxValue = 1 };
             //ListServices2.Add(ModeNaprOutput);
 
 
@@ -414,6 +423,7 @@ namespace ServiceControl.Modbus.Registers
             ReadRegisters(ListWriteControl);
             ReadRegisters(ListWriteControl2);
             ReadRegister(OnOffMS);
+            ReadRegister(OnOffMSWrite);
             ReadRegister(SetMode);
             ReadRegister(ModeNaprOutputWrite);
 
@@ -455,6 +465,11 @@ namespace ServiceControl.Modbus.Registers
             ReadRegisters(ListServices);
             ReadRegisters(ListDop);
             ReadRegister(ModeNaprOutput);
+
+            //IsAvarMode = Stabil.Value != SetMode.Value;
+            //IsAvarModeVisible = Stabil.Value == SetMode.Value
+            //? Visibility.Hidden
+            //: Visibility.Visible;
 
             return Task.CompletedTask;
         }

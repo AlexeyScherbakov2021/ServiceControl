@@ -78,10 +78,8 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         public MainWindowViewModel()
         {
-            byte[] n = new byte[4] { 0x02, 0x03, 0x11, 0x44 };
-
-            //var s2 = n.Select(it => $"{it:X}").ToList();
-            string s = $"RX: {string.Join(", ", n.Select(it => $"{it:X2}"))}";
+            //byte[] n = new byte[4] { 0x02, 0x03, 0x11, 0x44 };
+            //string s = $"RX: {string.Join(", ", n.Select(it => $"{it:X2}"))}";
 
             LoadFromIni();
             FormatStringConnect();

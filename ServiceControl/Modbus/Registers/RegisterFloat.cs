@@ -32,6 +32,7 @@ namespace ServiceControl.Modbus.Registers
                 res |= (int)(short)val[i];
             }
             Value = (int)res * Scale;
+            if (Value > MaxValue || Value < MinValue) Value = null;
         }
 
         public override ushort[] SetOutput()

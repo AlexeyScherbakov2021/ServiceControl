@@ -8,14 +8,34 @@
              xmlns:local="clr-namespace:ServiceControl.View"
              xmlns:fa="http://schemas.fontawesome.com/icons/"
              mc:Ignorable="d" 
-             d:Width="1012" d:Height="595">
+             d:Width="1000" d:Height="595">
     <UserControl.DataContext>
         <vm:KS216_UCViewModel/>
     </UserControl.DataContext>
 
     <UserControl.Resources>
         <conv:StatusMSConverter x:Key="StatusMSConverter"/>
+        <conv:StatusDKConverter x:Key="StatusDKConverter"/>
+
+        <Style TargetType="DataGridCell" x:Key="CellRight">
+            <Style.Setters>
+                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                <Setter Property="Background" Value="White"/>
+            </Style.Setters>
+        </Style>
+
+        <Style TargetType="fa:ImageAwesome">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.device.ControlMode.ValueBool, ElementName=mainControl}" Value="false">
+                    <Setter Property="Foreground" Value="DarkGray"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DataContext.device.ControlMode.ValueBool, ElementName=mainControl}" Value="true">
+                    <Setter Property="Foreground" Value="DarkSlateBlue"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         
+
         <DataTemplate x:Key="ItemsControlItemTemplate1">
             <Grid x:Name="grid">
                 <Rectangle x:Name="rect" Fill="DarkGray" Height="50" Margin="0" Stroke="Black" Width="30"/>
@@ -49,19 +69,18 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="10*"/>
             <RowDefinition Height="15*"/>
+            <RowDefinition Height="18*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="12*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="84*"/>
-            <ColumnDefinition Width="94*"/>
-            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="40*"/>
         </Grid.ColumnDefinitions>
 
-        <Border Background="Gainsboro" Margin="10" Grid.Row="0" Grid.RowSpan="5" >
+        <!--Входные параметры-->
+        <Border Background="Gainsboro" Margin="10" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="1" >
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -70,13 +89,13 @@
                     <TextBlock Text="Выходные параметры" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel Margin="8" >
-                    <TextBlock Text="{Binding DeviceInfo}" Margin="0,6" />
+                    <TextBlock Text="{Binding DeviceInfo}" Margin="0,6" FontSize="14" />
                     
                     <ItemsControl ItemsSource="{Binding ListInput}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"  VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="246"  VerticalAlignment="Top"/>
                                     <TextBlock Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" 
                                                VerticalAlignment="Top" Margin="1" Padding="2"
                                         TextAlignment="Right" Background="White"/>
@@ -85,27 +104,12 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding device.ModeNaprOutput.Name}"  Width="200"  HorizontalAlignment="Left"/>
-                        <TextBlock Text="{Binding device.ModeNaprOutput.ValueString}" Width="74" Background="White"
-                                   Padding="2"  Margin="1"  TextAlignment="Right" />
-                        <TextBlock Text="{Binding device.ModeNaprOutput.Measure}" VerticalAlignment="Top" Margin="2,3,0,0"/>
-                    </StackPanel>
-
-                    <TextBlock Text="{Binding device.Stabil.Name}" TextWrapping="Wrap" Width="200" HorizontalAlignment="Left" />
-                    <TextBlock Text="{Binding device.Stabil.ValueString}"  HorizontalAlignment="Stretch" Margin="0,2"
-                                Padding="2"
-                                TextAlignment="Left" Background="White"/>
-                    <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="200" HorizontalAlignment="Left" />
-                    <TextBlock Text="{Binding device.RealTime.RealTimeValue, StringFormat=dd.MM.yyyy HH:mm:ss, TargetNullValue=--}"  HorizontalAlignment="Stretch" Margin="0,2"
-                                Padding="2"
-                                TextAlignment="Left" Background="White"/>
                 </StackPanel>
             </GroupBox>
         </Border>
 
-        <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.RowSpan="2">
+        <!--Сигнализация-->
+        <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Visibility="Visible">
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -117,7 +121,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="190"  VerticalAlignment="Top"/>
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="140"  VerticalAlignment="Top"/>
                                 <Border x:Name="border" Background="#c0FFc0" Margin="1" CornerRadius="8" BorderBrush="Black" BorderThickness="1">
                                     <TextBlock Text="{Binding ValueString}" Width="140" VerticalAlignment="Center"
                                         Padding="2" TextAlignment="Center"/>
@@ -133,30 +137,36 @@
                 </ItemsControl>
             </GroupBox>
         </Border>
-        
-        <!--Группа регистров управления-->
-        <Border Background="Gainsboro" Margin="10" Grid.Column="2" Grid.RowSpan="4" >
+
+        <!--Управляемые параметры-->
+        <Border Background="Gainsboro" Margin="10" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="1">
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
             <GroupBox Margin="4"  BorderBrush="Black" >
                 <GroupBox.Header>
-                    <TextBlock Text="Управление" FontSize="16" FontWeight="Bold"/>
+                    <TextBlock Text="Управляемые параметры" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel Margin="8" Orientation="Vertical">
                     <ItemsControl ItemsSource="{Binding ListWriteControl}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="240"  VerticalAlignment="Top"/>
-                                    <TextBox Text="{Binding Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="240"  VerticalAlignment="Top"/>
+                                    <TextBox Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                                        Margin="4,1" Padding="2" FontWeight="Normal" FontSize="12"
+                                        TextAlignment="Right" Background="White" />
+                                    <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
+
+                                    <TextBox Text="{Binding Register2.Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" />
-                                    <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
-                                    <Button Width="30" Margin="1" VerticalAlignment="Top" 
-                                            CommandParameter="{Binding}" Padding="3"
+
+
+                                    <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="Установить"
+                                            CommandParameter="{Binding Register2}" Padding="3"
                                             Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}">
-                                        <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" Foreground="DarkSlateBlue"/>
+                                        <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" />
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
@@ -166,45 +176,58 @@
                     <!--Запись режима выходного напряжения-->
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding device.ModeNaprOutputWrite.Name}" Width="240"  VerticalAlignment="Top"/>
+                        <TextBox Text="{Binding device.ModeNaprOutput.ValueString, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                                        Margin="4,1" Padding="2"
+                                        TextAlignment="Right" Background="White" />
+                        <TextBlock Text="{Binding device.ModeNaprOutputWrite.Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
 
                         <ComboBox Width="50" SelectedIndex="{Binding device.ModeNaprOutputWrite.Value}" Margin="4,1">
                             <ComboBoxItem Content="48"/>
                             <ComboBoxItem Content="96"/>
                         </ComboBox>
-                        <TextBlock Text="{Binding device.ModeNaprOutputWrite.Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
-                        <Button Width="30" Margin="1" VerticalAlignment="Top" 
+                        <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="Установить"
                                             CommandParameter="{Binding device.ModeNaprOutputWrite}" Padding="3"
                                             Command="{Binding WriteValueCommand}">
-                            <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" Foreground="DarkSlateBlue"/>
+                            <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" />
                         </Button>
                     </StackPanel>
 
                     <!--Запись реального времени-->
-                    <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="240" 
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="240" 
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"/>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{Binding device.RealTimeWrite.RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" Width="292" VerticalAlignment="Top"
-                                        Margin="4,1,24,1" Padding="2"
+                        <TextBox Text="{Binding device.RealTime.RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
+                                 Width="130" VerticalAlignment="Top"
+                                        Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" InputScope="Date" />
-                        <Button Width="30" Margin="1" VerticalAlignment="Top" 
-                                            CommandParameter="{Binding device.RealTimeWrite}" Padding="3"
-                                            Command="{Binding WriteValueCommand}">
-                            <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" Foreground="DarkSlateBlue"/>
+                        <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="Установить текущее время"
+                                            Padding="3" Command="{Binding WriteTimeCommand}">
+                            <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" />
                         </Button>
                     </StackPanel>
 
                     <!--Запись режима стабилизации-->
-                    <GroupBox Header="Режим стабилизации" Padding="8" BorderBrush="Black" Margin="0,4">
+                    <GroupBox Header="Режим стабилизации" Padding="8" BorderBrush="Black" HorizontalAlignment="Left" Margin="0,4"  Width="413">
                         <DockPanel>
                             <Button DockPanel.Dock="Right" Width="40" Command="{Binding WriteValueCommand}"
-                                    CommandParameter="{Binding device.SetMode}">
-                                <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="16" Foreground="DarkSlateBlue"/>
+                                    CommandParameter="{Binding device.SetMode}" ToolTip="Установить">
+                                <fa:ImageAwesome Icon="Solid_SignOutAlt" Height="16"/>
                             </Button>
-                            <StackPanel>
+                            <StackPanel DockPanel.Dock="Left">
+                                <TextBox Text="{Binding device.Stabil.ValueString}" TextWrapping="Wrap"
+                                 Width="130" VerticalAlignment="Top"
+                                        Margin="0,0,0,0" Padding="1"
+                                        TextAlignment="Center" Background="White" InputScope="Date" />
+                                <fa:ImageAwesome Icon="Solid_ExclamationCircle" Width="24" Height="24" HorizontalAlignment="Center" 
+                                                 Foreground="#ee0000" ToolTip="Несоответствие режима стабилизации"
+                                                 Margin="0,10,0,0" Visibility="{Binding IsAvarModeVisible, Mode=OneWay}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Margin="20,0,0,0">
                                 <RadioButton Content="Выходной ток" IsChecked="{Binding device.SetMode.IsCurrentStab}"/>
-                                <RadioButton Content="Суммарный потенциал" IsChecked="{Binding device.SetMode.IsSummPotStab}"/>
-                                <RadioButton Content="Поляризационный потенциал" IsChecked="{Binding device.SetMode.IsPolPotStab}"/>
+                                <RadioButton Content="Суммарный потенциал" IsChecked="{Binding device.SetMode.IsSummPotStab}" Margin="0,2"/>
+                                <RadioButton Content="Поляризационный потенциал" IsChecked="{Binding device.SetMode.IsPolPotStab}" Margin="0,0,0,2"/>
                                 <RadioButton Content="Выходное напряжение" IsChecked="{Binding device.SetMode.IsNaprStab}"/>
                             </StackPanel>
                         </DockPanel>
@@ -213,7 +236,8 @@
             </GroupBox>
         </Border>
 
-        <Border Background="Gainsboro" Margin="10" Grid.Column="2" Grid.Row="4" >
+        <!--Силовые модули-->
+        <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="2">
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -221,17 +245,9 @@
                 <GroupBox.Header>
                     <TextBlock Text="Силовые модули" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <StackPanel>
-                    <!--<ToggleButton Content="{Binding device.OnOffMS.CurrentStringValue}" IsChecked="{Binding device.OnOffMS.ValueBool}" Margin="34,4" />-->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,7,0,0">
-                        <CheckBox Content="Включено" IsChecked="{Binding device.OnOffMS.ValueBool}" Margin="20,0,40,0"/>
-
-                        <TextBlock Text="Откл. "/>
-                        <Slider Width="50" Maximum="1" SmallChange="1" IsSnapToTickEnabled="True" Value="{Binding IsOn}"/>
-                        <TextBlock Text=" Вкл."/>
-                    </StackPanel>
-                            
-                            
+                
+                <StackPanel Orientation="Horizontal">
+                           
                     <ItemsControl ItemTemplate="{StaticResource ItemsControlItemTemplate1}" Width="200"
                               ItemsSource="{Binding ListInputMS}" Margin="8" >
                         <ItemsControl.ItemsPanel>
@@ -240,12 +256,45 @@
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
+
+                    <!--<ToggleButton Content="{Binding device.OnOffMS.CurrentStringValue}" IsChecked="{Binding device.OnOffMS.ValueBool}" Margin="34,4" />-->
+
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,7,0,0">
+                        <Border Margin="1" CornerRadius="8" BorderBrush="Black" BorderThickness="1">
+                            <TextBlock Text="{Binding device.OnOffMS.ValueString}" Width="80" VerticalAlignment="Center"
+                                        Padding="2" TextAlignment="Center"/>
+
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding device.OnOffMS.ValueBool}" Value="true">
+                                            <Setter Property="Background" Value="#c0FFc0"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding device.OnOffMS.ValueBool}" Value="false">
+                                            <Setter Property="Background" Value="#FFf0f0"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+
+                        </Border>
+
+                        <Button Content="Вкл./Выкл." Margin="0,20" Height="30" Command="{Binding OnOffCommand}"/>
+
+                        <!--<CheckBox Content="Включено" IsChecked="{Binding device.OnOffMS.ValueBool}" Margin="20,0,40,0"/>-->
+
+                        <!--<TextBlock Text="Откл. "/>
+                        <Slider Width="50" Maximum="1" SmallChange="1" IsSnapToTickEnabled="True" Value="{Binding IsOn}"/>
+                        <TextBlock Text=" Вкл."/>-->
+                    </StackPanel>
+                            
+
                 </StackPanel>
             </GroupBox>
         </Border>
 
-
-        <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.Row="2"  Grid.RowSpan="3">
+        <!--Индикаторы скорости коррозии-->
+        <Border Background="Gainsboro" Margin="10" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"  Grid.RowSpan="2" Visibility="Visible">
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
@@ -254,42 +303,109 @@
                     <TextBlock Text="Индикаторы скорости коррозии" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
 
-                <Grid>
-                    <TextBlock Text="Скорость коррозии" Margin="50,5"/>
-                    <TextBlock Text="Глубина коррозии" Margin="220,5,0,0"/>
-                    <ItemsControl ItemsSource="{Binding ListInputDK}" Margin="8,24,0,0" >
+                <StackPanel>
+
+                    <ItemsControl ItemsSource="{Binding ListDK3}" Margin="8,10,0,0" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding SpeedIKP.Number, StringFormat=ИКП {0}}" Width="48"  VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Register1.Name}" Width="168" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Register1.Value, TargetNullValue=--}" Background="White" Width="60" 
+                                               TextAlignment="Center"
+                                               Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,0,0" VerticalAlignment="Center"/>
 
-                                    <Grid Height="20" Margin="0,2">
-                                        <ProgressBar x:Name="pb1" Maximum="65.535" Width="100" 
-                                                 Value="{Binding SpeedIKP.Value}" BorderBrush="Gray"
-                                             Background="Gainsboro" Margin="1"  Foreground="DarkGray"
-                                             />
-                                        <TextBlock Text="{Binding SpeedIKP.Value, StringFormat=0.###}" 
-                                               VerticalAlignment="Center"
-                                               Width="{Binding ActualWidth, ElementName=pb1}" TextAlignment="Center"/>
-                                    </Grid>
-                                    <TextBlock Text="{Binding SpeedIKP.Measure}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                    <ContentPresenter Width="20" Height="20" Margin="18,0"
+                                        Content="{Binding Register3.ValueBool, Converter={StaticResource StatusDKConverter}}"/>
 
-                                    <Grid Height="20" Margin="0,2">
-                                        <ProgressBar x:Name="pb2" Maximum="65.535" Width="100" 
-                                                 Value="{Binding DeepIKP.Value}" BorderBrush="Gray"
-                                             Background="Gainsboro" Margin="1"  Foreground="DarkGray" Minimum="0"
-                                             />
-                                        <TextBlock Text="{Binding DeepIKP.Value, StringFormat=0.###}" 
-                                               VerticalAlignment="Center"
-                                               Width="{Binding ActualWidth, ElementName=pb2}" TextAlignment="Center"/>
-                                    </Grid>
-                                    <TextBlock Text="{Binding DeepIKP.Measure}" VerticalAlignment="Center"/>
+
+                                    <!--<TextBlock Text="{Binding Register2.Value}" VerticalAlignment="Center"/>-->
 
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </Grid>
+
+                    <!--<DataGrid ItemsSource="{Binding ListInputDK}" AutoGenerateColumns="False" IsReadOnly="True" Background="Gainsboro"
+                              VerticalGridLinesBrush="LightGray" HorizontalGridLinesBrush="LightGray" Margin="8" 
+                              HorizontalAlignment="Left" RowBackground="Gainsboro"
+                              >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Register1.Number, StringFormat=ИКП {0}}"/>
+                            <DataGridTextColumn Header="скорость" Binding="{Binding Register1.Value, StringFormat=0.###}" 
+                                                CellStyle="{StaticResource CellRight}"/>
+                            <DataGridTextColumn Binding="{Binding Register1.Measure}"/>
+                            <DataGridTextColumn Header="глубина" Binding="{Binding Register2.Value, StringFormat=0.###}"
+                                                 CellStyle="{StaticResource CellRight}"/>
+                            <DataGridTextColumn Binding="{Binding Register2.Measure}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>-->
+                    
+                    
+                    
+                    <StackPanel Orientation="Horizontal" Margin="30,5,0,0">
+                        <TextBlock Text="Скорость коррозии"/>
+                        <TextBlock Text="Глубина коррозии" Margin="10,0,0,0" />
+                    </StackPanel>
+                    <ItemsControl ItemsSource="{Binding ListInputDK}" Margin="8,0,0,0" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Height="20">
+                                    <TextBlock Text="{Binding Register1.Number, StringFormat=ИКП {0}}" 
+                                               Width="48"  VerticalAlignment="Center"/>
+
+                                    <!--<Grid Height="20" Margin="0,2">
+                                        <ProgressBar x:Name="pb1" Maximum="65.535" Width="100" 
+                                                 Value="{Binding Register1.Value}" BorderBrush="Gray"
+                                             Background="Gainsboro" Margin="1"  Foreground="DarkGray"
+                                             />-->
+                                        <TextBlock Text="{Binding Register1.Value, StringFormat=0.###}" 
+                                               VerticalAlignment="Center" Background="White" Margin="2,0"
+                                               Width="60" TextAlignment="Right" Padding="6,0"/>
+                                    <!--</Grid>-->
+                                    <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+
+                                    <!--<Grid Height="20" Margin="0,2">
+                                        <ProgressBar x:Name="pb2" Maximum="65.535" Width="100" 
+                                                 Value="{Binding RegisterTwo.Value}" BorderBrush="Gray"
+                                             Background="Gainsboro" Margin="1"  Foreground="DarkGray" Minimum="0"
+                                             />-->
+                                        <TextBlock Text="{Binding Register2.Value, StringFormat=0.###}" 
+                                               VerticalAlignment="Center" Background="White" Margin="2,0"
+                                               Width="60" TextAlignment="Right" Padding="6,0"/>
+                                    <!--</Grid>-->
+                                    <TextBlock Text="{Binding Register2.Measure}" VerticalAlignment="Center"/>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
+
+                    <!--<StackPanel Orientation="Horizontal" Margin="8,18">
+                        
+                        <TextBlock Text="{Binding ListInputDK[0].Register1.Number, StringFormat=ИКП {0}}" Width="40"  VerticalAlignment="Center"/>
+                        <TextBlock Text="скорость" Width="48"  VerticalAlignment="Center"/>
+
+                        <TextBlock Text="{Binding ListInputDK[0].Register1.Value, StringFormat=0.###}" 
+                                               VerticalAlignment="Center" Background="White" Margin="2,0"
+                                               Width="50" TextAlignment="Center"/>
+                        
+                        <TextBlock Text="{Binding ListInputDK[0].Register1.Measure}" VerticalAlignment="Center"/>
+                        <TextBlock Text="глубина" Width="48"  VerticalAlignment="Center" Margin="10,0,0,0"/>
+
+                        <TextBlock Text="{Binding ListInputDK[0].Register2.Value, StringFormat=0.###}" 
+                                               VerticalAlignment="Center" Background="White" Margin="2,0"
+                                               Width="50" TextAlignment="Center"/>
+
+                        <TextBlock Text="{Binding ListInputDK[0].Register2.Measure}" VerticalAlignment="Center"/>
+
+                    </StackPanel>-->
+                    
+
+
+                </StackPanel>
                 
             </GroupBox>
         </Border>

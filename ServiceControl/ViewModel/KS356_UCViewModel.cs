@@ -84,8 +84,8 @@ namespace ServiceControl.ViewModel
 
             ListCoil = new List<RegisterBool>() { device.OnOffMS };
             ListService = new List<Register>() {
-                device.TempCoolerOn, device.TempCoolerOff, device.Year, device.Number, device.ModeNaprOutput, device.TimeProtect,
-                device.WorkedTime
+                device.TempCoolerOn, device.TempCoolerOff, device.Year, device.Number, device.ModeNaprOutput, 
+                device.TimeProtect, device.WorkedTime
             };
 
         }

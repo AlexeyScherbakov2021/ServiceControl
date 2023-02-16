@@ -36,7 +36,7 @@ namespace ServiceControl.Modbus.Registers
         public override ushort[] SetOutput()
         {
             //ushort[] val = new ushort[Size];
-            //RealTimeValue = DateTime.Now.AddDays(-1);
+            //RealTimeValue = DateTime.Now.AddMonths(-1);
             TimeSpan span = RealTimeValue.Subtract(new DateTime(1970, 01, 01));
 
             ushort[] res = new ushort[Size];

@@ -56,22 +56,22 @@ namespace ServiceControl.Modbus.Registers
             switch((RezhStab)Value)
             {
                 case RezhStab.StabCurrent:
-                    ValueString = "00 - стабилизация тока";
+                    ValueString = "по току";
                     IsCurrentStab = true;
                     break;
 
                 case RezhStab.StabSummPot:
-                    ValueString = "01 - стабилизация сумм.потенциала";
+                    ValueString = "по сумм.потенциалу";
                     IsSummPotStab = true;
                     break;
 
                 case RezhStab.StabPolPot:
-                    ValueString = "02 - стабилизация поляр.потенциала";
+                    ValueString = "по поляр.потенциалу";
                     IsPolPotStab = true;
                     break;
 
                 case RezhStab.StabNapr:
-                    ValueString = "03 - стабилизация напряжения";
+                    ValueString = "по напряжению";
                     IsNaprStab = true;
                     break;
             }

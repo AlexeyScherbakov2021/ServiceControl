@@ -14,12 +14,13 @@ namespace ServiceControl.Modbus.Registers
     internal abstract class Device
     {
         //public string Name;
+
+        private bool TimerWork = false;
         protected byte Slave;
         protected MbWork modbus;
         protected IEnumerable<List<RegisterBase>> ListList;
-
         public event EventHandler<EventArgs> EndStartRead;
-
+        public event EventHandler<EventArgs> EndRead;
         private DispatcherTimer timer;
 
         //----------------------------------------------------------------------------------------------
@@ -41,7 +42,7 @@ namespace ServiceControl.Modbus.Registers
 
             EndStartRead?.Invoke(null, null);
 
-            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
@@ -194,9 +195,16 @@ namespace ServiceControl.Modbus.Registers
         //----------------------------------------------------------------------------------------------
         private async void Timer_Tick(object sender, EventArgs e)
         {
-            timer.Stop();
-            await Task.Run(() => RequestValue());
-            timer.Start();
+            if(!TimerWork)
+            {
+                TimerWork = true;
+                await Task.Run(() => RequestValue());
+                TimerWork = false;
+                EndRead?.Invoke(null, null);
+            }
+
+            //timer.Stop();
+            //timer.Start();
         }
 
         protected void CheckReg(IEnumerable<RegisterBase> ListReg)
