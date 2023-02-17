@@ -28,6 +28,8 @@ namespace ServiceControl.ViewModel
             public RegisterBool Register3 { get; set; }
         }
 
+        //private MainWindowViewModel mainVM;
+
         private bool IsProcessOnOff = false;
 
         private int CountTimerSetMode;
@@ -63,13 +65,14 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         // конструктор
         //--------------------------------------------------------------------------------------------
-        public KS216_UCViewModel(MbWork work, int Slave)
+        public KS216_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
         {
-            device = new Device216(work, Slave);
+            //mainVM = mainViewModel;
+            device = new Device216(mainViewModel, work, Slave);
             device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;
 
             device.EndRead += OnReadFinish;
-            device.EndStartRead += OnEndStartRead; ;
+            device.EndStartRead += OnEndStartRead; 
 
             device.Start();
 
@@ -160,7 +163,14 @@ namespace ServiceControl.ViewModel
         {
             if (p is Register reg)
             {
-                device.WriteRegister(reg);
+                try
+                {
+                    device.WriteRegister(reg);
+                }
+                catch(TimeoutException)
+                {
+
+                }
 
                 // была установка режима стабилизации
                 if(reg.Address == 0x84)

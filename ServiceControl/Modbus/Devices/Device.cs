@@ -1,4 +1,5 @@
 ﻿using ServiceControl.Infrastructure;
+using ServiceControl.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,29 @@ namespace ServiceControl.Modbus.Registers
 {
     internal abstract class Device
     {
-        //public string Name;
+        private bool _IsTimeout;
+        public bool IsTimeout 
+        { 
+            get => _IsTimeout;
+            set
+            {
+                if (_IsTimeout == value) return;
+                _IsTimeout = value;
+                if(_IsTimeout)
+                {
+                    mainVM.ConnectedString = "нет связи";
+                    mainVM.ConnectedColor = Brushes.Red;
+                }
+                else
+                {
+                    mainVM.ConnectedString = "подключено";
+                    mainVM.ConnectedColor = Brushes.Green;
+                }
 
+            }
+        }
+
+        private bool IsReadAllRegisters = false;
         private bool TimerWork = false;
         protected byte Slave;
         protected MbWork modbus;
@@ -22,58 +44,88 @@ namespace ServiceControl.Modbus.Registers
         public event EventHandler<EventArgs> EndStartRead;
         public event EventHandler<EventArgs> EndRead;
         private DispatcherTimer timer;
+        MainWindowViewModel mainVM;
 
         //----------------------------------------------------------------------------------------------
         // Конструктор
         //----------------------------------------------------------------------------------------------
-        public Device(MbWork modb, int slave)
+        public Device(MainWindowViewModel vm, MbWork modb, int slave)
         {
+            mainVM = vm;
             ListList = new List<List<RegisterBase>>();
             modbus = modb;
             Slave = (byte)slave;
             timer = new DispatcherTimer();
         }
 
-        public async void Start()
-        {
-            CheckListRegister();
-            //StartRequestValue();
-            await Task.Run(() => StartRequestValue());
 
-            EndStartRead?.Invoke(null, null);
-
-            timer.Interval = new TimeSpan(0, 0, 0, 1, 0);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-        }
-
-
+        //----------------------------------------------------------------------------------------------
+        // чтение регистра
+        //----------------------------------------------------------------------------------------------
         public void ReadRegister(Register Reg)
         {
-            if (Reg.CodeFunc == ModbusFunc.Holding)
+            try
             {
-                ushort[] res = modbus.ReadRegisterHolding(Reg.Address, Reg.Size, Slave);
-                Reg.SetResultValues(res);
+                if (Reg.CodeFunc == ModbusFunc.Holding)
+                {
+                    ushort[] res = modbus.ReadRegisterHolding(Reg.Address, Reg.Size, Slave);
+                    Reg.SetResultValues(res);
+                }
+                if (Reg.CodeFunc == ModbusFunc.InputReg)
+                {
+                    ushort[] res = modbus.ReadRegisterInput(Reg.Address, Reg.Size, Slave);
+                    Reg.SetResultValues(res);
+                }
+
+                if(IsTimeout)
+                {
+                    IsTimeout = false;
+
+                }
+
+                if (IsTimeout)
+                {
+                    IsTimeout = false;
+                    IsReadAllRegisters = true;
+                }
+
             }
-            if (Reg.CodeFunc == ModbusFunc.InputReg)
+
+            catch (TimeoutException)
             {
-                ushort[] res = modbus.ReadRegisterInput(Reg.Address, Reg.Size, Slave);
-                Reg.SetResultValues(res);
+                IsTimeout = true;
             }
 
         }
 
+        //----------------------------------------------------------------------------------------------
+        // чтение регистра
+        //----------------------------------------------------------------------------------------------
         public void ReadRegister(RegisterBool reg)
         {
-            if (reg.CodeFunc == ModbusFunc.CoilRead)
+            try
             {
-                bool[] res = modbus.ReadRegisterCoil(reg.Address, reg.Size, Slave);
-                reg.SetResultValues(res);
+                if (reg.CodeFunc == ModbusFunc.CoilRead)
+                {
+                    bool[] res = modbus.ReadRegisterCoil(reg.Address, reg.Size, Slave);
+                    reg.SetResultValues(res);
+                }
+                if (reg.CodeFunc == ModbusFunc.Discrete)
+                {
+                    bool[] res = modbus.ReadRegisterDiscret(reg.Address, reg.Size, Slave);
+                    reg.SetResultValues(res);
+                }
+
+                if (IsTimeout)
+                {
+                    IsTimeout = false;
+                    IsReadAllRegisters = true;
+                }
+
             }
-            if (reg.CodeFunc == ModbusFunc.Discrete)
+            catch (TimeoutException)
             {
-                bool[] res = modbus.ReadRegisterDiscret(reg.Address, reg.Size, Slave);
-                reg.SetResultValues(res);
+                IsTimeout = true;
             }
 
         }
@@ -83,8 +135,14 @@ namespace ServiceControl.Modbus.Registers
         //----------------------------------------------------------------------------------------------
         public void ReadInfoRegister(Register Reg)
         {
+            try { 
             ushort[] res = modbus.ReadInfoRegister(10, Slave);
             Reg.SetResultValues(res);
+            }
+            catch (TimeoutException)
+            {
+                IsTimeout = true;
+            }
         }
 
         //----------------------------------------------------------------------------------------------
@@ -94,28 +152,43 @@ namespace ServiceControl.Modbus.Registers
         {
             if (listReg == null || listReg.Count() == 0) return;
 
+
             RegisterBase reg = listReg.First();
             ushort[] res = null;
 
             ushort AllSize = (ushort)listReg.Sum(it => it.Size);
-            if (reg.CodeFunc == ModbusFunc.Holding)
-                res = modbus.ReadRegisterHolding(reg.Address, AllSize, Slave);
-            
-            if (reg.CodeFunc == ModbusFunc.InputReg)
-                res = modbus.ReadRegisterInput(reg.Address, AllSize, Slave);
 
-            if (res?.Length != AllSize) return;
-
-            int pos = 0;
-            foreach(var it in listReg)
+            try
             {
-                ushort[] res2 = new ushort[it.Size];
-                for (int i = 0; i < it.Size; i++)
-                    res2[i] = res[pos + i];
-                it.SetResultValues(res2);
-                pos += it.Size;
-            }
+                if (reg.CodeFunc == ModbusFunc.Holding)
+                    res = modbus.ReadRegisterHolding(reg.Address, AllSize, Slave);
 
+                if (reg.CodeFunc == ModbusFunc.InputReg)
+                    res = modbus.ReadRegisterInput(reg.Address, AllSize, Slave);
+
+                if (res?.Length != AllSize) return;
+
+                int pos = 0;
+                foreach (var it in listReg)
+                {
+                    ushort[] res2 = new ushort[it.Size];
+                    for (int i = 0; i < it.Size; i++)
+                        res2[i] = res[pos + i];
+                    it.SetResultValues(res2);
+                    pos += it.Size;
+                }
+
+                if (IsTimeout)
+                {
+                    IsTimeout = false;
+                    IsReadAllRegisters = true;
+                }
+
+            }
+            catch (TimeoutException)
+            {
+                IsTimeout = true;
+            }
         }
 
         //----------------------------------------------------------------------------------------------
@@ -130,27 +203,41 @@ namespace ServiceControl.Modbus.Registers
 
             ushort AllSize = (ushort)listReg.Sum(it => it.Size);
 
-            if (reg.CodeFunc == ModbusFunc.CoilRead)
-                res = modbus.ReadRegisterCoil(reg.Address, AllSize, Slave);
-
-            if (reg.CodeFunc == ModbusFunc.Discrete)
-                res = modbus.ReadRegisterDiscret(reg.Address, AllSize, Slave);
-
-            if (res?.Length != AllSize) return;
-
-            int pos = 0;
-            foreach (var it in listReg)
+            try
             {
-                bool[] res2 = new bool[it.Size];
-                for (int i = 0; i < it.Size; i++)
-                    res2[i] = res[pos + i];
-                it.SetResultValues(res2);
-                pos += it.Size;
+                if (reg.CodeFunc == ModbusFunc.CoilRead)
+                    res = modbus.ReadRegisterCoil(reg.Address, AllSize, Slave);
+
+                if (reg.CodeFunc == ModbusFunc.Discrete)
+                    res = modbus.ReadRegisterDiscret(reg.Address, AllSize, Slave);
+
+                if (res?.Length != AllSize) return;
+
+                int pos = 0;
+                foreach (var it in listReg)
+                {
+                    bool[] res2 = new bool[it.Size];
+                    for (int i = 0; i < it.Size; i++)
+                        res2[i] = res[pos + i];
+                    it.SetResultValues(res2);
+                    pos += it.Size;
+                }
+
+                if (IsTimeout)
+                {
+                    IsTimeout = false;
+                    IsReadAllRegisters = true; 
+                }
+
+            }
+            catch (TimeoutException) 
+            {
+                IsTimeout = true;
             }
         }
 
         //----------------------------------------------------------------------------------------------
-        // запись регистроа
+        // запись регистра
         //----------------------------------------------------------------------------------------------
         public void WriteRegister(Register Reg)
         {
@@ -168,7 +255,7 @@ namespace ServiceControl.Modbus.Registers
 
 
         //----------------------------------------------------------------------------------------------
-        // запись регистроа
+        // запись регистра
         //----------------------------------------------------------------------------------------------
         public void WriteRegister(RegisterBool Reg)
         {
@@ -176,19 +263,30 @@ namespace ServiceControl.Modbus.Registers
             modbus.WriteRegister(Reg.Address, val, Slave);
         }
 
+        //----------------------------------------------------------------------------------------------
+        // первоначальное чтение регистров (в т.ч. для записи)
+        //----------------------------------------------------------------------------------------------
+        public async void Start()
+        {
+            CheckListRegister();
+            //StartRequestValue();
+            await Task.Run(() => StartRequestValue());
+
+            EndStartRead?.Invoke(null, null);
+
+            timer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
 
         //----------------------------------------------------------------------------------------------
-        // стартовое событие таймера для чтения
+        // первоначальное чтение регистров (в т.ч. для записи)
         //----------------------------------------------------------------------------------------------
-        //private async void Timer_TickStart(object sender, EventArgs e)
-        //{
-        //    timer.Stop();
-        //    await Task.Run(() => StartRequestValue());
-        //    timer.Tick -= Timer_TickStart;
-        //    timer.Tick += Timer_Tick;
-        //    timer.Interval = new TimeSpan(0,0,2);
-        //    timer.Start();
-        //}
+        public void Stop()
+        {
+            timer.Stop();
+        }
+
 
         //----------------------------------------------------------------------------------------------
         // событие таймера для чтения
@@ -198,7 +296,15 @@ namespace ServiceControl.Modbus.Registers
             if(!TimerWork)
             {
                 TimerWork = true;
-                await Task.Run(() => RequestValue());
+
+                if (IsReadAllRegisters)
+                {
+                    IsReadAllRegisters = false;
+                    await Task.Run(() => StartRequestValue());
+                }
+                else
+                    await Task.Run(() => RequestValue());
+
                 TimerWork = false;
                 EndRead?.Invoke(null, null);
             }
@@ -207,9 +313,11 @@ namespace ServiceControl.Modbus.Registers
             //timer.Start();
         }
 
+        //----------------------------------------------------------------------------------------------
+        // проверка регистров на однотипность и последовательность
+        //----------------------------------------------------------------------------------------------
         protected void CheckReg(IEnumerable<RegisterBase> ListReg)
         {
-
             ushort StartAddress = 0;
             ModbusFunc PrevFunc = ModbusFunc.None;
             foreach (var it in ListReg)

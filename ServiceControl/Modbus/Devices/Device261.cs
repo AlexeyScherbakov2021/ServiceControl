@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceControl.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace ServiceControl.Modbus.Registers
 
 
 
-        public Device261(MbWork modb, int slave) : base(modb, slave)
+        public Device261(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
             ListStatus = new List<RegisterStatus>();
             ListCurrentPol = new List<RegisterFloat>();

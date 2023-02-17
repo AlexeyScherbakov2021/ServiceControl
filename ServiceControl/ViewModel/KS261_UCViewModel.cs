@@ -28,9 +28,9 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         // конструктор
         //--------------------------------------------------------------------------------------------
-        public KS261_UCViewModel(MbWork work, int Slave)
+        public KS261_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
         {
-            device = new Device261(work, Slave);
+            device = new Device261(mainViewModel, work, Slave);
             device.Start();
 
             ListKIP = new List<KIPData>();

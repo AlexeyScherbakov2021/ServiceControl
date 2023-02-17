@@ -16,6 +16,7 @@ using ServiceControl.Modbus.Devices;
 using System.IO;
 using System.Windows;
 using System.Reflection;
+using System.Threading;
 
 namespace ServiceControl.ViewModel
 {
@@ -26,7 +27,8 @@ namespace ServiceControl.ViewModel
 
         INIManager iniFile;
         public Device device { get; set; }
-        //DispatcherTimer timer;
+        MbWork work;
+        Device CurrentDevice;
 
         public List<DeviceType> ListDeviceType { get; set; }
         private DevType deviceType { get; set; }
@@ -183,8 +185,6 @@ namespace ServiceControl.ViewModel
         private bool CanConnectCommand(object p) => !IsConnected;
         private void OnConnectCommandExecuted(object p)
         {
-            MbWork work;
-
             if (IsSelectTCP)
                 work = new MbWork(HostName, Port, Protocol.TCP);
             else
@@ -200,21 +200,41 @@ namespace ServiceControl.ViewModel
                     break;
                 case DevType.KS216:
                     SControl = new KS216_UCView();
-                    SControl.DataContext = new KS216_UCViewModel(work, Slave);
+                    var vm216 = new KS216_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vm216;
+                    CurrentDevice = vm216.device;
                     break;
                 case DevType.KS356:
                     SControl = new KS356_UCView();
-                    SControl.DataContext = new KS356_UCViewModel(work, Slave);
-
+                    var vm356 = new KS356_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vm356;
+                    CurrentDevice = vm356.device;
                     break;
                 case DevType.KS261:
                     SControl = new KS261_UCView();
-                    SControl.DataContext = new KS261_UCViewModel(work, Slave);
+                    var vm261 = new KS261_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vm261;
+                    CurrentDevice = vm261.device;
                     break;
             }
 
 
 
+        }
+
+        //--------------------------------------------------------------------------------
+        // Команда Кнопка Разъединить
+        //--------------------------------------------------------------------------------
+        public ICommand DisconnectCommand => new LambdaCommand(OnDisconnectCommandExecuted, CanDisconnectCommand);
+        private bool CanDisconnectCommand(object p) => IsConnected;
+        private void OnDisconnectCommandExecuted(object p)
+        {
+            CurrentDevice.Stop();
+            Thread.Sleep(1000);
+            work.Disconnect();
+            SControl = null;
+            work = null;
+            IsConnected = false;
         }
 
         #endregion

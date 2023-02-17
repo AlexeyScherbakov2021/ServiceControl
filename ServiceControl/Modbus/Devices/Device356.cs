@@ -1,5 +1,6 @@
 ﻿//using ServiceControl.Infrastructure;
 using ServiceControl.Modbus.Registers;
+using ServiceControl.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +59,7 @@ namespace ServiceControl.Modbus.Devices
         public RegisterNapr4896 ModeNaprOutput;
 
         public RegisterRT RealTime { get; set; }
-        public RegisterInt WorkedTime;
+        //public RegisterInt WorkedTime;
         public RegisterInt ProtectTime;
         public RegisterInt ResistPlast1;
         public RegisterInt ResistPlast2;
@@ -85,7 +86,7 @@ namespace ServiceControl.Modbus.Devices
         //----------------------------------------------------------------------------------------------
         // Конструктор
         //----------------------------------------------------------------------------------------------
-        public Device356(MbWork modb, int slave) : base(modb, slave)
+        public Device356(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
 
             // список входных регистров

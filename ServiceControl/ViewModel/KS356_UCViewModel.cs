@@ -14,6 +14,8 @@ namespace ServiceControl.ViewModel
 {
     internal class KS356_UCViewModel: Observable
     {
+        MainWindowViewModel mainVM;
+
         public Device356 device { get; set; }
         public List<Register> ListInput { get; set; }
         public List<Register> ListInputMS { get; set; }
@@ -42,9 +44,11 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         // конструктор
         //--------------------------------------------------------------------------------------------
-        public KS356_UCViewModel(MbWork work, int Slave)
+        public KS356_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
         {
-            device = new Device356(work, Slave);
+            mainVM = mainViewModel;
+
+            device = new Device356(mainViewModel, work, Slave);
             device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;
             device.Start();
 
@@ -80,12 +84,12 @@ namespace ServiceControl.ViewModel
             ListWriteControl = new List<Register>() { device.SetCurrOutput, device.SetSummPotOutput, device.SetPolPotOutput, 
                 device.SetNaprOutput};
             
-            ListWriteControlInt = new List<Register>() { device.WorkedTime, device.ProtectTime };
+            //ListWriteControlInt = new List<Register>() { device.WorkedTime, device.ProtectTime };
 
             ListCoil = new List<RegisterBool>() { device.OnOffMS };
             ListService = new List<Register>() {
                 device.TempCoolerOn, device.TempCoolerOff, device.Year, device.Number, device.ModeNaprOutput, 
-                device.TimeProtect, device.WorkedTime
+                device.TimeProtect/*, device.WorkedTime*/
             };
 
         }
@@ -121,9 +125,9 @@ namespace ServiceControl.ViewModel
                 case 0x85:
                     device.WriteRegister(device.SetNaprOutput);
                     break;
-                case 0xC7:
-                    device.WriteRegister(device.WorkedTime);
-                    break;
+                //case 0xC7:
+                //    device.WriteRegister(device.WorkedTime);
+                //    break;
                 case 0xC9:
                     device.WriteRegister(device.ProtectTime);
                     break;

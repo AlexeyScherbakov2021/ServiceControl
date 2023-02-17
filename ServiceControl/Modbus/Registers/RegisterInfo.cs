@@ -10,9 +10,15 @@ namespace ServiceControl.Modbus.Registers
     {
         private string _VersionDev;
         public string VersionDev { get => _VersionDev; set { Set(ref _VersionDev, value); } }
-        public string VersionPO { get; set; }
-        public string Year { get; set; }
-        public string NumberDev { get; set; }
+
+        private string _VersionPO;
+        public string VersionPO { get => _VersionPO; set { Set(ref _VersionPO, value); } }
+
+        private string _Year;
+        public string Year { get => _Year; set { Set(ref _Year, value); } }
+
+        private string _NumberDev;
+        public string NumberDev { get => _NumberDev; set { Set(ref _NumberDev, value); } }
 
 
         public override void SetResultValues(ushort[] val)

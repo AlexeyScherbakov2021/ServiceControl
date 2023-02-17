@@ -46,13 +46,14 @@
             <StatusBar >
                 <TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
                 <Button Content="Подключиться" Command="{Binding ConnectCommand}" Padding="6" Margin="16,0,0,0" BorderBrush="Black" />
+                <Button Content="Отключиться" Command="{Binding DisconnectCommand}" Padding="6" Margin="16,0,40,0" BorderBrush="Black" />
             </StatusBar>
 
         </StackPanel>
 
         <StatusBar Grid.Row="2">
             <StatusBarItem Content="Статус подключения:" Margin="10,0"/>
-            <StatusBarItem Content="{Binding ConnectedString}" Foreground="{Binding ConnectedColor}"/>
+            <StatusBarItem Content="{Binding ConnectedString}" FontWeight="Bold" Foreground="{Binding ConnectedColor}"/>
         </StatusBar>
 
         <ContentPresenter Content="{Binding SControl}" Grid.Row="1"/>

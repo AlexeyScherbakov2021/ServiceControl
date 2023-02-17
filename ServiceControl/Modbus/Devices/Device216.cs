@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceControl.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -74,10 +75,11 @@ namespace ServiceControl.Modbus.Registers
         //List<Register> ListServices2;
         List<Register> ListDop;
 
+
         //----------------------------------------------------------------------------------------------
         // Конструктор
         //----------------------------------------------------------------------------------------------
-        public Device216(MbWork modb, int slave) : base(modb, slave)
+        public Device216(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
             // список входных регистров
             //--------------------------------------------------------------------------------------------------------------------------------------

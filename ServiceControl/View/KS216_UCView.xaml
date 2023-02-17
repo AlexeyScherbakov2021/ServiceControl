@@ -46,20 +46,10 @@
                 <!--<Image x:Name="img" Margin="0,4" Source="{Binding Value, Converter={StaticResource StatusMSConverter}}" VerticalAlignment="Bottom" Width="20"/>-->
             </Grid>
             <DataTemplate.Triggers>
-                <!--<DataTrigger Binding="{Binding Value}" Value="0">
-                    <Setter Property="ToolTip" Value="Включен" TargetName="img"/>
-                </DataTrigger>-->
-                <!--<DataTrigger Binding="{Binding Value}" Value="1">
-                    <Setter Property="ToolTip" Value="Выключен" TargetName="img"/>
-                </DataTrigger>-->
                 <DataTrigger Binding="{Binding Value}" Value="2">
                     <Setter Property="Fill" Value="DimGray" TargetName="rect"/>
-                    <!--<Setter Property="ToolTip" Value="Отсутствует" TargetName="img"/>-->
                     <Setter Property="Foreground" Value="White" TargetName="font"/>
                 </DataTrigger>
-                <!--<DataTrigger Binding="{Binding Value}" Value="3">
-                    <Setter Property="ToolTip" Value="Авария" TargetName="img"/>
-                </DataTrigger>-->
             </DataTemplate.Triggers>
         </DataTemplate>
         
@@ -72,10 +62,10 @@
             <RowDefinition Height="15*"/>
             <RowDefinition Height="18*"/>
             <RowDefinition Height="15*"/>
-            <RowDefinition Height="12*"/>
+            <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="45*"/>
             <ColumnDefinition Width="40*"/>
         </Grid.ColumnDefinitions>
 
@@ -84,18 +74,18 @@
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
-            <GroupBox Margin="4"  BorderBrush="Black" >
+            <GroupBox Margin="4"  BorderBrush="Black" FontSize="14" >
                 <GroupBox.Header>
                     <TextBlock Text="Выходные параметры" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel Margin="8" >
-                    <TextBlock Text="{Binding DeviceInfo}" Margin="0,6" FontSize="14" />
+                    <!--<TextBlock Text="{Binding DeviceInfo}" Margin="0,6" FontSize="14" />-->
                     
                     <ItemsControl ItemsSource="{Binding ListInput}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="246"  VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="280"  VerticalAlignment="Top"/>
                                     <TextBlock Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" 
                                                VerticalAlignment="Top" Margin="1" Padding="2"
                                         TextAlignment="Right" Background="White"/>
@@ -104,6 +94,18 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    <UniformGrid Columns="2" Rows="4" Margin="1" Width="354" HorizontalAlignment="Left">
+                        <TextBlock Text="Версия платы"/>
+                        <TextBlock Text="{Binding device.InfoReg.VersionDev}" Margin="0,2,0,0" Background="White" TextAlignment="Center"/>
+                        <TextBlock Text="Версия ПО" />
+                        <TextBlock Text="{Binding device.InfoReg.VersionPO}" Margin="0,2,0,0" Background="White" TextAlignment="Center"/>
+                        <TextBlock Text="Год"/>
+                        <TextBlock Text="{Binding device.InfoReg.Year}" Margin="0,2,0,0" Background="White" TextAlignment="Center"/>
+                        <TextBlock Text="№"/>
+                        <TextBlock Text="{Binding device.InfoReg.NumberDev}" Margin="0,2,0,0" Background="White" TextAlignment="Center"/>
+
+                    </UniformGrid>
+                    
                 </StackPanel>
             </GroupBox>
         </Border>
@@ -113,16 +115,17 @@
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
-            <GroupBox Margin="4"  BorderBrush="Black" >
+            <GroupBox Margin="4"  BorderBrush="Black" FontSize="14" >
                 <GroupBox.Header>
                     <TextBlock Text="Сигнализация о текущем состоянии" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <ItemsControl ItemsSource="{Binding ListStatus}" Margin="8" >
+                <ItemsControl ItemsSource="{Binding ListStatus}" Margin="8,8,0,0" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="140"  VerticalAlignment="Top"/>
-                                <Border x:Name="border" Background="#c0FFc0" Margin="1" CornerRadius="8" BorderBrush="Black" BorderThickness="1">
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="160"  VerticalAlignment="Top"/>
+                                <Border x:Name="border" Background="#c0FFc0" Margin="1,0,10,0" CornerRadius="8" BorderBrush="Black" 
+                                        BorderThickness="1">
                                     <TextBlock Text="{Binding ValueString}" Width="140" VerticalAlignment="Center"
                                         Padding="2" TextAlignment="Center"/>
                                 </Border>
@@ -143,7 +146,7 @@
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
-            <GroupBox Margin="4"  BorderBrush="Black" >
+            <GroupBox Margin="4"  BorderBrush="Black" FontSize="14">
                 <GroupBox.Header>
                     <TextBlock Text="Управляемые параметры" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
@@ -152,14 +155,14 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="240"  VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="270"  VerticalAlignment="Top"/>
                                     <TextBox Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
-                                        Margin="4,1" Padding="2" FontWeight="Normal" FontSize="12"
+                                        Margin="4,0" Padding="2" FontWeight="Normal" 
                                         TextAlignment="Right" Background="White" />
-                                    <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
+                                    <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
                                     <TextBox Text="{Binding Register2.Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
-                                        Margin="4,1" Padding="2"
+                                        Margin="4,0" Padding="2"
                                         TextAlignment="Right" Background="White" />
 
 
@@ -175,7 +178,7 @@
 
                     <!--Запись режима выходного напряжения-->
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding device.ModeNaprOutputWrite.Name}" Width="240"  VerticalAlignment="Top"/>
+                        <TextBlock Text="{Binding device.ModeNaprOutputWrite.Name}" Width="270"  VerticalAlignment="Top"/>
                         <TextBox Text="{Binding device.ModeNaprOutput.ValueString, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" />
@@ -194,10 +197,10 @@
 
                     <!--Запись реального времени-->
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="240" 
+                        <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="270" 
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"/>
-                        <TextBox Text="{Binding device.RealTime.RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
+                        <TextBlock Text="{Binding device.RealTime.RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
                                  Width="130" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" InputScope="Date" />
@@ -208,7 +211,8 @@
                     </StackPanel>
 
                     <!--Запись режима стабилизации-->
-                    <GroupBox Header="Режим стабилизации" Padding="8" BorderBrush="Black" HorizontalAlignment="Left" Margin="0,4"  Width="413">
+                    <GroupBox Header="Режим стабилизации" Padding="8" BorderBrush="Black" HorizontalAlignment="Left"
+                              Margin="0,2"  Width="440">
                         <DockPanel>
                             <Button DockPanel.Dock="Right" Width="40" Command="{Binding WriteValueCommand}"
                                     CommandParameter="{Binding device.SetMode}" ToolTip="Установить">
@@ -241,15 +245,13 @@
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
-            <GroupBox Margin="4"  BorderBrush="Black" >
+            <GroupBox Margin="4"  BorderBrush="Black" FontSize="14" >
                 <GroupBox.Header>
                     <TextBlock Text="Силовые модули" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                
                 <StackPanel Orientation="Horizontal">
-                           
                     <ItemsControl ItemTemplate="{StaticResource ItemsControlItemTemplate1}" Width="200"
-                              ItemsSource="{Binding ListInputMS}" Margin="8" >
+                              ItemsSource="{Binding ListInputMS}" Margin="20,20,0,0" >
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal"/>
@@ -259,7 +261,7 @@
 
                     <!--<ToggleButton Content="{Binding device.OnOffMS.CurrentStringValue}" IsChecked="{Binding device.OnOffMS.ValueBool}" Margin="34,4" />-->
 
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,7,0,0">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,20,0,0">
                         <Border Margin="1" CornerRadius="8" BorderBrush="Black" BorderThickness="1">
                             <TextBlock Text="{Binding device.OnOffMS.ValueString}" Width="80" VerticalAlignment="Center"
                                         Padding="2" TextAlignment="Center"/>
@@ -298,7 +300,7 @@
             <Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>
-            <GroupBox Margin="4"  BorderBrush="Black" >
+            <GroupBox Margin="4"  BorderBrush="Black" FontSize="14" >
                 <GroupBox.Header>
                     <TextBlock Text="Индикаторы скорости коррозии" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
@@ -309,13 +311,13 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Register1.Name}" Width="168" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Register1.Name}" Width="188" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Register1.Value, TargetNullValue=--}" Background="White" Width="60" 
                                                TextAlignment="Center"
                                                Margin="0,0,8,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,0,0" VerticalAlignment="Center"/>
 
-                                    <ContentPresenter Width="20" Height="20" Margin="18,0"
+                                    <ContentPresenter Width="20" Height="20" Margin="4,0"
                                         Content="{Binding Register3.ValueBool, Converter={StaticResource StatusDKConverter}}"/>
 
 
@@ -343,7 +345,7 @@
                     
                     
                     
-                    <StackPanel Orientation="Horizontal" Margin="30,5,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="30,8,0,4">
                         <TextBlock Text="Скорость коррозии"/>
                         <TextBlock Text="Глубина коррозии" Margin="10,0,0,0" />
                     </StackPanel>
