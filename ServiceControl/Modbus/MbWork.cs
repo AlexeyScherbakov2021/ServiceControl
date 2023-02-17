@@ -6,6 +6,7 @@ using ServiceControl.Modbus.Registers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Net.Sockets;
@@ -48,6 +49,11 @@ namespace ServiceControl.Modbus
         //    ComPort = comPort;
         //}
 
+        public bool IsWorked()
+        {
+            return master != null;
+        }
+
 
         public bool CreateConnect()
         {
@@ -57,6 +63,8 @@ namespace ServiceControl.Modbus
                 {
                     tcp = new TcpClient();
                     tcp.Connect(Host, Port);
+                    tcp.ReceiveTimeout = 1000;
+                    tcp.SendTimeout= 1000;
                     if (!tcp.Connected)
                         return false;
 
@@ -137,6 +145,10 @@ namespace ServiceControl.Modbus
             catch (TimeoutException te)
             {
                 throw te;
+            }
+            catch (IOException ioe)
+            {
+                throw new TimeoutException();
             }
             catch (Exception e)
             {

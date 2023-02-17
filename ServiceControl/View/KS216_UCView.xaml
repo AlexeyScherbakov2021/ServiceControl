@@ -14,7 +14,7 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
-        <conv:StatusMSConverter x:Key="StatusMSConverter"/>
+        <!--<conv:StatusMSConverter x:Key="StatusMSConverter"/>-->
         <conv:StatusDKConverter x:Key="StatusDKConverter"/>
 
         <Style TargetType="DataGridCell" x:Key="CellRight">
@@ -41,8 +41,39 @@
                 <Rectangle x:Name="rect" Fill="DarkGray" Height="50" Margin="0" Stroke="Black" Width="30"/>
                 <Rectangle Height="48" Margin="0" Stroke="White" Width="28"/>
                 <TextBlock x:Name="font" FontWeight="Bold" FontSize="16" HorizontalAlignment="Center" Text="{Binding Number}"/>
-                <ContentPresenter Content="{Binding Value, Converter={StaticResource StatusMSConverter}}"
-                                  VerticalAlignment="Bottom" Width="16" Height="16" Margin="0,6" />
+
+                <fa:ImageAwesome VerticalAlignment="Bottom" Width="16" Height="16" Margin="0,6">
+                    <fa:ImageAwesome.Style>
+                        <Style TargetType="fa:ImageAwesome">
+                            <Setter Property="Foreground" Value="LightSalmon"/>
+                            <Setter Property="Icon" Value="Solid_Times"/>
+                            <Setter Property="ToolTip" Value="Отсутствует"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Value}" Value="0">
+                                    <Setter Property="Foreground" Value="LightGreen"/>
+                                    <Setter Property="Icon" Value="Solid_Circle"/>
+                                    <Setter Property="ToolTip" Value="Включен"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Value}" Value="1">
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                    <Setter Property="Icon" Value="Solid_Circle"/>
+                                    <Setter Property="ToolTip" Value="Выключен"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Value}" Value="3">
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Setter Property="Icon" Value="Solid_Exclamation"/>
+                                    <Setter Property="ToolTip" Value="Авария"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </fa:ImageAwesome.Style>
+
+                </fa:ImageAwesome>
+                
+                <!--<ContentPresenter Content="{Binding Value, Converter={StaticResource StatusMSConverter}}"
+                                  VerticalAlignment="Bottom" Width="16" Height="16" Margin="0,6" />-->
+                
+                
                 <!--<Image x:Name="img" Margin="0,4" Source="{Binding Value, Converter={StaticResource StatusMSConverter}}" VerticalAlignment="Bottom" Width="20"/>-->
             </Grid>
             <DataTemplate.Triggers>
@@ -85,24 +116,24 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="280"  VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap"  TextAlignment="Right" Width="280"  VerticalAlignment="Top"/>
                                     <TextBlock Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" 
-                                               VerticalAlignment="Top" Margin="1" Padding="2"
+                                               VerticalAlignment="Top" Margin="8,1,1,1" Padding="2"
                                         TextAlignment="Right" Background="White"/>
                                     <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Margin="2,3,0,0"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <UniformGrid Columns="2" Rows="4" Margin="1" Width="354" HorizontalAlignment="Left">
-                        <TextBlock Text="Версия платы"/>
-                        <TextBlock Text="{Binding device.InfoReg.VersionDev}" Margin="0,2,0,0" Background="White" TextAlignment="Center"/>
-                        <TextBlock Text="Версия ПО" />
-                        <TextBlock Text="{Binding device.InfoReg.VersionPO}" Margin="0,2,0,0" Background="White" TextAlignment="Center"/>
-                        <TextBlock Text="Год"/>
-                        <TextBlock Text="{Binding device.InfoReg.Year}" Margin="0,2,0,0" Background="White" TextAlignment="Center"/>
-                        <TextBlock Text="№"/>
-                        <TextBlock Text="{Binding device.InfoReg.NumberDev}" Margin="0,2,0,0" Background="White" TextAlignment="Center"/>
+                    <UniformGrid Columns="2" Rows="4" Margin="1" Width="361" HorizontalAlignment="Left">
+                        <TextBlock Text="Версия платы"  TextAlignment="Right"/>
+                        <TextBlock Text="{Binding device.InfoReg.VersionDev}" Margin="8,2,0,0" Background="White" TextAlignment="Center"/>
+                        <TextBlock Text="Версия ПО" TextAlignment="Right" />
+                        <TextBlock Text="{Binding device.InfoReg.VersionPO}" Margin="8,2,0,0" Background="White" TextAlignment="Center"/>
+                        <TextBlock Text="Год" TextAlignment="Right"/>
+                        <TextBlock Text="{Binding device.InfoReg.Year}" Margin="8,2,0,0" Background="White" TextAlignment="Center"/>
+                        <TextBlock Text="№" TextAlignment="Right"/>
+                        <TextBlock Text="{Binding device.InfoReg.NumberDev}" Margin="8,2,0,0" Background="White" TextAlignment="Center"/>
 
                     </UniformGrid>
                     
@@ -123,8 +154,8 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="160"  VerticalAlignment="Top"/>
-                                <Border x:Name="border" Background="#c0FFc0" Margin="1,1,10,1" CornerRadius="8" BorderBrush="Black" 
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="160" TextAlignment="Right" VerticalAlignment="Center"/>
+                                <Border x:Name="border" Background="#c0FFc0" Margin="6,1,10,1" CornerRadius="8" BorderBrush="Black" 
                                         BorderThickness="1">
                                     <TextBlock Text="{Binding ValueString}" Width="140" VerticalAlignment="Center"
                                         Padding="2" TextAlignment="Center"/>
@@ -155,13 +186,14 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="270"  VerticalAlignment="Top"/>
-                                    <TextBox Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="262" 
+                                               TextAlignment="Right" VerticalAlignment="Top"/>
+                                    <TextBox Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="56" VerticalAlignment="Top"
                                         Margin="4,0" Padding="2" FontWeight="Normal" 
                                         TextAlignment="Right" Background="White" />
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
-                                    <TextBox Text="{Binding Register2.Value, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                                    <TextBox Text="{Binding Register2.Value, StringFormat=0.00, TargetNullValue=--}" Width="56" VerticalAlignment="Top"
                                         Margin="4,0" Padding="2"
                                         TextAlignment="Right" Background="White" />
 
@@ -178,13 +210,14 @@
 
                     <!--Запись режима выходного напряжения-->
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding device.ModeNaprOutputWrite.Name}" Width="270"  VerticalAlignment="Top"/>
-                        <TextBox Text="{Binding device.ModeNaprOutput.ValueString, StringFormat=0.00, TargetNullValue=--}" Width="50" VerticalAlignment="Top"
+                        <TextBlock Text="{Binding device.ModeNaprOutputWrite.Name}" Width="262" TextAlignment="Right"   VerticalAlignment="Top"/>
+                        <TextBox Text="{Binding device.ModeNaprOutput.ValueString, StringFormat=0.00, TargetNullValue=--}" 
+                                 Width="56" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" />
                         <TextBlock Text="{Binding device.ModeNaprOutputWrite.Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
 
-                        <ComboBox Width="50" SelectedIndex="{Binding device.ModeNaprOutputWrite.Value}" Margin="4,1">
+                        <ComboBox Width="56" SelectedIndex="{Binding device.ModeNaprOutputWrite.Value}" Margin="4,1">
                             <ComboBoxItem Content="48"/>
                             <ComboBoxItem Content="96"/>
                         </ComboBox>
@@ -197,11 +230,10 @@
 
                     <!--Запись реального времени-->
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="270" 
-                               HorizontalAlignment="Left"
+                        <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="262" TextAlignment="Right" 
                                VerticalAlignment="Top"/>
                         <TextBlock Text="{Binding device.RealTime.RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
-                                 Width="130" VerticalAlignment="Top"
+                                 Width="142" VerticalAlignment="Top"
                                         Margin="4,1" Padding="2"
                                         TextAlignment="Right" Background="White" InputScope="Date" />
                         <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="Установить текущее время"
@@ -212,7 +244,7 @@
 
                     <!--Запись режима стабилизации-->
                     <GroupBox Header="Режим стабилизации" Padding="8" BorderBrush="Black" HorizontalAlignment="Left"
-                              Margin="0,2"  Width="440">
+                              Margin="0,2"  Width="444">
                         <DockPanel>
                             <Button DockPanel.Dock="Right" Width="40" Command="{Binding WriteValueCommand}"
                                     CommandParameter="{Binding device.SetMode}" ToolTip="Установить">
@@ -320,7 +352,6 @@
                                     <ContentPresenter Width="20" Height="20" Margin="4,0"
                                         Content="{Binding Register3.ValueBool, Converter={StaticResource StatusDKConverter}}"/>
 
-
                                     <!--<TextBlock Text="{Binding Register2.Value}" VerticalAlignment="Center"/>-->
 
                                 </StackPanel>
@@ -362,7 +393,7 @@
                                              Background="Gainsboro" Margin="1"  Foreground="DarkGray"
                                              />-->
                                         <TextBlock Text="{Binding Register1.Value, StringFormat=0.###}" 
-                                               VerticalAlignment="Center" Background="White" Margin="2,0"
+                                               VerticalAlignment="Center" Background="White" Margin="6,0"
                                                Width="60" TextAlignment="Right" Padding="6,0"/>
                                     <!--</Grid>-->
                                     <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,8,0" VerticalAlignment="Center"/>
@@ -373,7 +404,7 @@
                                              Background="Gainsboro" Margin="1"  Foreground="DarkGray" Minimum="0"
                                              />-->
                                         <TextBlock Text="{Binding Register2.Value, StringFormat=0.###}" 
-                                               VerticalAlignment="Center" Background="White" Margin="2,0"
+                                               VerticalAlignment="Center" Background="White" Margin="14,0,8,0"
                                                Width="60" TextAlignment="Right" Padding="6,0"/>
                                     <!--</Grid>-->
                                     <TextBlock Text="{Binding Register2.Measure}" VerticalAlignment="Center"/>

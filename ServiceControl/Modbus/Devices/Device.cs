@@ -272,6 +272,8 @@ namespace ServiceControl.Modbus.Registers
             //StartRequestValue();
             await Task.Run(() => StartRequestValue());
 
+            if (!modbus.IsWorked()) return;
+
             EndStartRead?.Invoke(null, null);
 
             timer.Interval = new TimeSpan(0, 0, 0, 1, 0);

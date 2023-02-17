@@ -20,14 +20,14 @@
             <Grid Margin="30,10,10,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="190"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Устройство" Grid.Row="0"/>
-                <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ListDeviceType}" 
+                <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ListDeviceType}" FontSize="14" 
                           DisplayMemberPath="Name" SelectedItem="{Binding SelectedDevice}"
                           SelectedIndex="{Binding DeviceIndex}"/>
                 <TextBlock Text="Адрес устройства" Grid.Row="1"/>

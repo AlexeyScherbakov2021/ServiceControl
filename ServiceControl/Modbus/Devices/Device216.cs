@@ -389,7 +389,7 @@ namespace ServiceControl.Modbus.Registers
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
-            ReadInfoRegister(InfoReg);
+            //ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
             ReadRegisters(ListWriteControl2);
             ReadRegister(OnOffMS);

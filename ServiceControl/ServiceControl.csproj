@@ -69,7 +69,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\StatusDKConverter.cs" />
-    <Compile Include="Converters\StatusMSConverter.cs" />
     <Compile Include="Infrastructure\INIManager.cs" />
     <Compile Include="Infrastructure\ListExt.cs" />
     <Compile Include="Modbus\Devices\Device356.cs" />
@@ -180,6 +179,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="tune.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\NGK.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

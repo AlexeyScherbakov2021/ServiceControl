@@ -41,10 +41,12 @@
                             <fa:ImageAwesome Height="14" >
                                 <fa:ImageAwesome.Style>
                                     <Style TargetType="fa:ImageAwesome">
-                                        <Setter Property="Foreground" Value="OrangeRed"/>
-                                        <Setter Property="Icon" Value="Solid_Bolt"/>
-                                        <Setter Property="ToolTip" Value="Вскрыт"/>
                                         <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.IsSensorOpen}" Value="True">
+                                                <Setter Property="Foreground" Value="OrangeRed"/>
+                                                <Setter Property="Icon" Value="Solid_Bolt"/>
+                                                <Setter Property="ToolTip" Value="Вскрыт"/>
+                                            </DataTrigger>
                                             <DataTrigger Binding="{Binding RegStatus.IsSensorOpen}" Value="False">
                                                 <Setter Property="Foreground" Value="LightGreen"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
