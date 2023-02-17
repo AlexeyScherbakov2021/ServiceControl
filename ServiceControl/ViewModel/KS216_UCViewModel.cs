@@ -69,7 +69,7 @@ namespace ServiceControl.ViewModel
         {
             //mainVM = mainViewModel;
             device = new Device216(mainViewModel, work, Slave);
-            device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;
+            //device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;
 
             device.EndRead += OnReadFinish;
             device.EndStartRead += OnEndStartRead; 
@@ -133,24 +133,22 @@ namespace ServiceControl.ViewModel
             }
             else
                 --CountTimerSetMode;
-
-
         }
 
 
-        private async void CheckAvarMode()
-        {
-            await Task.Delay(3000);
-            IsAvarModeVisible = device.Stabil.Value == LastSetMode
-            ? Visibility.Hidden
-            : Visibility.Visible;
-        }
+        //private async void CheckAvarMode()
+        //{
+        //    await Task.Delay(3000);
+        //    IsAvarModeVisible = device.Stabil.Value == LastSetMode
+        //    ? Visibility.Hidden
+        //    : Visibility.Visible;
+        //}
 
 
-        private void InfoReg_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(DeviceInfo));
-        }
+        //private void InfoReg_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    OnPropertyChanged(nameof(DeviceInfo));
+        //}
 
         #region Команды =================================
 

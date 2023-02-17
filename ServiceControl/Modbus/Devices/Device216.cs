@@ -361,40 +361,11 @@ namespace ServiceControl.Modbus.Registers
                 MinValue = -32769, MaxValue = 32768 };
             ListServices.Add(TempCoolerOff);
 
-            //var stab = new RegisterInt() { Address = 0xC7, CodeFunc = ModbusFunc.Holding, Name = "Заглушка", Size = 2, Description = "", MinValue = 0, MaxValue = 65535 };
-            //ListServices.Add(stab);
-
-            //ProtectTime = new RegisterInt() { Address = 0xC9, CodeFunc = ModbusFunc.Holding, Name = "Время защиты сооружения", Measure = "ч", Size = 2, Description = "СВЗ", MinValue = -596522, MaxValue = 596522 };
-            //ListServices.Add(ProtectTime);
-
-
-            // список сервисных регистров 2
-            //--------------------------------------------------------------------------------------------------------------------------------------
-            //ListServices2 = new List<Register>();
-            //Year = new RegisterInt() { Address = 0xCB, CodeFunc = ModbusFunc.InputReg, Name = "Год выпуска устройства", Description = "Год", MinValue = 0, MaxValue = 65535 };
-            //ListServices2.Add(Year);
-
-            //Number = new RegisterInt() { Address = 0xCC, CodeFunc = ModbusFunc.InputReg, Name = "Порядковый номер устройства", Description = "Номер", MinValue = 0, MaxValue = 65535 };
-            //ListServices2.Add(Number);
-
             ModeNaprOutput = new RegisterNapr4896() { Address = 0xCD, CodeFunc = ModbusFunc.Holding, 
                 Name = "Режим работы СКЗ", Description = "Uрежим", Measure = "В", MinValue = 0, MaxValue = 1 };
-            //ListServices2.Add(ModeNaprOutput);
 
 
             ListDop = new List<Register>();
-            //RealTime = new RegisterRT()
-            //{
-            //    Address = 0x41,
-            //    CodeFunc = ModbusFunc.InputReg,
-            //    Name = "Реальное время",
-            //    Measure = "сек",
-            //    Size = 4,
-            //    Description = "РВ",
-            //    MinValue = 0,
-            //    MaxValue = int.MaxValue
-            //};
-            //ListDop.Add(RealTime);
 
             ResistPlast1 = new RegisterInt() { Address = 0x45, CodeFunc = ModbusFunc.InputReg, 
                 Name = "Сопротивление пластины 1", Measure = "Ом", Description = "Rn1", MinValue = 0, MaxValue = 404 };
@@ -411,9 +382,6 @@ namespace ServiceControl.Modbus.Registers
 
             InfoReg = new RegisterInfo() { Name = "Информация" };
 
-            //CheckListRegister();
-
-            //StartRequestValue();
         }
 
         //-------------------------------------------------------------------------------------------

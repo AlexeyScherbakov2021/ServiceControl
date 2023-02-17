@@ -50,29 +50,7 @@ namespace ServiceControl.ViewModel
                 ListKIP.Add(kip);
             }
 
-
-
-            //timer = new DispatcherTimer();
-            //timer.Interval = new TimeSpan(0, 0, 1);
-            //timer.Tick += Timer_Tick;
-            //timer.Start();
         }
 
-        //--------------------------------------------------------------------------------------------
-        // Событие таймера
-        //--------------------------------------------------------------------------------------------
-        //private void Timer_Tick(object sender, EventArgs e)
-        //{
-        //    device.ReadRegisters(device.ListStatus);
-        //    device.ReadRegisters(device.ListCurrentPol);
-        //    device.ReadRegisters(device.ListPolPot);
-        //    device.ReadRegisters(device.ListSummPot);
-        //    device.ReadRegisters(device.ListResistDK1);
-        //    device.ReadRegisters(device.ListResistDK2);
-        //    device.ReadRegisters(device.ListResistDK3);
-        //    device.ReadRegisters(device.ListProtectCurrent);
-        //    device.ReadRegisters(device.ListDeepCorr);
-        //    device.ReadRegisters(device.ListSpeedCorr);
-        //}
     }
 }

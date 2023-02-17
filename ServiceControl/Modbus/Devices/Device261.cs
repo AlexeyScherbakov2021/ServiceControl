@@ -22,7 +22,6 @@ namespace ServiceControl.Modbus.Registers
         public List<RegisterFloat> ListSpeedCorr { get; set; }
 
 
-
         public Device261(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
             ListStatus = new List<RegisterStatus>();
@@ -35,8 +34,6 @@ namespace ServiceControl.Modbus.Registers
             ListProtectCurrent = new List<RegisterFloat>();
             ListDeepCorr = new List<RegisterFloat>();
             ListSpeedCorr = new List<RegisterFloat>();
-
-            //ListHolding = new List<DoubleRegister>();
 
             for (int i = 1; i <= CountKIP; i++)
             {
@@ -72,13 +69,37 @@ namespace ServiceControl.Modbus.Registers
 
             }
 
-            //CheckListRegister();
-            //StartRequestValue();
         }
 
         public override Task StartRequestValue()
         {
             return RequestValue();
+
+            //ReadRegisters(ListStatus);
+            //ReadRegisters(ListCurrentPol);
+            //ReadRegisters(ListPolPot);
+            //ReadRegisters(ListSummPot);
+            //ReadRegisters(ListResistDK1);
+            //ReadRegisters(ListResistDK2);
+            //ReadRegisters(ListResistDK3);
+            //ReadRegisters(ListProtectCurrent);
+            //ReadRegisters(ListDeepCorr);
+            //ReadRegisters(ListSpeedCorr);
+
+            //ushort[] test = new ushort[1];
+            //test[0] = 0b1001;
+            //ListStatus[0].SetResultValues(test);
+
+            //test[0] = 0b0010;
+            //ListStatus[1].SetResultValues(test);
+
+            //test[0] = 0b0101;
+            //ListStatus[2].SetResultValues(test);
+
+            //test[0] = 0b0110;
+            //ListStatus[3].SetResultValues(test);
+
+            //return Task.CompletedTask;
 
         }
 

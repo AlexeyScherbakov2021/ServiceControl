@@ -4,30 +4,168 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:ServiceControl.ViewModel"
+             xmlns:fa="http://schemas.fontawesome.com/icons/"
              xmlns:local="clr-namespace:ServiceControl.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <vm:KS261_UCViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="DataGridCell" x:Key="CellRight">
+            <Style.Setters>
+                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
-        <DataGrid ItemsSource="{Binding ListKIP}" AutoGenerateColumns="False" Margin="8">
+        <DataGrid ItemsSource="{Binding ListKIP}" AutoGenerateColumns="False" Margin="8" IsReadOnly="True" 
+                  VerticalGridLinesBrush="Gainsboro" HorizontalGridLinesBrush="Gainsboro" AlternationCount="2"
+                  AlternatingRowBackground="#f0f0f0"
+                  >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number}"/>
-                <DataGridTextColumn Header="Ток полр." Binding="{Binding RegCurrentPolyar.ValueDouble}"/>
-                <DataGridTextColumn Header="Полр.пот." Binding="{Binding RegPolyarPot.ValueDouble}"/>
-                <DataGridTextColumn Header="Сумм.пот." Binding="{Binding RegSummPot.ValueDouble}"/>
-                <DataGridTextColumn Header="Сопр.ДК1" Binding="{Binding RegtResistDK1.ValueDouble}"/>
-                <DataGridTextColumn Header="Сопр.ДК2" Binding="{Binding RegtResistDK2.ValueDouble}"/>
-                <DataGridTextColumn Header="Сопр.ДК3" Binding="{Binding RegtResistDK3.ValueDouble}"/>
-                <DataGridTextColumn Header="Защит.ток" Binding="{Binding RegProtectCurrent.ValueDouble}"/>
-                <DataGridTextColumn Header="Глуб.корр." Binding="{Binding RegDeepCorr.ValueDouble}"/>
-                <DataGridTextColumn Header="Скор.корр." Binding="{Binding RegSpeedCorr.ValueDouble}"/>
-                <DataGridTextColumn Header="Вскрыт." Binding="{Binding RegStatus.IsSensorOpen}"/>
-                <DataGridTextColumn Header="Стат.блока" Binding="{Binding RegStatus.StatusBlock}"/>
-                <DataGridTextColumn Header="ДК1" Binding="{Binding RegStatus.IsDK1Break}"/>
-                <DataGridTextColumn Header="ДК2" Binding="{Binding RegStatus.IsDK2Break}"/>
-                <DataGridTextColumn Header="ДК3" Binding="{Binding RegStatus.IsDK3Break}"/>
+                <DataGridTextColumn Header="Ток полр." Binding="{Binding RegCurrentPolyar.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="Полр.пот." Binding="{Binding RegPolyarPot.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="Сумм.пот." Binding="{Binding RegSummPot.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="Сопр.ДК1" Binding="{Binding RegtResistDK1.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="Сопр.ДК2" Binding="{Binding RegtResistDK2.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="Сопр.ДК3" Binding="{Binding RegtResistDK3.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="Защит.ток" Binding="{Binding RegProtectCurrent.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="Глуб.корр." Binding="{Binding RegDeepCorr.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="Скор.корр." Binding="{Binding RegSpeedCorr.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTemplateColumn Header="Вскрыт">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <fa:ImageAwesome Height="14" >
+                                <fa:ImageAwesome.Style>
+                                    <Style TargetType="fa:ImageAwesome">
+                                        <Setter Property="Foreground" Value="OrangeRed"/>
+                                        <Setter Property="Icon" Value="Solid_Bolt"/>
+                                        <Setter Property="ToolTip" Value="Вскрыт"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.IsSensorOpen}" Value="False">
+                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Icon" Value="Solid_Circle"/>
+                                                <Setter Property="ToolTip" Value="Не вскрыт"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </fa:ImageAwesome.Style>
+                            </fa:ImageAwesome>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!--<DataGridTextColumn Header="Вскрыт." Binding="{Binding RegStatus.IsSensorOpen}"/>-->
+
+
+                <DataGridTemplateColumn Header="Статус">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <fa:ImageAwesome Height="14" >
+                                <fa:ImageAwesome.Style>
+                                    <Style TargetType="fa:ImageAwesome">
+                                        <Setter Property="Foreground" Value="Red"/>
+                                        <Setter Property="Icon" Value="Solid_Times"/>
+                                        <Setter Property="ToolTip" Value="Отсутствует"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Good">
+                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Icon" Value="Solid_Circle"/>
+                                                <Setter Property="ToolTip" Value="Норма"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Opened">
+                                                <Setter Property="Foreground" Value="OrangeRed"/>
+                                                <Setter Property="Icon" Value="Solid_Bolt"/>
+                                                <Setter Property="ToolTip" Value="Вскрыт"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Alarm">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                                <Setter Property="Icon" Value="Solid_ExclamationTriangle"/>
+                                                <Setter Property="ToolTip" Value="Авария"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </fa:ImageAwesome.Style>
+                            </fa:ImageAwesome>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!--<DataGridTextColumn Header="Стат.блока" Binding="{Binding RegStatus.StatusBlock}"/>-->
+
+                <DataGridTemplateColumn Header="ДК1">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <fa:ImageAwesome Height="14" >
+                                <fa:ImageAwesome.Style>
+                                    <Style TargetType="fa:ImageAwesome">
+                                        <Setter Property="Foreground" Value="OrangeRed"/>
+                                        <Setter Property="Icon" Value="Solid_Bolt"/>
+                                        <Setter Property="ToolTip" Value="Обрыв"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.IsDK1Break}" Value="False">
+                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Icon" Value="Solid_Circle"/>
+                                                <Setter Property="ToolTip" Value="Норма"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </fa:ImageAwesome.Style>
+                            </fa:ImageAwesome>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                
+                <DataGridTemplateColumn Header="ДК2">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <fa:ImageAwesome Height="14" >
+                                <fa:ImageAwesome.Style>
+                                    <Style TargetType="fa:ImageAwesome">
+                                        <Setter Property="Foreground" Value="OrangeRed"/>
+                                        <Setter Property="Icon" Value="Solid_Bolt"/>
+                                        <Setter Property="ToolTip" Value="Обрыв"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.IsDK2Break}" Value="False">
+                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Icon" Value="Solid_Circle"/>
+                                                <Setter Property="ToolTip" Value="Норма"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </fa:ImageAwesome.Style>
+                            </fa:ImageAwesome>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="ДК3">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <fa:ImageAwesome Height="14" >
+                                <fa:ImageAwesome.Style>
+                                    <Style TargetType="fa:ImageAwesome">
+                                        <Setter Property="Foreground" Value="OrangeRed"/>
+                                        <Setter Property="Icon" Value="Solid_Bolt"/>
+                                        <Setter Property="ToolTip" Value="Обрыв"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.IsDK3Break}" Value="False">
+                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Icon" Value="Solid_Circle"/>
+                                                <Setter Property="ToolTip" Value="Норма"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </fa:ImageAwesome.Style>
+                            </fa:ImageAwesome>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!--<DataGridTextColumn Header="ДК1" Binding="{Binding RegStatus.IsDK1Break}"/>-->
+                <!--<DataGridTextColumn Header="ДК2" Binding="{Binding RegStatus.IsDK2Break}"/>
+                <DataGridTextColumn Header="ДК3" Binding="{Binding RegStatus.IsDK3Break}"/>-->
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
