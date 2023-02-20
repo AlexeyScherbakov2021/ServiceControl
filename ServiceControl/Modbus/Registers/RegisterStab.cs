@@ -51,30 +51,74 @@ namespace ServiceControl.Modbus.Registers
         {
             base.SetResultValues(val);
 
+            setValueString();
+
+            //if (Value == null) return;
+
+            //switch((RezhStab)Value)
+            //{
+            //    case RezhStab.StabCurrent:
+            //        ValueString = "по току"; 
+            //        IsCurrentStab = true;
+            //        break;
+
+            //    case RezhStab.StabSummPot:
+            //        ValueString = "по сумм.потенциалу";
+            //        IsSummPotStab = true;
+            //        break;
+
+            //    case RezhStab.StabPolPot:
+            //        ValueString = "по поляр.потенциалу";
+            //        IsPolPotStab = true;
+            //        break;
+
+            //    case RezhStab.StabNapr:
+            //        ValueString = "по напряжению";
+            //        IsNaprStab = true;
+            //        break;
+            //}
+        }
+
+
+        private void setValueString()
+        {
             if (Value == null) return;
 
-            switch((RezhStab)Value)
+            switch ((RezhStab)Value)
             {
                 case RezhStab.StabCurrent:
-                    ValueString = "по току";
+                    ValueString = App.Current.Resources["ByCurrent"]?.ToString();
                     IsCurrentStab = true;
                     break;
 
                 case RezhStab.StabSummPot:
-                    ValueString = "по сумм.потенциалу";
+                    ValueString = App.Current.Resources["BySumPot"]?.ToString();
                     IsSummPotStab = true;
                     break;
 
                 case RezhStab.StabPolPot:
-                    ValueString = "по поляр.потенциалу";
+                    ValueString = App.Current.Resources["ByPolPot"]?.ToString();
                     IsPolPotStab = true;
                     break;
 
                 case RezhStab.StabNapr:
-                    ValueString = "по напряжению";
+                    ValueString = App.Current.Resources["ByVoltage"]?.ToString();
                     IsNaprStab = true;
                     break;
             }
+
+        }
+
+
+        //-------------------------------------------------------------
+        // Изменение языка
+        //-------------------------------------------------------------
+        public override void SetLanguage()
+        {
+            base.SetLanguage();
+            setValueString();
+
+            //App.Current.Resources["ByCurrent"]?.ToString()
         }
 
     }

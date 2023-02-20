@@ -22,16 +22,18 @@ namespace ServiceControl.Modbus.Registers
             {
                 if (_IsTimeout == value) return;
                 _IsTimeout = value;
-                if(_IsTimeout)
-                {
-                    mainVM.ConnectedString = "нет связи";
-                    mainVM.ConnectedColor = Brushes.Red;
-                }
-                else
-                {
-                    mainVM.ConnectedString = "подключено";
-                    mainVM.ConnectedColor = Brushes.Green;
-                }
+                mainVM.IsConnected = !_IsTimeout;
+
+                //if (_IsTimeout)
+                //{
+                //    mainVM.ConnectedString = App.Current.Resources["NotConnected"].ToString();
+                //    mainVM.ConnectedColor = Brushes.Red;
+                //}
+                //else
+                //{
+                //    mainVM.ConnectedString = App.Current.Resources["Connected"].ToString();
+                //    mainVM.ConnectedColor = Brushes.Green;
+                //}
 
             }
         }
@@ -337,10 +339,11 @@ namespace ServiceControl.Modbus.Registers
             }
         }
 
-
-
         public abstract Task StartRequestValue();
         public abstract Task RequestValue();
         protected abstract void CheckListRegister();
+
+        public virtual void ChangeLangRegister() { }
+
     }
 }

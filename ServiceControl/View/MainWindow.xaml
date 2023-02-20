@@ -7,8 +7,8 @@
         xmlns:view="clr-namespace:ServiceControl.View"
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"
-        Background="Gainsboro" SizeToContent="Width"
-        Title="Service Control" Height="900" Width="1200" WindowStartupLocation="CenterScreen">
+        Background="WhiteSmoke" SizeToContent="Width"
+        Title="Service Control" Height="870" Width="1200" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -34,37 +34,31 @@
 
         <StackPanel Orientation="Vertical">
 
-            <ToolBar Background="Gainsboro" >
-                <Menu Background="Gainsboro">
-                    <MenuItem Header="Настройка">
-                        <MenuItem Header="Настройка соединения" Command="{Binding SetConnCommand}"/>
-                        <MenuItem Header="Выбор языка"/>
+            <ToolBarPanel Background="#FFB3CEFB" Height="24" >
+                <Menu Background="Transparent" >
+                    <MenuItem Header="{DynamicResource Setting}">
+                        <MenuItem Header="{DynamicResource SetConnect}" Command="{Binding SetConnCommand}"/>
+                        <MenuItem Header="Выбор языка">
+                            <MenuItem Header="Русский" Command="{Binding LangCommand}" CommandParameter="ru-RU"/>
+                            <MenuItem Header="English" Command="{Binding LangCommand}" CommandParameter="en-US"/>
+                        </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="О программе"/>
-
+                    <MenuItem Header="{DynamicResource About}"/>
                 </Menu>
-                <!--<ComboBox SelectedIndex="1" Width="200" ItemsSource="{Binding ListDeviceType}" 
-                      FontWeight="Bold" FontSize="16" SelectedItem="{Binding SelectedDevice}"
-                      DisplayMemberPath="Name"/>
 
-            <TextBlock Text="Адрес TCP:" VerticalAlignment="Center" Margin="13,0,0,0" />
-            <TextBox Text="{Binding HostName}" Width="150"/>
-            <TextBlock Text="Порт TCP:" VerticalAlignment="Center" Margin="14,0,0,0" />
-            <TextBox Text="{Binding Port}" Width="60"/>
-            <TextBlock Text="Slave:" VerticalAlignment="Center" Margin="14,0,0,0" />
-            <TextBox Text="{Binding Slave}" Width="60"/>-->
-
-            </ToolBar>
-            <StatusBar >
-                <TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
-                <Button Content="Подключиться" Command="{Binding ConnectCommand}" Padding="6" Margin="16,0,0,0" BorderBrush="Black" />
-                <Button Content="Отключиться" Command="{Binding DisconnectCommand}" Padding="6" Margin="16,0,40,0" BorderBrush="Black" />
-            </StatusBar>
-
+            </ToolBarPanel>
+            <Border BorderThickness="1" BorderBrush="Black" Padding="4" Background="#FFB3CEFB">
+                <StatusBar Background="Transparent">
+                    <TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" 
+                           FontWeight="Bold"/>
+                    <Button Content="{DynamicResource Connect}" Command="{Binding ConnectCommand}" Padding="6" Margin="16,0,0,0" BorderBrush="Black" Style="{DynamicResource ButtonStyle1}" />
+                    <Button Content="{DynamicResource Disconnect}" Command="{Binding DisconnectCommand}" Padding="6" Margin="16,0,40,0" BorderBrush="Black" Style="{DynamicResource ButtonStyle1}" />
+                </StatusBar>
+            </Border>
         </StackPanel>
 
-        <StatusBar Grid.Row="2">
-            <StatusBarItem Content="Статус подключения:" Margin="10,0"/>
+        <StatusBar Grid.Row="2" FontSize="14">
+            <StatusBarItem Content="{DynamicResource Stat}" Margin="10,0"/>
             <StatusBarItem Content="{Binding ConnectedString}" FontWeight="Bold" Foreground="{Binding ConnectedColor}"/>
         </StatusBar>
 

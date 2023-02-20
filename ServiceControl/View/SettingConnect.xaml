@@ -7,14 +7,14 @@
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"
         Background="WhiteSmoke"
-        Title="Настройка соединения" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        Title="{DynamicResource SetConnect}" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:SettingConnectViewModel/>
     </Window.DataContext>
     <DockPanel>
         <UniformGrid Columns="2" DockPanel.Dock="Bottom" Margin="6">
-            <Button Content="OK" Margin="4" Command="{Binding OkCommand}"/>
-            <Button Content="Отмена" Margin="4" Command="{Binding CancelCommand}"/>
+            <Button Content="OK" Margin="4" Command="{Binding OkCommand}" Style="{StaticResource ButtonStyle1}"/>
+            <Button Content="{DynamicResource Cancel}" Margin="4" Command="{Binding CancelCommand}" Style="{StaticResource ButtonStyle1}"/>
         </UniformGrid>
         <StackPanel>
             <Grid Margin="30,10,10,10">
@@ -26,15 +26,15 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Устройство" Grid.Row="0"/>
+                <TextBlock Text="{DynamicResource Device}" Grid.Row="0"/>
                 <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ListDeviceType}" FontSize="14" 
                           DisplayMemberPath="Name" SelectedItem="{Binding SelectedDevice}"
                           SelectedIndex="{Binding DeviceIndex}"/>
-                <TextBlock Text="Адрес устройства" Grid.Row="1"/>
+                <TextBlock Text="{DynamicResource DevAddr}" Grid.Row="1"/>
                 <TextBox  Grid.Row="1" Grid.Column="1" Text="{Binding Slave}"/>
 
             </Grid>
-            <GroupBox Header="Протокол" Padding="8" Margin="6" BorderBrush="Black">
+            <GroupBox Header="{DynamicResource Proto}" Padding="8" Margin="6" BorderBrush="Black">
                 <StackPanel Orientation="Vertical" >
                     <RadioButton IsChecked="True" Name="rbCOM">
                         <Grid >
@@ -49,11 +49,11 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="RS-485" FontWeight="Bold"/>
-                            <TextBlock Text="COM порт" Grid.Row="1"/>
+                            <TextBlock Text="{DynamicResource ComPort}" Grid.Row="1"/>
                             <ComboBox Width="180" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ListCOM}"
                                       SelectedItem="{Binding SelectedCOM}"
                                       IsEnabled="{Binding IsChecked, ElementName=rbCOM}"/>
-                            <TextBlock Text="Таймаут" Grid.Row="2"/>
+                            <TextBlock Text="{DynamicResource Timeout}" Grid.Row="2"/>
                             <TextBox Width="180" Grid.Row="2" Grid.Column="1" Text="{Binding TimeOut}"
                                      IsEnabled="{Binding IsChecked, ElementName=rbCOM}"/>
                         </Grid>
@@ -71,10 +71,10 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="TCP" FontWeight="Bold"/>
-                            <TextBlock Text="IP адрес (хост)" Grid.Row="1"/>
+                            <TextBlock Text="{DynamicResource IPAddr}" Grid.Row="1"/>
                             <TextBox Width="180" Grid.Row="1" Grid.Column="1" Text="{Binding HostTCP}"
                                      IsEnabled="{Binding IsChecked, ElementName=rbTCP}"/>
-                            <TextBlock Text="Порт" Grid.Row="2"/>
+                            <TextBlock Text="{DynamicResource Port}" Grid.Row="2"/>
                             <TextBox Width="180" Grid.Row="2" Grid.Column="1" Text="{Binding PortTCP}"
                                      IsEnabled="{Binding IsChecked, ElementName=rbTCP}"/>
                         </Grid>

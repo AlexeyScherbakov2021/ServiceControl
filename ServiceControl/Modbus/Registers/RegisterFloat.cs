@@ -53,5 +53,10 @@ namespace ServiceControl.Modbus.Registers
             //return result;
         }
 
+        public override void ChangeLang() 
+        { 
+            Name = App.Current.Resources[NameRes].ToString();
+        }
+
     }
 }

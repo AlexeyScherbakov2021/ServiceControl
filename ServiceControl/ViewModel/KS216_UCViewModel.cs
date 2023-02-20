@@ -46,14 +46,15 @@ namespace ServiceControl.ViewModel
         public List<RegisterBool> ListStatus { get; set; }
         public List<RegisterBool> ListCoil { get; set; }
         public List<TwoRegister> ListWriteControl { get; set; }
+        public List<TwoRegister> ListWriteControl2 { get; set; }
         public List<Register> ListService { get; set; }
         public List<TwoRegister> ListDK3 { get; set; }
 
-        public string DeviceInfo =>
-            "Версия платы " + device?.InfoReg.VersionDev
-            + "; Верстия ПО " + device?.InfoReg.VersionPO
-            + "; Год " + device?.InfoReg.Year
-            + "; № " + device?.InfoReg.NumberDev;
+        //public string DeviceInfo =>
+        //    "Версия платы " + device?.InfoReg.VersionDev
+        //    + "; Верстия ПО " + device?.InfoReg.VersionPO
+        //    + "; Год " + device?.InfoReg.Year
+        //    + "; № " + device?.InfoReg.NumberDev;
 
         //--------------------------------------------------------------------------------------------
         // конструктор
@@ -78,13 +79,18 @@ namespace ServiceControl.ViewModel
 
             ListInput = new List<Register>()
             {
-                device.NaprSeti1, device.NaprSeti2, device.CountEE1, device.CountEE2, device.Temper, device.CurrPolyar
+                device.NaprSeti1, device.CountEE1, device.NaprSeti2, device.CountEE2, device.Temper, device.CurrPolyar
             };
 
             ListInputMS = new List<Register>();
-            for (int i = 0; i < Device216.CountMS; i++)
+            for (int i = 0; i < Device216.CountMS; i+=2)
+            {
                 ListInputMS.Add(device.MS[i]);
-
+            }
+            for (int i = 1; i < Device216.CountMS; i+=2)
+            {
+                ListInputMS.Add(device.MS[i]);
+            }
 
             ListInputDK = new List<TwoRegister>();
             for (int i = 0; i < Device216.CountDK; i++)
@@ -103,6 +109,9 @@ namespace ServiceControl.ViewModel
                 new TwoRegister() { Register1 = device.NaprOutput, Register2 = device.SetNaprOutput },
                 new TwoRegister() { Register1 = device.TempCoolerOn, Register2 = device.TempCoolerOnWrite },
                 new TwoRegister() { Register1 = device.TempCoolerOff, Register2 = device.TempCoolerOffWrite },
+            };
+
+            ListWriteControl2 = new List<TwoRegister>() { 
                 new TwoRegister() { Register1 = device.TimeWork, Register2 = device.TimeWorkWrite },
                 new TwoRegister() { Register1 = device.TimeProtect, Register2 = device.TimeProtectWrite },
             };
@@ -183,7 +192,7 @@ namespace ServiceControl.ViewModel
         // Команда Установить текущее время
         //--------------------------------------------------------------------------------
         public ICommand WriteTimeCommand => new LambdaCommand(OnWriteTimeModeCommandExecuted, CanWriteTimeModeCommand);
-        private bool CanWriteTimeModeCommand(object p) => true;
+        private bool CanWriteTimeModeCommand(object p) => device != null && device.DistanceMode.ValueBool;
         private void OnWriteTimeModeCommandExecuted(object p)
         {
             device.RealTimeWrite.RealTimeValue = DateTime.Now;

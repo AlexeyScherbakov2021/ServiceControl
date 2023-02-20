@@ -27,7 +27,7 @@ namespace ServiceControl.ViewModel
         private int _PortTCP;
         public int PortTCP { get => _PortTCP; set { Set(ref _PortTCP, value); } }
 
-        private int _TimeOut;
+        private int _TimeOut = 500;
         public int TimeOut { get => _TimeOut; set { Set(ref _TimeOut, value); } }
 
         private int _Slave = 1;

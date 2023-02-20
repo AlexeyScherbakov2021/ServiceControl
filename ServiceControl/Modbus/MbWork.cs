@@ -68,7 +68,8 @@ namespace ServiceControl.Modbus
                     if (!tcp.Connected)
                         return false;
 
-                    master = ModbusIpMaster.CreateIp(tcp);
+                    master = ModbusSerialMaster.CreateRtu(tcp);
+                    //master = ModbusIpMaster.CreateIp(tcp);
                 }
                 else
                 {
