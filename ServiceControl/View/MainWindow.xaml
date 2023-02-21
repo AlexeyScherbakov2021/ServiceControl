@@ -15,7 +15,7 @@
     </Window.DataContext>
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/Resources/NGK.png" Stretch="Uniform" TileMode="None" Opacity="0.4">
+            <ImageBrush ImageSource="/Resources/NGK.png" Stretch="Uniform" TileMode="None" Opacity="0.2">
                 <ImageBrush.RelativeTransform>
                     <TransformGroup>
                         <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="0.5" ScaleY="0.5"/>
@@ -38,12 +38,13 @@
                 <Menu Background="Transparent" >
                     <MenuItem Header="{DynamicResource Setting}">
                         <MenuItem Header="{DynamicResource SetConnect}" Command="{Binding SetConnCommand}"/>
+                        <MenuItem Header="{DynamicResource LogPacket}" Command="{Binding LogCommand}"/>
                         <MenuItem Header="{DynamicResource SelectLang}">
                             <MenuItem Header="Русский" Command="{Binding LangCommand}" CommandParameter="ru-RU"/>
                             <MenuItem Header="English" Command="{Binding LangCommand}" CommandParameter="en-US"/>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="{DynamicResource About}"/>
+                    <MenuItem Header="{DynamicResource About}" Command="{Binding AboutCommand}"/>
                 </Menu>
 
             </ToolBarPanel>

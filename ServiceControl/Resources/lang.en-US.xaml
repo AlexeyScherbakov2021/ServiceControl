@@ -100,6 +100,8 @@
     <sys:String x:Key="TimeOut2">TimeOut:</sys:String>
     <sys:String x:Key="IPAddr2">IP address:</sys:String>
     <sys:String x:Key="CardDev">Device card</sys:String>
+    <sys:String x:Key="LogPacket">Packet Log</sys:String>
+    <sys:String x:Key="Pause">Pause</sys:String>
 
 
 </ResourceDictionary>

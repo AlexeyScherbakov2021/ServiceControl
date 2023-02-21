@@ -82,9 +82,16 @@
     <Compile Include="ViewModel\KS216_UCViewModel.cs" />
     <Compile Include="ViewModel\KS261_UCViewModel.cs" />
     <Compile Include="ViewModel\KS356_UCViewModel.cs" />
+    <Compile Include="ViewModel\LogWindowViewModel.cs" />
     <Compile Include="ViewModel\SettingConnectViewModel.cs" />
+    <Compile Include="View\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\KS216_UCView.xaml.cs">
       <DependentUpon>KS216_UCView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LogWindow.xaml.cs">
+      <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SettingConnect.xaml.cs">
       <DependentUpon>SettingConnect.xaml</DependentUpon>
@@ -97,11 +104,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\KS261_UCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\KS356_UCView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,6 +211,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\wp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ngk-logo-short-blue2.png" />
+    <Resource Include="Resources\ngk-logo-short-blue3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

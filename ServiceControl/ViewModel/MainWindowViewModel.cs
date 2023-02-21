@@ -27,6 +27,7 @@ namespace ServiceControl.ViewModel
         #region Переменные класса
         private CultureInfo SelectedCilture = new CultureInfo("ru-RU");
 
+        LogWindow winLog;
         INIManager iniFile;
         public Device device { get; set; }
         MbWork work;
@@ -264,13 +265,17 @@ namespace ServiceControl.ViewModel
             {
                 case DevType.KS131:
                     break;
+
                 case DevType.KS216:
                     SControl = new KS216_UCView();
                     var vm216 = new KS216_UCViewModel(this, work, Slave);
                     SControl.DataContext = vm216;
                     CurrentDevice = vm216.device;
+                    if(winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
                     CurrentDevice.ChangeLangRegister();
                     break;
+
                 case DevType.KS356:
                     SControl = new KS356_UCView();
                     var vm356 = new KS356_UCViewModel(this, work, Slave);
@@ -278,6 +283,7 @@ namespace ServiceControl.ViewModel
                     CurrentDevice = vm356.device;
                     CurrentDevice.ChangeLangRegister();
                     break;
+
                 case DevType.KS261:
                     SControl = new KS261_UCView();
                     var vm261 = new KS261_UCViewModel(this, work, Slave);
@@ -317,6 +323,32 @@ namespace ServiceControl.ViewModel
             iniFile.WritePrivateString("Main", "Lang", SelectedCilture.Name);
             CurrentDevice?.ChangeLangRegister();
             SetStatusConnection();
+        }
+
+        //--------------------------------------------------------------------------------
+        // Команда Журнал
+        //--------------------------------------------------------------------------------
+        public ICommand LogCommand => new LambdaCommand(OnLogCommandExecuted, CanLogCommand);
+        private bool CanLogCommand(object p) => winLog == null /* && work != null*/;
+        private void OnLogCommandExecuted(object p)
+        {
+            winLog = new LogWindow();
+            LogWindowViewModel vm = new LogWindowViewModel(work?.master);
+            vm.listBox = winLog.lb;
+            winLog.DataContext = vm;
+            winLog.Closed += (sender, e) => { winLog = null; vm.Dispose(); }; 
+            winLog.Show();
+        }
+
+        //--------------------------------------------------------------------------------
+        // Команда О программе
+        //--------------------------------------------------------------------------------
+        public ICommand AboutCommand => new LambdaCommand(OnAboutCommandExecuted, CanAboutCommand);
+        private bool CanAboutCommand(object p) => winLog == null /* && work != null*/;
+        private void OnAboutCommandExecuted(object p)
+        {
+            AboutWindow win = new AboutWindow();
+            win.ShowDialog();
         }
 
         #endregion

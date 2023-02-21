@@ -22,7 +22,7 @@ namespace ServiceControl.Modbus
 
     internal class MbWork
     {
-        ModbusMaster master;
+        public ModbusMaster master { get; private set; }
         TcpClient tcp;
         SerialPort com;
         private string Host;
@@ -83,6 +83,7 @@ namespace ServiceControl.Modbus
                         return false;
 
                     master = ModbusSerialMaster.CreateRtu(com);
+                    //master.Transport.EventLogEvent += Transport_EventLogEvent;
                 }
 
                 return true;
@@ -93,6 +94,10 @@ namespace ServiceControl.Modbus
             }
 
         }
+
+        //private void Transport_EventLogEvent(string header, byte[] message)
+        //{
+        //}
 
         public void Disconnect()
         {
@@ -147,7 +152,7 @@ namespace ServiceControl.Modbus
             {
                 throw te;
             }
-            catch (IOException ioe)
+            catch (IOException )
             {
                 throw new TimeoutException();
             }
