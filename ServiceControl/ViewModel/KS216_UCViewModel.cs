@@ -100,7 +100,6 @@ namespace ServiceControl.ViewModel
                 ListInputMS.Add(device.MS[i]);
             }
 
-
             // добавление в список датчиков коррозии
             ListInputDK = new List<TwoRegister>();
             for (int i = 0; i < Device216.CountDK; i++)
@@ -138,12 +137,19 @@ namespace ServiceControl.ViewModel
             };
         }
 
+
+        //--------------------------------------------------------------------------------
+        // событие после чтения всех регистров при старте
+        //--------------------------------------------------------------------------------
         private void OnEndStartRead(object sender, EventArgs e)
         {
             CommandManager.InvalidateRequerySuggested();
             LastSetMode = device.SetMode.Value;
         }
 
+        //--------------------------------------------------------------------------------
+        // событие после чтения всех регистров
+        //--------------------------------------------------------------------------------
         private void OnReadFinish(object sender, EventArgs e)
         {
             if (CountTimerSetMode == 0)

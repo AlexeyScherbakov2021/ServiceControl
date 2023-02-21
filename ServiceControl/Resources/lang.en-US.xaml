@@ -5,6 +5,7 @@
     <sys:String x:Key="Disconnect">Disconnect</sys:String>
     <sys:String x:Key="SetConnect">Setting connect</sys:String>
     <sys:String x:Key="Setting">Setting</sys:String>
+    <sys:String x:Key="SelectLang">Select language</sys:String>
     <sys:String x:Key="About">About</sys:String>
     <sys:String x:Key="Stat">State connect:</sys:String>
     <sys:String x:Key="Connected">connected</sys:String>
@@ -36,9 +37,9 @@
     <sys:String x:Key="DeepCorr">Deep corrosion</sys:String>
     <sys:String x:Key="OnOff">On/Off</sys:String>
     <sys:String x:Key="AlarmStatus">Alarm current status</sys:String>
-    <sys:String x:Key="VoltCircuit1">Voltage circuit 1 (main)</sys:String>
+    <sys:String x:Key="VoltCircuit1">Voltage 1 (main)</sys:String>
     <sys:String x:Key="ValueCounterEE1">Value counter EE 1 (main)</sys:String>
-    <sys:String x:Key="VoltCircuit2">Voltage circuit 2 (res)</sys:String>
+    <sys:String x:Key="VoltCircuit2">Voltage 2 (res)</sys:String>
     <sys:String x:Key="ValueCounterEE2">Value counter EE 2 (res)</sys:String>
     <sys:String x:Key="InnnerTemper">Inner temperature</sys:String>
     <sys:String x:Key="TimeWork">Time work</sys:String>

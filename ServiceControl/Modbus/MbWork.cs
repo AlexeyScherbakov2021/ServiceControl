@@ -17,7 +17,7 @@ using System.Windows.Media;
 
 namespace ServiceControl.Modbus
 {
-    public enum ModbusFunc { None, CoilRead, Discrete, Holding, InputReg };
+    public enum ModbusFunc { None, Coil, InputDiscrete, HoldingRegister, InputRegister };
     public enum Protocol { COM, TCP};
 
     internal class MbWork
@@ -119,7 +119,7 @@ namespace ServiceControl.Modbus
         {
             try
             {
-                ushort[] read = master.ReadInputRegisters(Slave, Address, Size);
+                ushort[] read = master?.ReadInputRegisters(Slave, Address, Size);
                 return read;
             }
             catch(TimeoutException te)
@@ -140,7 +140,7 @@ namespace ServiceControl.Modbus
         {
             try
             {
-                ushort[] read = master.ReadHoldingRegisters(Slave, Address, Size);
+                ushort[] read = master?.ReadHoldingRegisters(Slave, Address, Size);
                 return read;
             }
             catch (TimeoutException te)
@@ -165,7 +165,7 @@ namespace ServiceControl.Modbus
         {
             try
             {
-                ushort[] read = master.ReadInfoRegisters(Slave, Size);
+                ushort[] read = master?.ReadInfoRegisters(Slave, Size);
                 return read;
             }
             catch (TimeoutException te)
@@ -187,7 +187,7 @@ namespace ServiceControl.Modbus
         {
             try
             {
-                bool[] read = master.ReadCoils(Slave, Address, Size);
+                bool[] read = master?.ReadCoils(Slave, Address, Size);
                 return read;
             }
             catch (TimeoutException te)
@@ -210,7 +210,7 @@ namespace ServiceControl.Modbus
         {
             try
             {
-                bool[] read = master.ReadInputs(Slave, Address, Size);
+                bool[] read = master?.ReadInputs(Slave, Address, Size);
                 return read;
             }
             catch (TimeoutException te)
@@ -232,7 +232,7 @@ namespace ServiceControl.Modbus
         {
             try
             {
-                master.WriteSingleRegister(Slave, Address, val);
+                master?.WriteSingleRegister(Slave, Address, val);
             }
             catch (TimeoutException te)
             {
@@ -249,7 +249,7 @@ namespace ServiceControl.Modbus
         {
             try
             {
-                master.WriteMultipleRegisters(Slave, Address, val);
+                master?.WriteMultipleRegisters(Slave, Address, val);
             }
             catch (TimeoutException te)
             {
@@ -266,7 +266,7 @@ namespace ServiceControl.Modbus
         //----------------------------------------------------------------------------------------------
         public void WriteRegister(ushort Address, bool val, byte Slave)
         {
-            master.WriteSingleCoil(Slave, Address, val);
+            master?.WriteSingleCoil(Slave, Address, val);
         }
 
     }

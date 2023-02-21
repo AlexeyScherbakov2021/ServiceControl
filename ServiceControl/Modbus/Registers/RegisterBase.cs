@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace ServiceControl.Modbus.Registers
 {
@@ -23,6 +24,9 @@ namespace ServiceControl.Modbus.Registers
 
         private string _ValueString;
         public string ValueString { get => _ValueString; set { Set(ref _ValueString, value); } }
+
+        public string ToolTip => $"{CodeFunc} 0x{Address:X2}";
+
 
         public virtual void ChangeLang() { }
 

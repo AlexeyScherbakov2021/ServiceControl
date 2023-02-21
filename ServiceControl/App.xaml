@@ -9,6 +9,10 @@
                 <ResourceDictionary Source="Resources/lang.ru-RU.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type ToolTip}">
+                <Setter Property="Background" Value="LightYellow"/>
+            </Style>
         </ResourceDictionary>
 
     </Application.Resources>

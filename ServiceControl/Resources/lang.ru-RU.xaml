@@ -4,6 +4,7 @@
 	<sys:String x:Key="Connect">Подключиться</sys:String>
 	<sys:String x:Key="Disconnect">Отключиться</sys:String>
 	<sys:String x:Key="SetConnect">Настройка соединения</sys:String>
+    <sys:String x:Key="SelectLang">Выбор языка</sys:String>
 	<sys:String x:Key="Setting">Настройка</sys:String>
 	<sys:String x:Key="About">О программе</sys:String>
 	<sys:String x:Key="Stat">Статус подключения:</sys:String>
@@ -20,8 +21,8 @@
 	<sys:String x:Key="CtrlParam">Управляемые параметры</sys:String>
 	<sys:String x:Key="ModeStab">Режим стабилизации</sys:String>
 	<sys:String x:Key="OutCur">Выходной ток</sys:String>
-    <sys:String x:Key="SummPot">Защитный потенциал</sys:String>
-	<sys:String x:Key="PolPot">Поляризационный потенциал</sys:String>
+    <sys:String x:Key="SummPot">Суммарный потенциал (СОС)</sys:String>
+	<sys:String x:Key="PolPot">Поляризационный потенциал (БОС)</sys:String>
 	<sys:String x:Key="OutNapr">Выходное напряжение</sys:String>
 	<sys:String x:Key="Set">Установить</sys:String>
 	<sys:String x:Key="WrongModeStab">Несоответствие режима стабилизации</sys:String>
@@ -34,7 +35,7 @@
 	<sys:String x:Key="SpeedCorr">Скорость коррозии</sys:String>
 	<sys:String x:Key="DeepCorr">Глубина коррозии</sys:String>
 	<sys:String x:Key="OnOff">Вкл./Выкл.</sys:String>
-    <sys:String x:Key="AlarmStatus">Сигнализация о текущем состоянии</sys:String>
+    <sys:String x:Key="AlarmStatus">Сигнализация</sys:String>
     <sys:String x:Key="VoltCircuit1">Напряжение сети 1</sys:String>
     <sys:String x:Key="ValueCounterEE1">Счетчик э/э сети 1</sys:String>
     <sys:String x:Key="VoltCircuit2">Напряжение сети 2</sys:String>
@@ -90,7 +91,7 @@
     <sys:String x:Key="Break">разрыв</sys:String>
     <sys:String x:Key="Contact">замкнут</sys:String>
     <sys:String x:Key="ByCurrent">по току</sys:String>
-    <sys:String x:Key="BySumPot">по защит.потенциалу</sys:String>
+    <sys:String x:Key="BySumPot">по сумм.потенциалу</sys:String>
     <sys:String x:Key="ByPolPot">по поляр.потенциалу</sys:String>
     <sys:String x:Key="ByVoltage">по напряжению</sys:String>
     <sys:String x:Key="Type">Тип:</sys:String>

@@ -37,34 +37,34 @@ namespace ServiceControl.Modbus.Registers
 
             for (int i = 1; i <= CountKIP; i++)
             {
-                RegisterStatus regStat = new RegisterStatus() { Number = i,  Address = (ushort)(i + 3000), CodeFunc = ModbusFunc.Holding, Name = "Состояние НГК-БИ(ИКП)" };
+                RegisterStatus regStat = new RegisterStatus() { Number = i,  Address = (ushort)(i + 3000), CodeFunc = ModbusFunc.HoldingRegister, Name = "Состояние НГК-БИ(ИКП)" };
                 ListStatus.Add(regStat);
 
-                RegisterFloat reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3100), CodeFunc = ModbusFunc.Holding, Name = "Ток поляризации", Scale = 0.001f };
+                RegisterFloat reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3100), CodeFunc = ModbusFunc.HoldingRegister, Name = "Ток поляризации", Scale = 0.001f };
                 ListCurrentPol.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3200), CodeFunc = ModbusFunc.Holding, Name = "Поляризационный потенциал", Scale = 0.001f };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3200), CodeFunc = ModbusFunc.HoldingRegister, Name = "Поляризационный потенциал", Scale = 0.001f };
                 ListPolPot.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3300), CodeFunc = ModbusFunc.Holding, Name = "Суммарный потенциал", Scale = 0.01f };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3300), CodeFunc = ModbusFunc.HoldingRegister, Name = "Суммарный потенциал", Scale = 0.01f };
                 ListSummPot.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3400), CodeFunc = ModbusFunc.Holding, Name = "Сопротивление 1 платины ДК", Scale = 0.01f };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3400), CodeFunc = ModbusFunc.HoldingRegister, Name = "Сопротивление 1 платины ДК", Scale = 0.01f };
                 ListResistDK1.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3500), CodeFunc = ModbusFunc.Holding, Name = "Сопротивление 2 платины ДК", Scale = 0.01f };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3500), CodeFunc = ModbusFunc.HoldingRegister, Name = "Сопротивление 2 платины ДК", Scale = 0.01f };
                 ListResistDK2.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3600), CodeFunc = ModbusFunc.Holding, Name = "Сопротивление 3 платины ДК", Scale = 0.01f };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3600), CodeFunc = ModbusFunc.HoldingRegister, Name = "Сопротивление 3 платины ДК", Scale = 0.01f };
                 ListResistDK3.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3700), CodeFunc = ModbusFunc.Holding, Name = "Защитный ток", Scale = 0.01f };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3700), CodeFunc = ModbusFunc.HoldingRegister, Name = "Защитный ток", Scale = 0.01f };
                 ListProtectCurrent.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3900), CodeFunc = ModbusFunc.Holding, Name = "Глубина коррозии", Scale = 1 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3900), CodeFunc = ModbusFunc.HoldingRegister, Name = "Глубина коррозии", Scale = 1 };
                 ListDeepCorr.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 4000), CodeFunc = ModbusFunc.Holding, Name = "Скорость коррозии", Scale = 1 };
+                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 4000), CodeFunc = ModbusFunc.HoldingRegister, Name = "Скорость коррозии", Scale = 1 };
                 ListSpeedCorr.Add(reg);
 
             }

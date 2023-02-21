@@ -68,12 +68,12 @@ namespace ServiceControl.Modbus.Registers
         {
             try
             {
-                if (Reg.CodeFunc == ModbusFunc.Holding)
+                if (Reg.CodeFunc == ModbusFunc.HoldingRegister)
                 {
                     ushort[] res = modbus.ReadRegisterHolding(Reg.Address, Reg.Size, Slave);
                     Reg.SetResultValues(res);
                 }
-                if (Reg.CodeFunc == ModbusFunc.InputReg)
+                if (Reg.CodeFunc == ModbusFunc.InputRegister)
                 {
                     ushort[] res = modbus.ReadRegisterInput(Reg.Address, Reg.Size, Slave);
                     Reg.SetResultValues(res);
@@ -107,12 +107,12 @@ namespace ServiceControl.Modbus.Registers
         {
             try
             {
-                if (reg.CodeFunc == ModbusFunc.CoilRead)
+                if (reg.CodeFunc == ModbusFunc.Coil)
                 {
                     bool[] res = modbus.ReadRegisterCoil(reg.Address, reg.Size, Slave);
                     reg.SetResultValues(res);
                 }
-                if (reg.CodeFunc == ModbusFunc.Discrete)
+                if (reg.CodeFunc == ModbusFunc.InputDiscrete)
                 {
                     bool[] res = modbus.ReadRegisterDiscret(reg.Address, reg.Size, Slave);
                     reg.SetResultValues(res);
@@ -162,10 +162,10 @@ namespace ServiceControl.Modbus.Registers
 
             try
             {
-                if (reg.CodeFunc == ModbusFunc.Holding)
+                if (reg.CodeFunc == ModbusFunc.HoldingRegister)
                     res = modbus.ReadRegisterHolding(reg.Address, AllSize, Slave);
 
-                if (reg.CodeFunc == ModbusFunc.InputReg)
+                if (reg.CodeFunc == ModbusFunc.InputRegister)
                     res = modbus.ReadRegisterInput(reg.Address, AllSize, Slave);
 
                 if (res?.Length != AllSize) return;
@@ -207,10 +207,10 @@ namespace ServiceControl.Modbus.Registers
 
             try
             {
-                if (reg.CodeFunc == ModbusFunc.CoilRead)
+                if (reg.CodeFunc == ModbusFunc.Coil)
                     res = modbus.ReadRegisterCoil(reg.Address, AllSize, Slave);
 
-                if (reg.CodeFunc == ModbusFunc.Discrete)
+                if (reg.CodeFunc == ModbusFunc.InputDiscrete)
                     res = modbus.ReadRegisterDiscret(reg.Address, AllSize, Slave);
 
                 if (res?.Length != AllSize) return;
