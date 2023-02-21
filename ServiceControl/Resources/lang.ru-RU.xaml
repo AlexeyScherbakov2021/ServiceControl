@@ -9,8 +9,6 @@
 	<sys:String x:Key="Stat">Статус подключения:</sys:String>
     <sys:String x:Key="Connected">подключено</sys:String>
     <sys:String x:Key="NotConnected">не подключено</sys:String>
-        
-    
 	<sys:String x:Key="Cancel">Отменить</sys:String>
 	<sys:String x:Key="Device">Устройство</sys:String>
 	<sys:String x:Key="DevAddr">Адрес устройства</sys:String>
@@ -28,7 +26,7 @@
 	<sys:String x:Key="Set">Установить</sys:String>
 	<sys:String x:Key="WrongModeStab">Несоответствие режима стабилизации</sys:String>
 	<sys:String x:Key="PowerModul">Силовые модули</sys:String>
-	<sys:String x:Key="OutParam">Выходные параметры</sys:String>
+	<sys:String x:Key="CounterEE">Счетчик э/э</sys:String>
 	<sys:String x:Key="VerPlate">Версия платы</sys:String>
 	<sys:String x:Key="VerPO">Версия ПО</sys:String>
 	<sys:String x:Key="Year">Год</sys:String>
@@ -71,6 +69,7 @@
     <sys:String x:Key="On">Включен</sys:String>
     <sys:String x:Key="Off">Выключен</sys:String>
     <sys:String x:Key="Crash">Авария</sys:String>
+    <sys:String x:Key="Absent">Отсутствует</sys:String>
     <!--измерения-->
     <sys:String x:Key="Volt">В</sys:String>
     <sys:String x:Key="KVT">кВт*ч</sys:String>
@@ -91,8 +90,17 @@
     <sys:String x:Key="Break">разрыв</sys:String>
     <sys:String x:Key="Contact">замкнут</sys:String>
     <sys:String x:Key="ByCurrent">по току</sys:String>
-    <sys:String x:Key="BySumPot">по сумм.потенциалу</sys:String>
+    <sys:String x:Key="BySumPot">по защит.потенциалу</sys:String>
     <sys:String x:Key="ByPolPot">по поляр.потенциалу</sys:String>
     <sys:String x:Key="ByVoltage">по напряжению</sys:String>
+    <sys:String x:Key="Type">Тип:</sys:String>
+    <sys:String x:Key="Address">Адрес:</sys:String>
+    <sys:String x:Key="Port2">Порт:</sys:String>
+    <sys:String x:Key="TimeOut2">Таймаут:</sys:String>
+    <sys:String x:Key="IPAddr2">IP адрес:</sys:String>
+    <sys:String x:Key="CardDev">Карточка устройства</sys:String>
+    <!--<sys:String x:Key=""></sys:String>
+    <sys:String x:Key=""></sys:String>
+    <sys:String x:Key=""></sys:String>-->
 
 </ResourceDictionary>

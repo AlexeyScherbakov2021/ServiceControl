@@ -27,7 +27,7 @@
     <sys:String x:Key="Set">Set</sys:String>
     <sys:String x:Key="WrongModeStab">Stabilization mode mismatch</sys:String>
     <sys:String x:Key="PowerModul">Power modules</sys:String>
-    <sys:String x:Key="OutParam">Output parameter</sys:String>
+    <sys:String x:Key="CounterEE">Counter EE</sys:String>
     <sys:String x:Key="VerPlate">Ver. board</sys:String>
     <sys:String x:Key="VerPO">Ver. SW</sys:String>
     <sys:String x:Key="Year">Year</sys:String>
@@ -70,6 +70,7 @@
     <sys:String x:Key="On">On</sys:String>
     <sys:String x:Key="Off">Off</sys:String>
     <sys:String x:Key="Crash">Crash</sys:String>
+    <sys:String x:Key="Absent">Absent</sys:String>
     <sys:String x:Key="Volt">V</sys:String>
     <sys:String x:Key="KVT">kW*h</sys:String>
     <sys:String x:Key="Hour">h</sys:String>
@@ -92,6 +93,12 @@
     <sys:String x:Key="BySumPot">by summ. potenc.</sys:String>
     <sys:String x:Key="ByPolPot">by polyar pot.</sys:String>
     <sys:String x:Key="ByVoltage">by voltage</sys:String>
+    <sys:String x:Key="Type">Type:</sys:String>
+    <sys:String x:Key="Address">Address:</sys:String>
+    <sys:String x:Key="Port2">Port:</sys:String>
+    <sys:String x:Key="TimeOut2">TimeOut:</sys:String>
+    <sys:String x:Key="IPAddr2">IP address:</sys:String>
+    <sys:String x:Key="CardDev">Device card</sys:String>
 
 
 </ResourceDictionary>

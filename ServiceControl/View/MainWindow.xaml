@@ -47,10 +47,38 @@
                 </Menu>
 
             </ToolBarPanel>
-            <Border BorderThickness="1" BorderBrush="Black" Padding="4" Background="#FFB3CEFB">
+            <Border x:Name="bordBlue" BorderThickness="1" BorderBrush="Black" Padding="4" Background="#FFB3CEFB">
                 <StatusBar Background="Transparent">
-                    <TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" 
-                           FontWeight="Bold"/>
+                    <!--<TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" 
+                           FontWeight="Bold"/>-->
+                    <Grid Height="21">
+                        <Grid >
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource Type}" FontSize="18"/>
+                                <TextBlock Text="{Binding deviceType}" Margin="4,0,8,0"  FontSize="18" FontWeight="Bold"/>
+                                <TextBlock Text="{DynamicResource Address}" FontSize="16"/>
+                                <TextBlock Text="{Binding Slave}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                <TextBlock Text="{DynamicResource Port2}" FontSize="18"/>
+                                <TextBlock Text="{Binding ComPort}" Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                <TextBlock Text="{DynamicResource TimeOut2}"  FontSize="18"/>
+                                <TextBlock Text="{Binding TimeOutCOM}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Background="{Binding Background, ElementName=bordBlue}" Visibility="{Binding VisibleTCP}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{DynamicResource Type}" FontSize="18"/>
+                                <TextBlock Text="{Binding deviceType}" Margin="4,0,8,0"  FontSize="18" FontWeight="Bold"/>
+                                <TextBlock Text="{DynamicResource Address}" FontSize="18"/>
+                                <TextBlock Text="{Binding Slave}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                <TextBlock Text="{DynamicResource IPAddr2}" FontSize="18"/>
+                                <TextBlock Text="{Binding HostName}" Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                <TextBlock Text="{DynamicResource Port2}"  FontSize="18"/>
+                                <TextBlock Text="{Binding Port}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <!--<TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" 
+                           FontWeight="Bold"/>-->
                     <Button Content="{DynamicResource Connect}" Command="{Binding ConnectCommand}" Padding="6" Margin="16,0,0,0" BorderBrush="Black" Style="{DynamicResource ButtonStyle1}" />
                     <Button Content="{DynamicResource Disconnect}" Command="{Binding DisconnectCommand}" Padding="6" Margin="16,0,40,0" BorderBrush="Black" Style="{DynamicResource ButtonStyle1}" />
                 </StatusBar>

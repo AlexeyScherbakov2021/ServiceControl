@@ -33,27 +33,40 @@ namespace ServiceControl.ViewModel
         Device CurrentDevice;
 
         public List<DeviceType> ListDeviceType { get; set; }
-        private DevType deviceType { get; set; }
-        private int TimeOutCOM { get; set; }
-        private bool IsSelectTCP { get; set; }
+        
 
+
+        private bool IsSelectTCP { get; set; }
 
         #endregion
 
         #region Экранные переменные
 
-        private string _StringConnect;
-        public string StringConnect { get => _StringConnect; set { Set(ref _StringConnect, value);  } }
+        private int _TimeOutCOM;
+        public int TimeOutCOM { get => _TimeOutCOM; set { Set(ref _TimeOutCOM, value); } }
+        
+        public Visibility VisibleTCP => IsSelectTCP ? Visibility.Visible : Visibility.Hidden;
+
+        private DevType _deviceType;
+        public DevType deviceType { get => _deviceType; set { Set(ref _deviceType, value); } }
+
+        private int _Slave;
+        public int Slave { get => _Slave; set { Set(ref _Slave, value); } }
+
+        private string _HostName = "COM3";// "localhost";
+        public string HostName { get => _HostName; set { Set(ref _HostName, value); } }
+
+        private int _Port;
+        public int Port { get => _Port; set { Set(ref _Port, value); } }
+
+        private string _ComPort;
+        public string ComPort { get => _ComPort; set { Set(ref _ComPort, value); } }
+
+        //private string _StringConnect;
+        //public string StringConnect { get => _StringConnect; set { Set(ref _StringConnect, value);  } }
 
         private UserControl _SControl { get; set; }
         public UserControl SControl { get => _SControl; set { _SControl = value; OnPropertyChanged(nameof(SControl)); } }
-
-
-        public int Slave { get; set; } = 1;
-
-        public string HostName { get; set; } = "COM3";// "localhost";
-        public int Port { get; set; } = 0;
-        public string ComPort { get; set; }
 
         private bool _IsConnected = false;
         public bool IsConnected
@@ -85,7 +98,7 @@ namespace ServiceControl.ViewModel
             //string s = $"RX: {string.Join(", ", n.Select(it => $"{it:X2}"))}";
 
             LoadFromIni();
-            FormatStringConnect();
+            //FormatStringConnect();
 
             ListDeviceType = new List<DeviceType>()
             {
@@ -112,12 +125,12 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         // формирование строки подключеия
         //--------------------------------------------------------------------------------------------
-        private void FormatStringConnect()
-        {
-            StringConnect = IsSelectTCP
-                ? $"Тип устройства: {deviceType}   Адрес: {Slave}    IP адрес: {HostName}   Порт: {Port}"
-                : $"Тип: {deviceType}   Адрес:{Slave}   Порт: {ComPort}   Таймаут: {TimeOutCOM}";
-        }
+        //private void FormatStringConnect()
+        //{
+        //    StringConnect = IsSelectTCP
+        //        ? $"Тип устройства: {deviceType}   Адрес: {Slave}    IP адрес: {HostName}   Порт: {Port}"
+        //        : $"Тип: {deviceType}   Адрес:{Slave}   Порт: {ComPort}   Таймаут: {TimeOutCOM}";
+        //}
 
 
         //--------------------------------------------------------------------------------------------
@@ -154,7 +167,7 @@ namespace ServiceControl.ViewModel
                 lang = SelectedCilture.Name;
 
             ChangeLanguage(lang);
-
+            OnPropertyChanged(nameof(VisibleTCP));
         }
 
         //--------------------------------------------------------------------------------------------
@@ -225,7 +238,9 @@ namespace ServiceControl.ViewModel
                 iniFile.WritePrivateString("TCP", "Host", HostName);
                 iniFile.WritePrivateString("TCP", "Port", Port.ToString());
 
-                FormatStringConnect();
+                OnPropertyChanged(nameof(VisibleTCP));
+
+                //FormatStringConnect();
             }
         }
 

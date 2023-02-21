@@ -47,7 +47,7 @@
                         <Style TargetType="fa:ImageAwesome">
                             <Setter Property="Foreground" Value="OrangeRed"/>
                             <Setter Property="Icon" Value="Solid_Times"/>
-                            <Setter Property="ToolTip" Value="Отсутствует"/>
+                            <Setter Property="ToolTip" Value="{DynamicResource Absent}"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Value}" Value="0">
                                     <Setter Property="Foreground" Value="LightGreen"/>
@@ -90,18 +90,21 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="15*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="14*"/>
-            <RowDefinition Height="9*"/>
+            <RowDefinition Height="104"/>
+            <RowDefinition Height="164"/>
+            <RowDefinition Height="146"/>
+            <RowDefinition Height="52"/>
+            <RowDefinition Height="255"/>
+            <RowDefinition Height="90"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="45*"/>
-            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="490"/>
+            <ColumnDefinition Width="360"/>
         </Grid.ColumnDefinitions>
 
         <!--Управляемые параметры-->
-        <Border Background="WhiteSmoke" Margin="4,0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="1">
+        <Border Background="WhiteSmoke" Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="1">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -177,6 +180,22 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
+                    <ItemsControl ItemsSource="{Binding ListInput2}" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="262" 
+                                               TextAlignment="Right" VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding Value, TargetNullValue=--}" Width="56" VerticalAlignment="Top"
+                                        Margin="4,0" Padding="2" FontWeight="Normal" 
+                                        TextAlignment="Right" Background="White" />
+                                    <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    
                     <!--Запись режима выходного напряжения-->
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding device.ModeNaprOutputWrite.Name}" Width="262" TextAlignment="Right"   VerticalAlignment="Top"/>
@@ -242,15 +261,14 @@
             </GroupBox>
         </Border>
 
-
-        <!--Входные параметры-->
-        <Border Background="WhiteSmoke" Margin="4,0" Grid.Row="2" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="1" >
+        <!--Счетчик электроэнергии-->
+        <Border Background="WhiteSmoke" Margin="4,0" Grid.Row="2" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1" >
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
             <GroupBox Margin="4"  BorderBrush="Black" FontSize="14"   >
                 <GroupBox.Header>
-                    <TextBlock Text="{DynamicResource OutParam}" FontSize="16" FontWeight="Bold"/>
+                    <TextBlock Text="{DynamicResource CounterEE}" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel Margin="8" >
                     <!--<TextBlock Text="{Binding DeviceInfo}" Margin="0,6" FontSize="14" />-->
@@ -259,7 +277,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap"  TextAlignment="Right" Width="280"  VerticalAlignment="Top"/>
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" TextAlignment="Right" Width="134"  VerticalAlignment="Top"/>
                                     <TextBlock Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" 
                                                VerticalAlignment="Top" Margin="8,1,1,1" Padding="6,2"
                                         TextAlignment="Right" Background="White"/>
@@ -268,24 +286,55 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <UniformGrid Columns="2" Rows="4" Margin="1" Width="361" HorizontalAlignment="Left">
-                        <TextBlock Text="{DynamicResource VerPlate}"  TextAlignment="Right"/>
-                        <TextBlock Text="{Binding device.InfoReg.VersionDev}" Margin="8,2,0,0" Background="White" TextAlignment="Center"/>
-                        <TextBlock Text="{DynamicResource VerPO}" TextAlignment="Right" />
-                        <TextBlock Text="{Binding device.InfoReg.VersionPO}" Margin="8,2,0,0" Background="White" TextAlignment="Center"/>
-                        <TextBlock Text="{DynamicResource Year}" TextAlignment="Right"/>
-                        <TextBlock Text="{Binding device.InfoReg.Year}" Margin="8,2,0,0" Background="White" TextAlignment="Center"/>
-                        <TextBlock Text="№" TextAlignment="Right"/>
-                        <TextBlock Text="{Binding device.InfoReg.NumberDev}" Margin="8,2,0,0" Background="White" TextAlignment="Center"/>
-
-                    </UniformGrid>
 
                 </StackPanel>
             </GroupBox>
         </Border>
 
+        <!--Карточка устройства-->
+        <Border Background="WhiteSmoke" Margin="4,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1" >
+            <!--<Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>-->
+            <GroupBox Margin="4"  BorderBrush="Black" FontSize="16"   >
+                <GroupBox.Header>
+                    <TextBlock Text="{DynamicResource CardDev}" FontSize="16" FontWeight="Bold"/>
+                </GroupBox.Header>
+                    <Grid Margin="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                        
+                        <TextBlock Text="{DynamicResource VerPlate}"  TextAlignment="Right"/>
+                        <TextBlock Text="{Binding device.InfoReg.VersionDev}" Margin="8,2,0,0" Grid.Column="1"
+                                   Background="White" TextAlignment="Center"/>
+
+                    <TextBlock Text="{DynamicResource VerPO}" TextAlignment="Right"  Grid.Column="0" Grid.Row="1"/>
+                    <TextBlock Text="{Binding device.InfoReg.VersionPO}" Margin="8,2,0,0" Grid.Column="1" Grid.Row="1"
+                                   Background="White" TextAlignment="Center"/>
+
+                    <TextBlock Text="{DynamicResource Year}" TextAlignment="Right" Grid.Row="0"  Grid.Column="2"/>
+                        <TextBlock Text="{Binding device.InfoReg.Year}" Margin="8,2,0,0"  Grid.Row="0"  Grid.Column="3"
+                                   Background="White" TextAlignment="Center"/>
+
+                        <TextBlock Text="№" TextAlignment="Right" Grid.Row="1"  Grid.Column="2"/>
+                        <TextBlock Text="{Binding device.InfoReg.NumberDev}" Margin="8,2,0,0"  Grid.Row="1" Grid.Column="3"
+                                   Background="White" TextAlignment="Center"/>
+                    </Grid>
+
+            </GroupBox>
+        </Border>
+
         <!--Сигнализация-->
-        <Border Background="WhiteSmoke" Margin="4" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="2" Visibility="Visible">
+        <Border Background="WhiteSmoke" Margin="4" Grid.Column="0" Grid.RowSpan="1" Grid.Row="4" Grid.ColumnSpan="1">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -293,7 +342,7 @@
                 <GroupBox.Header>
                     <TextBlock Text="{DynamicResource AlarmStatus}" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <ItemsControl ItemsSource="{Binding ListStatus}" Margin="8,8,0,0" >
+                <ItemsControl ItemsSource="{Binding ListStatus}" Margin="8,20,0,0" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -306,7 +355,7 @@
                             </StackPanel>
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding IsAlarm}" Value="true">
-                                    <Setter Property="Background" Value="#FFf0f0" TargetName="border"/>
+                                    <Setter Property="Background" Value="#FFd0d0" TargetName="border"/>
                                 </DataTrigger>
                             </DataTemplate.Triggers>
                         </DataTemplate>
@@ -314,7 +363,6 @@
                 </ItemsControl>
             </GroupBox>
         </Border>
-
 
         <!--Силовые модули-->
         <Border Background="WhiteSmoke" Margin="4,0" Grid.Column="1" Grid.Row="1" Grid.RowSpan="1" Grid.ColumnSpan="2">
@@ -327,7 +375,7 @@
                 </GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <ItemsControl ItemTemplate="{StaticResource ItemsControlItemTemplate1}" Width="200"
-                              ItemsSource="{Binding ListInputMS}" Margin="20,20,0,0" >
+                              ItemsSource="{Binding ListInputMS}" Margin="20,14,0,0" >
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal"/>
@@ -374,7 +422,8 @@
         </Border>
 
         <!--Индикаторы скорости коррозии-->
-        <Border Background="WhiteSmoke" Margin="4,0" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"  Grid.RowSpan="2" Visibility="Visible">
+        <Border Background="WhiteSmoke" Margin="4,0" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"  
+                Grid.RowSpan="2" Visibility="Visible">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->

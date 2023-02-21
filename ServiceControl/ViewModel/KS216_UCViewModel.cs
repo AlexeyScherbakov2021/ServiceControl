@@ -41,6 +41,8 @@ namespace ServiceControl.ViewModel
         public Device216 device { get; set; }
 
         public List<Register> ListInput { get; set; }
+        public List<Register> ListInput2 { get; set; }
+
         public List<Register> ListInputMS { get; set; }
         public List<TwoRegister> ListInputDK { get; set; }
         public List<RegisterBool> ListStatus { get; set; }
@@ -74,14 +76,20 @@ namespace ServiceControl.ViewModel
 
             device.EndRead += OnReadFinish;
             device.EndStartRead += OnEndStartRead; 
-
             device.Start();
 
+            // добавление в список входных параметров
             ListInput = new List<Register>()
             {
-                device.NaprSeti1, device.CountEE1, device.NaprSeti2, device.CountEE2, device.Temper, device.CurrPolyar
+                device.NaprSeti1, device.CountEE1, device.NaprSeti2, device.CountEE2
             };
 
+            ListInput2 = new List<Register>()
+            {
+                device.Temper, device.CurrPolyar
+            };
+
+            // добавление в список силовых модулей
             ListInputMS = new List<Register>();
             for (int i = 0; i < Device216.CountMS; i+=2)
             {
@@ -92,16 +100,19 @@ namespace ServiceControl.ViewModel
                 ListInputMS.Add(device.MS[i]);
             }
 
+
+            // добавление в список датчиков коррозии
             ListInputDK = new List<TwoRegister>();
             for (int i = 0; i < Device216.CountDK; i++)
             {
                 ListInputDK.Add( new TwoRegister() { Register1 = device.SpeedDK[i], Register2 = device.DeepDK[i] });
-                //ListInputDK.Add(device.DeepDK[i]);
             }
 
+            // добавление в список статусов
             ListStatus = new List<RegisterBool>() { device.IllegalAccess, device.DistanceMode, device.Fault, 
                 device.BreakCirc, device.OnMS };
 
+            // добавление в список регистров управления
             ListWriteControl = new List<TwoRegister>() { 
                 new TwoRegister() { Register1 = device.CurrOutput, Register2 = device.SetCurrOutput },
                 new TwoRegister() { Register1 = device.ProtectPotenSumm, Register2 = device.SetSummPotOutput },
@@ -111,6 +122,7 @@ namespace ServiceControl.ViewModel
                 new TwoRegister() { Register1 = device.TempCoolerOff, Register2 = device.TempCoolerOffWrite },
             };
 
+            // добавление в список целых регистров управления
             ListWriteControl2 = new List<TwoRegister>() { 
                 new TwoRegister() { Register1 = device.TimeWork, Register2 = device.TimeWorkWrite },
                 new TwoRegister() { Register1 = device.TimeProtect, Register2 = device.TimeProtectWrite },
