@@ -11,60 +11,87 @@ namespace ServiceControl.Modbus.Registers
     {
         public static readonly int CountKIP = 32;
         public List<RegisterStatus> ListStatus { get; set; }
-        public List<RegisterFloat> ListCurrentPol { get; set; }
-        public List<RegisterFloat> ListPolPot { get; set; }
-        public List<RegisterFloat> ListSummPot { get; set; }
-        public List<RegisterFloat> ListResistDK1 { get; set; }
-        public List<RegisterFloat> ListResistDK2 { get; set; }
-        public List<RegisterFloat> ListResistDK3 { get; set; }
-        public List<RegisterFloat> ListProtectCurrent { get; set; }
-        public List<RegisterFloat> ListDeepCorr { get; set; }
-        public List<RegisterFloat> ListSpeedCorr { get; set; }
+        public List<RegisterKIP> ListCurrentPol { get; set; }
+        public List<RegisterKIP> ListPolPot { get; set; }
+        public List<RegisterKIP> ListSummPot { get; set; }
+        public List<RegisterKIP> ListResistDK1 { get; set; }
+        public List<RegisterKIP> ListResistDK2 { get; set; }
+        public List<RegisterKIP> ListResistDK3 { get; set; }
+        public List<RegisterKIP> ListProtectCurrent { get; set; }
+        public List<RegisterKIP> ListDeepCorr { get; set; }
+        public List<RegisterKIP> ListSpeedCorr { get; set; }
 
 
         public Device261(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
             ListStatus = new List<RegisterStatus>();
-            ListCurrentPol = new List<RegisterFloat>();
-            ListPolPot = new List<RegisterFloat>();
-            ListSummPot = new List<RegisterFloat>();
-            ListResistDK1 = new List<RegisterFloat>();
-            ListResistDK2 = new List<RegisterFloat>();
-            ListResistDK3 = new List<RegisterFloat>();
-            ListProtectCurrent = new List<RegisterFloat>();
-            ListDeepCorr = new List<RegisterFloat>();
-            ListSpeedCorr = new List<RegisterFloat>();
+            ListCurrentPol = new List<RegisterKIP>();
+            ListPolPot = new List<RegisterKIP>();
+            ListSummPot = new List<RegisterKIP>();
+            ListResistDK1 = new List<RegisterKIP>();
+            ListResistDK2 = new List<RegisterKIP>();
+            ListResistDK3 = new List<RegisterKIP>();
+            ListProtectCurrent = new List<RegisterKIP>();
+            ListDeepCorr = new List<RegisterKIP>();
+            ListSpeedCorr = new List<RegisterKIP>();
 
             for (int i = 1; i <= CountKIP; i++)
             {
-                RegisterStatus regStat = new RegisterStatus() { Number = i,  Address = (ushort)(i + 3000), CodeFunc = ModbusFunc.HoldingRegister, Name = "Состояние НГК-БИ(ИКП)" };
+                RegisterStatus regStat = new RegisterStatus() { Number = i,  Address = (ushort)(i + 3000), 
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Состояние НГК-БИ(ИКП)" };
                 ListStatus.Add(regStat);
 
-                RegisterFloat reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3100), CodeFunc = ModbusFunc.HoldingRegister, Name = "Ток поляризации", Scale = 0.001f };
+                RegisterKIP reg = new RegisterKIP() { Number = i, Address = (ushort)(i + 3100), 
+                    MinValue = -5, MaxValue = 5,
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Ток поляризации", Scale = 0.001f };
                 ListCurrentPol.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3200), CodeFunc = ModbusFunc.HoldingRegister, Name = "Поляризационный потенциал", Scale = 0.001f };
+                reg = new RegisterKIP() { Number = i, Address = (ushort)(i + 3200),
+                    MinValue = -2,
+                    MaxValue = 2,
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Поляризационный потенциал", Scale = 0.001f };
                 ListPolPot.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3300), CodeFunc = ModbusFunc.HoldingRegister, Name = "Суммарный потенциал", Scale = 0.01f };
+                reg = new RegisterKIP() { Number = i, Address = (ushort)(i + 3300),
+                    MinValue = -10,
+                    MaxValue = 10,
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Суммарный потенциал", Scale = 0.01f };
                 ListSummPot.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3400), CodeFunc = ModbusFunc.HoldingRegister, Name = "Сопротивление 1 платины ДК", Scale = 0.01f };
+                reg = new RegisterKIP() { Number = i, Address = (ushort)(i + 3400),
+                    MinValue = 0,
+                    MaxValue = 110,
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Сопротивление 1 платины ДК", Scale = 0.01f };
                 ListResistDK1.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3500), CodeFunc = ModbusFunc.HoldingRegister, Name = "Сопротивление 2 платины ДК", Scale = 0.01f };
+                reg = new RegisterKIP() { Number = i, Address = (ushort)(i + 3500),
+                    MinValue = 0,
+                    MaxValue = 110,
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Сопротивление 2 платины ДК", Scale = 0.01f };
                 ListResistDK2.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3600), CodeFunc = ModbusFunc.HoldingRegister, Name = "Сопротивление 3 платины ДК", Scale = 0.01f };
+                reg = new RegisterKIP() { Number = i, Address = (ushort)(i + 3600),
+                    MinValue = 0,
+                    MaxValue = 110,
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Сопротивление 3 платины ДК", Scale = 0.01f };
                 ListResistDK3.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3700), CodeFunc = ModbusFunc.HoldingRegister, Name = "Защитный ток", Scale = 0.01f };
+                reg = new RegisterKIP() { Number = i, Address = (ushort)(i + 3700),
+                    MinValue = 0,
+                    MaxValue = 50,
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Защитный ток", Scale = 0.01f };
                 ListProtectCurrent.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 3900), CodeFunc = ModbusFunc.HoldingRegister, Name = "Глубина коррозии", Scale = 1 };
+                reg = new RegisterKIP() { Number = i, Address = (ushort)(i + 3900),
+                    MinValue = 0,
+                    MaxValue = 65535,
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Глубина коррозии", Scale = 1 };
                 ListDeepCorr.Add(reg);
 
-                reg = new RegisterFloat() { Number = i, Address = (ushort)(i + 4000), CodeFunc = ModbusFunc.HoldingRegister, Name = "Скорость коррозии", Scale = 1 };
+                reg = new RegisterKIP() { Number = i, Address = (ushort)(i + 4000),
+                    MinValue = 0,
+                    MaxValue = 65535,
+                    CodeFunc = ModbusFunc.HoldingRegister, Name = "Скорость коррозии", Scale = 1 };
                 ListSpeedCorr.Add(reg);
 
             }
@@ -74,33 +101,6 @@ namespace ServiceControl.Modbus.Registers
         public override Task StartRequestValue()
         {
             return RequestValue();
-
-            //ReadRegisters(ListStatus);
-            //ReadRegisters(ListCurrentPol);
-            //ReadRegisters(ListPolPot);
-            //ReadRegisters(ListSummPot);
-            //ReadRegisters(ListResistDK1);
-            //ReadRegisters(ListResistDK2);
-            //ReadRegisters(ListResistDK3);
-            //ReadRegisters(ListProtectCurrent);
-            //ReadRegisters(ListDeepCorr);
-            //ReadRegisters(ListSpeedCorr);
-
-            //ushort[] test = new ushort[1];
-            //test[0] = 0b1001;
-            //ListStatus[0].SetResultValues(test);
-
-            //test[0] = 0b0010;
-            //ListStatus[1].SetResultValues(test);
-
-            //test[0] = 0b0101;
-            //ListStatus[2].SetResultValues(test);
-
-            //test[0] = 0b0110;
-            //ListStatus[3].SetResultValues(test);
-
-            //return Task.CompletedTask;
-
         }
 
         public override Task RequestValue()
@@ -115,6 +115,8 @@ namespace ServiceControl.Modbus.Registers
             ReadRegisters(ListProtectCurrent);
             ReadRegisters(ListDeepCorr);
             ReadRegisters(ListSpeedCorr);
+
+            SetValueFromStatus();
 
             return Task.CompletedTask;
         }
@@ -133,5 +135,24 @@ namespace ServiceControl.Modbus.Registers
             CheckReg(ListSpeedCorr);
         }
 
+
+        private void SetValueFromStatus()
+        {
+            for (int i = 1; i < CountKIP; i++)
+            {
+                if (ListStatus[i].StatusBlock != BlockStatus.Absent)
+                {
+                    ListCurrentPol[i].SetValueFromStatus(true);
+                    ListPolPot[i].SetValueFromStatus(true);
+                    ListSummPot[i].SetValueFromStatus(true);
+                    ListResistDK1[i].SetValueFromStatus(true);
+                    ListResistDK2[i].SetValueFromStatus(true);
+                    ListResistDK3[i].SetValueFromStatus(true);
+                    ListProtectCurrent[i].SetValueFromStatus(true);
+                    ListDeepCorr[i].SetValueFromStatus(true);
+                    ListSpeedCorr[i].SetValueFromStatus(true);
+                }
+            }
+        }
     }
 }

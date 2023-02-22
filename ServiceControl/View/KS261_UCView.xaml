@@ -25,57 +25,57 @@
                   AlternatingRowBackground="#f0f0f0" FontSize="14"
                   >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number}"/>
+                <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number, StringFormat=N2, TargetNullValue=--}"/>
                 
                 <DataGridTextColumn Binding="{Binding RegCurrentPolyar.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
                     <DataGridTextColumn.Header>
                         <TextBlock Text="{DynamicResource CurrPol}"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
-                
-                <DataGridTextColumn Binding="{Binding RegPolyarPot.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+
+                <DataGridTextColumn Binding="{Binding RegPolyarPot.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                     <DataGridTextColumn.Header>
                         <TextBlock Text="{DynamicResource PolPotShot}"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
-                
-                <DataGridTextColumn Binding="{Binding RegSummPot.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+
+                <DataGridTextColumn Binding="{Binding RegSummPot.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                 <DataGridTextColumn.Header>
                         <TextBlock Text="{DynamicResource SummPotShort}"/>
                 </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn  Binding="{Binding RegtResistDK1.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn  Binding="{Binding RegtResistDK1.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                 <DataGridTextColumn.Header>
                     <TextBlock Text="{DynamicResource ResDK1}"/>
                 </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding RegtResistDK2.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn Binding="{Binding RegtResistDK2.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                 <DataGridTextColumn.Header>
                     <TextBlock Text="{DynamicResource ResDK2}"/>
                 </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding RegtResistDK3.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn Binding="{Binding RegtResistDK3.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                 <DataGridTextColumn.Header>
                     <TextBlock Text="{DynamicResource ResDK3}"/>
                 </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding RegProtectCurrent.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn Binding="{Binding RegProtectCurrent.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                 <DataGridTextColumn.Header>
                     <TextBlock Text="{DynamicResource ProtCurr}"/>
                 </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding RegDeepCorr.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn Binding="{Binding RegDeepCorr.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                 <DataGridTextColumn.Header>
                     <TextBlock Text="{DynamicResource DeepCorrShort}"/>
                 </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Binding="{Binding RegSpeedCorr.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn Binding="{Binding RegSpeedCorr.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                 <DataGridTextColumn.Header>
                     <TextBlock Text="{DynamicResource SpeedCorrShort}"/>
                 </DataGridTextColumn.Header>
@@ -97,7 +97,7 @@
                                                 <Setter Property="ToolTip" Value="{DynamicResource Opened}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding RegStatus.IsSensorOpen}" Value="False">
-                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Foreground" Value="#00dF00"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
                                                 <Setter Property="ToolTip" Value="{DynamicResource NotOpened}"/>
                                             </DataTrigger>
@@ -123,7 +123,7 @@
                                         <Setter Property="ToolTip" Value="{DynamicResource Absent}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Good">
-                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Foreground" Value="#00dF00"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
                                                 <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
                                             </DataTrigger>
@@ -159,7 +159,7 @@
                                         <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RegStatus.IsDK1Break}" Value="False">
-                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Foreground" Value="#00dF00"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
                                                 <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
                                             </DataTrigger>
@@ -185,7 +185,7 @@
                                         <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RegStatus.IsDK2Break}" Value="False">
-                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Foreground" Value="#00dF00"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
                                                 <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
                                             </DataTrigger>
@@ -211,7 +211,7 @@
                                         <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RegStatus.IsDK3Break}" Value="False">
-                                                <Setter Property="Foreground" Value="LightGreen"/>
+                                                <Setter Property="Foreground" Value="#00dF00"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
                                                 <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
                                             </DataTrigger>

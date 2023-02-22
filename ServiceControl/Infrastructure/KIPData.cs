@@ -9,15 +9,15 @@ namespace ServiceControl.Infrastructure
 {
     internal class KIPData
     {
-        public RegisterFloat RegCurrentPolyar { get; set; }
-        public RegisterFloat RegPolyarPot { get; set; }
-        public RegisterFloat RegSummPot { get; set; }
-        public RegisterFloat RegtResistDK1 { get; set; }
-        public RegisterFloat RegtResistDK2 { get; set; }
-        public RegisterFloat RegtResistDK3 { get; set; }
-        public RegisterFloat RegProtectCurrent { get; set; }
-        public RegisterFloat RegDeepCorr { get; set; }
-        public RegisterFloat RegSpeedCorr { get; set; }
+        public RegisterKIP RegCurrentPolyar { get; set; }
+        public RegisterKIP RegPolyarPot { get; set; }
+        public RegisterKIP RegSummPot { get; set; }
+        public RegisterKIP RegtResistDK1 { get; set; }
+        public RegisterKIP RegtResistDK2 { get; set; }
+        public RegisterKIP RegtResistDK3 { get; set; }
+        public RegisterKIP RegProtectCurrent { get; set; }
+        public RegisterKIP RegDeepCorr { get; set; }
+        public RegisterKIP RegSpeedCorr { get; set; }
         public RegisterStatus RegStatus { get; set; }
 
         //public int Number { get; set; }

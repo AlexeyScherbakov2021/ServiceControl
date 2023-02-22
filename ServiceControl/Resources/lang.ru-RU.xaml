@@ -89,7 +89,7 @@
     <sys:String x:Key="Avar">авария</sys:String>
     <sys:String x:Key="Main">основные</sys:String>
     <sys:String x:Key="Second">резервные</sys:String>
-    <sys:String x:Key="Break">разрыв</sys:String>
+    <sys:String x:Key="Break">обрыв</sys:String>
     <sys:String x:Key="Contact">замкнут</sys:String>
     <sys:String x:Key="ByCurrent">по току</sys:String>
     <sys:String x:Key="BySumPot">по сумм.потенциалу</sys:String>
