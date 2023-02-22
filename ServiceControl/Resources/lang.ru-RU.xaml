@@ -10,7 +10,8 @@
 	<sys:String x:Key="Stat">Статус подключения:</sys:String>
     <sys:String x:Key="Connected">подключено</sys:String>
     <sys:String x:Key="NotConnected">не подключено</sys:String>
-	<sys:String x:Key="Cancel">Отменить</sys:String>
+    <sys:String x:Key="NotAnswer">оборудование не отвечает</sys:String>
+    <sys:String x:Key="Cancel">Отменить</sys:String>
 	<sys:String x:Key="Device">Устройство</sys:String>
 	<sys:String x:Key="DevAddr">Адрес устройства</sys:String>
 	<sys:String x:Key="Proto">Протокол</sys:String>
@@ -102,6 +103,28 @@
     <sys:String x:Key="CardDev">Карточка устройства</sys:String>
     <sys:String x:Key="LogPacket">Журнал пакетов</sys:String>
     <sys:String x:Key="Pause">Пауза</sys:String>
-    <!--<sys:String x:Key=""></sys:String>-->
+
+    <!--KS261-->
+    <sys:String x:Key="CurrPol">Ток полр.</sys:String>
+    <sys:String x:Key="PolPotShot">Полр.пот.</sys:String>
+    <sys:String x:Key="SummPotShort">Сумм.пот.</sys:String>
+    <sys:String x:Key="ResDK1">Сопр.ДК1</sys:String>
+    <sys:String x:Key="ResDK2">Сопр.ДК2</sys:String>
+    <sys:String x:Key="ResDK3">Сопр.ДК3</sys:String>
+    <sys:String x:Key="ProtCurr">Защит.ток</sys:String>
+    <sys:String x:Key="DeepCorrShort">Глуб.корр.</sys:String>
+    <sys:String x:Key="SpeedCorrShort">Скор.корр.</sys:String>
+    <sys:String x:Key="Opened">Вскрыт</sys:String>
+    <sys:String x:Key="NotOpened">Не вскрыт</sys:String>
+    <sys:String x:Key="Status">Статус</sys:String>
+    <sys:String x:Key="DK1">ДК1</sys:String>
+    <sys:String x:Key="DK2">ДК2</sys:String>
+    <sys:String x:Key="DK3">ДК3</sys:String>
+    <!--<sys:String x:Key="Break">Обрыв</sys:String>-->
+    <!--<sys:String x:Key=""></sys:String>
+    <sys:String x:Key=""></sys:String>
+    <sys:String x:Key=""></sys:String>
+    <sys:String x:Key=""></sys:String>-->
+
 
 </ResourceDictionary>

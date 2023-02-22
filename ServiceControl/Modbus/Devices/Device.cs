@@ -12,6 +12,9 @@ using System.Windows.Threading;
 
 namespace ServiceControl.Modbus.Registers
 {
+    public enum StatusConnect { Disconnected, Connected, Answer, NotAnswer };
+
+
     internal abstract class Device
     {
         private bool _IsTimeout;
@@ -22,19 +25,8 @@ namespace ServiceControl.Modbus.Registers
             {
                 if (_IsTimeout == value) return;
                 _IsTimeout = value;
-                mainVM.IsConnected = !_IsTimeout;
-
-                //if (_IsTimeout)
-                //{
-                //    mainVM.ConnectedString = App.Current.Resources["NotConnected"].ToString();
-                //    mainVM.ConnectedColor = Brushes.Red;
-                //}
-                //else
-                //{
-                //    mainVM.ConnectedString = App.Current.Resources["Connected"].ToString();
-                //    mainVM.ConnectedColor = Brushes.Green;
-                //}
-
+                mainVM.SetStatusConnection(_IsTimeout ? StatusConnect.NotAnswer : StatusConnect.Answer);
+                //mainVM.IsConnected = !_IsTimeout;
             }
         }
 

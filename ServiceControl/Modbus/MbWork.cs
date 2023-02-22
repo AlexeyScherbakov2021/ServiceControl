@@ -28,6 +28,7 @@ namespace ServiceControl.Modbus
         private string Host;
         private int Port;
         private string ComPort;
+        private bool IsTCPoverRTU = false;
         private int TimeOut = 1000;
 
         public MbWork(string connect, int val, Protocol proto)
@@ -68,8 +69,9 @@ namespace ServiceControl.Modbus
                     if (!tcp.Connected)
                         return false;
 
-                    master = ModbusSerialMaster.CreateRtu(tcp);
-                    //master = ModbusIpMaster.CreateIp(tcp);
+                    master = IsTCPoverRTU 
+                        ? (ModbusMaster)ModbusSerialMaster.CreateRtu(tcp)
+                        : (ModbusMaster)ModbusIpMaster.CreateIp(tcp);
                 }
                 else
                 {

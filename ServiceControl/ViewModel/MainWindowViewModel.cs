@@ -69,17 +69,20 @@ namespace ServiceControl.ViewModel
         private UserControl _SControl { get; set; }
         public UserControl SControl { get => _SControl; set { _SControl = value; OnPropertyChanged(nameof(SControl)); } }
 
-        private bool _IsConnected = false;
-        public bool IsConnected
-        {
-            get => _IsConnected;
-            set
-            {
-                if (_IsConnected == value) return;
-                _IsConnected = value;
-                SetStatusConnection();
-            }
-        }
+        private bool IsTimeOutStatus = false;
+        //public bool IsTimeOutStatus
+        //{
+        //    get => _IsTimeOutStatus;
+        //    set => Set(ref _IsTimeOutStatus, value);
+        //}
+
+
+        private bool IsConnected = false;
+        //public bool IsConnected
+        //{
+        //    get => _IsConnected;
+        //    set => Set(ref _IsConnected, value);
+        //}
 
         private string _ConnectedString; // = "не подключено";
         public string ConnectedString { get => _ConnectedString; set { Set(ref _ConnectedString, value); } }
@@ -95,12 +98,7 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         public MainWindowViewModel()
         {
-            //byte[] n = new byte[4] { 0x02, 0x03, 0x11, 0x44 };
-            //string s = $"RX: {string.Join(", ", n.Select(it => $"{it:X2}"))}";
-
             LoadFromIni();
-            //FormatStringConnect();
-
             ListDeviceType = new List<DeviceType>()
             {
                 new DeviceType() { Name = "ДЕШК.301411.131", deviceType = DevType.KS131},
@@ -113,26 +111,53 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         // установка статуса соединения
         //--------------------------------------------------------------------------------------------
-        private void SetStatusConnection()
+        public void SetStatusConnection(StatusConnect status)
         {
-            ConnectedString = _IsConnected
-                ? App.Current.Resources["Connected"].ToString()
-                : App.Current.Resources["NotConnected"].ToString();
-            ConnectedColor = _IsConnected ? Brushes.Green : Brushes.Red;
+            switch(status)
+            {
+                case StatusConnect.Connected:
+                    IsConnected = true;
+                    break;
+
+                case StatusConnect.Disconnected:
+                    IsTimeOutStatus= false;
+                    IsConnected = false;
+                    break;
+
+                case StatusConnect.NotAnswer:
+                    IsTimeOutStatus = true;
+                    break;
+
+                case StatusConnect.Answer:
+                    IsTimeOutStatus = false;
+                    break;
+            }
+
+            SetStringConnection();
         }
 
 
-
         //--------------------------------------------------------------------------------------------
-        // формирование строки подключеия
+        // установка строки соединения
         //--------------------------------------------------------------------------------------------
-        //private void FormatStringConnect()
-        //{
-        //    StringConnect = IsSelectTCP
-        //        ? $"Тип устройства: {deviceType}   Адрес: {Slave}    IP адрес: {HostName}   Порт: {Port}"
-        //        : $"Тип: {deviceType}   Адрес:{Slave}   Порт: {ComPort}   Таймаут: {TimeOutCOM}";
-        //}
-
+        public void SetStringConnection()
+        {
+            if(IsTimeOutStatus)
+            {
+                ConnectedString = App.Current.Resources["NotAnswer"].ToString();
+                ConnectedColor = Brushes.Red;
+            }
+            else if(IsConnected)
+            {
+                ConnectedString = App.Current.Resources["Connected"].ToString();
+                ConnectedColor = Brushes.Green;
+            }
+            else
+            {
+                ConnectedString = App.Current.Resources["NotConnected"].ToString();
+                ConnectedColor = Brushes.Red;
+            }
+        }
 
         //--------------------------------------------------------------------------------------------
         // загрузка параметров из INI файла
@@ -257,9 +282,15 @@ namespace ServiceControl.ViewModel
             else
                 work = new MbWork(ComPort, TimeOutCOM, Protocol.COM);
 
-            IsConnected = work.CreateConnect();
+            if (work.CreateConnect())
+                SetStatusConnection(StatusConnect.Connected);
+            else
+            {
+                SetStatusConnection(StatusConnect.Disconnected);
+                return;
+            }
 
-            if (!IsConnected) return;
+            //if (!IsConnected) return;
 
             switch(deviceType)
             {
@@ -289,11 +320,11 @@ namespace ServiceControl.ViewModel
                     var vm261 = new KS261_UCViewModel(this, work, Slave);
                     SControl.DataContext = vm261;
                     CurrentDevice = vm261.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
                     CurrentDevice.ChangeLangRegister();
                     break;
             }
-
-
 
         }
 
@@ -301,7 +332,7 @@ namespace ServiceControl.ViewModel
         // Команда Кнопка Разъединить
         //--------------------------------------------------------------------------------
         public ICommand DisconnectCommand => new LambdaCommand(OnDisconnectCommandExecuted, CanDisconnectCommand);
-        private bool CanDisconnectCommand(object p) => IsConnected;
+        private bool CanDisconnectCommand(object p) => IsConnected || IsTimeOutStatus;
         private void OnDisconnectCommandExecuted(object p)
         {
             CurrentDevice.Stop();
@@ -309,7 +340,7 @@ namespace ServiceControl.ViewModel
             work.Disconnect();
             SControl = null;
             work = null;
-            IsConnected = false;
+            SetStatusConnection(StatusConnect.Disconnected);
         }
 
         //--------------------------------------------------------------------------------
@@ -322,7 +353,7 @@ namespace ServiceControl.ViewModel
             ChangeLanguage(p.ToString());
             iniFile.WritePrivateString("Main", "Lang", SelectedCilture.Name);
             CurrentDevice?.ChangeLangRegister();
-            SetStatusConnection();
+            SetStringConnection();
         }
 
         //--------------------------------------------------------------------------------

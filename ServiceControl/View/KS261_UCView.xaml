@@ -26,16 +26,65 @@
                   >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number}"/>
-                <DataGridTextColumn Header="Ток полр." Binding="{Binding RegCurrentPolyar.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="Полр.пот." Binding="{Binding RegPolyarPot.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="Сумм.пот." Binding="{Binding RegSummPot.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="Сопр.ДК1" Binding="{Binding RegtResistDK1.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="Сопр.ДК2" Binding="{Binding RegtResistDK2.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="Сопр.ДК3" Binding="{Binding RegtResistDK3.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="Защит.ток" Binding="{Binding RegProtectCurrent.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="Глуб.корр." Binding="{Binding RegDeepCorr.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="Скор.корр." Binding="{Binding RegSpeedCorr.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTemplateColumn Header="Вскрыт">
+                
+                <DataGridTextColumn Binding="{Binding RegCurrentPolyar.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource CurrPol}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                
+                <DataGridTextColumn Binding="{Binding RegPolyarPot.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource PolPotShot}"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                
+                <DataGridTextColumn Binding="{Binding RegSummPot.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource SummPotShort}"/>
+                </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn  Binding="{Binding RegtResistDK1.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn.Header>
+                    <TextBlock Text="{DynamicResource ResDK1}"/>
+                </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding RegtResistDK2.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn.Header>
+                    <TextBlock Text="{DynamicResource ResDK2}"/>
+                </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding RegtResistDK3.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn.Header>
+                    <TextBlock Text="{DynamicResource ResDK3}"/>
+                </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding RegProtectCurrent.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn.Header>
+                    <TextBlock Text="{DynamicResource ProtCurr}"/>
+                </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding RegDeepCorr.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn.Header>
+                    <TextBlock Text="{DynamicResource DeepCorrShort}"/>
+                </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Binding="{Binding RegSpeedCorr.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn.Header>
+                    <TextBlock Text="{DynamicResource SpeedCorrShort}"/>
+                </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Text="{DynamicResource Opened}"/>
+                    </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <fa:ImageAwesome Height="14" >
@@ -45,12 +94,12 @@
                                             <DataTrigger Binding="{Binding RegStatus.IsSensorOpen}" Value="True">
                                                 <Setter Property="Foreground" Value="OrangeRed"/>
                                                 <Setter Property="Icon" Value="Solid_Bolt"/>
-                                                <Setter Property="ToolTip" Value="Вскрыт"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Opened}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding RegStatus.IsSensorOpen}" Value="False">
                                                 <Setter Property="Foreground" Value="LightGreen"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
-                                                <Setter Property="ToolTip" Value="Не вскрыт"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource NotOpened}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -59,10 +108,11 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <!--<DataGridTextColumn Header="Вскрыт." Binding="{Binding RegStatus.IsSensorOpen}"/>-->
 
-
-                <DataGridTemplateColumn Header="Статус">
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Text="{DynamicResource Status}"/>
+                    </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <fa:ImageAwesome Height="14" >
@@ -70,22 +120,22 @@
                                     <Style TargetType="fa:ImageAwesome">
                                         <Setter Property="Foreground" Value="Red"/>
                                         <Setter Property="Icon" Value="Solid_Times"/>
-                                        <Setter Property="ToolTip" Value="Отсутствует"/>
+                                        <Setter Property="ToolTip" Value="{DynamicResource Absent}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Good">
                                                 <Setter Property="Foreground" Value="LightGreen"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
-                                                <Setter Property="ToolTip" Value="Норма"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Opened">
                                                 <Setter Property="Foreground" Value="OrangeRed"/>
                                                 <Setter Property="Icon" Value="Solid_Bolt"/>
-                                                <Setter Property="ToolTip" Value="Вскрыт"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Opened}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Alarm">
                                                 <Setter Property="Foreground" Value="Red"/>
                                                 <Setter Property="Icon" Value="Solid_ExclamationTriangle"/>
-                                                <Setter Property="ToolTip" Value="Авария"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Avar}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -94,9 +144,11 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <!--<DataGridTextColumn Header="Стат.блока" Binding="{Binding RegStatus.StatusBlock}"/>-->
 
-                <DataGridTemplateColumn Header="ДК1">
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Text="{DynamicResource DK1}"/>
+                    </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <fa:ImageAwesome Height="14" >
@@ -104,12 +156,12 @@
                                     <Style TargetType="fa:ImageAwesome">
                                         <Setter Property="Foreground" Value="OrangeRed"/>
                                         <Setter Property="Icon" Value="Solid_Bolt"/>
-                                        <Setter Property="ToolTip" Value="Обрыв"/>
+                                        <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RegStatus.IsDK1Break}" Value="False">
                                                 <Setter Property="Foreground" Value="LightGreen"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
-                                                <Setter Property="ToolTip" Value="Норма"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -118,8 +170,11 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn Header="ДК2">
+
+                <DataGridTemplateColumn >
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Text="{DynamicResource DK2}"/>
+                    </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <fa:ImageAwesome Height="14" >
@@ -127,12 +182,12 @@
                                     <Style TargetType="fa:ImageAwesome">
                                         <Setter Property="Foreground" Value="OrangeRed"/>
                                         <Setter Property="Icon" Value="Solid_Bolt"/>
-                                        <Setter Property="ToolTip" Value="Обрыв"/>
+                                        <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RegStatus.IsDK2Break}" Value="False">
                                                 <Setter Property="Foreground" Value="LightGreen"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
-                                                <Setter Property="ToolTip" Value="Норма"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -142,7 +197,10 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="ДК3">
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.Header>
+                        <TextBlock Text="{DynamicResource DK3}"/>
+                    </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <fa:ImageAwesome Height="14" >
@@ -150,12 +208,12 @@
                                     <Style TargetType="fa:ImageAwesome">
                                         <Setter Property="Foreground" Value="OrangeRed"/>
                                         <Setter Property="Icon" Value="Solid_Bolt"/>
-                                        <Setter Property="ToolTip" Value="Обрыв"/>
+                                        <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding RegStatus.IsDK3Break}" Value="False">
                                                 <Setter Property="Foreground" Value="LightGreen"/>
                                                 <Setter Property="Icon" Value="Solid_Circle"/>
-                                                <Setter Property="ToolTip" Value="Норма"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -165,9 +223,6 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!--<DataGridTextColumn Header="ДК1" Binding="{Binding RegStatus.IsDK1Break}"/>-->
-                <!--<DataGridTextColumn Header="ДК2" Binding="{Binding RegStatus.IsDK2Break}"/>
-                <DataGridTextColumn Header="ДК3" Binding="{Binding RegStatus.IsDK3Break}"/>-->
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -10,6 +10,7 @@
     <sys:String x:Key="Stat">State connect:</sys:String>
     <sys:String x:Key="Connected">connected</sys:String>
     <sys:String x:Key="NotConnected">diconnected</sys:String>
+    <sys:String x:Key="NotAnswer">device not answer</sys:String>
 
     <sys:String x:Key="Cancel">Cancel</sys:String>
     <sys:String x:Key="Device">Device</sys:String>
@@ -102,6 +103,23 @@
     <sys:String x:Key="CardDev">Device card</sys:String>
     <sys:String x:Key="LogPacket">Packet Log</sys:String>
     <sys:String x:Key="Pause">Pause</sys:String>
+    <!--KS261-->
+    <sys:String x:Key="CurrPol">Curr.Pol.</sys:String>
+    <sys:String x:Key="PolPotShot">Polr.Pot.</sys:String>
+    <sys:String x:Key="SummPotShort">Summ.Pot.</sys:String>
+    <sys:String x:Key="ResDK1">Res.DK1</sys:String>
+    <sys:String x:Key="ResDK2">Res.DK2</sys:String>
+    <sys:String x:Key="ResDK3">Res.DK3</sys:String>
+    <sys:String x:Key="ProtCurr">Prot.cur.</sys:String>
+    <sys:String x:Key="DeepCorrShort">Deep cor.</sys:String>
+    <sys:String x:Key="SpeedCorrShort">Sp.corr.</sys:String>
+    <sys:String x:Key="Opened">Opened</sys:String>
+    <sys:String x:Key="NotOpened">Not opened</sys:String>
+    <sys:String x:Key="Status">Status</sys:String>
+    <sys:String x:Key="DK1">DK1</sys:String>
+    <sys:String x:Key="DK2">DK2</sys:String>
+    <sys:String x:Key="DK3">DK3</sys:String>
+    <!--<sys:String x:Key="Break">Break</sys:String>-->
 
 
 </ResourceDictionary>
