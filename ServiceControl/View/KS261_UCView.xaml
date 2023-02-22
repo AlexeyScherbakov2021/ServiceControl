@@ -25,9 +25,9 @@
                   AlternatingRowBackground="#f0f0f0" FontSize="14"
                   >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number, StringFormat=N2, TargetNullValue=--}"/>
-                
-                <DataGridTextColumn Binding="{Binding RegCurrentPolyar.Value, StringFormat=N2}" CellStyle="{StaticResource CellRight}">
+                <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number}"/>
+
+                <DataGridTextColumn Binding="{Binding RegCurrentPolyar.Value, StringFormat=N2,TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                     <DataGridTextColumn.Header>
                         <TextBlock Text="{DynamicResource CurrPol}"/>
                     </DataGridTextColumn.Header>
