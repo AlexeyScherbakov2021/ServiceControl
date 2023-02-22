@@ -22,8 +22,6 @@ namespace ServiceControl.Modbus.Registers
         public RegisterFloat Temper;
         public RegisterInt TimeWork;
         public RegisterInt TimeProtect;
-        public RegisterInt TimeWorkWrite;
-        public RegisterInt TimeProtectWrite;
         public RegisterFloat CurrOutput;
         public RegisterFloat NaprOutput;
         public RegisterFloat ProtectPotenSumm;
@@ -44,14 +42,6 @@ namespace ServiceControl.Modbus.Registers
         public RegisterBool SpeedCorr3;
         public RegisterBool OnOffMS { get; set; }
         public RegisterBool OnOffMSWrite { get; set; }
-        public RegisterInt TempCoolerOnWrite;
-        public RegisterInt TempCoolerOn;
-        public RegisterInt TempCoolerOffWrite;
-        public RegisterInt TempCoolerOff;
-        public RegisterNapr4896 ModeNaprOutput { get; set; }
-        public RegisterNapr4896 ModeNaprOutputWrite { get; set; }
-        public RegisterRT RealTime { get; set; }
-        public RegisterRT RealTimeWrite { get; set; }
 
         public RegisterStab Stabil { get; set; }
         public RegisterFloat SetCurrOutput;
@@ -59,21 +49,33 @@ namespace ServiceControl.Modbus.Registers
         public RegisterFloat SetPolPotOutput;
         public RegisterStab SetMode { get; set; }
         public RegisterFloat SetNaprOutput;
-        public RegisterInt ResistPlast1;
-        public RegisterInt ResistPlast2;
-        public RegisterInt ResistPlast3;
-        public RegisterFloat CurrPolyar;
 
         public RegisterInfo InfoReg { get; set; }
 
         List<Register> ListInput;
         List<RegisterBool> ListStatus;
         List<Register> ListWriteControl;
+
+#if !CLIENT
+        public RegisterNapr4896 ModeNaprOutput { get; set; }
+        public RegisterNapr4896 ModeNaprOutputWrite { get; set; }
+        public RegisterRT RealTime { get; set; }
+        public RegisterRT RealTimeWrite { get; set; }
+        public RegisterInt TempCoolerOnWrite;
+        public RegisterInt TempCoolerOffWrite;
+        public RegisterInt ResistPlast1;
+        public RegisterInt ResistPlast2;
+        public RegisterInt ResistPlast3;
+        public RegisterFloat CurrPolyar;
+        public RegisterInt TimeWorkWrite;
+        public RegisterInt TimeProtectWrite;
+        public RegisterInt TempCoolerOn;
+        public RegisterInt TempCoolerOff;
+
         List<Register> ListWriteControl2;
-        //List<RegisterBool> ListCoil;
         List<Register> ListServices;
-        //List<Register> ListServices2;
         List<Register> ListDop;
+#endif
 
 
         //----------------------------------------------------------------------------------------------
@@ -342,7 +344,7 @@ namespace ServiceControl.Modbus.Registers
                 Scale = 0.01f, MinValue = 0, MaxValue = 100 };
             ListWriteControl.Add(SetNaprOutput);
 
-
+#if !CLIENT
             ListWriteControl2 = new List<Register>();
             // Отдельные регистры для записи
             RealTimeWrite = new RegisterRT()
@@ -387,8 +389,6 @@ namespace ServiceControl.Modbus.Registers
             };
             ListWriteControl2.Add(TempCoolerOffWrite);
 
-
-
             TimeWorkWrite = new RegisterInt()
             {
                 Address = 0xC7,
@@ -431,29 +431,6 @@ namespace ServiceControl.Modbus.Registers
                 MinValue = 0,
                 MaxValue = 1
             };
-
-
-            // список управляющих статусов
-            //--------------------------------------------------------------------------------------------------------------------------------------
-            //ListCoil = new List<RegisterBool>();
-            OnOffMS = new RegisterBool() { Address = 0x81, CodeFunc = ModbusFunc.Coil, Size = 1, 
-                Name = "Дистанц.откл.вкл.модулей силовых",
-                NameRes = "RemoteOnOffPower",
-                Description = "ТУ1 (ДО СМ)", 
-                ResultText0 = "выключен", ResultText1 = "включен", ResultText0Res = "Off",
-                ResultText1Res = "On",
-            };
-            
-            OnOffMSWrite = new RegisterBool() { Address = 0x81, CodeFunc = ModbusFunc.Coil, Size = 1, 
-                Name = "Дистанц.откл.вкл.модулей силовых",
-                NameRes = "RemoteOnOffPower",
-                Description = "ТУ1 (ДО СМ)", 
-                ResultText0 = "выключен", ResultText1 = "включен", ResultText0Res = "Off",
-                ResultText1Res = "On",
-            };
-            //ListCoil.Add(OnMS);
-
-
 
             // список сервисных регистров
             //--------------------------------------------------------------------------------------------------------------------------------------
@@ -527,6 +504,28 @@ namespace ServiceControl.Modbus.Registers
                 Description = "Iпол", MinValue = -10, MaxValue = 10 };
             ListDop.Add(CurrPolyar);
 
+
+#endif
+
+            // список управляющих статусов
+            //--------------------------------------------------------------------------------------------------------------------------------------
+            //ListCoil = new List<RegisterBool>();
+            OnOffMS = new RegisterBool() { Address = 0x81, CodeFunc = ModbusFunc.Coil, Size = 1, 
+                Name = "Дистанц.откл.вкл.модулей силовых",
+                NameRes = "RemoteOnOffPower",
+                Description = "ТУ1 (ДО СМ)", 
+                ResultText0 = "выключен", ResultText1 = "включен", ResultText0Res = "Off",
+                ResultText1Res = "On",
+            };
+            
+            OnOffMSWrite = new RegisterBool() { Address = 0x81, CodeFunc = ModbusFunc.Coil, Size = 1, 
+                Name = "Дистанц.откл.вкл.модулей силовых",
+                NameRes = "RemoteOnOffPower",
+                Description = "ТУ1 (ДО СМ)", 
+                ResultText0 = "выключен", ResultText1 = "включен", ResultText0Res = "Off",
+                ResultText1Res = "On",
+            };
+
             InfoReg = new RegisterInfo() { Name = "Информация", NameRes = "" };
 
         }
@@ -538,11 +537,13 @@ namespace ServiceControl.Modbus.Registers
         {
             ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
+#if !CLIENT
             ReadRegisters(ListWriteControl2);
+            ReadRegister(ModeNaprOutputWrite);
+#endif
             ReadRegister(OnOffMS);
             ReadRegister(OnOffMSWrite);
             ReadRegister(SetMode);
-            ReadRegister(ModeNaprOutputWrite);
 
             ReadRegisters(ListInput);
             //MS[1].Value = (int)StatusMS.Off;
@@ -550,10 +551,11 @@ namespace ServiceControl.Modbus.Registers
             //MS[5].Value = (int)StatusMS.Avar;
             //MS[6].Value = (int)StatusMS.Absent;
             ReadRegisters(ListStatus);
+#if !CLIENT
             ReadRegisters(ListServices);
             ReadRegister(ModeNaprOutput);
             ReadRegisters(ListDop);
-
+#endif
             return Task.CompletedTask;
 
         }
@@ -579,10 +581,12 @@ namespace ServiceControl.Modbus.Registers
 
             ReadRegisters(ListStatus);
             ReadRegister(OnOffMS);
+
+#if !CLIENT
             ReadRegisters(ListServices);
             ReadRegisters(ListDop);
             ReadRegister(ModeNaprOutput);
-
+#endif
             //IsAvarMode = Stabil.Value != SetMode.Value;
             //IsAvarModeVisible = Stabil.Value == SetMode.Value
             //? Visibility.Hidden
@@ -599,8 +603,10 @@ namespace ServiceControl.Modbus.Registers
             CheckReg(ListInput);
             CheckReg(ListStatus);
             CheckReg(ListWriteControl);
+#if !CLIENT
             CheckReg(ListWriteControl2);
             CheckReg(ListServices);
+#endif
             //CheckReg(ListCoil);
         }
 
@@ -612,17 +618,18 @@ namespace ServiceControl.Modbus.Registers
         {
             ListInput.ForEach(n => n.SetLanguage());
             ListStatus.ForEach(n => n.SetLanguage());
+            ListWriteControl.ForEach(n => n.SetLanguage());
+#if !CLIENT
             ListServices.ForEach(n => n.SetLanguage());
             ListDop.ForEach(n => n.SetLanguage());
-            ListWriteControl.ForEach(n => n.SetLanguage());
             ListWriteControl2.ForEach(n => n.SetLanguage());
-            
+            ModeNaprOutput.SetLanguage();
+            ModeNaprOutputWrite.SetLanguage();
+#endif
             InfoReg.SetLanguage();
             OnOffMS.SetLanguage();
             OnOffMSWrite.SetLanguage();
             SetMode.SetLanguage();
-            ModeNaprOutput.SetLanguage();
-            ModeNaprOutputWrite.SetLanguage();
 
         }
 

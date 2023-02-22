@@ -48,9 +48,14 @@ namespace ServiceControl.ViewModel
         public List<RegisterBool> ListStatus { get; set; }
         public List<RegisterBool> ListCoil { get; set; }
         public List<TwoRegister> ListWriteControl { get; set; }
-        public List<TwoRegister> ListWriteControl2 { get; set; }
         public List<Register> ListService { get; set; }
+        public List<TwoRegister> ListModeNapr { get; set; }
+        public List<Register> ListRealTime { get; set; }
+
+#if !CLIENT
+        public List<TwoRegister> ListWriteControl2 { get; set; }
         public List<TwoRegister> ListDK3 { get; set; }
+#endif
 
         //public string DeviceInfo =>
         //    "Версия платы " + device?.InfoReg.VersionDev
@@ -86,7 +91,13 @@ namespace ServiceControl.ViewModel
 
             ListInput2 = new List<Register>()
             {
-                device.Temper, device.CurrPolyar
+#if CLIENT
+                device.TimeWork, device.TimeProtect,
+#endif
+                device.Temper,
+#if !CLIENT
+                device.CurrPolyar
+#endif
             };
 
             // добавление в список силовых модулей
@@ -117,17 +128,21 @@ namespace ServiceControl.ViewModel
                 new TwoRegister() { Register1 = device.ProtectPotenSumm, Register2 = device.SetSummPotOutput },
                 new TwoRegister() { Register1 = device.ProtectPotenPol, Register2 = device.SetPolPotOutput },
                 new TwoRegister() { Register1 = device.NaprOutput, Register2 = device.SetNaprOutput },
+#if !CLIENT
                 new TwoRegister() { Register1 = device.TempCoolerOn, Register2 = device.TempCoolerOnWrite },
                 new TwoRegister() { Register1 = device.TempCoolerOff, Register2 = device.TempCoolerOffWrite },
-            };
-
-            // добавление в список целых регистров управления
-            ListWriteControl2 = new List<TwoRegister>() { 
-                new TwoRegister() { Register1 = device.TimeWork, Register2 = device.TimeWorkWrite },
-                new TwoRegister() { Register1 = device.TimeProtect, Register2 = device.TimeProtectWrite },
+#endif
             };
 
             ListCoil = new List<RegisterBool>() { device.OnOffMS };
+
+
+            // добавление в список целых регистров управления
+#if !CLIENT
+            ListWriteControl2 = new List<TwoRegister>() { 
+                new TwoRegister() { Register1 = device.TimeWork, Register2 = device.TimeWorkWrite },
+                new TwoRegister() { Register1 = device.TimeProtect, Register2 = device.TimeProtectWrite  },
+            };
 
             ListDK3 = new List<TwoRegister>()
             {
@@ -135,6 +150,18 @@ namespace ServiceControl.ViewModel
                 new TwoRegister() { Register1 = device.ResistPlast2, Register3 = device.SpeedCorr2 },
                 new TwoRegister() { Register1 = device.ResistPlast3, Register3 = device.SpeedCorr3 },
             };
+
+            ListModeNapr = new List<TwoRegister>() 
+            {
+                new TwoRegister() { Register1 = device.ModeNaprOutput, Register2 = device.ModeNaprOutputWrite },
+            };
+
+            ListRealTime = new List<Register>() { device.RealTime };
+
+#endif
+
+
+
         }
 
 
@@ -177,7 +204,7 @@ namespace ServiceControl.ViewModel
         //    OnPropertyChanged(nameof(DeviceInfo));
         //}
 
-        #region Команды =================================
+#region Команды =================================
 
         //--------------------------------------------------------------------------------
         // Команда Отправить значение
@@ -206,6 +233,7 @@ namespace ServiceControl.ViewModel
             }
         }
 
+#if !CLIENT
         //--------------------------------------------------------------------------------
         // Команда Установить текущее время
         //--------------------------------------------------------------------------------
@@ -217,6 +245,8 @@ namespace ServiceControl.ViewModel
             device.WriteRegister(device.RealTimeWrite);
         }
 
+
+#endif
         //--------------------------------------------------------------------------------
         // Команда Записать в регистр Bool
         //--------------------------------------------------------------------------------
@@ -242,7 +272,7 @@ namespace ServiceControl.ViewModel
             CommandManager.InvalidateRequerySuggested();
         }
 
-        #endregion
+#endregion
 
 
 

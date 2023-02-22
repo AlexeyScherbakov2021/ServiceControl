@@ -33,8 +33,8 @@
 	<sys:String x:Key="VerPO">Версия ПО</sys:String>
 	<sys:String x:Key="Year">Год</sys:String>
 	<sys:String x:Key="SensorSpeedCorr">Индикаторы скорости коррозии</sys:String>
-	<sys:String x:Key="SpeedCorr">Скорость коррозии</sys:String>
-	<sys:String x:Key="DeepCorr">Глубина коррозии</sys:String>
+	<sys:String x:Key="SpeedCorr">Скорость</sys:String>
+	<sys:String x:Key="DeepCorr">Глубина</sys:String>
 	<sys:String x:Key="OnOff">Вкл./Выкл.</sys:String>
     <sys:String x:Key="AlarmStatus">Сигнализация</sys:String>
     <sys:String x:Key="VoltCircuit1">Напряжение сети 1</sys:String>
@@ -63,9 +63,9 @@
     <sys:String x:Key="TempOffCooler">Температура выключения вентилятора</sys:String>
     <sys:String x:Key="ModeVoltage">Режим работы СКЗ (48/96)</sys:String>
     <sys:String x:Key="RemoteOnOffPower">Дистанц.откл.вкл.модулей силовых</sys:String>
-    <sys:String x:Key="ResistPast1">Сопротивление пластины 1</sys:String>
-    <sys:String x:Key="ResistPast2">Сопротивление пластины 2</sys:String>
-    <sys:String x:Key="ResistPast3">Сопротивление пластины 3</sys:String>
+    <sys:String x:Key="ResistPast1">Пластина 1</sys:String>
+    <sys:String x:Key="ResistPast2">Пластина 2</sys:String>
+    <sys:String x:Key="ResistPast3">Пластина 3</sys:String>
     <sys:String x:Key="CurrentPolyar">Ток поляризации</sys:String>
     <sys:String x:Key="SetCurrTime">Установить текущее время</sys:String>
     <sys:String x:Key="On">Включен</sys:String>

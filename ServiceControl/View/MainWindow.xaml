@@ -7,8 +7,8 @@
         xmlns:view="clr-namespace:ServiceControl.View"
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"
-        Background="WhiteSmoke" SizeToContent="Width"
-        Title="Service Control" Height="820" Width="1200" WindowStartupLocation="CenterScreen">
+        Background="Gainsboro" SizeToContent="Width"
+        Title="Service Control" Height="840" Width="1200" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>

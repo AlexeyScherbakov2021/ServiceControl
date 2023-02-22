@@ -37,6 +37,16 @@
   <PropertyGroup>
     <ApplicationIcon>tune.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugClient|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugClient\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CLIENT</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome5, Version=2.1.11.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome5.2.1.11\lib\net472\FontAwesome5.dll</HintPath>
