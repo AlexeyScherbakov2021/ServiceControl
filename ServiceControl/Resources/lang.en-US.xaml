@@ -125,6 +125,10 @@
     <sys:String x:Key="Hertz">Hz</sys:String>
     <sys:String x:Key="FreqIndVoltage">Freq induced voltage</sys:String>
     <sys:String x:Key="Temper">Temperature</sys:String>
+    <sys:String x:Key="ControlStab">Control with Stabilization</sys:String>
+    <sys:String x:Key="Contr">ctrl.</sys:String>
+    <sys:String x:Key="Stab">stab.</sys:String>
+    <sys:String x:Key="IKP">IKP</sys:String>
 
 
 </ResourceDictionary>

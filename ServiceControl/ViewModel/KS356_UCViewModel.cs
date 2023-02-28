@@ -304,7 +304,7 @@ namespace ServiceControl.ViewModel
             win = new BIWindow();
             BIWindowViewModel vm = new BIWindowViewModel(device);
             win.DataContext = vm;
-            win.Show();
+            win.ShowDialog();
         }
 
         #endregion

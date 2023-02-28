@@ -107,7 +107,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="120"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="20"/>
@@ -120,23 +120,23 @@
             <ColumnDefinition Width="330"/>
         </Grid.ColumnDefinitions>
 
-        <!--Управляемые параметры-->
-        <Border  Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="1">
+        <!--Управляемые параметры со стабилизацией-->
+        <Border  Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="1">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
             <GroupBox >
                 <GroupBox.Header>
-                    <TextBlock Text="{DynamicResource CtrlParam}" FontSize="16" FontWeight="Bold"/>
+                    <TextBlock Text="{DynamicResource ControlStab}" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel Margin="8,0" Orientation="Vertical">
 
                     <DockPanel LastChildFill="False" Margin="0,2">
-                        <TextBlock Text="стаб." DockPanel.Dock="Right" Width="30"/>
-                        <TextBlock Text="управ." DockPanel.Dock="Right" Width="90"/>
+                        <TextBlock Text="{DynamicResource Stab}" DockPanel.Dock="Right" Width="30"/>
+                        <TextBlock Text="{DynamicResource Contr}" DockPanel.Dock="Right" Width="90"/>
                     </DockPanel>
-                    
-                    
+
+
                     <!--Регистры управления-->
                     <ItemsControl ItemsSource="{Binding ListWriteControl}" >
                         <ItemsControl.ItemTemplate>
@@ -169,8 +169,8 @@
                                                 <Binding Path="DataContext.device.SetMode.Address" ElementName="mainControl"/>
                                             </MultiBinding>
                                         </Button.Background>
-                                        
-                                        
+
+
                                         <Grid Width="16" Height="16">
                                             <Ellipse >
                                                 <Ellipse.Fill>
@@ -188,9 +188,25 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    
+
+
+                </StackPanel>
+            </GroupBox>
+        </Border>
+
+        <!--Управляемые параметры -->
+        <Border  Margin="4,0" Grid.Row="2" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="1">
+            <!--<Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>-->
+            <GroupBox >
+                <GroupBox.Header>
+                    <TextBlock Text="{DynamicResource CtrlParam}" FontSize="16" FontWeight="Bold"/>
+                </GroupBox.Header>
+                <StackPanel Margin="8,0" Orientation="Vertical">
+
                     <!--Время работы и защиты-->
-                    <ItemsControl ItemsSource="{Binding ListWriteControl2}" >
+                    <ItemsControl ItemsSource="{Binding ListWriteControl2}" Margin="0,8,0,0" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -218,7 +234,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    
+
 
                     <!--Запись режима выходного напряжения-->
                     <ItemsControl ItemsSource="{Binding ListModeNapr}">
@@ -247,8 +263,8 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    
-                    
+
+
                     <!--Запись реального времени-->
                     <ItemsControl ItemsSource="{Binding ListRealTime}">
                         <ItemsControl.ItemTemplate>
@@ -296,7 +312,9 @@
                             <Button Style="{StaticResource ButtonStyle1}" DockPanel.Dock="Right" Width="40" Command="{Binding WriteStabCommand}"
                                     CommandParameter="{Binding device.SetMode}" ToolTip="{DynamicResource Set}">
                                 <Image Source="/Resources/Logout.png" Width="16" Height="16" Style="{StaticResource OutImageStyle}"/>
-                                --><!--<fa:ImageAwesome Icon="Solid_SignOutAlt" Height="16"  Style="{StaticResource faStyle}"/>--><!--
+                                -->
+                    <!--<fa:ImageAwesome Icon="Solid_SignOutAlt" Height="16"  Style="{StaticResource faStyle}"/>-->
+                    <!--
                             </Button>
                             <StackPanel DockPanel.Dock="Left">
                                 <TextBlock Text="{Binding device.Stabil.ValueString}" TextWrapping="Wrap" FontWeight="Bold"
@@ -307,9 +325,11 @@
                                                  ToolTip="{DynamicResource WrongModeStab}"
                                                  Margin="0,10,0,0" Visibility="{Binding IsAvarModeVisible, Mode=OneWay}"/>
 
-                                --><!--<fa:ImageAwesome Icon="Solid_ExclamationCircle" Width="24" Height="24" HorizontalAlignment="Center" 
+                                -->
+                    <!--<fa:ImageAwesome Icon="Solid_ExclamationCircle" Width="24" Height="24" HorizontalAlignment="Center" 
                                                  Foreground="#ee0000" ToolTip="{DynamicResource WrongModeStab}"
-                                                 Margin="0,10,0,0" Visibility="{Binding IsAvarModeVisible, Mode=OneWay}"/>--><!--
+                                                 Margin="0,10,0,0" Visibility="{Binding IsAvarModeVisible, Mode=OneWay}"/>-->
+                    <!--
                             </StackPanel>
 
                             <StackPanel Margin="30,0,0,0">
@@ -323,6 +343,7 @@
                 </StackPanel>
             </GroupBox>
         </Border>
+
 
         <!--Счетчик электроэнергии-->
         <Border  Margin="4,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1" >
@@ -355,7 +376,7 @@
         </Border>
 
         <!--Карточка устройства-->
-        <Border  Margin="4,0" Grid.Row="3" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="1" >
+        <Border  Margin="4,0" Grid.Row="4" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="1" >
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -401,7 +422,7 @@
         </Border>
 
         <!--Сигнализация-->
-        <Border  Margin="4,0" Grid.Column="2" Grid.RowSpan="2" Grid.Row="0" Grid.ColumnSpan="1">
+        <Border  Margin="4,0" Grid.Column="2" Grid.RowSpan="3" Grid.Row="0" Grid.ColumnSpan="1">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -433,7 +454,7 @@
         </Border>
 
         <!--Силовые модули-->
-        <Border  Margin="4,0" Grid.Column="2" Grid.Row="2" Grid.RowSpan="4" Grid.ColumnSpan="2">
+        <Border  Margin="4,0" Grid.Column="2" Grid.Row="3" Grid.RowSpan="4" Grid.ColumnSpan="2">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -443,7 +464,7 @@
                 </GroupBox.Header>
                 <StackPanel Orientation="Horizontal">
                     <ItemsControl ItemTemplate="{StaticResource ItemsControlItemTemplate1}" Width="160"
-                              ItemsSource="{Binding ListInputMS}" Margin="6,10,0,0" >
+                              ItemsSource="{Binding ListInputMS}" Margin="20,10,0,0" >
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal"/>
@@ -489,8 +510,7 @@
         </Border>
 
         <!--Индикаторы скорости коррозии-->
-        <Border Margin="4,0" Grid.Column="1" Grid.Row="1"  
-                Grid.RowSpan="2" Visibility="Visible">
+        <Border Margin="4,0" Grid.Column="1" Grid.Row="1"  Grid.RowSpan="3" Visibility="Visible">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -538,7 +558,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Height="20">
-                                    <TextBlock Text="ИКП1" 
+                                    <TextBlock Text="{DynamicResource IKP}" 
                                                VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Register1.Number}" Margin="2,0"
                                                VerticalAlignment="Center"/>

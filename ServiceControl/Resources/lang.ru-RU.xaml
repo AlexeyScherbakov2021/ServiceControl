@@ -126,6 +126,10 @@
     <sys:String x:Key="Hertz">Гц</sys:String>
     <sys:String x:Key="FreqIndVoltage">Частота нав. напряжения</sys:String>
     <sys:String x:Key="Temper">Температура</sys:String>
+    <sys:String x:Key="ControlStab">Управление со стабилизацией</sys:String>
+    <sys:String x:Key="Contr">управ.</sys:String>
+    <sys:String x:Key="Stab">стаб.</sys:String>
+    <sys:String x:Key="IKP">ИКП</sys:String>
 
 
 </ResourceDictionary>
