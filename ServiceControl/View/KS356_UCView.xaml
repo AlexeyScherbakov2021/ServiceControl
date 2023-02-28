@@ -548,7 +548,7 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <Button Content="Внешние измерители" HorizontalAlignment="Center" Padding="4,4" 
+                    <Button Content="{DynamicResource OutsideMeasure}" HorizontalAlignment="Center" Padding="4,4" 
                             Command="{Binding OpenBICommand}" Margin="0,16"
                             Style="{DynamicResource ButtonStyle1}"/>
 

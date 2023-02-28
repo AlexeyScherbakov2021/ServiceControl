@@ -6,13 +6,14 @@
         xmlns:local="clr-namespace:ServiceControl.View"
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"  SizeToContent="WidthAndHeight"
-        Title="Внешние измерители" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        Background="Gainsboro"
+        Title="{DynamicResource OutsideMeasure}" Height="450" Width="800" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:BIWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <DataGrid ItemsSource="{Binding ListBIRegisters}" AutoGenerateColumns="False" Style="{DynamicResource DataGridStyle}"
-                  FontSize="16" Margin="8" IsReadOnly="True">
+        <DataGrid ItemsSource="{Binding ListBIRegisters}" Style="{DynamicResource DataGridStyle}"
+                  FontSize="16" Margin="12" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn  Binding="{Binding reg[0].Name}"/>
                 <DataGridTextColumn  Binding="{Binding reg[0].Measure}"/>

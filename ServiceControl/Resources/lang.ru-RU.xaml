@@ -130,6 +130,7 @@
     <sys:String x:Key="Contr">управ.</sys:String>
     <sys:String x:Key="Stab">стаб.</sys:String>
     <sys:String x:Key="IKP">ИКП</sys:String>
+    <sys:String x:Key="OutsideMeasure">Внешние измерители</sys:String>
 
 
 </ResourceDictionary>

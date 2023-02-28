@@ -33,8 +33,10 @@
         </Grid.RowDefinitions>
 
         <DockPanel >
-            <Image Source="/Resources/ngk-logo-short-blue3.png" HorizontalAlignment="Right" 
-                   Margin="10,0" Height="68" DockPanel.Dock="Right"/>
+            <Border HorizontalAlignment="Right" BorderBrush="Gray" BorderThickness="1" Padding="5" CornerRadius="3"
+                   Margin="0,4,10,0" Height="68" DockPanel.Dock="Right">
+                <Image Source="/Resources/ngk-logo-short-blue3.png" />
+            </Border>
             <StackPanel Orientation="Vertical" >
                 <ToolBarPanel  Height="20" Margin="0,4" >
                     <Menu Background="Transparent" >

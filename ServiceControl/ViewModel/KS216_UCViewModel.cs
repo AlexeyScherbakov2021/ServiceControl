@@ -46,6 +46,7 @@ namespace ServiceControl.ViewModel
 
         public List<Register> ListInputMS { get; set; }
         public List<TwoRegister> ListInputDK { get; set; }
+        public List<TwoRegister> ListInputAllDK { get; set; }
         public List<RegisterBool> ListStatus { get; set; }
         public List<RegisterBool> ListCoil { get; set; }
         public List<TwoRegister> ListWriteControl { get; set; }
@@ -117,6 +118,13 @@ namespace ServiceControl.ViewModel
             for (int i = 0; i < 1/*Device216.CountDK*/; i++)
             {
                 ListInputDK.Add( new TwoRegister() { Register1 = device.SpeedDK[i], Register2 = device.DeepDK[i] });
+            }
+
+            // добавление в список датчиков коррозии
+            ListInputAllDK = new List<TwoRegister>();
+            for (int i = 1; i < Device216.CountDK; i++)
+            {
+                ListInputAllDK.Add( new TwoRegister() { Register1 = device.SpeedDK[i], Register2 = device.DeepDK[i] });
             }
 
             // добавление в список статусов
