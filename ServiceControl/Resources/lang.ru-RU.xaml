@@ -46,7 +46,7 @@
     <sys:String x:Key="TimeProtect">Время защиты сооружения</sys:String>
     <sys:String x:Key="ModeControlStation">Режим управления станцией</sys:String>
     <sys:String x:Key="PowerModuleStatus">Состояние модуля силового</sys:String>
-    <sys:String x:Key="SpeedCorrDK">ИКП</sys:String>
+    <sys:String x:Key="SpeedCorrDK">Скорость коррозии</sys:String>
     <sys:String x:Key="DeepCorrDK">Глубина коррозии ИКП</sys:String>
     <sys:String x:Key="Door">Дверь шкафа</sys:String>
     <sys:String x:Key="DistControl">Режим упр. станцией</sys:String>
@@ -121,10 +121,11 @@
     <sys:String x:Key="DK2">ДК2</sys:String>
     <sys:String x:Key="DK3">ДК3</sys:String>
     <sys:String x:Key="SetMode">Установить режим стабилизации</sys:String>
-    <!--<sys:String x:Key=""></sys:String>
-    <sys:String x:Key=""></sys:String>
-    <sys:String x:Key=""></sys:String>
-    <sys:String x:Key=""></sys:String>-->
+    <sys:String x:Key="Amp">А</sys:String>
+    <sys:String x:Key="IndVoltage">Наведенное напряжение</sys:String>
+    <sys:String x:Key="Hertz">Гц</sys:String>
+    <sys:String x:Key="FreqIndVoltage">Частота нав. напряжения</sys:String>
+    <sys:String x:Key="Temper">Температура</sys:String>
 
 
 </ResourceDictionary>

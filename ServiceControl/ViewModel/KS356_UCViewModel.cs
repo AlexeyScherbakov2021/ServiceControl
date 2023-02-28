@@ -3,42 +3,67 @@ using ServiceControl.Infrastructure;
 using ServiceControl.Modbus;
 using ServiceControl.Modbus.Devices;
 using ServiceControl.Modbus.Registers;
+using ServiceControl.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ServiceControl.ViewModel
 {
     internal class KS356_UCViewModel: Observable
     {
-        MainWindowViewModel mainVM;
+        public class TwoRegister
+        {
+            public Register Register1 { get; set; }
+            public Register Register2 { get; set; }
+            public RegisterBool Register3 { get; set; }
+            public RezhStab stab { get; set; }
+        }
+
+        //private MainWindowViewModel mainVM;
+
+        private bool IsProcessOnOff = false;
+        private BIWindow win;
+        private int CountTimerSetMode;
+        private int? LastSetMode;
+
+        private Visibility _IsAvarModeVisible = Visibility.Hidden;
+        public Visibility IsAvarModeVisible { get => _IsAvarModeVisible; set { Set(ref _IsAvarModeVisible, value); } }
 
         public Device356 device { get; set; }
+
         public List<Register> ListInput { get; set; }
+        public List<Register> ListInput2 { get; set; }
+
         public List<Register> ListInputMS { get; set; }
-        public List<Register> ListInputDK { get; set; }
+        public List<TwoRegister> ListInputDK { get; set; }
         public List<RegisterBool> ListStatus { get; set; }
         public List<RegisterBool> ListCoil { get; set; }
-        public List<Register> ListWriteControl { get; set; }
-        public List<Register> ListWriteControlInt { get; set; }
+        public List<TwoRegister> ListWriteControl { get; set; }
         public List<Register> ListService { get; set; }
+        public List<TwoRegister> ListModeNapr { get; set; }
+        public List<Register> ListRealTime { get; set; }
 
-        public string DeviceInfo =>
-            "Версия " + device?.InfoReg.VersionDev
-            + "; Верстия ПО " + device?.InfoReg.VersionPO
-            + "; Год " + device?.InfoReg.Year
-            + "; № " + device?.InfoReg.NumberDev;
+#if !CLIENT
+        public List<TwoRegister> ListWriteControl2 { get; set; }
+        public List<TwoRegister> ListDK3 { get; set; }
+#endif
 
+        //public string DeviceInfo =>
+        //    "Версия платы " + device?.InfoReg.VersionDev
+        //    + "; Верстия ПО " + device?.InfoReg.VersionPO
+        //    + "; Год " + device?.InfoReg.Year
+        //    + "; № " + device?.InfoReg.NumberDev;
 
         //--------------------------------------------------------------------------------------------
         // конструктор
         //--------------------------------------------------------------------------------------------
         public KS356_UCViewModel()
         {
-
         }
 
         //--------------------------------------------------------------------------------------------
@@ -46,59 +71,142 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         public KS356_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
         {
-            mainVM = mainViewModel;
-
+            //mainVM = mainViewModel;
             device = new Device356(mainViewModel, work, Slave);
-            device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;
+            //device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;
+
+            device.EndRead += OnReadFinish;
+            device.EndStartRead += OnEndStartRead;
             device.Start();
 
+            // добавление в список входных параметров
             ListInput = new List<Register>()
             {
-                device.NaprSeti1, device.CountEE1, device.NaprSeti2, device.CountEE2, device.Temper, device.TimeWork,
-                device.TimeProtect, device.CurrOutput, device.NaprOutput, device.ProtectPotenSumm, device.ProtectPotenPol
+                device.NaprSeti1, device.CountEE1, device.NaprSeti2, device.CountEE2
             };
 
-            ListInputMS = new List<Register>();
-            for(int i = 0; i < Device356.CountMS; i++)
-                ListInputMS.Add(device.MS[i]);
-
-
-            //{ device.MS1, device.MS2, device.MS3, device.MS4, device.MS5, device.MS6, device.MS7,
-            //    device.MS8, device.MS9, device.MS10, device.MS11, device.MS12 };
-
-            ListInputDK = new List<Register>();
-            for (int i = 0; i < Device356.CountDK; i++)
+            ListInput2 = new List<Register>()
             {
-                ListInputDK.Add(device.SpeedDK[i]);
-                ListInputDK.Add(device.DeepDK[i]);
+#if CLIENT
+                device.TimeWork, device.TimeProtect,
+#endif
+                device.Temper,
+#if !CLIENT
+                device.CurrPolyar
+#endif
+            };
+
+            // добавление в список силовых модулей
+            ListInputMS = new List<Register>();
+            for (int i = 0; i < Device356.CountMS; i += 2)
+            {
+                ListInputMS.Add(device.MS[i]);
+            }
+            for (int i = 1; i < Device356.CountMS; i += 2)
+            {
+                ListInputMS.Add(device.MS[i]);
             }
 
+            // добавление в список датчиков коррозии
+            //ListInputDK = new List<TwoRegister>();
+            //for (int i = 0; i < 1/*Device356.CountDK*/; i++)
             //{
-            //    device.SpeedDK1,device.DeepDK1,device.SpeedDK2,device.DeepDK2,device.SpeedDK3,device.DeepDK3,device.SpeedDK4,device.DeepDK4,
-            //    device.SpeedDK5,device.DeepDK5,device.SpeedDK6,device.DeepDK6,device.SpeedDK7,device.DeepDK7,device.SpeedDK8,device.DeepDK8
-            //};
+            //    ListInputDK.Add(new TwoRegister() { Register1 = device.SpeedDK[i], Register2 = device.DeepDK[i] });
+            //}
 
-            ListStatus = new List<RegisterBool>() { device.IllegalAccess, device.ControlMode, device.Fault, device.BreakCirc, device.OnMS,
-                device.SpeedCorr1, device.SpeedCorr2, device.SpeedCorr3 };
+            // добавление в список статусов
+            ListStatus = new List<RegisterBool>() { device.IllegalAccess, device.DistanceMode, device.Fault,
+                device.BreakCirc, device.OnMS };
 
-            ListWriteControl = new List<Register>() { device.SetCurrOutput, device.SetSummPotOutput, device.SetPolPotOutput, 
-                device.SetNaprOutput};
-            
-            //ListWriteControlInt = new List<Register>() { device.WorkedTime, device.ProtectTime };
-
-            ListCoil = new List<RegisterBool>() { device.OnOffMS };
-            ListService = new List<Register>() {
-                device.TempCoolerOn, device.TempCoolerOff, device.Year, device.Number, device.ModeNaprOutput, 
-                device.TimeProtect/*, device.WorkedTime*/
+            // добавление в список регистров управления
+            ListWriteControl = new List<TwoRegister>() {
+                new TwoRegister() { Register1 = device.CurrOutput,
+                    Register2 = device.SetCurrOutput,
+                    stab = RezhStab.StabCurrent },
+                new TwoRegister() { Register1 = device.ProtectPotenSumm,
+                    Register2 = device.SetSummPotOutput,
+                    stab = RezhStab.StabSummPot },
+                new TwoRegister() { Register1 = device.ProtectPotenPol,
+                    Register2 = device.SetPolPotOutput,
+                    stab = RezhStab.StabPolPot },
+                new TwoRegister() { Register1 = device.NaprOutput,
+                    Register2 = device.SetNaprOutput,
+                    stab = RezhStab.StabNapr },
             };
 
+            ListCoil = new List<RegisterBool>() { device.OnOffMS };
+
+
+            // добавление в список целых регистров управления
+#if !CLIENT
+            ListWriteControl2 = new List<TwoRegister>() {
+                new TwoRegister() { Register1 = device.TimeWork, Register2 = device.TimeWorkWrite },
+                new TwoRegister() { Register1 = device.TimeProtect, Register2 = device.TimeProtectWrite  },
+                new TwoRegister() { Register1 = device.TempCoolerOn, Register2 = device.TempCoolerOnWrite },
+                new TwoRegister() { Register1 = device.TempCoolerOff, Register2 = device.TempCoolerOffWrite },
+            };
+
+            ListDK3 = new List<TwoRegister>()
+            {
+                new TwoRegister() { Register1 = device.ResistPlast1, Register3 = device.SpeedCorr1 },
+                new TwoRegister() { Register1 = device.ResistPlast2, Register3 = device.SpeedCorr2 },
+                new TwoRegister() { Register1 = device.ResistPlast3, Register3 = device.SpeedCorr3 },
+            };
+
+            ListModeNapr = new List<TwoRegister>()
+            {
+                new TwoRegister() { Register1 = device.ModeNaprOutput, Register2 = device.ModeNaprOutputWrite },
+            };
+
+            ListRealTime = new List<Register>() { device.RealTime };
+
+#endif
+
+
+
         }
 
-        private void InfoReg_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+
+        //--------------------------------------------------------------------------------
+        // событие после чтения всех регистров при старте
+        //--------------------------------------------------------------------------------
+        private void OnEndStartRead(object sender, EventArgs e)
         {
-            OnPropertyChanged(nameof(DeviceInfo));
+            CommandManager.InvalidateRequerySuggested();
+            LastSetMode = device.SetMode.Value;
         }
 
+        //--------------------------------------------------------------------------------
+        // событие после чтения всех регистров
+        //--------------------------------------------------------------------------------
+        private void OnReadFinish(object sender, EventArgs e)
+        {
+            if (CountTimerSetMode == 0)
+            {
+                IsAvarModeVisible = device.Stabil.Value == LastSetMode
+                    ? Visibility.Hidden
+                    : Visibility.Visible;
+
+                OnPropertyChanged(nameof(device.Stabil));
+            }
+            else
+                --CountTimerSetMode;
+        }
+
+
+        //private async void CheckAvarMode()
+        //{
+        //    await Task.Delay(3000);
+        //    IsAvarModeVisible = device.Stabil.Value == LastSetMode
+        //    ? Visibility.Hidden
+        //    : Visibility.Visible;
+        //}
+
+
+        //private void InfoReg_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        //{
+        //    OnPropertyChanged(nameof(DeviceInfo));
+        //}
 
         #region Команды =================================
 
@@ -106,42 +214,97 @@ namespace ServiceControl.ViewModel
         // Команда Отправить значение
         //--------------------------------------------------------------------------------
         public ICommand WriteValueCommand => new LambdaCommand(OnWriteValueCommandExecuted, CanWriteValueCommand);
-        private bool CanWriteValueCommand(object p) => true;
+        private bool CanWriteValueCommand(object p) => device != null && device.DistanceMode.ValueBool;
         private void OnWriteValueCommandExecuted(object p)
         {
-            int address = int.Parse(p.ToString());
-
-            switch (address)
+            if (p is Register reg)
             {
-                case 0x81:
-                    device.WriteRegister(device.SetCurrOutput);
-                    break;
-                case 0x82:
-                    device.WriteRegister(device.SetSummPotOutput);
-                    break;
-                case 0x83:
-                    device.WriteRegister(device.SetPolPotOutput);
-                    break;
-                case 0x85:
-                    device.WriteRegister(device.SetNaprOutput);
-                    break;
-                //case 0xC7:
-                //    device.WriteRegister(device.WorkedTime);
-                //    break;
-                case 0xC9:
-                    device.WriteRegister(device.ProtectTime);
-                    break;
+                try
+                {
+                    device.WriteRegister(reg);
+                }
+                catch (TimeoutException)
+                {
+
+                }
+
+                // была установка режима стабилизации
+                //if(reg.Address == 0x84)
+                //{
+                //    LastSetMode = (reg as RegisterInt).Value;
+                //    CountTimerSetMode = 3;
+                //}
             }
         }
 
         //--------------------------------------------------------------------------------
-        // Команда Установить режим
+        // Команда Установить режим стабилизации
         //--------------------------------------------------------------------------------
-        public ICommand WriteModeCommand => new LambdaCommand(OnWriteModeCommandExecuted, CanWriteModeCommand);
-        private bool CanWriteModeCommand(object p) => true;
-        private void OnWriteModeCommandExecuted(object p)
+        public ICommand WriteStabCommand => new LambdaCommand(OnWriteStabCommandExecuted, CanWriteStabCommand);
+        private bool CanWriteStabCommand(object p) => device != null && device.DistanceMode.ValueBool;
+        private void OnWriteStabCommandExecuted(object p)
         {
-            device.WriteRegister(device.SetMode);
+            if (p is RezhStab mode)
+            {
+                device.SetMode.Value = (int)mode;
+                device.WriteRegister(device.SetMode);
+                LastSetMode = (int)mode;
+                //LastSetMode = (reg as RegisterInt).Value;
+                CountTimerSetMode = 3;
+            }
+        }
+
+
+#if !CLIENT
+        //--------------------------------------------------------------------------------
+        // Команда Установить текущее время
+        //--------------------------------------------------------------------------------
+        public ICommand WriteTimeCommand => new LambdaCommand(OnWriteTimeModeCommandExecuted, CanWriteTimeModeCommand);
+        private bool CanWriteTimeModeCommand(object p) => device != null && device.DistanceMode.ValueBool;
+        private void OnWriteTimeModeCommandExecuted(object p)
+        {
+            device.RealTimeWrite.RealTimeValue = DateTime.Now;
+            device.WriteRegister(device.RealTimeWrite);
+        }
+
+
+#endif
+        //--------------------------------------------------------------------------------
+        // Команда Записать в регистр Bool
+        //--------------------------------------------------------------------------------
+        //public ICommand OnOffCommand => new LambdaCommand(OnOnOffCommandExecuted);
+        private void WriteValueBoolCommand(object p)
+        {
+            RegisterBool reg = p as RegisterBool;
+            device.WriteRegister(reg);
+        }
+
+        //--------------------------------------------------------------------------------
+        // Команда Вкл - откл силовых модулей
+        //--------------------------------------------------------------------------------
+        public ICommand OnOffCommand => new LambdaCommand(WriteOnOffMSCommand, CanOnOfCommand);
+        private bool CanOnOfCommand(object p) => !IsProcessOnOff && device != null && device.DistanceMode.ValueBool;
+        private async void WriteOnOffMSCommand(object p)
+        {
+            IsProcessOnOff = true;
+            device.OnOffMSWrite.ValueBool ^= true;
+            device.WriteRegister(device.OnOffMSWrite);
+            await Task.Delay(10000);
+            IsProcessOnOff = false;
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        //--------------------------------------------------------------------------------
+        // Команда Открыть окно с внешними измерителями
+        //--------------------------------------------------------------------------------
+        public ICommand OpenBICommand => new LambdaCommand(OpenBICommandExecute, CanOpenBICommand);
+        private bool CanOpenBICommand(object p) => true;
+        private void OpenBICommandExecute(object p)
+        {
+            win = new BIWindow();
+            BIWindowViewModel vm = new BIWindowViewModel(device);
+            win.DataContext = vm;
+            win.Show();
         }
 
         #endregion

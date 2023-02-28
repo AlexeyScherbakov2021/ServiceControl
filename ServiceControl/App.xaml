@@ -8,6 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/lang.ru-RU.xaml"/>
                 <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/DataGrid.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <Style TargetType="{x:Type ToolTip}">

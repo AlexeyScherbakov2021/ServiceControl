@@ -34,8 +34,8 @@
     <sys:String x:Key="VerPO">Ver. SW</sys:String>
     <sys:String x:Key="Year">Year</sys:String>
     <sys:String x:Key="SensorSpeedCorr">Sensor speed corrosion</sys:String>
-    <sys:String x:Key="SpeedCorr">Speed corrosion</sys:String>
-    <sys:String x:Key="DeepCorr">Deep corrosion</sys:String>
+    <sys:String x:Key="SpeedCorr">Speed</sys:String>
+    <sys:String x:Key="DeepCorr">Deep</sys:String>
     <sys:String x:Key="OnOff">On/Off</sys:String>
     <sys:String x:Key="AlarmStatus">Alarm current status</sys:String>
     <sys:String x:Key="VoltCircuit1">Mains voltage 1</sys:String>
@@ -47,7 +47,7 @@
     <sys:String x:Key="TimeProtect">Time protected device</sys:String>
     <sys:String x:Key="ModeControlStation">Mode control device</sys:String>
     <sys:String x:Key="PowerModuleStatus">Status power module</sys:String>
-    <sys:String x:Key="SpeedCorrDK">IKP</sys:String>
+    <sys:String x:Key="SpeedCorrDK">Speed corrosion IKP</sys:String>
     <sys:String x:Key="DeepCorrDK">Deep corrosion IKP</sys:String>
     <sys:String x:Key="Door">Door device</sys:String>
     <sys:String x:Key="DistControl">Mode remote control</sys:String>
@@ -76,7 +76,7 @@
     <sys:String x:Key="Volt">V</sys:String>
     <sys:String x:Key="KVT">kW*h</sys:String>
     <sys:String x:Key="Hour">h</sys:String>
-    <sys:String x:Key="MMYEAR">mm/year</sys:String>
+    <sys:String x:Key="MMYEAR">mm/y</sys:String>
     <sys:String x:Key="MM">mm</sys:String>
     <sys:String x:Key="SEC">sec</sys:String>
     <sys:String x:Key="Ohm">Ohm</sys:String>
@@ -120,7 +120,11 @@
     <sys:String x:Key="DK2">DK2</sys:String>
     <sys:String x:Key="DK3">DK3</sys:String>
     <sys:String x:Key="SetMode">Set stabilization mode</sys:String>
-    <!--<sys:String x:Key="Break">Break</sys:String>-->
+    <sys:String x:Key="Amp">A</sys:String>
+    <sys:String x:Key="IndVoltage">Induced voltage</sys:String>
+    <sys:String x:Key="Hertz">Hz</sys:String>
+    <sys:String x:Key="FreqIndVoltage">Freq induced voltage</sys:String>
+    <sys:String x:Key="Temper">Temperature</sys:String>
 
 
 </ResourceDictionary>

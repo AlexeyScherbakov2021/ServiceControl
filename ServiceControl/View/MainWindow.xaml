@@ -7,7 +7,7 @@
         xmlns:view="clr-namespace:ServiceControl.View"
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"
-        Background="Gainsboro" SizeToContent="Width"
+        Background="#e8e8e8" SizeToContent="Width"
         Title="Service Control" Height="580" Width="1200" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
@@ -50,7 +50,7 @@
                     </Menu>
 
                 </ToolBarPanel>
-                <Border x:Name="bordBlue" BorderThickness="0" BorderBrush="Black" Padding="4" Background="#c0c0c0" >
+                <Border x:Name="bordBlue" BorderThickness="0" BorderBrush="Black" Padding="4" Background="#d4d4d4" >
                     <StatusBar Background="Transparent">
                         <!--<TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" 
                            FontWeight="Bold"/>-->
@@ -89,7 +89,7 @@
             </StackPanel>
         </DockPanel>
 
-        <StatusBar Grid.Row="2" FontSize="14" Background="Gainsboro">
+        <StatusBar Grid.Row="2" FontSize="14" Background="#d4d4d4">
             <StatusBarItem Content="{DynamicResource Stat}" Margin="10,0"/>
             <StatusBarItem Content="{Binding ConnectedString}" FontWeight="Bold" Foreground="{Binding ConnectedColor}"/>
         </StatusBar>

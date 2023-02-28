@@ -121,7 +121,7 @@
         </Grid.ColumnDefinitions>
 
         <!--Управляемые параметры-->
-        <Border Background="Gainsboro" Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="1">
+        <Border  Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="6" Grid.ColumnSpan="1">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -325,7 +325,7 @@
         </Border>
 
         <!--Счетчик электроэнергии-->
-        <Border Background="Gainsboro" Margin="4,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1" >
+        <Border  Margin="4,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1" >
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -355,7 +355,7 @@
         </Border>
 
         <!--Карточка устройства-->
-        <Border Background="Gainsboro" Margin="4,0" Grid.Row="3" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="1" >
+        <Border  Margin="4,0" Grid.Row="3" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="1" >
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -401,7 +401,7 @@
         </Border>
 
         <!--Сигнализация-->
-        <Border Background="Gainsboro" Margin="4,0" Grid.Column="2" Grid.RowSpan="2" Grid.Row="0" Grid.ColumnSpan="1">
+        <Border  Margin="4,0" Grid.Column="2" Grid.RowSpan="2" Grid.Row="0" Grid.ColumnSpan="1">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -433,7 +433,7 @@
         </Border>
 
         <!--Силовые модули-->
-        <Border Background="Gainsboro" Margin="4,0" Grid.Column="2" Grid.Row="2" Grid.RowSpan="4" Grid.ColumnSpan="2">
+        <Border  Margin="4,0" Grid.Column="2" Grid.Row="2" Grid.RowSpan="4" Grid.ColumnSpan="2">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
             </Border.Effect>-->
@@ -489,7 +489,7 @@
         </Border>
 
         <!--Индикаторы скорости коррозии-->
-        <Border Background="Gainsboro" Margin="4,0" Grid.Column="1" Grid.Row="1"  
+        <Border Margin="4,0" Grid.Column="1" Grid.Row="1"  
                 Grid.RowSpan="2" Visibility="Visible">
             <!--<Border.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
@@ -503,7 +503,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Height="22">
-                                    <TextBlock Text="{Binding Register1.Name}" Width="88" Padding="4,0" VerticalAlignment="Center" TextAlignment="Right"/>
+                                    <TextBlock Text="{Binding Register1.Name}" Width="98" Padding="4,0" VerticalAlignment="Center" TextAlignment="Right"/>
                                     <TextBlock Text="{Binding Register1.Value, TargetNullValue=--}" Background="White" Width="60" 
                                                TextAlignment="Center" ToolTip="{Binding Register1.ToolTip}" FontWeight="Bold"
                                                Margin="0,0,8,0" VerticalAlignment="Center"/>
@@ -530,42 +530,30 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <StackPanel Orientation="Horizontal" Margin="48,8,0,4">
+                    <StackPanel Orientation="Horizontal" Margin="70,8,0,4">
                         <TextBlock Text="{DynamicResource SpeedCorr}" Margin="26,0"/>
-                        <TextBlock Text="{DynamicResource DeepCorr}" Margin="50,0,0,0" />
+                        <TextBlock Text="{DynamicResource DeepCorr}" Margin="40,0,0,0" />
                     </StackPanel>
-                    <ItemsControl ItemsSource="{Binding ListInputDK}" Margin="40,0,0,0" >
+                    <ItemsControl ItemsSource="{Binding ListInputDK}" Margin="43,0,0,0" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Height="20">
-                                    <TextBlock Text="{Binding Register1.Name}" 
+                                    <TextBlock Text="ИКП1" 
                                                VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Register1.Number}" Margin="2,0"
                                                VerticalAlignment="Center"/>
 
-                                    <!--<Grid Height="20" Margin="0,2">
-                                        <ProgressBar x:Name="pb1" Maximum="65.535" Width="100" 
-                                                 Value="{Binding Register1.Value}" BorderBrush="Gray"
-                                             Background="Gainsboro" Margin="1"  Foreground="DarkGray"
-                                             />-->
                                     <TextBlock Text="{Binding Register1.Value, StringFormat=0.###}" 
-                                               VerticalAlignment="Center" Background="White" Margin="6,0"
+                                               VerticalAlignment="Center" Background="White" Margin="4,0"
                                                ToolTip="{Binding Register1.ToolTip}" FontWeight="Bold"
                                                Width="60" TextAlignment="Center" Padding="6,0"/>
-                                    <!--</Grid>-->
                                     <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,8,0" 
                                                VerticalAlignment="Center"/>
 
-                                    <!--<Grid Height="20" Margin="0,2">
-                                        <ProgressBar x:Name="pb2" Maximum="65.535" Width="100" 
-                                                 Value="{Binding RegisterTwo.Value}" BorderBrush="Gray"
-                                             Background="Gainsboro" Margin="1"  Foreground="DarkGray" Minimum="0"
-                                             />-->
                                     <TextBlock Text="{Binding Register2.Value, StringFormat=0.###}" 
-                                               VerticalAlignment="Center" Background="White" Margin="14,0,8,0"
+                                               VerticalAlignment="Center" Background="White" Margin="6,0,2,0"
                                                ToolTip="{Binding Register2.ToolTip}" FontWeight="Bold"
                                                Width="60" TextAlignment="Center" Padding="6,0"/>
-                                    <!--</Grid>-->
                                     <TextBlock Text="{Binding Register2.Measure}" VerticalAlignment="Center"/>
 
                                 </StackPanel>

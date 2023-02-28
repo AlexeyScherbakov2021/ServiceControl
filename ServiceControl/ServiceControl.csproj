@@ -85,6 +85,7 @@
     <Compile Include="Modbus\Registers\RegisterNapr4896.cs" />
     <Compile Include="Modbus\Registers\RegisterRT.cs" />
     <Compile Include="Modbus\Registers\RegisterStatus.cs" />
+    <Compile Include="ViewModel\BIWindowViewModel.cs" />
     <Compile Include="ViewModel\KS216_UCViewModel.cs" />
     <Compile Include="ViewModel\KS261_UCViewModel.cs" />
     <Compile Include="ViewModel\KS356_UCViewModel.cs" />
@@ -92,6 +93,9 @@
     <Compile Include="ViewModel\SettingConnectViewModel.cs" />
     <Compile Include="View\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BIWindow.xaml.cs">
+      <DependentUpon>BIWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KS216_2_UCView.xaml.cs">
       <DependentUpon>KS216_2_UCView.xaml</DependentUpon>
@@ -113,7 +117,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\DataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BIWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
