@@ -87,22 +87,22 @@ namespace ServiceControl.Modbus.Registers
             switch ((RezhStab)Value)
             {
                 case RezhStab.StabCurrent:
-                    ValueString = App.Current.Resources["ByCurrent"]?.ToString();
+                    ValueString = App.Current?.Resources["ByCurrent"]?.ToString();
                     IsCurrentStab = true;
                     break;
 
                 case RezhStab.StabSummPot:
-                    ValueString = App.Current.Resources["BySumPot"]?.ToString();
+                    ValueString = App.Current?.Resources["BySumPot"]?.ToString();
                     IsSummPotStab = true;
                     break;
 
                 case RezhStab.StabPolPot:
-                    ValueString = App.Current.Resources["ByPolPot"]?.ToString();
+                    ValueString = App.Current?.Resources["ByPolPot"]?.ToString();
                     IsPolPotStab = true;
                     break;
 
                 case RezhStab.StabNapr:
-                    ValueString = App.Current.Resources["ByVoltage"]?.ToString();
+                    ValueString = App.Current?.Resources["ByVoltage"]?.ToString();
                     IsNaprStab = true;
                     break;
             }

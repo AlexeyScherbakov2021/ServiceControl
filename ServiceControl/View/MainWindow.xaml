@@ -8,13 +8,13 @@
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"
         Background="Gainsboro" SizeToContent="Width"
-        Title="Service Control" Height="840" Width="1200" WindowStartupLocation="CenterScreen">
+        Title="Service Control" Height="580" Width="1200" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid.Background>
+        <!--<Grid.Background>
             <ImageBrush ImageSource="/Resources/NGK.png" Stretch="Uniform" TileMode="None" Opacity="0.2">
                 <ImageBrush.RelativeTransform>
                     <TransformGroup>
@@ -25,66 +25,69 @@
                     </TransformGroup>
                 </ImageBrush.RelativeTransform>
             </ImageBrush>
-        </Grid.Background>
+        </Grid.Background>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
             <RowDefinition Height="30.003"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical">
-
-            <ToolBarPanel Background="#FFB3CEFB" Height="24" >
-                <Menu Background="Transparent" >
-                    <MenuItem Header="{DynamicResource Setting}">
-                        <MenuItem Header="{DynamicResource SetConnect}" Command="{Binding SetConnCommand}"/>
-                        <MenuItem Header="{DynamicResource LogPacket}" Command="{Binding LogCommand}"/>
-                        <MenuItem Header="{DynamicResource SelectLang}">
-                            <MenuItem Header="Русский" Command="{Binding LangCommand}" CommandParameter="ru-RU"/>
-                            <MenuItem Header="English" Command="{Binding LangCommand}" CommandParameter="en-US"/>
+        <DockPanel >
+            <Image Source="/Resources/ngk-logo-short-blue3.png" HorizontalAlignment="Right" 
+                   Margin="10,0" Height="68" DockPanel.Dock="Right"/>
+            <StackPanel Orientation="Vertical" >
+                <ToolBarPanel  Height="20" Margin="0,4" >
+                    <Menu Background="Transparent" >
+                        <MenuItem Header="{DynamicResource Setting}">
+                            <MenuItem Header="{DynamicResource SetConnect}" Command="{Binding SetConnCommand}"/>
+                            <MenuItem Header="{DynamicResource LogPacket}" Command="{Binding LogCommand}"/>
+                            <MenuItem Header="{DynamicResource SelectLang}">
+                                <MenuItem Header="Русский" Command="{Binding LangCommand}" CommandParameter="ru-RU"/>
+                                <MenuItem Header="English" Command="{Binding LangCommand}" CommandParameter="en-US"/>
+                            </MenuItem>
                         </MenuItem>
-                    </MenuItem>
-                    <MenuItem Header="{DynamicResource About}" Command="{Binding AboutCommand}"/>
-                </Menu>
+                        <MenuItem Header="{DynamicResource About}" Command="{Binding AboutCommand}"/>
+                    </Menu>
 
-            </ToolBarPanel>
-            <Border x:Name="bordBlue" BorderThickness="1" BorderBrush="Black" Padding="4" Background="#FFB3CEFB">
-                <StatusBar Background="Transparent">
-                    <!--<TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" 
+                </ToolBarPanel>
+                <Border x:Name="bordBlue" BorderThickness="0" BorderBrush="Black" Padding="4" Background="#c0c0c0" >
+                    <StatusBar Background="Transparent">
+                        <!--<TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" 
                            FontWeight="Bold"/>-->
-                    <Grid Height="21">
-                        <Grid >
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource Type}" FontSize="18"/>
-                                <TextBlock Text="{Binding deviceType}" Margin="4,0,8,0"  FontSize="18" FontWeight="Bold"/>
-                                <TextBlock Text="{DynamicResource Address}" FontSize="16"/>
-                                <TextBlock Text="{Binding Slave}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
-                                <TextBlock Text="{DynamicResource Port2}" FontSize="18"/>
-                                <TextBlock Text="{Binding ComPort}" Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
-                                <TextBlock Text="{DynamicResource TimeOut2}"  FontSize="18"/>
-                                <TextBlock Text="{Binding TimeOutCOM}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
-                            </StackPanel>
+                        <Grid Height="21">
+                            <Grid >
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource Type}" FontSize="18"/>
+                                    <TextBlock Text="{Binding deviceType}" Margin="4,0,8,0"  FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Text="{DynamicResource Address}" FontSize="18"/>
+                                    <TextBlock Text="{Binding Slave}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Text="{DynamicResource Port2}" FontSize="18"/>
+                                    <TextBlock Text="{Binding ComPort}" Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Text="{DynamicResource TimeOut2}"  FontSize="18"/>
+                                    <TextBlock Text="{Binding TimeOutCOM}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Background="{Binding Background, ElementName=bordBlue}" Visibility="{Binding VisibleTCP}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{DynamicResource Type}" FontSize="18"/>
+                                    <TextBlock Text="{Binding deviceType}" Margin="4,0,8,0"  FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Text="{DynamicResource Address}" FontSize="18"/>
+                                    <TextBlock Text="{Binding Slave}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Text="{DynamicResource IPAddr2}" FontSize="18"/>
+                                    <TextBlock Text="{Binding HostName}" Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Text="{DynamicResource Port2}"  FontSize="18"/>
+                                    <TextBlock Text="{Binding Port}" Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
+                                </StackPanel>
+                            </Grid>
                         </Grid>
-                        <Grid Background="{Binding Background, ElementName=bordBlue}" Visibility="{Binding VisibleTCP}">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{DynamicResource Type}" FontSize="18"/>
-                                <TextBlock Text="{Binding deviceType}" Margin="4,0,8,0"  FontSize="18" FontWeight="Bold"/>
-                                <TextBlock Text="{DynamicResource Address}" FontSize="18"/>
-                                <TextBlock Text="{Binding Slave}"  Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
-                                <TextBlock Text="{DynamicResource IPAddr2}" FontSize="18"/>
-                                <TextBlock Text="{Binding HostName}" Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
-                                <TextBlock Text="{DynamicResource Port2}"  FontSize="18"/>
-                                <TextBlock Text="{Binding Port}" Margin="4,0,8,0" FontSize="18" FontWeight="Bold"/>
-                            </StackPanel>
-                        </Grid>
-                    </Grid>
-                    <!--<TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" 
+                        <!--<TextBlock Text="{Binding StringConnect}" VerticalAlignment="Center" FontSize="18" 
                            FontWeight="Bold"/>-->
-                    <Button Content="{DynamicResource Connect}" Command="{Binding ConnectCommand}" Padding="6" Margin="16,0,0,0" BorderBrush="Black" Style="{DynamicResource ButtonStyle1}" />
-                    <Button Content="{DynamicResource Disconnect}" Command="{Binding DisconnectCommand}" Padding="6" Margin="16,0,40,0" BorderBrush="Black" Style="{DynamicResource ButtonStyle1}" />
-                </StatusBar>
-            </Border>
-        </StackPanel>
+                        <Button Content="{DynamicResource Connect}" Command="{Binding ConnectCommand}" Padding="6" Margin="16,0,0,0" BorderBrush="Black" Style="{DynamicResource ButtonStyle1}" />
+                        <Button Content="{DynamicResource Disconnect}" Command="{Binding DisconnectCommand}" Padding="6" Margin="16,0,40,0" BorderBrush="Black" Style="{DynamicResource ButtonStyle1}" />
+                    </StatusBar>
+                </Border>
+            </StackPanel>
+        </DockPanel>
 
         <StatusBar Grid.Row="2" FontSize="14" Background="Gainsboro">
             <StatusBarItem Content="{DynamicResource Stat}" Margin="10,0"/>

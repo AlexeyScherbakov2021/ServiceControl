@@ -26,6 +26,7 @@ namespace ServiceControl.ViewModel
             public Register Register1 { get; set; }
             public Register Register2 { get; set; }
             public RegisterBool Register3 { get; set; }
+            public RezhStab stab { get; set; }
         }
 
         //private MainWindowViewModel mainVM;
@@ -113,7 +114,7 @@ namespace ServiceControl.ViewModel
 
             // добавление в список датчиков коррозии
             ListInputDK = new List<TwoRegister>();
-            for (int i = 0; i < Device216.CountDK; i++)
+            for (int i = 0; i < 1/*Device216.CountDK*/; i++)
             {
                 ListInputDK.Add( new TwoRegister() { Register1 = device.SpeedDK[i], Register2 = device.DeepDK[i] });
             }
@@ -124,15 +125,23 @@ namespace ServiceControl.ViewModel
 
             // добавление в список регистров управления
             ListWriteControl = new List<TwoRegister>() { 
-                new TwoRegister() { Register1 = device.CurrOutput, Register2 = device.SetCurrOutput },
-                new TwoRegister() { Register1 = device.ProtectPotenSumm, Register2 = device.SetSummPotOutput },
-                new TwoRegister() { Register1 = device.ProtectPotenPol, Register2 = device.SetPolPotOutput },
-                new TwoRegister() { Register1 = device.NaprOutput, Register2 = device.SetNaprOutput },
-#if !CLIENT
-                new TwoRegister() { Register1 = device.TempCoolerOn, Register2 = device.TempCoolerOnWrite },
-                new TwoRegister() { Register1 = device.TempCoolerOff, Register2 = device.TempCoolerOffWrite },
-#endif
-            };
+                new TwoRegister() { Register1 = device.CurrOutput, 
+                    Register2 = device.SetCurrOutput, 
+                    stab = RezhStab.StabCurrent },
+                new TwoRegister() { Register1 = device.ProtectPotenSumm, 
+                    Register2 = device.SetSummPotOutput,  
+                    stab = RezhStab.StabSummPot },
+                new TwoRegister() { Register1 = device.ProtectPotenPol, 
+                    Register2 = device.SetPolPotOutput, 
+                    stab = RezhStab.StabPolPot },
+                new TwoRegister() { Register1 = device.NaprOutput, 
+                    Register2 = device.SetNaprOutput, 
+                    stab = RezhStab.StabNapr },
+//#if !CLIENT
+//                new TwoRegister() { Register1 = device.TempCoolerOn, Register2 = device.TempCoolerOnWrite },
+//                new TwoRegister() { Register1 = device.TempCoolerOff, Register2 = device.TempCoolerOffWrite },
+//#endif
+            }; 
 
             ListCoil = new List<RegisterBool>() { device.OnOffMS };
 
@@ -142,6 +151,8 @@ namespace ServiceControl.ViewModel
             ListWriteControl2 = new List<TwoRegister>() { 
                 new TwoRegister() { Register1 = device.TimeWork, Register2 = device.TimeWorkWrite },
                 new TwoRegister() { Register1 = device.TimeProtect, Register2 = device.TimeProtectWrite  },
+                new TwoRegister() { Register1 = device.TempCoolerOn, Register2 = device.TempCoolerOnWrite },
+                new TwoRegister() { Register1 = device.TempCoolerOff, Register2 = device.TempCoolerOffWrite },
             };
 
             ListDK3 = new List<TwoRegister>()
@@ -184,6 +195,8 @@ namespace ServiceControl.ViewModel
                 IsAvarModeVisible = device.Stabil.Value == LastSetMode
                     ? Visibility.Hidden
                     : Visibility.Visible;
+
+                OnPropertyChanged(nameof(device.Stabil));
             }
             else
                 --CountTimerSetMode;
@@ -225,13 +238,31 @@ namespace ServiceControl.ViewModel
                 }
 
                 // была установка режима стабилизации
-                if(reg.Address == 0x84)
-                {
-                    LastSetMode = (reg as RegisterInt).Value;
-                    CountTimerSetMode = 3;
-                }
+                //if(reg.Address == 0x84)
+                //{
+                //    LastSetMode = (reg as RegisterInt).Value;
+                //    CountTimerSetMode = 3;
+                //}
             }
         }
+
+        //--------------------------------------------------------------------------------
+        // Команда Установить режим стабилизации
+        //--------------------------------------------------------------------------------
+        public ICommand WriteStabCommand => new LambdaCommand(OnWriteStabCommandExecuted, CanWriteStabCommand);
+        private bool CanWriteStabCommand(object p) => device != null && device.DistanceMode.ValueBool;
+        private void OnWriteStabCommandExecuted(object p)
+        {
+            if (p is RezhStab mode)
+            {
+                device.SetMode.Value = (int)mode;
+                device.WriteRegister(device.SetMode);
+                LastSetMode = (int)mode;
+                //LastSetMode = (reg as RegisterInt).Value;
+                CountTimerSetMode = 3;
+            }
+        }
+
 
 #if !CLIENT
         //--------------------------------------------------------------------------------

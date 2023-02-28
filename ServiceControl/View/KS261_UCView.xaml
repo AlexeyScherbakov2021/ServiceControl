@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:ServiceControl.ViewModel"
-             xmlns:fa="http://schemas.fontawesome.com/icons/"
              xmlns:local="clr-namespace:ServiceControl.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -25,7 +24,7 @@
                   AlternatingRowBackground="#f0f0f0" FontSize="14"
                   >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number}"/>
+                <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number}"  CellStyle="{StaticResource CellRight}"/>
 
                 <DataGridTextColumn Binding="{Binding RegCurrentPolyar.Value, StringFormat=N2,TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
                     <DataGridTextColumn.Header>
@@ -87,7 +86,24 @@
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <fa:ImageAwesome Height="14" >
+                            <Image Height="14">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.IsSensorOpen}" Value="True">
+                                                <Setter Property="Source" Value="../Resources/Absent.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Opened}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RegStatus.IsSensorOpen}" Value="False">
+                                                <Setter Property="Source" Value="../Resources/greenLed.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource NotOpened}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            
+                            <!--<fa:ImageAwesome Height="14" >
                                 <fa:ImageAwesome.Style>
                                     <Style TargetType="fa:ImageAwesome">
                                         <Style.Triggers>
@@ -104,7 +120,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </fa:ImageAwesome.Style>
-                            </fa:ImageAwesome>
+                            </fa:ImageAwesome>-->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -115,7 +131,32 @@
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <fa:ImageAwesome Height="14" >
+                            <Image Height="14">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Good">
+                                                <Setter Property="Source" Value="../Resources/greenLed.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Opened">
+                                                <Setter Property="Source" Value="../Resources/blackLed.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Opened}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Alarm">
+                                                <Setter Property="Source" Value="../Resources/attention.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Avar}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RegStatus.StatusBlock}" Value="Absent">
+                                                <Setter Property="Source" Value="../Resources/Absent.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Absent}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                            <!--<fa:ImageAwesome Height="14" >
                                 <fa:ImageAwesome.Style>
                                     <Style TargetType="fa:ImageAwesome">
                                         <Setter Property="Foreground" Value="Red"/>
@@ -140,7 +181,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </fa:ImageAwesome.Style>
-                            </fa:ImageAwesome>
+                            </fa:ImageAwesome>-->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -151,7 +192,24 @@
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <fa:ImageAwesome Height="14" >
+                            <Image Height="14">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.IsDK1Break}" Value="False">
+                                                <Setter Property="Source" Value="../Resources/greenLed.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RegStatus.IsDK1Break}" Value="True">
+                                                <Setter Property="Source" Value="../Resources/Absent.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+
+                            <!--<fa:ImageAwesome Height="14" >
                                 <fa:ImageAwesome.Style>
                                     <Style TargetType="fa:ImageAwesome">
                                         <Setter Property="Foreground" Value="OrangeRed"/>
@@ -166,7 +224,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </fa:ImageAwesome.Style>
-                            </fa:ImageAwesome>
+                            </fa:ImageAwesome>-->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -177,7 +235,23 @@
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <fa:ImageAwesome Height="14" >
+                            <Image Height="14">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.IsDK2Break}" Value="False">
+                                                <Setter Property="Source" Value="../Resources/greenLed.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RegStatus.IsDK2Break}" Value="True">
+                                                <Setter Property="Source" Value="../Resources/Absent.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <!--<fa:ImageAwesome Height="14" >
                                 <fa:ImageAwesome.Style>
                                     <Style TargetType="fa:ImageAwesome">
                                         <Setter Property="Foreground" Value="OrangeRed"/>
@@ -192,7 +266,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </fa:ImageAwesome.Style>
-                            </fa:ImageAwesome>
+                            </fa:ImageAwesome>-->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -203,7 +277,23 @@
                     </DataGridTemplateColumn.Header>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <fa:ImageAwesome Height="14" >
+                            <Image Height="14">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding RegStatus.IsDK3Break}" Value="False">
+                                                <Setter Property="Source" Value="../Resources/greenLed.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Norm}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding RegStatus.IsDK3Break}" Value="True">
+                                                <Setter Property="Source" Value="../Resources/Absent.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                            <!--<fa:ImageAwesome Height="14" >
                                 <fa:ImageAwesome.Style>
                                     <Style TargetType="fa:ImageAwesome">
                                         <Setter Property="Foreground" Value="OrangeRed"/>
@@ -218,7 +308,7 @@
                                         </Style.Triggers>
                                     </Style>
                                 </fa:ImageAwesome.Style>
-                            </fa:ImageAwesome>
+                            </fa:ImageAwesome>-->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

@@ -59,8 +59,8 @@
     <sys:String x:Key="ControlModeStab">Управление режимами стабилизации станции</sys:String>
     <sys:String x:Key="SetVoltage">Задание выходного напряжения</sys:String>
     <sys:String x:Key="TimeDevice">Время устройства</sys:String>
-    <sys:String x:Key="TempOnCooler">Температура включения вентилятора</sys:String>
-    <sys:String x:Key="TempOffCooler">Температура выключения вентилятора</sys:String>
+    <sys:String x:Key="TempOnCooler">t° включения вентилятора</sys:String>
+    <sys:String x:Key="TempOffCooler">t° выключения вентилятора</sys:String>
     <sys:String x:Key="ModeVoltage">Режим работы СКЗ (48/96)</sys:String>
     <sys:String x:Key="RemoteOnOffPower">Дистанц.откл.вкл.модулей силовых</sys:String>
     <sys:String x:Key="ResistPast1">Пластина 1</sys:String>
@@ -120,7 +120,7 @@
     <sys:String x:Key="DK1">ДК1</sys:String>
     <sys:String x:Key="DK2">ДК2</sys:String>
     <sys:String x:Key="DK3">ДК3</sys:String>
-    <!--<sys:String x:Key="Break">Обрыв</sys:String>-->
+    <sys:String x:Key="SetMode">Установить режим стабилизации</sys:String>
     <!--<sys:String x:Key=""></sys:String>
     <sys:String x:Key=""></sys:String>
     <sys:String x:Key=""></sys:String>

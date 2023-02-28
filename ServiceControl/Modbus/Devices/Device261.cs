@@ -106,6 +106,17 @@ namespace ServiceControl.Modbus.Registers
         public override Task RequestValue()
         {
             ReadRegisters(ListStatus);
+
+            ListStatus[0].StatusBlock = BlockStatus.Absent;
+            ListStatus[1].StatusBlock = BlockStatus.Alarm;
+            ListStatus[2].StatusBlock = BlockStatus.Opened;
+            ListStatus[2].IsDK1Break = true;
+            ListStatus[3].IsDK1Break = true;
+            ListStatus[4].IsDK1Break = true;
+            
+            ListStatus[5].IsSensorOpen = true;
+            ListStatus[6].IsSensorOpen = true;
+
             ReadRegisters(ListCurrentPol);
             ReadRegisters(ListPolPot);
             ReadRegisters(ListSummPot);
@@ -115,6 +126,8 @@ namespace ServiceControl.Modbus.Registers
             ReadRegisters(ListProtectCurrent);
             ReadRegisters(ListDeepCorr);
             ReadRegisters(ListSpeedCorr);
+
+
 
             SetValueFromStatus();
 

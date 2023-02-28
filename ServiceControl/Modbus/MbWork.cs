@@ -28,7 +28,7 @@ namespace ServiceControl.Modbus
         private string Host;
         private int Port;
         private string ComPort;
-        private bool IsTCPoverRTU = true;
+        private bool IsTCPoverRTU = false;
         private int TimeOut = 1000;
 
         public MbWork(string connect, int val, Protocol proto)
