@@ -18,12 +18,12 @@ namespace ServiceControl.ViewModel
         ModbusMaster master;
         public ListBox listBox;
         private bool _IsPause;
-        public bool IsPause 
+        public bool IsPause
         {
             get => _IsPause;
             set
             {
-                if (_IsPause == value) return;
+                if (_IsPause == value || master.Transport == null) return;
                 _IsPause = value;
                 if(_IsPause)
                     master.Transport.EventLogEvent -= Transport_EventLogEvent;
@@ -53,7 +53,7 @@ namespace ServiceControl.ViewModel
 
         public void Dispose()
         {
-            if(master != null)
+            if(master != null && master.Transport != null)
                 master.Transport.EventLogEvent -= Transport_EventLogEvent;
         }
 

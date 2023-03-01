@@ -33,6 +33,9 @@ namespace ServiceControl.ViewModel
         private int _Slave = 1;
         public int Slave { get => _Slave; set { Set(ref _Slave, value); } }
 
+        private bool _IsOverRTU;
+        public bool IsOverRTU { get => _IsOverRTU; set { Set(ref _IsOverRTU, value); } }
+
         private DeviceType _SelectedDevice;
         public DeviceType SelectedDevice { get => _SelectedDevice; set { Set(ref _SelectedDevice, value); } }
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServiceControl.View"
         mc:Ignorable="d"
-        Title="{DynamicResource About}" Height="330" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="{DynamicResource About}" Height="330" Width="400" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
         <Image Source="/Resources/wp.png" Stretch="Fill"/>
         <Image Source="/Resources/NGK.png" Margin="120,-38,20,162" />

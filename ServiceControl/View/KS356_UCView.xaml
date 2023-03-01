@@ -144,14 +144,14 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="250" 
                                                TextAlignment="Right" VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
-                                        Margin="4,0" Padding="2" FontWeight="Bold" ToolTip="{Binding Register1.ToolTip}"
+                                    <TextBox Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
+                                        Margin="4,0" Padding="2,1" FontWeight="Bold" ToolTip="{Binding Register1.ToolTip}" IsReadOnly="True"
                                         TextAlignment="Right" Background="White" />
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
                                     <TextBox Text="{Binding Register2.Value, StringFormat=0.00, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
-                                        Margin="4,0" Padding="2" ToolTip="{Binding Register2.ToolTip}" FontWeight="Bold"
-                                        TextAlignment="Right" Background="White" />
+                                        Margin="4,0" Padding="2,1" ToolTip="{Binding Register2.ToolTip}" FontWeight="Bold"
+                                        TextAlignment="Right" Background="WhiteSmoke" />
 
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource Set}" Style="{StaticResource ButtonStyle1}"
                                             CommandParameter="{Binding Register2}" Padding="3"
@@ -212,14 +212,14 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="250" 
                                                TextAlignment="Right" VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding Register1.Value, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
-                                        Margin="4,0" Padding="2" FontWeight="Bold"  ToolTip="{Binding Register1.ToolTip}"
+                                    <TextBox Text="{Binding Register1.Value, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
+                                        Margin="4,0" Padding="2,1" FontWeight="Bold"  ToolTip="{Binding Register1.ToolTip}" IsReadOnly="True"
                                         TextAlignment="Right" Background="White" />
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
                                     <TextBox Text="{Binding Register2.Value, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
-                                        Margin="4,0" Padding="2" ToolTip="{Binding Register2.ToolTip}" FontWeight="Bold"
-                                        TextAlignment="Right" Background="White" />
+                                        Margin="4,0" Padding="2,1" ToolTip="{Binding Register2.ToolTip}" FontWeight="Bold"
+                                        TextAlignment="Right" Background="WhiteSmoke" />
 
 
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource Set}" Style="{StaticResource ButtonStyle1}"
@@ -242,13 +242,13 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Register1.Name}" Width="250" TextAlignment="Right"   VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding Register1.ValueString, StringFormat=0.00, TargetNullValue=--}" 
-                                 Width="64" VerticalAlignment="Top" ToolTip="{Binding Register1.ToolTip}"
-                                        Margin="4,1" Padding="2" FontWeight="Bold"
+                                    <TextBox Text="{Binding Register1.ValueString, StringFormat=0.00, TargetNullValue=--}" 
+                                 Width="64" VerticalAlignment="Top" ToolTip="{Binding Register1.ToolTip}" IsReadOnly="True"
+                                        Margin="4,1" Padding="2,1" FontWeight="Bold"
                                         TextAlignment="Right" Background="White" />
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,3,0,0"/>
 
-                                    <ComboBox Width="64" SelectedIndex="{Binding Register2.Value}" Margin="4,1"
+                                    <ComboBox Width="64" SelectedIndex="{Binding Register2.Value}" Margin="4,1" Padding="6,1"
                                   ToolTip="{Binding Register2.ToolTip}">
                                         <ComboBoxItem Content="48"/>
                                         <ComboBoxItem Content="96"/>
@@ -272,9 +272,9 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="250" TextAlignment="Right" 
                                VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
+                                    <TextBox Text="{Binding RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
                                  Width="158" VerticalAlignment="Top" ToolTip="{Binding ToolTip}" FontWeight="Bold"
-                                        Margin="4,1" Padding="2"
+                                        Margin="4,1" Padding="2,1" IsReadOnly="True"
                                         TextAlignment="Right" Background="White" InputScope="Date" />
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource SetCurrTime}"
                                  Style="{StaticResource ButtonStyle1}"
@@ -294,8 +294,8 @@
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="250" 
                                                TextAlignment="Right" VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding Value, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
-                                        Margin="4,1" Padding="2" FontWeight="Bold"  ToolTip="{Binding ToolTip}"
+                                    <TextBox Text="{Binding Value, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
+                                        Margin="4,1" Padding="2,1" FontWeight="Bold"  ToolTip="{Binding ToolTip}" IsReadOnly="True"
                                         TextAlignment="Right" Background="White" />
                                     <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
                                 </StackPanel>
@@ -361,8 +361,8 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" TextAlignment="Right" Width="134"  VerticalAlignment="Top"/>
-                                    <TextBlock Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" FontWeight="Bold" 
-                                               VerticalAlignment="Top" Margin="8,1,1,1" Padding="6,2" ToolTip="{Binding ToolTip}"
+                                    <TextBox Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="74" FontWeight="Bold" 
+                                               VerticalAlignment="Top" Margin="8,1,1,1" Padding="2,1" ToolTip="{Binding ToolTip}" IsReadOnly="True"
                                         TextAlignment="Right" Background="White"/>
                                     <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Margin="2,3,0,0"/>
                                 </StackPanel>
@@ -397,23 +397,23 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="{DynamicResource VerPlate}" VerticalAlignment="Center" TextAlignment="Right"/>
-                    <TextBlock Text="{Binding device.InfoReg.VersionDev}" Margin="8,0,0,0" Grid.Column="1" FontWeight="Bold"
-                               VerticalAlignment="Center"
+                    <TextBox Text="{Binding device.InfoReg.VersionDev}" Margin="8,0,0,0" Grid.Column="1" FontWeight="Bold"
+                               VerticalAlignment="Center" IsReadOnly="True"
                                    Background="White" TextAlignment="Center"/>
 
                     <TextBlock Text="{DynamicResource VerPO}" VerticalAlignment="Center" TextAlignment="Right"  Grid.Column="0" Grid.Row="1"/>
-                    <TextBlock Text="{Binding device.InfoReg.VersionPO}" Margin="8,0,0,0" Grid.Column="1" Grid.Row="1" 
-                               FontWeight="Bold" VerticalAlignment="Center"
+                    <TextBox Text="{Binding device.InfoReg.VersionPO}" Margin="8,0,0,0" Grid.Column="1" Grid.Row="1" 
+                               FontWeight="Bold" VerticalAlignment="Center" IsReadOnly="True"
                                    Background="White" TextAlignment="Center"/>
 
                     <TextBlock Text="{DynamicResource Year}" TextAlignment="Right" Grid.Row="0" VerticalAlignment="Center" Grid.Column="2"/>
-                    <TextBlock Text="{Binding device.InfoReg.Year}" Margin="8,0,0,0"  Grid.Row="0"  Grid.Column="3" 
-                               FontWeight="Bold" VerticalAlignment="Center"
+                    <TextBox Text="{Binding device.InfoReg.Year}" Margin="8,0,0,0"  Grid.Row="0"  Grid.Column="3" 
+                               FontWeight="Bold" VerticalAlignment="Center" IsReadOnly="True"
                                    Background="White" TextAlignment="Center"/>
 
                     <TextBlock Text="№" TextAlignment="Right" Grid.Row="1" VerticalAlignment="Center" Grid.Column="2"/>
-                    <TextBlock Text="{Binding device.InfoReg.NumberDev}" Margin="8,0,0,0"  Grid.Row="1" Grid.Column="3" 
-                               FontWeight="Bold" VerticalAlignment="Center"
+                    <TextBox Text="{Binding device.InfoReg.NumberDev}" Margin="8,0,0,0"  Grid.Row="1" Grid.Column="3" 
+                               FontWeight="Bold" VerticalAlignment="Center" IsReadOnly="True"
                                    Background="White" TextAlignment="Center"/>
                 </Grid>
 
@@ -523,8 +523,8 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Height="22">
                                     <TextBlock Text="{Binding Register1.Name}" Width="98" Padding="4,0" VerticalAlignment="Center" TextAlignment="Right"/>
-                                    <TextBlock Text="{Binding Register1.Value, TargetNullValue=--}" Background="White" Width="60" 
-                                               TextAlignment="Center" ToolTip="{Binding Register1.ToolTip}" FontWeight="Bold"
+                                    <TextBox Text="{Binding Register1.Value, TargetNullValue=--}" Background="White" Width="60" 
+                                               TextAlignment="Center" ToolTip="{Binding Register1.ToolTip}" FontWeight="Bold" IsReadOnly="True"
                                                Margin="0,0,8,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,0,0" VerticalAlignment="Center"/>
 

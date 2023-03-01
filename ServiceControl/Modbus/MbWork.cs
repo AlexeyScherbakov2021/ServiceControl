@@ -28,15 +28,16 @@ namespace ServiceControl.Modbus
         private string Host;
         private int Port;
         private string ComPort;
-        private bool IsTCPoverRTU = true;
+        private bool IsTCPoverRTU;
         private int TimeOut = 1000;
 
-        public MbWork(string connect, int val, Protocol proto)
+        public MbWork(string connect, int val, Protocol proto, bool IsRTU = false)
         {
             if (proto == Protocol.TCP)
             {
                 Host = connect;
                 Port = val;
+                IsTCPoverRTU = IsRTU;
             }
             else
             {

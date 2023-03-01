@@ -60,6 +60,8 @@ namespace ServiceControl.ViewModel
         private int _Port;
         public int Port { get => _Port; set { Set(ref _Port, value); } }
 
+        private bool IsRTU;
+
         private string _ComPort;
         public string ComPort { get => _ComPort; set { Set(ref _ComPort, value); } }
 
@@ -187,6 +189,7 @@ namespace ServiceControl.ViewModel
             int.TryParse(iniFile.GetPrivateString("TCP", "Port"), out resInt);
             Port = resInt;
 
+            bool.TryParse(iniFile.GetPrivateString("TCP", "RTU"), out IsRTU);
 
             string lang = iniFile.GetPrivateString("Main", "Lang");
             if (string.IsNullOrEmpty(lang)) 
@@ -242,11 +245,13 @@ namespace ServiceControl.ViewModel
             vm.TimeOut= TimeOutCOM;
             vm.HostTCP = HostName;
             vm.PortTCP = Port;
+            vm.IsOverRTU = IsRTU;
 
             if (win.ShowDialog() == true)
             {
                 HostName = vm.HostTCP;
                 Port = vm.PortTCP;
+                IsRTU = vm.IsOverRTU;
                 ComPort = vm.SelectedCOM;
                 TimeOutCOM = vm.TimeOut;
                 Slave = vm.Slave;
@@ -263,6 +268,7 @@ namespace ServiceControl.ViewModel
 
                 iniFile.WritePrivateString("TCP", "Host", HostName);
                 iniFile.WritePrivateString("TCP", "Port", Port.ToString());
+                iniFile.WritePrivateString("TCP", "RTU", IsRTU.ToString());
 
                 OnPropertyChanged(nameof(VisibleTCP));
 
@@ -278,7 +284,7 @@ namespace ServiceControl.ViewModel
         private void OnConnectCommandExecuted(object p)
         {
             if (IsSelectTCP)
-                work = new MbWork(HostName, Port, Protocol.TCP);
+                work = new MbWork(HostName, Port, Protocol.TCP, IsRTU);
             else
                 work = new MbWork(ComPort, TimeOutCOM, Protocol.COM);
 
@@ -379,6 +385,7 @@ namespace ServiceControl.ViewModel
         private void OnAboutCommandExecuted(object p)
         {
             AboutWindow win = new AboutWindow();
+            win.Owner = App.Current.MainWindow;
             win.ShowDialog();
         }
 

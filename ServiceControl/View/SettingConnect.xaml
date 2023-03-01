@@ -68,6 +68,7 @@
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="20"/>
                                 <RowDefinition Height="20"/>
+                                <RowDefinition Height="20"/>
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="TCP" FontWeight="Bold"/>
@@ -77,6 +78,7 @@
                             <TextBlock Text="{DynamicResource Port}" Grid.Row="2"/>
                             <TextBox Width="180" Grid.Row="2" Grid.Column="1" Text="{Binding PortTCP}"
                                      IsEnabled="{Binding IsChecked, ElementName=rbTCP}"/>
+                            <CheckBox Content="RTU" Grid.Row="3" IsChecked="{Binding IsOverRTU}"/>
                         </Grid>
                     </RadioButton>
 

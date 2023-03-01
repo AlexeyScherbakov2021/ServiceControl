@@ -130,6 +130,7 @@
     <sys:String x:Key="Stab">stab.</sys:String>
     <sys:String x:Key="IKP">IKP</sys:String>
     <sys:String x:Key="OutsideMeasure">Outside sensor</sys:String>
+    <sys:String x:Key="Other">Addition</sys:String>
 
 
 </ResourceDictionary>
