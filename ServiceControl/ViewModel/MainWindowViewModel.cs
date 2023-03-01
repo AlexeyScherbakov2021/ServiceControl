@@ -301,6 +301,13 @@ namespace ServiceControl.ViewModel
             switch(deviceType)
             {
                 case DevType.KS131:
+                    SControl = new KS131_UCView();
+                    var vm131 = new KS131_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vm131;
+                    CurrentDevice = vm131.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                    CurrentDevice.ChangeLangRegister();
                     break;
 
                 case DevType.KS216:
@@ -381,7 +388,7 @@ namespace ServiceControl.ViewModel
         // Команда О программе
         //--------------------------------------------------------------------------------
         public ICommand AboutCommand => new LambdaCommand(OnAboutCommandExecuted, CanAboutCommand);
-        private bool CanAboutCommand(object p) => winLog == null /* && work != null*/;
+        private bool CanAboutCommand(object p) => winLog == null;
         private void OnAboutCommandExecuted(object p)
         {
             AboutWindow win = new AboutWindow();

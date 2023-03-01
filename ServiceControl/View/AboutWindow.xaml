@@ -13,7 +13,7 @@
                    VerticalAlignment="Top" FontSize="22" Foreground="White"/>
         <TextBlock HorizontalAlignment="Left" Margin="290,159,0,0"  Text="1.0" VerticalAlignment="Top" 
                    FontSize="48" FontWeight="Bold" Foreground="LightGreen"/>
-        <TextBlock HorizontalAlignment="Left" Margin="135,225,0,0" TextWrapping="Wrap" 
+        <TextBlock HorizontalAlignment="Left" Margin="135,225,0,0" Style="{x:Null}" 
                  VerticalAlignment="Top" Width="263" FontSize="10" Foreground="White">
             <Run Text="Service program device NGK"/>
             <LineBreak/>

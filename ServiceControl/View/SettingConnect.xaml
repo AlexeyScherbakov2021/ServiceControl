@@ -23,15 +23,15 @@
                     <ColumnDefinition Width="190"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="26"/>
                     <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="{DynamicResource Device}" Grid.Row="0"/>
+                <TextBlock Text="{DynamicResource Device}" Grid.Row="0" Style="{x:Null}"/>
                 <ComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding ListDeviceType}" FontSize="14" 
                           DisplayMemberPath="Name" SelectedItem="{Binding SelectedDevice}"
                           SelectedIndex="{Binding DeviceIndex}"/>
-                <TextBlock Text="{DynamicResource DevAddr}" Grid.Row="1"/>
-                <TextBox  Grid.Row="1" Grid.Column="1" Text="{Binding Slave}"/>
+                <TextBlock Text="{DynamicResource DevAddr}" Grid.Row="1" Style="{x:Null}"/>
+                <TextBox  Grid.Row="1" Grid.Column="1" Text="{Binding Slave}" Style="{x:Null}"/>
 
             </Grid>
             <GroupBox Header="{DynamicResource Proto}" Padding="8" Margin="6" BorderBrush="Black">
@@ -48,14 +48,14 @@
                                 <RowDefinition Height="20"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="RS-485" FontWeight="Bold"/>
-                            <TextBlock Text="{DynamicResource ComPort}" Grid.Row="1"/>
+                            <TextBlock Text="RS-485" FontWeight="Bold" Style="{x:Null}"/>
+                            <TextBlock Text="{DynamicResource ComPort}" Grid.Row="1" Style="{x:Null}"/>
                             <ComboBox Width="180" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding ListCOM}"
                                       SelectedItem="{Binding SelectedCOM}"
                                       IsEnabled="{Binding IsChecked, ElementName=rbCOM}"/>
-                            <TextBlock Text="{DynamicResource Timeout}" Grid.Row="2"/>
+                            <TextBlock Text="{DynamicResource Timeout}" Grid.Row="2" Style="{x:Null}"/>
                             <TextBox Width="180" Grid.Row="2" Grid.Column="1" Text="{Binding TimeOut}"
-                                     IsEnabled="{Binding IsChecked, ElementName=rbCOM}"/>
+                                     IsEnabled="{Binding IsChecked, ElementName=rbCOM}" Style="{x:Null}"/>
                         </Grid>
                     </RadioButton>
                     <RadioButton Margin="0,8" Name="rbTCP" IsChecked="{Binding IsSelectTCP}">
@@ -71,13 +71,13 @@
                                 <RowDefinition Height="20"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Text="TCP" FontWeight="Bold"/>
-                            <TextBlock Text="{DynamicResource IPAddr}" Grid.Row="1"/>
+                            <TextBlock Text="TCP" FontWeight="Bold" Style="{x:Null}"/>
+                            <TextBlock Text="{DynamicResource IPAddr}" Grid.Row="1" Style="{x:Null}"/>
                             <TextBox Width="180" Grid.Row="1" Grid.Column="1" Text="{Binding HostTCP}"
-                                     IsEnabled="{Binding IsChecked, ElementName=rbTCP}"/>
-                            <TextBlock Text="{DynamicResource Port}" Grid.Row="2"/>
+                                     IsEnabled="{Binding IsChecked, ElementName=rbTCP}" Style="{x:Null}"/>
+                            <TextBlock Text="{DynamicResource Port}" Grid.Row="2" Style="{x:Null}"/>
                             <TextBox Width="180" Grid.Row="2" Grid.Column="1" Text="{Binding PortTCP}"
-                                     IsEnabled="{Binding IsChecked, ElementName=rbTCP}"/>
+                                     IsEnabled="{Binding IsChecked, ElementName=rbTCP}" Style="{x:Null}"/>
                             <CheckBox Content="RTU" Grid.Row="3" IsChecked="{Binding IsOverRTU}"/>
                         </Grid>
                     </RadioButton>

@@ -132,8 +132,8 @@
                 <StackPanel Margin="8,0" Orientation="Vertical">
 
                     <DockPanel LastChildFill="False" Margin="0,2">
-                        <TextBlock Text="{DynamicResource Stab}" DockPanel.Dock="Right" Width="30"/>
-                        <TextBlock Text="{DynamicResource Contr}" DockPanel.Dock="Right" Width="90"/>
+                        <TextBlock Text="{DynamicResource Stab}" DockPanel.Dock="Right" Width="35" Style="{x:Null}"/>
+                        <TextBlock Text="{DynamicResource Contr}" DockPanel.Dock="Right" Width="90" Style="{x:Null}"/>
                     </DockPanel>
 
 

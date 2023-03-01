@@ -75,17 +75,22 @@
     <Compile Include="Converters\StabilModeConverter.cs" />
     <Compile Include="Infrastructure\INIManager.cs" />
     <Compile Include="Infrastructure\ListExt.cs" />
+    <Compile Include="Modbus\Devices\Device131.cs" />
     <Compile Include="Modbus\Devices\Device356.cs" />
     <Compile Include="Modbus\Devices\DeviceType.cs" />
     <Compile Include="Modbus\Registers\Register.cs" />
     <Compile Include="Modbus\Registers\RegisterBase.cs" />
     <Compile Include="Modbus\Registers\RegisterInfo.cs" />
     <Compile Include="Modbus\Registers\RegisterKIP.cs" />
+    <Compile Include="Modbus\Registers\RegisterMode131.cs" />
     <Compile Include="Modbus\Registers\RegisterMS.cs" />
     <Compile Include="Modbus\Registers\RegisterNapr4896.cs" />
     <Compile Include="Modbus\Registers\RegisterRT.cs" />
     <Compile Include="Modbus\Registers\RegisterStatus.cs" />
+    <Compile Include="Modbus\Registers\RegisterStatus131.cs" />
+    <Compile Include="Modbus\Registers\RegisterStatusDC.cs" />
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
+    <Compile Include="ViewModel\KS131_UCViewModel.cs" />
     <Compile Include="ViewModel\KS216_UCViewModel.cs" />
     <Compile Include="ViewModel\KS261_UCViewModel.cs" />
     <Compile Include="ViewModel\KS356_UCViewModel.cs" />
@@ -96,6 +101,9 @@
     </Compile>
     <Compile Include="View\BIWindow.xaml.cs">
       <DependentUpon>BIWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KS131_UCView.xaml.cs">
+      <DependentUpon>KS131_UCView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KS216_2_UCView.xaml.cs">
       <DependentUpon>KS216_2_UCView.xaml</DependentUpon>
@@ -117,15 +125,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\DarkScheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\LightScheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BIWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\KS131_UCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -14,9 +14,7 @@
         <ToolBarPanel DockPanel.Dock="Top">
             <CheckBox Content="{DynamicResource Pause}" Margin="10,4" IsChecked="{Binding IsPause}"/>
         </ToolBarPanel>
-        <ListBox ItemsSource="{Binding ListString}" Background="Black" 
-                 Name="lb"
-                 Foreground="White">
+        <ListBox ItemsSource="{Binding ListString}" Background="Black" Name="lb" Foreground="White">
             
         </ListBox>
     </DockPanel>

@@ -19,7 +19,7 @@ namespace ServiceControl.Modbus.Registers
         public RegisterFloat CountEE1;
         public RegisterFloat NaprSeti2;
         public RegisterFloat CountEE2;
-        public RegisterInt Temper;
+        public RegisterFloat Temper;
         public RegisterInt TimeWork;
         public RegisterInt TimeProtect;
         public RegisterFloat CurrOutput;
@@ -120,7 +120,7 @@ namespace ServiceControl.Modbus.Registers
                 Scale = 0.1f, MinValue = 0, MaxValue = 999999.9f };
             ListInput.Add(CountEE2);
 
-            Temper = new RegisterInt() { Address = 0x07, CodeFunc = ModbusFunc.InputRegister, Size = 1, 
+            Temper = new RegisterFloat() { Address = 0x07, CodeFunc = ModbusFunc.InputRegister, Size = 1, 
                 Name = "Температура в шкафу", Measure = "°С",
                 NameRes = "InnnerTemper",
                 Description = "°C", 

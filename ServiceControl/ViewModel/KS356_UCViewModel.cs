@@ -301,10 +301,16 @@ namespace ServiceControl.ViewModel
         private bool CanOpenBICommand(object p) => true;
         private void OpenBICommandExecute(object p)
         {
-            win = new BIWindow();
-            BIWindowViewModel vm = new BIWindowViewModel(device);
-            win.DataContext = vm;
-            win.ShowDialog();
+            if (win == null)
+            {
+                win = new BIWindow();
+                BIWindowViewModel vm = new BIWindowViewModel(device);
+                win.DataContext = vm;
+                win.Show();
+                win.Closed += (sender, e) => { win = null; };
+            }
+            else
+                win.Focus();
         }
 
         #endregion
