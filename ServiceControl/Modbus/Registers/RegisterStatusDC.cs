@@ -8,9 +8,27 @@ namespace ServiceControl.Modbus.Registers
 {
     public enum StatusDC { Norma, Off, Absent, Avar };
 
+    public class ClassStatus
+    {
+        public int Number { get; set;}
+        public StatusDC StatusDC { get; set;}
+    }
+
+
+
     internal class RegisterStatusDC : RegisterInt
     {
-        public StatusDC[] ValueStat { get; set; } = new StatusDC[8];
+        public ClassStatus[] ValueStat { get; set; }
+
+        public RegisterStatusDC()
+        {
+            ValueStat = new ClassStatus[8];
+            for (int i = 0; i < 8; i++)
+            {
+                ValueStat[i] = new ClassStatus() { Number = i + 1 };
+            }
+        }
+
 
         public override void SetResultValues(ushort[] val)
         {
@@ -19,7 +37,7 @@ namespace ServiceControl.Modbus.Registers
 
             for (int i = 0; i < 8; i++)
             {
-                ValueStat[i] = (StatusDC)(valueStat & 0b11);
+                ValueStat[i].StatusDC = (StatusDC)(valueStat & 0b11);
                 valueStat >>= 2;
             }
         }

@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace ServiceControl.Modbus.Registers
 {
-    public enum DistMode { Manual, Distance };
+    public enum DistMode { Distance, Manual };
     public enum ModeStab { Current, Voltage, PolPot, SummPot, Wait, LimitCurr };
 
     internal class RegisterMode131 : RegisterInt
     {
         public DistMode distMode { get; set; }
+        public string DistModeName { get; set; } = "Режим управления";
+        public string DistModeString => distMode == DistMode.Manual ? "местный" : "дистанционный";
         public ModeStab Mode { get; set; }
 
 

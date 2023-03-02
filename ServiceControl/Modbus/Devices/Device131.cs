@@ -13,7 +13,6 @@ namespace ServiceControl.Modbus.Devices
     {
         public const int CountKIP = 32;
 
-
         public RegisterFloat CurrOutput;
         public RegisterFloat VoltOutput;
         public RegisterFloat Potencial;
@@ -21,18 +20,17 @@ namespace ServiceControl.Modbus.Devices
         public RegisterFloat NaprSeti;
         public RegisterFloat Temper;
 
-        public RegisterStatusDC StatDC1;
-        public RegisterStatusDC StatDC2;
-        public RegisterStatus131 StatDK;
+        public RegisterStatusDC StatDC1 { get; set; }
+        public RegisterStatusDC StatDC2 { get; set; }
+        public RegisterStatus131 StatDK { get; set; }
 
-        public RegisterRT RealTime;
+        public RegisterRT RealTime { get; set; }
         public RegisterFloat SetCurrOutput;
         public RegisterFloat SetPotOutput;
-        public RegisterMode131 Mode;
+        public RegisterMode131 Mode { get; set; }
         public RegisterInfo InfoReg { get; set; }
 
-
-        public RegisterFloat[] ListKIP;
+        public RegisterFloat[] ListKIP { get; set; }
 
         List<Register> ListInput;
 
@@ -253,6 +251,7 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task RequestValue()
         {
+            ReadRegisters(ListInput);
             return Task.CompletedTask;
         }
 
@@ -261,7 +260,7 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
-            ReadInfoRegister(InfoReg);
+            //ReadInfoRegister(InfoReg);
             ReadRegisters(ListInput);
             return Task.CompletedTask;
         }

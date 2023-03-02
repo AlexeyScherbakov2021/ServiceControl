@@ -21,8 +21,10 @@ namespace ServiceControl.ViewModel
 
         public Device131 device { get; set; }
 
-        public List<TwoRegister> ListInfoReg { get; set; }
-
+        public List<TwoRegister> ListCtrlReg { get; set; }
+        public List<Register> ListReg { get; set; }
+        public List<Register> ListKIP { get; set; }
+        public List<RegisterStatus131> ListStatus { get; set; }
 
         //--------------------------------------------------------------------------------------------
         // конструктор
@@ -36,13 +38,21 @@ namespace ServiceControl.ViewModel
         {
             device = new Device131(mainViewModel, work, Slave);
 
-            ListInfoReg = new List<TwoRegister>()
+            ListCtrlReg = new List<TwoRegister>()
             {
                 new TwoRegister { Reg1 = device.CurrOutput, Reg2 = device.SetCurrOutput},
                 new TwoRegister { Reg1 = device.VoltOutput, Reg2 = device.SetPotOutput},
                 new TwoRegister { Reg1 = device.Potencial, Reg2 = device.SetPotOutput},
-                new TwoRegister { Reg1 = device.Potencial, Reg2 = device.SetPotOutput},
             };
+
+            ListReg = new List<Register>() 
+            {
+                device.TimeProtect, device.NaprSeti, device.Temper
+            };
+
+            ListKIP = new List<Register>();
+            ListKIP.AddRange(device.ListKIP);
+
 
             device.Start();
         }
