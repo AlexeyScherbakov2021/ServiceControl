@@ -3,19 +3,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ServiceControl.Modbus.Registers
 {
     public enum DistMode { Distance, Manual };
-    public enum ModeStab { Current, Voltage, PolPot, SummPot, Wait, LimitCurr };
+    public enum ModeStab { Current, SummPot, PolPot, Voltage, Wait, LimitCurr };
 
     internal class RegisterMode131 : RegisterInt
     {
-        public DistMode distMode { get; set; }
-        public string DistModeName { get; set; } = "Режим управления";
-        public string DistModeString => distMode == DistMode.Manual ? "местный" : "дистанционный";
-        public ModeStab Mode { get; set; }
+        private DistMode _distMode;
+        public DistMode distMode 
+        { 
+            get => _distMode; 
+            set 
+            {
+                if (Set(ref _distMode, value))
+                {
+                    DistModeString = distMode == DistMode.Manual
+                        ? App.Current?.Resources["Local"]?.ToString()
+                        : App.Current?.Resources["Remote"]?.ToString();
+                }
+            } 
+        }
 
+        private string _DistModeName; // = "Режим управления";
+        public string DistModeName { get => _DistModeName; set { Set(ref _DistModeName, value); } } 
+
+        private string _DistModeString;
+        public string DistModeString { get => _DistModeString; set { Set(ref _DistModeString, value); } }
+
+        private ModeStab _Mode;
+        public ModeStab Mode { get => _Mode; set { Set(ref _Mode, value); } }
 
         public override void SetResultValues(ushort[] val)
         {
@@ -128,5 +147,21 @@ namespace ServiceControl.Modbus.Registers
 
             return res;
         }
+
+        public override void SetLanguage()
+        {
+            base.SetLanguage();
+            setValueString();
+        }
+
+        private void setValueString()
+        {
+            DistModeName = App.Current?.Resources["DistControl"]?.ToString();
+            DistModeString = distMode == DistMode.Manual 
+                ? App.Current?.Resources["Local"]?.ToString() 
+                : App.Current?.Resources["Remote"]?.ToString();
+        }
+
+
     }
 }

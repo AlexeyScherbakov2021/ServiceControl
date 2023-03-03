@@ -135,7 +135,7 @@ namespace ServiceControl.Modbus.Registers
             }
             catch (TimeoutException)
             {
-                IsTimeout = true;
+                //IsTimeout = true;
             }
         }
 

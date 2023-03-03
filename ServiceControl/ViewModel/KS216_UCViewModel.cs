@@ -244,13 +244,6 @@ namespace ServiceControl.ViewModel
                 {
 
                 }
-
-                // была установка режима стабилизации
-                //if(reg.Address == 0x84)
-                //{
-                //    LastSetMode = (reg as RegisterInt).Value;
-                //    CountTimerSetMode = 3;
-                //}
             }
         }
 
@@ -270,7 +263,7 @@ namespace ServiceControl.ViewModel
                 CountTimerSetMode = 3;
             }
         }
-
+        
 
 #if !CLIENT
         //--------------------------------------------------------------------------------

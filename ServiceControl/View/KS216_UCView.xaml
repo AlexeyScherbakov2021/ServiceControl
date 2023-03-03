@@ -169,7 +169,6 @@
                                             </MultiBinding>
                                         </Button.Background>
 
-
                                         <Grid Width="16" Height="16">
                                             <Ellipse >
                                                 <Ellipse.Fill>

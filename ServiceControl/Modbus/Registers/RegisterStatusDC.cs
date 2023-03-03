@@ -20,12 +20,12 @@ namespace ServiceControl.Modbus.Registers
     {
         public ClassStatus[] ValueStat { get; set; }
 
-        public RegisterStatusDC()
+        public RegisterStatusDC(int StartNum = 1)
         {
             ValueStat = new ClassStatus[8];
             for (int i = 0; i < 8; i++)
             {
-                ValueStat[i] = new ClassStatus() { Number = i + 1 };
+                ValueStat[i] = new ClassStatus() { Number = i + StartNum };
             }
         }
 

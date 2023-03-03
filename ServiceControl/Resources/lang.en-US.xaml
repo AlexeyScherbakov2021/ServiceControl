@@ -131,6 +131,7 @@
     <sys:String x:Key="IKP">IKP</sys:String>
     <sys:String x:Key="OutsideMeasure">Outside sensor</sys:String>
     <sys:String x:Key="Other">Addition</sys:String>
+    <sys:String x:Key="KIP">KIP</sys:String>
 
 
 </ResourceDictionary>

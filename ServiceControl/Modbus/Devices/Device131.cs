@@ -16,6 +16,7 @@ namespace ServiceControl.Modbus.Devices
         public RegisterFloat CurrOutput;
         public RegisterFloat VoltOutput;
         public RegisterFloat Potencial;
+        public RegisterFloat PolPotencial;
         public RegisterInt TimeProtect;
         public RegisterFloat NaprSeti;
         public RegisterFloat Temper;
@@ -27,12 +28,15 @@ namespace ServiceControl.Modbus.Devices
         public RegisterRT RealTime { get; set; }
         public RegisterFloat SetCurrOutput;
         public RegisterFloat SetPotOutput;
+        public RegisterFloat SetVoltageOutput;
         public RegisterMode131 Mode { get; set; }
         public RegisterInfo InfoReg { get; set; }
 
-        public RegisterFloat[] ListKIP { get; set; }
+        //public RegisterFloat[] ListKIP { get; set; }
 
         List<Register> ListInput;
+        List<Register> ListOutput;
+        public List<Register> ListKIP;
 
         //----------------------------------------------------------------------------------------------
         // Конструктор
@@ -72,12 +76,28 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(VoltOutput);
 
+
+            PolPotencial = new RegisterFloat()
+            {
+                Address = 2002,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "Поляризационный потенциал",
+                NameRes = "PolPot",
+                Measure = "В",
+                MeasureRes = "Volt",
+                Scale = 0.01f,
+                MinValue = -5,
+                MaxValue = 5
+            };
+
+
             Potencial = new RegisterFloat()
             {
                 Address = 2002,
                 CodeFunc = ModbusFunc.HoldingRegister,
                 Size = 1,
-                Name = "Потенциал",
+                Name = "Суммарный потенциал",
                 NameRes = "SummPot",
                 Measure = "В",
                 MeasureRes = "Volt",
@@ -141,7 +161,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(StatDC1);
 
-            StatDC2 = new RegisterStatusDC()
+            StatDC2 = new RegisterStatusDC(9)
             {
                 Address = 2008,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -179,6 +199,8 @@ namespace ServiceControl.Modbus.Devices
             ListInput.Add(RealTime);
 
 
+            ListOutput = new List<Register>();
+
             SetCurrOutput = new RegisterFloat()
             {
                 Address = 2014,
@@ -187,17 +209,33 @@ namespace ServiceControl.Modbus.Devices
                 NameRes = "SetCurrent",
                 Measure = "A",
                 Description = "Iуст",
+                Scale = 0.01f,
                 MinValue = 0,
                 MaxValue = 100
             };
-            ListInput.Add(SetCurrOutput);
+            ListOutput.Add(SetCurrOutput);
 
             RegisterInt reserv = new RegisterInt()
             {
                 Address = 2015,
                 CodeFunc = ModbusFunc.HoldingRegister,
             };
-            ListInput.Add(reserv);
+            ListOutput.Add(reserv);
+
+            SetVoltageOutput = new RegisterFloat()
+            {
+                Address = 2016,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Name = "Задание напряжения",
+                NameRes = "SetVoltage",
+                Measure = "В",
+                MeasureRes = "Volt",
+                Description = "U",
+                Scale = 0.1f,
+                MinValue = 0,
+                MaxValue = 48
+            };
+
 
             SetPotOutput = new RegisterFloat()
             {
@@ -212,7 +250,7 @@ namespace ServiceControl.Modbus.Devices
                 MinValue = -5,
                 MaxValue = 5
             };
-            ListInput.Add(SetPotOutput);
+            ListOutput.Add(SetPotOutput);
 
 
             Mode = new RegisterMode131()
@@ -221,25 +259,26 @@ namespace ServiceControl.Modbus.Devices
                 CodeFunc = ModbusFunc.HoldingRegister,
 
             };
-            ListInput.Add(Mode);
+            //ListInput.Add(Mode);
 
-            ListKIP = new RegisterFloat[CountKIP];
+            ListKIP = new List<Register>();
             for(int i = 0; i < CountKIP; i++)
             {
-                ListKIP[i] = new RegisterFloat()
+                ListKIP.Add( new RegisterFloat()
                 {
                     Address = (ushort)(2018 + i),
                     CodeFunc = ModbusFunc.HoldingRegister,
                     Size = 1,
                     Name = $"КИП {i + 1}",
-                    NameRes = "SummPot",
+                    NameRes = "KIP",
                     Measure = "В",
                     MeasureRes = "Volt",
                     Scale = 0.01f,
                     MinValue = -5,
                     MaxValue = 5
-                };
-                ListInput.Add(ListKIP[i]);
+                }
+                );
+                //ListInput.Add(ListKIP[i]);
             }
 
             InfoReg = new RegisterInfo() { Name = "Информация", NameRes = "" };
@@ -252,6 +291,8 @@ namespace ServiceControl.Modbus.Devices
         public override Task RequestValue()
         {
             ReadRegisters(ListInput);
+            ReadRegisters(ListKIP);
+            ReadRegister(Mode);
             return Task.CompletedTask;
         }
 
@@ -260,8 +301,11 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
-            //ReadInfoRegister(InfoReg);
+            ReadInfoRegister(InfoReg);
             ReadRegisters(ListInput);
+            ReadRegisters(ListOutput);
+            ReadRegisters(ListKIP);
+            ReadRegister(Mode);
             return Task.CompletedTask;
         }
 
@@ -272,6 +316,8 @@ namespace ServiceControl.Modbus.Devices
         {
             ReadInfoRegister(InfoReg);
             ReadRegisters(ListInput);
+            ReadRegisters(ListOutput);
+            ReadRegisters(ListKIP);
             CheckReg(ListInput);
         }
 
@@ -279,7 +325,14 @@ namespace ServiceControl.Modbus.Devices
         // Изменине языка для регистров
         //-------------------------------------------------------------------------------------------
         public override void ChangeLangRegister()
-        { 
+        {
+            ListInput.ForEach(n => n.SetLanguage());
+            ListOutput.ForEach(n => n.SetLanguage());
+            ListKIP.ForEach(n => n.SetLanguage());
+            InfoReg.SetLanguage();
+            InfoReg.SetLanguage();
+            Mode.SetLanguage();
+            PolPotencial.SetLanguage();
         }
 
     }

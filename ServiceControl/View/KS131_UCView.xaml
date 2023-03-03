@@ -4,14 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:vm="clr-namespace:ServiceControl.ViewModel"
+             xmlns:conv="clr-namespace:ServiceControl.Converters"
              xmlns:local="clr-namespace:ServiceControl.View"
              mc:Ignorable="d" 
+             x:Name="mainControl"
              d:DesignHeight="450" d:DesignWidth="1300">
     <UserControl.DataContext>
         <vm:KS131_UCViewModel/>
     </UserControl.DataContext>
 
     <UserControl.Resources>
+
+        <conv:StabilMode131Converter x:Key="StabilMode131Converter"/>
 
         <Style TargetType="GroupBox">
             <Style.Setters>
@@ -100,25 +104,20 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="120"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="130"/>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="100"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="530"/>
+            <ColumnDefinition Width="490"/>
             <ColumnDefinition Width="340"/>
             <ColumnDefinition Width="330"/>
         </Grid.ColumnDefinitions>
 
         <!--Управляемые параметры со стабилизацией-->
-        <Border  Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
-            <!--<Border.Effect>
-                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
-            </Border.Effect>-->
+        <Border  Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="1">
             <GroupBox >
                 <GroupBox.Header>
                     <TextBlock Text="{DynamicResource ControlStab}" FontSize="16" FontWeight="Bold"/>
@@ -126,8 +125,8 @@
                 <StackPanel Margin="8,0" Orientation="Vertical">
 
                     <DockPanel LastChildFill="False" Margin="0,2">
-                        <TextBlock Text="{DynamicResource Stab}" DockPanel.Dock="Right" Width="30"/>
-                        <TextBlock Text="{DynamicResource Contr}" DockPanel.Dock="Right" Width="90"/>
+                        <TextBlock Text="{DynamicResource Stab}" DockPanel.Dock="Right" Width="10"/>
+                        <TextBlock Text="{DynamicResource Contr}" DockPanel.Dock="Right" Width="80"/>
                     </DockPanel>
 
                     <!--Регистры управления-->
@@ -135,7 +134,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Reg1.Name}" TextWrapping="Wrap" Width="250" />
+                                    <TextBlock Text="{Binding Reg1.Name}" TextWrapping="Wrap" Width="210" />
 
                                     <TextBox Text="{Binding Reg1.Value, StringFormat=0.00, TargetNullValue=--}" Width="64" 
                                         Margin="4,0" ToolTip="{Binding Reg1.ToolTip}"  />
@@ -154,24 +153,24 @@
                                             Style="{StaticResource ButtonStyle1}"
                                             CommandParameter="{Binding stab}" Padding="3"
                                             Command="{Binding DataContext.WriteStabCommand, ElementName=mainControl}">
-                                        <!--<Button.Background>
-                                            <MultiBinding Converter="{StaticResource StabilModeConverter}">
+                                        <Button.Background>
+                                            <MultiBinding Converter="{StaticResource StabilMode131Converter}">
                                                 <Binding Path="stab"/>
-                                                <Binding Path="DataContext.device.SetMode.Value" ElementName="mainControl"/>
-                                                <Binding Path="DataContext.device.SetMode.Address" ElementName="mainControl"/>
+                                                <Binding Path="DataContext.device.Mode.Mode" ElementName="mainControl"/>
+                                                <Binding Path="DataContext.device.Mode.Address" ElementName="mainControl"/>
                                             </MultiBinding>
-                                        </Button.Background>-->
+                                        </Button.Background>
 
 
                                         <Grid Width="16" Height="16">
                                             <Ellipse >
-                                                <!--<Ellipse.Fill>
-                                                    <MultiBinding Converter="{StaticResource StabilModeConverter}">
+                                                <Ellipse.Fill>
+                                                    <MultiBinding Converter="{StaticResource StabilMode131Converter}">
                                                         <Binding Path="stab"/>
-                                                        <Binding Path="DataContext.device.Stabil.Value" ElementName="mainControl"/>
-                                                        <Binding Path="DataContext.device.Stabil.Address" ElementName="mainControl"/>
+                                                        <Binding Path="DataContext.device.Mode.Mode" ElementName="mainControl"/>
+                                                        <Binding Path="DataContext.device.Mode.Address" ElementName="mainControl"/>
                                                     </MultiBinding>
-                                                </Ellipse.Fill>-->
+                                                </Ellipse.Fill>
                                             </Ellipse>
                                             <Ellipse StrokeThickness="1" Stroke="Gray"/>
                                         </Grid>
@@ -202,9 +201,6 @@
 
         <!--Управляемые параметры -->
         <Border  Margin="4,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1">
-            <!--<Border.Effect>
-                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
-            </Border.Effect>-->
             <GroupBox >
                 <GroupBox.Header>
                     <TextBlock Text="{DynamicResource CtrlParam}" FontSize="16" FontWeight="Bold"/>
@@ -327,7 +323,6 @@
             </GroupBox>
         </Border>
 
-
         <!--Счетчик электроэнергии-->
         <!--<Border  Margin="4,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1" >
             <Border.Effect>
@@ -357,10 +352,7 @@
         </Border>-->
 
         <!--Карточка устройства-->
-        <Border  Margin="4,0" Grid.Row="4" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="1" >
-            <!--<Border.Effect>
-                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
-            </Border.Effect>-->
+        <Border  Margin="4,0" Grid.Row="3" Grid.Column="1" Grid.RowSpan="3" Grid.ColumnSpan="1" >
             <GroupBox >
                 <GroupBox.Header>
                     <TextBlock Text="{DynamicResource CardDev}" FontSize="16" FontWeight="Bold"/>
@@ -395,7 +387,7 @@
         </Border>
 
         <!--Сигнализация-->
-        <Border  Margin="4,0" Grid.Column="2" Grid.RowSpan="3" Grid.Row="0" Grid.ColumnSpan="1">
+        <Border  Margin="4,0" Grid.Column="0" Grid.RowSpan="3" Grid.Row="2" Grid.ColumnSpan="1">
             <GroupBox >
                 <GroupBox.Header>
                     <TextBlock Text="{DynamicResource AlarmStatus}" FontSize="16" FontWeight="Bold"/>
@@ -406,11 +398,11 @@
                         <TextBlock Text="{Binding device.Mode.DistModeName}" Width="170" VerticalAlignment="Center"/>
                         <Border Margin="6,3,10,1" CornerRadius="8" BorderBrush="Black" 
                                         BorderThickness="1">
-                            <TextBlock Text="{Binding device.StatDK.ValueDK1String}" Width="120" VerticalAlignment="Center"
-                                                ToolTip="{Binding device.StatDK.ToolTip}" Padding="2" TextAlignment="Center"/>
+                            <TextBlock Text="{Binding device.Mode.DistModeString}" Width="140" VerticalAlignment="Center"
+                                                ToolTip="{Binding device.Mode.ToolTip}" Padding="2" TextAlignment="Center"/>
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Orange"/>
+                                    <Setter Property="Background" Value="#FFd0d0"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding device.Mode.distMode}" Value="0">
                                             <Setter Property="Background" Value="#c0FFc0"/>
@@ -426,11 +418,11 @@
                         <TextBlock Text="{Binding device.StatDK.NameDK1}" Width="170" VerticalAlignment="Center"/>
                         <Border Margin="6,3,10,1" CornerRadius="8" BorderBrush="Black" 
                                         BorderThickness="1">
-                            <TextBlock Text="{Binding device.StatDK.ValueDK1String}" Width="120" VerticalAlignment="Center"
+                            <TextBlock Text="{Binding device.StatDK.ValueDK1String}" Width="140" VerticalAlignment="Center"
                                                 ToolTip="{Binding device.StatDK.ToolTip}" Padding="2" TextAlignment="Center"/>
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Orange"/>
+                                    <Setter Property="Background" Value="#FFd0d0"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding device.StatDK.DK1}" Value="0">
                                             <Setter Property="Background" Value="#c0FFc0"/>
@@ -444,11 +436,11 @@
                         <TextBlock Text="{Binding device.StatDK.NameDK2}" Width="170" VerticalAlignment="Center"/>
                         <Border Margin="6,3,10,1" CornerRadius="8" BorderBrush="Black" 
                                         BorderThickness="1">
-                            <TextBlock Text="{Binding device.StatDK.ValueDK2String}" Width="120" VerticalAlignment="Center"
+                            <TextBlock Text="{Binding device.StatDK.ValueDK2String}" Width="140" VerticalAlignment="Center"
                                                 ToolTip="{Binding device.StatDK.ToolTip}" Padding="2" TextAlignment="Center"/>
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Orange"/>
+                                    <Setter Property="Background" Value="#FFd0d0"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding device.StatDK.DK2}" Value="0">
                                             <Setter Property="Background" Value="#c0FFc0"/>
@@ -462,11 +454,11 @@
                         <TextBlock Text="{Binding device.StatDK.NameDK3}" Width="170" VerticalAlignment="Center"/>
                         <Border Margin="6,3,10,1" CornerRadius="8" BorderBrush="Black" 
                                         BorderThickness="1">
-                            <TextBlock Text="{Binding device.StatDK.ValueDK3String}" Width="120" VerticalAlignment="Center"
+                            <TextBlock Text="{Binding device.StatDK.ValueDK3String}" Width="140" VerticalAlignment="Center"
                                                 ToolTip="{Binding device.StatDK.ToolTip}" Padding="2" TextAlignment="Center"/>
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Orange"/>
+                                    <Setter Property="Background" Value="#FFd0d0"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding device.StatDK.DK3}" Value="0">
                                             <Setter Property="Background" Value="#c0FFc0"/>
@@ -481,11 +473,11 @@
                         <TextBlock Text="{Binding device.StatDK.NameDoor}" Width="170" VerticalAlignment="Center"/>
                         <Border Margin="6,3,10,1" CornerRadius="8" BorderBrush="Black" 
                                         BorderThickness="1">
-                            <TextBlock Text="{Binding device.StatDK.ValueDoorString}" Width="120" VerticalAlignment="Center"
+                            <TextBlock Text="{Binding device.StatDK.ValueDoorString}" Width="140" VerticalAlignment="Center"
                                                 ToolTip="{Binding device.StatDK.ToolTip}" Padding="2" TextAlignment="Center"/>
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Orange"/>
+                                    <Setter Property="Background" Value="#FFd0d0"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding device.StatDK.IsOpenedDoor}" Value="0">
                                             <Setter Property="Background" Value="#c0FFc0"/>
@@ -500,11 +492,11 @@
                         <TextBlock Text="{Binding device.StatDK.NamePower}" Width="170" VerticalAlignment="Center"/>
                         <Border Margin="6,3,10,1" CornerRadius="8" BorderBrush="Black" 
                                         BorderThickness="1">
-                            <TextBlock Text="{Binding device.StatDK.ValuePowerString}" Width="120" VerticalAlignment="Center"
+                            <TextBlock Text="{Binding device.StatDK.ValuePowerString}" Width="140" VerticalAlignment="Center"
                                                 ToolTip="{Binding device.StatDK.ToolTip}" Padding="2" TextAlignment="Center"/>
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="Orange"/>
+                                    <Setter Property="Background" Value="#FFd0d0"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding device.StatDK.Power}" Value="0">
                                             <Setter Property="Background" Value="#c0FFc0"/>
@@ -539,10 +531,7 @@
         </Border>
 
         <!--Силовые модули-->
-        <Border  Margin="4,0" Grid.Column="2" Grid.Row="3" Grid.RowSpan="4" Grid.ColumnSpan="2">
-            <!--<Border.Effect>
-                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
-            </Border.Effect>-->
+        <Border  Margin="4,0" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="1">
             <GroupBox >
                 <GroupBox.Header>
                     <TextBlock Text="Состояние выпрямителей" FontSize="16" FontWeight="Bold"/>
@@ -601,69 +590,23 @@
         </Border>
 
         <!--Индикаторы скорости коррозии-->
-        <Border Margin="4,0" Grid.Column="1" Grid.Row="1"  Grid.RowSpan="3" Visibility="Visible">
+        <Border Margin="4,0" Grid.Column="2" Grid.Row="0"  Grid.RowSpan="5" Visibility="Visible">
             <GroupBox >
                 <GroupBox.Header>
                     <TextBlock Text="Показания датчиков" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel>
-                    <ItemsControl ItemsSource="{Binding ListDK3}" Margin="0,10,0,0" >
-                        <ItemsControl.Template>
-                            <ControlTemplate>
-                                <Border x:Name="Border"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                                    <ScrollViewer Margin="0"
-                                      Focusable="False"
-                                      Padding="{TemplateBinding Padding}"
-                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
-                                      CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}">
-                                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                    </ScrollViewer>
-                                </Border>
-                            </ControlTemplate>
-                        </ItemsControl.Template>
-                        <ItemsControl.ItemTemplate>
-                            
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Height="22">
-                                    <TextBlock Text="{Binding Register1.Name}" Width="98" Padding="4,0"  />
-                                    <TextBox Text="{Binding Register1.Value, TargetNullValue=--}" Width="60" ToolTip="{Binding Register1.ToolTip}"
-                                               Margin="0,0,8,0" />
-                                    <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,0,0"/>
 
-                                    <Image 
-                                        Width="18" Height="18" Margin="4,0" >
-                                        <Image.Style>
-                                            <Style TargetType="Image">
-                                                <Setter Property="Source" Value="../Resources/attention.png"/>
-                                                <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Register3.ValueBool}" Value="True">
-                                                        <Setter Property="Source" Value="../Resources/greenLed.png"/>
-                                                        <Setter Property="ToolTip" Value="{DynamicResource Contact}"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Image.Style>
-                                    </Image>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <ItemsControl ItemsSource="{Binding ListKIP}" Margin="6,0" Height="110" >
+                    <ItemsControl ItemsSource="{Binding ListKIP}" Margin="6,20" Height="370" >
                         
                         <ItemsControl.Template>
                             <ControlTemplate>
-                                <Border Background="Gainsboro">
-                                    <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}">
-                                        <ItemsPresenter/>
-                                    </ScrollViewer>
+                                <Border Background="Gainsboro" BorderBrush="Gray" BorderThickness="0.5" CornerRadius="3">
+                                    <Border Margin="10" BorderBrush="Gray" BorderThickness="0.5">
+                                        <ScrollViewer x:Name="ScrollViewer" Padding="{TemplateBinding Padding}" >
+                                            <ItemsPresenter/>
+                                        </ScrollViewer>
+                                    </Border>
                                 </Border>
                             </ControlTemplate>
                         </ItemsControl.Template>
@@ -671,7 +614,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Height="22">
-                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding Name}" Width="70"/>
                                     <TextBlock Text="{Binding Register1.Number}" Margin="2,0"/>
 
                                      <TextBox Text="{Binding Value, StringFormat=0.00}" Margin="4,0"

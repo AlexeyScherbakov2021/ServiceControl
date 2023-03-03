@@ -132,6 +132,7 @@
     <sys:String x:Key="IKP">ИКП</sys:String>
     <sys:String x:Key="OutsideMeasure">Внешние измерители</sys:String>
     <sys:String x:Key="Other">дополнительно</sys:String>
+    <sys:String x:Key="KIP">КИП</sys:String>
 
 
 </ResourceDictionary>
