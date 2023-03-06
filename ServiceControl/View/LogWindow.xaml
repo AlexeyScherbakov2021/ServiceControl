@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ServiceControl.View"
+        xmlns:con="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"
         Title="{DynamicResource LogPacket}" Height="450" Width="800" WindowStartupLocation="CenterScreen">
@@ -14,8 +15,11 @@
         <ToolBarPanel DockPanel.Dock="Top">
             <CheckBox Content="{DynamicResource Pause}" Margin="10,4" IsChecked="{Binding IsPause}"/>
         </ToolBarPanel>
-        <ListBox ItemsSource="{Binding ListString}" Background="Black" Name="lb" Foreground="White">
+        <!--<ListBox ItemsSource="{Binding ListString}" Background="Black" Name="lb" Foreground="White" Height="258">
             
-        </ListBox>
+        </ListBox>-->
+        <Border>
+            <ContentPresenter Content="{Binding conCtrl}"/>
+        </Border>
     </DockPanel>
 </Window>

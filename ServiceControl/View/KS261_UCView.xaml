@@ -21,8 +21,14 @@
     <Grid>
         <DataGrid ItemsSource="{Binding ListKIP}" AutoGenerateColumns="False" Margin="8" IsReadOnly="True" 
                   VerticalGridLinesBrush="Gainsboro" HorizontalGridLinesBrush="Gainsboro" AlternationCount="2"
-                  AlternatingRowBackground="#f0f0f0" FontSize="14"
+                  AlternatingRowBackground="#f0f0f0" FontSize="14" CurrentColumn="{Binding SelectColumn}" 
+                  CurrentCellChanged="DataGrid_CurrentCellChanged"
                   >
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell" x:Key="SelectedColumnStyle" BasedOn="{StaticResource CellRight}">
+                    <Setter Property="Background" Value="LightSteelBlue"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="№" Binding="{Binding RegCurrentPolyar.Number}"  CellStyle="{StaticResource CellRight}"/>
 

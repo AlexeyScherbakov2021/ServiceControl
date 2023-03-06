@@ -9,12 +9,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace ServiceControl.ViewModel
 {
     internal class LogWindowViewModel : Observable,  IDisposable
     {
+
+        public ConsoleControl.WPF.ConsoleControl conCtrl { get; set; }
+
         ModbusMaster master;
         public ListBox listBox;
         private bool _IsPause;
@@ -42,6 +46,9 @@ namespace ServiceControl.ViewModel
 
         public LogWindowViewModel(ModbusMaster mas)
         {
+            conCtrl = new ConsoleControl.WPF.ConsoleControl();
+            conCtrl.StartProcess("procNew", "7");
+
             ListString = new ObservableCollection<string>();
             //object lockitems = new object();
             //BindingOperations.EnableCollectionSynchronization(ListString, lockitems);
@@ -49,21 +56,28 @@ namespace ServiceControl.ViewModel
             master = mas;
             if(master != null)
                 master.Transport.EventLogEvent += Transport_EventLogEvent;
+
         }
 
         public void Dispose()
         {
-            if(master != null && master.Transport != null)
+            conCtrl.StopProcess();
+
+            if (master != null && master.Transport != null)
                 master.Transport.EventLogEvent -= Transport_EventLogEvent;
+
         }
 
         private void Transport_EventLogEvent(string header, byte[] message)
         {
             string s = header + $": {string.Join(", ", message.Select(it => $"{it:X2}"))}";
-            App.Current.Dispatcher.Invoke(() => 
+            App.Current.Dispatcher.Invoke(() =>
             {
                 ListString.Add(s);
-                listBox.ScrollIntoView(s); 
+                conCtrl.WriteOutput(s, Colors.Red);
+                conCtrl.WriteOutput("\n\r", Colors.Red);
+
+                //listBox.ScrollIntoView(s);
             });
         }
 

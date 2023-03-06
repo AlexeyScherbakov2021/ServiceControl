@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace ServiceControl.ViewModel
@@ -16,9 +17,6 @@ namespace ServiceControl.ViewModel
         //DispatcherTimer timer;
 
         public List<KIPData> ListKIP { get; set; }
-
-
-
 
         //--------------------------------------------------------------------------------------------
         // конструктор

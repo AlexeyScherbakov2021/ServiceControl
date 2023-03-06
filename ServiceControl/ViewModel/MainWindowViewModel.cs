@@ -18,6 +18,8 @@ using System.Windows;
 using System.Reflection;
 using System.Threading;
 using System.Globalization;
+using System.Diagnostics;
+using ConsoleControl.WPF;
 
 namespace ServiceControl.ViewModel
 {
@@ -376,11 +378,12 @@ namespace ServiceControl.ViewModel
         private bool CanLogCommand(object p) => winLog == null /* && work != null*/;
         private void OnLogCommandExecuted(object p)
         {
+
             winLog = new LogWindow();
             LogWindowViewModel vm = new LogWindowViewModel(work?.master);
-            vm.listBox = winLog.lb;
+            //vm.listBox = winLog.lb;
             winLog.DataContext = vm;
-            winLog.Closed += (sender, e) => { winLog = null; vm.Dispose(); }; 
+            winLog.Closed += (sender, e) => { winLog = null; vm.Dispose(); };
             winLog.Show();
         }
 

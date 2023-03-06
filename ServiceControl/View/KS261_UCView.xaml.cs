@@ -24,5 +24,25 @@ namespace ServiceControl.View
         {
             InitializeComponent();
         }
+
+
+
+        DataGridColumn CurrentColumn = null;
+        Style OldStyle = null;
+
+        private void DataGrid_CurrentCellChanged(object sender, EventArgs e)
+        {
+            var dataGrid = (DataGrid)sender;
+            if (CurrentColumn != null)
+            {
+                CurrentColumn.CellStyle = OldStyle;
+            }
+            CurrentColumn = dataGrid.CurrentColumn;
+            if (CurrentColumn != null)
+            {
+                OldStyle = CurrentColumn.CellStyle;
+                CurrentColumn.CellStyle = (Style)dataGrid.Resources["SelectedColumnStyle"];
+            }
+        }
     }
 }
