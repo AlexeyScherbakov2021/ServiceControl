@@ -70,14 +70,19 @@ namespace ServiceControl.ViewModel
 
         private void Transport_EventLogEvent(string header, byte[] message)
         {
+            Color color = Colors.White;
+
             string s = header + $": {string.Join(", ", message.Select(it => $"{it:X2}"))}";
+
+            if(header == "RX") color = Color.FromRgb(160, 255, 130);
+            if (header == "TX") color = Color.FromRgb(0,255, 255);
+
             App.Current.Dispatcher.Invoke(() =>
             {
                 ListString.Add(s);
-                conCtrl.WriteOutput(s, Colors.Red);
-                conCtrl.WriteOutput("\n\r", Colors.Red);
+                conCtrl.WriteOutput(s, color);
+                conCtrl.WriteOutput("\n", color);
 
-                //listBox.ScrollIntoView(s);
             });
         }
 
