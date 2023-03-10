@@ -2,6 +2,7 @@
 using ServiceControl.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -270,7 +271,7 @@ namespace ServiceControl.Modbus.Registers
 
             EndStartRead?.Invoke(null, null);
 
-            timer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 1);
             timer.Tick += Timer_Tick;
             timer.Start();
         }
@@ -289,9 +290,11 @@ namespace ServiceControl.Modbus.Registers
         //----------------------------------------------------------------------------------------------
         private async void Timer_Tick(object sender, EventArgs e)
         {
-            if(!TimerWork)
-            {
-                TimerWork = true;
+            timer.Stop();
+
+            //if (!TimerWork)
+            //{
+            //    TimerWork = true;
 
                 if (IsReadAllRegisters)
                 {
@@ -303,10 +306,11 @@ namespace ServiceControl.Modbus.Registers
 
                 TimerWork = false;
                 EndRead?.Invoke(null, null);
-            }
+            //}
+            //else
+            //    Debug.WriteLine("Пропуск таймера");
 
-            //timer.Stop();
-            //timer.Start();
+            timer.Start();
         }
 
         //----------------------------------------------------------------------------------------------

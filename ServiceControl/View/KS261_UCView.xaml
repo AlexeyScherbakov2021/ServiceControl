@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ServiceControl.View.KS261_UCView"
+﻿<UserControl x:Name="mainControl" x:Class="ServiceControl.View.KS261_UCView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -17,12 +17,30 @@
             </Style.Setters>
         </Style>
     </UserControl.Resources>
-    
+
     <Grid>
-        <DataGrid ItemsSource="{Binding ListKIP}" AutoGenerateColumns="False" Margin="8" IsReadOnly="True" 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="{Binding device.RealTime.Name}" TextWrapping="Wrap" Width="110" TextAlignment="Right" 
+                               VerticalAlignment="Center"/>
+            <TextBox Text="{Binding device.RealTime.RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
+                                 Width="158" ToolTip="{Binding ToolTip}" Margin="4,1" />
+            <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource SetCurrTime}"
+                                 Style="{StaticResource ButtonStyle1}"
+                                            Padding="3" Command="{Binding DataContext.WriteTimeCommand, ElementName=mainControl}">
+                <Image Source="/Resources/Logout.png" Width="16" Height="16" />
+            </Button>
+        </StackPanel>
+
+
+        <DataGrid ItemsSource="{Binding ListKIP}" AutoGenerateColumns="False" Margin="8,8,8,8" IsReadOnly="True" 
                   VerticalGridLinesBrush="Gainsboro" HorizontalGridLinesBrush="Gainsboro" AlternationCount="2"
                   AlternatingRowBackground="#f0f0f0" FontSize="14" CurrentColumn="{Binding SelectColumn}" 
-                  CurrentCellChanged="DataGrid_CurrentCellChanged"
+                  CurrentCellChanged="DataGrid_CurrentCellChanged" Grid.Row="1"
                   >
             <DataGrid.Resources>
                 <Style TargetType="DataGridCell" x:Key="SelectedColumnStyle" BasedOn="{StaticResource CellRight}">
@@ -45,45 +63,45 @@
                 </DataGridTextColumn>
 
                 <DataGridTextColumn Binding="{Binding RegSummPot.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
-                <DataGridTextColumn.Header>
+                    <DataGridTextColumn.Header>
                         <TextBlock Text="{DynamicResource SummPotShort}"/>
-                </DataGridTextColumn.Header>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
                 <DataGridTextColumn  Binding="{Binding RegtResistDK1.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
-                <DataGridTextColumn.Header>
-                    <TextBlock Text="{DynamicResource ResDK1}"/>
-                </DataGridTextColumn.Header>
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource ResDK1}"/>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
                 <DataGridTextColumn Binding="{Binding RegtResistDK2.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
-                <DataGridTextColumn.Header>
-                    <TextBlock Text="{DynamicResource ResDK2}"/>
-                </DataGridTextColumn.Header>
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource ResDK2}"/>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
                 <DataGridTextColumn Binding="{Binding RegtResistDK3.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
-                <DataGridTextColumn.Header>
-                    <TextBlock Text="{DynamicResource ResDK3}"/>
-                </DataGridTextColumn.Header>
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource ResDK3}"/>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
                 <DataGridTextColumn Binding="{Binding RegProtectCurrent.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
-                <DataGridTextColumn.Header>
-                    <TextBlock Text="{DynamicResource ProtCurr}"/>
-                </DataGridTextColumn.Header>
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource ProtCurr}"/>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
                 <DataGridTextColumn Binding="{Binding RegDeepCorr.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
-                <DataGridTextColumn.Header>
-                    <TextBlock Text="{DynamicResource DeepCorrShort}"/>
-                </DataGridTextColumn.Header>
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource DeepCorrShort}"/>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
                 <DataGridTextColumn Binding="{Binding RegSpeedCorr.Value, StringFormat=N2, TargetNullValue=--}" CellStyle="{StaticResource CellRight}">
-                <DataGridTextColumn.Header>
-                    <TextBlock Text="{DynamicResource SpeedCorrShort}"/>
-                </DataGridTextColumn.Header>
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="{DynamicResource SpeedCorrShort}"/>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
                 <DataGridTemplateColumn >
@@ -108,7 +126,7 @@
                                     </Style>
                                 </Image.Style>
                             </Image>
-                            
+
                             <!--<fa:ImageAwesome Height="14" >
                                 <fa:ImageAwesome.Style>
                                     <Style TargetType="fa:ImageAwesome">

@@ -1,4 +1,5 @@
-﻿using ServiceControl.Infrastructure;
+﻿using ServiceControl.Commands;
+using ServiceControl.Infrastructure;
 using ServiceControl.Modbus;
 using ServiceControl.Modbus.Registers;
 using System;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace ServiceControl.ViewModel
@@ -52,5 +54,19 @@ namespace ServiceControl.ViewModel
 
         }
 
+        #region Команды
+
+        //--------------------------------------------------------------------------------
+        // Команда Установить текущее время
+        //--------------------------------------------------------------------------------
+        public ICommand WriteTimeCommand => new LambdaCommand(OnWriteTimeModeCommandExecuted, CanWriteTimeModeCommand);
+        private bool CanWriteTimeModeCommand(object p) => device != null;
+        private void OnWriteTimeModeCommandExecuted(object p)
+        {
+            device.RealTime.RealTimeValue = DateTime.Now;
+            device.WriteRegister(device.RealTime);
+        }
+
+        #endregion
     }
 }
