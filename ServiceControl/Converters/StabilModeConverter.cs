@@ -26,7 +26,7 @@ namespace ServiceControl.Converters
                 }
                 if(addr == 0x84)
                 {
-                    brush = (int)stab == valStab ? Brushes.YellowGreen : Brushes.Transparent;
+                    brush = (int)stab == valStab ? Brushes.SpringGreen : Brushes.Transparent;
                 }
 
             }

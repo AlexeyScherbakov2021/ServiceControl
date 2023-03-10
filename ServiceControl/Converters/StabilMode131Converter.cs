@@ -22,11 +22,15 @@ namespace ServiceControl.Converters
 
                 if (addr == 0x10)
                 {
-                    brush = (int)stab == (int)valStab ? Brushes.SpringGreen : Brushes.Gray;
+                    brush = (int)stab == (int)valStab 
+                        ? new SolidColorBrush(Color.FromRgb(0xc0, 0xFF, 0xc0)) 
+                        : Brushes.Gray;
                 }
                 if(addr == 2017)
                 {
-                    brush = (int)stab == (int)valStab ? Brushes.YellowGreen : Brushes.Transparent;
+                    brush = (int)stab == (int)valStab
+                        ? new SolidColorBrush(Color.FromRgb(0xc0, 0xFF, 0xc0))
+                        : Brushes.Transparent;
                 }
 
             }

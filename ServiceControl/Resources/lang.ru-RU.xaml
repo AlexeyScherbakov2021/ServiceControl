@@ -23,7 +23,7 @@
 	<sys:String x:Key="ModeStab">Режим стабилизации</sys:String>
 	<sys:String x:Key="OutCur">Выходной ток</sys:String>
     <sys:String x:Key="SummPot">Суммарный потенциал (СОС)</sys:String>
-	<sys:String x:Key="PolPot">Поляризационный потенциал (БОС)</sys:String>
+	<sys:String x:Key="PolPot">Поляриз. потенциал (БОС)</sys:String>
 	<sys:String x:Key="OutNapr">Выходное напряжение</sys:String>
 	<sys:String x:Key="Set">Установить</sys:String>
 	<sys:String x:Key="WrongModeStab">Несоответствие режима стабилизации</sys:String>
@@ -133,6 +133,10 @@
     <sys:String x:Key="OutsideMeasure">Внешние измерители</sys:String>
     <sys:String x:Key="Other">дополнительно</sys:String>
     <sys:String x:Key="KIP">КИП</sys:String>
+    <sys:String x:Key="ValueSensor">Показания датчиков</sys:String>
+    <sys:String x:Key="StatusVoltage">Состояние сети ~220В</sys:String>
+    <sys:String x:Key="Lower">понижено</sys:String>
+    <sys:String x:Key="Upper">повышено</sys:String>
 
 
 </ResourceDictionary>

@@ -132,6 +132,10 @@
     <sys:String x:Key="OutsideMeasure">Outside sensor</sys:String>
     <sys:String x:Key="Other">Addition</sys:String>
     <sys:String x:Key="KIP">KIP</sys:String>
+    <sys:String x:Key="ValueSensor">Sensors</sys:String>
+    <sys:String x:Key="StatusVoltage">Status circuit ~220В</sys:String>
+    <sys:String x:Key="Lower">lower</sys:String>
+    <sys:String x:Key="Upper">upper</sys:String>
 
 
 </ResourceDictionary>
