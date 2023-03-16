@@ -79,7 +79,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\StabilMode131Converter.cs" />
+    <Compile Include="Converters\StabilMode131VisibleConverter.cs" />
     <Compile Include="Converters\StabilModeConverter.cs" />
+    <Compile Include="Converters\StabModeVisibleConverter.cs" />
     <Compile Include="Infrastructure\ConsoleManager.cs" />
     <Compile Include="Infrastructure\INIManager.cs" />
     <Compile Include="Infrastructure\ListExt.cs" />
@@ -112,9 +114,6 @@
     </Compile>
     <Compile Include="View\KS131_UCView.xaml.cs">
       <DependentUpon>KS131_UCView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\KS216_2_UCView.xaml.cs">
-      <DependentUpon>KS216_2_UCView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KS216_UCView.xaml.cs">
       <DependentUpon>KS216_UCView.xaml</DependentUpon>
@@ -156,10 +155,6 @@
     <Page Include="View\KS131_UCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\KS216_2_UCView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\KS261_UCView.xaml">
       <SubType>Designer</SubType>
@@ -269,9 +264,10 @@
     <Resource Include="Resources\wp.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ngk-logo-short-blue2.png" />
     <Resource Include="Resources\ngk-logo-short-blue3.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\bullet_lightning.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

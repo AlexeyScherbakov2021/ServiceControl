@@ -32,7 +32,7 @@ namespace ServiceControl.Modbus.Registers
         }
 
         private bool IsReadAllRegisters = false;
-        private bool TimerWork = false;
+        //private bool TimerWork = false;
         protected byte Slave;
         protected MbWork modbus;
         protected IEnumerable<List<RegisterBase>> ListList;
@@ -304,7 +304,7 @@ namespace ServiceControl.Modbus.Registers
                 else
                     await Task.Run(() => RequestValue());
 
-                TimerWork = false;
+                //TimerWork = false;
                 EndRead?.Invoke(null, null);
             //}
             //else

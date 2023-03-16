@@ -16,6 +16,8 @@
     <UserControl.Resources>
 
         <conv:StabilMode131Converter x:Key="StabilMode131Converter"/>
+        <!--<conv:StabilModeConverter x:Key="StabilModeConverter"/>-->
+        <conv:StabilMode131VisibleConverter x:Key="StabilMode131VisibleConverter"/>
 
         <Style TargetType="GroupBox">
             <Style.Setters>
@@ -153,19 +155,20 @@
                                     </Button>
                                     <Button Width="30" Margin="10,0" VerticalAlignment="Top" ToolTip="{DynamicResource SetMode}" 
                                             Style="{StaticResource ButtonStyle1}"
-                                            CommandParameter="{Binding stab}" Padding="3"
+                                            CommandParameter="{Binding stab}" Padding="2"
+                                            BorderThickness="1"
                                             Command="{Binding DataContext.WriteStabCommand, ElementName=mainControl}">
                                         <Button.Background>
                                             <MultiBinding Converter="{StaticResource StabilMode131Converter}">
                                                 <Binding Path="stab"/>
                                                 <Binding Path="DataContext.device.Mode.Mode" ElementName="mainControl"/>
-                                                <Binding Path="DataContext.device.Mode.Address" ElementName="mainControl"/>
+                                                <!--<Binding Path="DataContext.device.Mode.Address" ElementName="mainControl"/>-->
                                             </MultiBinding>
                                         </Button.Background>
 
 
                                         <Grid Width="16" Height="16">
-                                            <Ellipse >
+                                            <!--<Ellipse >
                                                 <Ellipse.Fill>
                                                     <MultiBinding Converter="{StaticResource StabilMode131Converter}">
                                                         <Binding Path="stab"/>
@@ -174,7 +177,15 @@
                                                     </MultiBinding>
                                                 </Ellipse.Fill>
                                             </Ellipse>
-                                            <Ellipse StrokeThickness="1" Stroke="Gray"/>
+                                            <Ellipse StrokeThickness="1" Stroke="Gray"/>-->
+                                            <Image Source="/Resources/bullet_lightning.png" >
+                                                <Image.Visibility>
+                                                    <MultiBinding Converter="{StaticResource StabilMode131VisibleConverter}">
+                                                        <Binding Path="stab"/>
+                                                        <Binding Path="DataContext.device.Stabil.Value" ElementName="mainControl"/>
+                                                    </MultiBinding>
+                                                </Image.Visibility>
+                                            </Image>
                                         </Grid>
                                     </Button>
                                 </StackPanel>

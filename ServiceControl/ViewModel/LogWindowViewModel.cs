@@ -20,7 +20,7 @@ namespace ServiceControl.ViewModel
         public ConsoleControl.WPF.ConsoleControl conCtrl { get; set; }
 
         ModbusMaster master;
-        public ListBox listBox;
+        //public ListBox listBox;
         private bool _IsPause;
         public bool IsPause
         {

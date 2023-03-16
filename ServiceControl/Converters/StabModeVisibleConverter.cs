@@ -5,33 +5,24 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
 namespace ServiceControl.Converters
 {
-    internal class StabilModeConverter : IMultiValueConverter
+    internal class StabModeVisibleConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            Brush brush = null;
+            Visibility visible = Visibility.Hidden;
 
-            if( values[0] is RezhStab stab && values[1] is int valStab)
+            if (values[0] is RezhStab stab && values[1] is int valStab)
             {
-                //ushort addr = (ushort)values[2];
-
-                //if (addr == 0x10)
-                //{
-                //    brush = (int)stab == valStab ? Brushes.SpringGreen : Brushes.Gray;
-                //}
-                //if(addr == 0x84)
-                //{
-                    brush = (int)stab == valStab ? Brushes.LightGreen : new SolidColorBrush(Color.FromRgb(0xe0,0xe0,0xe0));
-                //}
-
+                visible = (int)stab == valStab ? Visibility.Visible : Visibility.Hidden;
             }
 
-            return brush;
+            return visible;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

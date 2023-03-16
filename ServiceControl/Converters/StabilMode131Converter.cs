@@ -18,20 +18,20 @@ namespace ServiceControl.Converters
 
             if( values[0] is RezhStab stab && values[1] is ModeStab valStab)
             {
-                ushort addr = (ushort)values[2];
+                //ushort addr = (ushort)values[2];
 
-                if (addr == 0x10)
-                {
-                    brush = (int)stab == (int)valStab 
-                        ? new SolidColorBrush(Color.FromRgb(0xc0, 0xFF, 0xc0)) 
-                        : Brushes.Gray;
-                }
-                if(addr == 2017)
-                {
-                    brush = (int)stab == (int)valStab
-                        ? new SolidColorBrush(Color.FromRgb(0xc0, 0xFF, 0xc0))
-                        : Brushes.Transparent;
-                }
+                //if (addr == 0x10)
+                //{
+                //    brush = (int)stab == (int)valStab 
+                //        ? new SolidColorBrush(Color.FromRgb(0xc0, 0xFF, 0xc0)) 
+                //        : Brushes.Gray;
+                //}
+                //if(addr == 2017)
+                //{
+                brush = (int)stab == (int)valStab
+                    ? Brushes.LightGreen
+                    : new SolidColorBrush(Color.FromRgb(0xe0, 0xe0, 0xe0));
+                //}
 
             }
 
