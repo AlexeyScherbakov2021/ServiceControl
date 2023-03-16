@@ -182,7 +182,7 @@
                                                 <Image.Visibility>
                                                     <MultiBinding Converter="{StaticResource StabilMode131VisibleConverter}">
                                                         <Binding Path="stab"/>
-                                                        <Binding Path="DataContext.device.Stabil.Value" ElementName="mainControl"/>
+                                                        <Binding Path="DataContext.device.Mode.Mode" ElementName="mainControl"/>
                                                     </MultiBinding>
                                                 </Image.Visibility>
                                             </Image>
