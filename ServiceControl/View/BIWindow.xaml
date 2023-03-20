@@ -17,16 +17,16 @@
             <DataGrid.Columns>
                 <DataGridTextColumn  Binding="{Binding reg[0].Name}"/>
                 <DataGridTextColumn  Binding="{Binding reg[0].Measure}"/>
-                <DataGridTextColumn Header="БИ1" Binding="{Binding reg[0].Value}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="БИ2" Binding="{Binding reg[1].Value}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="БИ3" Binding="{Binding reg[2].Value}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="БИ4" Binding="{Binding reg[3].Value}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="БИ5" Binding="{Binding reg[4].Value}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="БИ6" Binding="{Binding reg[5].Value}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="БИ7" Binding="{Binding reg[6].Value}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="БИ8" Binding="{Binding reg[7].Value}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="БИ9" Binding="{Binding reg[8].Value}" CellStyle="{StaticResource CellRight}"/>
-                <DataGridTextColumn Header="БИ10" Binding="{Binding reg[9].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="1" Binding="{Binding reg[0].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="2" Binding="{Binding reg[1].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="3" Binding="{Binding reg[2].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="4" Binding="{Binding reg[3].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="5" Binding="{Binding reg[4].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="6" Binding="{Binding reg[5].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="7" Binding="{Binding reg[6].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="8" Binding="{Binding reg[7].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="9" Binding="{Binding reg[8].Value}" CellStyle="{StaticResource CellRight}"/>
+                <DataGridTextColumn Header="10" Binding="{Binding reg[9].Value}" CellStyle="{StaticResource CellRight}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

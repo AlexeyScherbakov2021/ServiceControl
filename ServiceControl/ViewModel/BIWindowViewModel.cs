@@ -49,21 +49,6 @@ namespace ServiceControl.ViewModel
             for(int i = 0; i < 10; i++)
                 ListBIRegisters.Add(listReg[i]);
 
-            //listReg = new Reg10BI();
-            //for (int i = 0; i < Device356.CountBI; i++)
-            //    listReg.reg[i] = device.DeepDK[i];
-            //ListBIRegisters.Add(listReg);
-
-            //listReg = new Reg10BI();
-            //for (int i = 0; i < Device356.CountBI; i++)
-            //    listReg.reg[i] = device.BI_SummPot[i];
-            //ListBIRegisters.Add(listReg);
-
-            //listReg = new Reg10BI();
-            //for (int i = 0; i < Device356.CountBI; i++)
-            //    listReg.reg[i] = device.BI_PolPot[i];
-            //ListBIRegisters.Add(listReg);
-
         }
 
     }

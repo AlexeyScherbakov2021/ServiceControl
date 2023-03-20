@@ -961,7 +961,6 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task RequestValue()
         {
-            ReadRegisters(ListInput);
             ReadRegisters(ListInputBI);
             ReadRegisters(ListStatus);
             ReadRegister(OnOffMS);
@@ -970,6 +969,7 @@ namespace ServiceControl.Modbus.Devices
             ReadRegisters(ListDop);
             ReadRegister(ModeNaprOutput);
 #endif
+            ReadRegisters(ListInput);
             return Task.CompletedTask;
         }
 

@@ -37,9 +37,10 @@ namespace ServiceControl.Modbus.Registers
 
         public override ushort[] SetOutput()
         {
-            ushort[] res = new ushort[Size];
+            ushort[] res = null;
             if (Value != null)
             {
+                res = new ushort[Size];
                 int val = Value.Value;
 
                 for (int i = 0; i < Size; i++)

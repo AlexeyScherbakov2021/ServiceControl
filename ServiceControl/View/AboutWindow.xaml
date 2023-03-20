@@ -17,7 +17,7 @@
                  VerticalAlignment="Top" Width="263" FontSize="10" Foreground="White">
             <Run Text="Service program device NGK"/>
             <LineBreak/>
-            <Run Text="Version 1.0"/>
+            <Run x:Name="NameVersion" Text="Version 1.0"/>
             <LineBreak/>
             <Run Text="Copyright © 2023 «LLC SPA «Neftegazcomplex-EHZ»"/>
             <LineBreak/>

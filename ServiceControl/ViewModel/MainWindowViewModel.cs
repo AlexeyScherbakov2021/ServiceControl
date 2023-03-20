@@ -395,6 +395,7 @@ namespace ServiceControl.ViewModel
         private void OnAboutCommandExecuted(object p)
         {
             AboutWindow win = new AboutWindow();
+            win.NameVersion.Text = "Version " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
             win.Owner = App.Current.MainWindow;
             win.ShowDialog();
         }

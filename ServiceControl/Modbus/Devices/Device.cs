@@ -239,12 +239,14 @@ namespace ServiceControl.Modbus.Registers
             if (Reg.Size > 1)
             {
                 ushort[] data = Reg.SetOutput();
-                modbus.WriteRegister(Reg.Address, data, Slave);
+                if (data != null)
+                    modbus.WriteRegister(Reg.Address, data, Slave);
             }
             else
             {
                 ushort[] val = Reg.SetOutput();
-                modbus.WriteRegister(Reg.Address, val[0], Slave);
+                if(val != null)
+                    modbus.WriteRegister(Reg.Address, val[0], Slave);
             }
         }
 

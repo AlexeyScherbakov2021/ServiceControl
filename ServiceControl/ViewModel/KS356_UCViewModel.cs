@@ -8,9 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using static ServiceControl.ViewModel.BIWindowViewModel;
 
 namespace ServiceControl.ViewModel
 {
@@ -47,6 +49,7 @@ namespace ServiceControl.ViewModel
         public List<Register> ListService { get; set; }
         public List<TwoRegister> ListModeNapr { get; set; }
         public List<Register> ListRealTime { get; set; }
+        public Reg10BI regBI { get; set; }
 
 #if !CLIENT
         public List<TwoRegister> ListWriteControl2 { get; set; }
@@ -135,6 +138,18 @@ namespace ServiceControl.ViewModel
             };
 
             ListCoil = new List<RegisterBool>() { device.OnOffMS };
+
+            regBI = new Reg10BI();
+            regBI.reg[0] = device.SpeedDK[0];
+            regBI.reg[1] = device.DeepDK[0];
+            regBI.reg[2] = device.BI_SummPot[0];
+            regBI.reg[3] = device.BI_PolPot[0];
+            regBI.reg[4] = device.BI_OutCurrent[0];
+            regBI.reg[5] = device.BI_OutVoltage[0];
+            regBI.reg[6] = device.BI_CurrPol[0];
+            regBI.reg[7] = device.BI_IndVoltage[0];
+            regBI.reg[8] = device.BI_FreqVoltage[0];
+            regBI.reg[9] = device.BI_Temper[0];
 
 
             // добавление в список целых регистров управления

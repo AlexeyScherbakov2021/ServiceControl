@@ -149,9 +149,15 @@
                                     
                                     <TextBlock Text="{Binding Register1.Measure}" Width="20" Margin="2,2,0,0"/>
 
-                                    <TextBox Text="{Binding Register2.Value, StringFormat=0.00, TargetNullValue=--}" Width="64" 
-                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}"/>
+                                    <TextBox Text="{Binding Register2.Value, StringFormat=0.00, TargetNullValue=--, UpdateSourceTrigger=PropertyChanged}" Width="64" 
+                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Gesture="Enter" 
+                                                        CommandParameter="{Binding Register2}"
+                                                        Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}"/>
+                                        </TextBox.InputBindings>
 
+                                    </TextBox>
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource Set}" Style="{StaticResource ButtonStyle1}"
                                             CommandParameter="{Binding Register2}" Padding="3"
                                             Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}">
@@ -223,8 +229,14 @@
                                         Margin="4,0" ToolTip="{Binding Register1.ToolTip}"/>
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
-                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--}" Width="64" 
-                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" />
+                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--, UpdateSourceTrigger=PropertyChanged}" Width="64" 
+                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" >
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Gesture="Enter" 
+                                                        CommandParameter="{Binding Register2}"
+                                                        Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
 
 
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource Set}" Style="{StaticResource ButtonStyle1}"
