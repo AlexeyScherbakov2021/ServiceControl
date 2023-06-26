@@ -121,6 +121,9 @@
     <Compile Include="View\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ManualWindow.xaml.cs">
+      <DependentUpon>ManualWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\SettingConnect.xaml.cs">
       <DependentUpon>SettingConnect.xaml</DependentUpon>
     </Compile>
@@ -197,6 +200,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ManualWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\SettingConnect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -268,6 +275,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\bullet_lightning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StabOK.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StabAvar.JPG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

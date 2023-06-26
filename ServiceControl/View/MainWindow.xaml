@@ -48,7 +48,10 @@
                                 <MenuItem Header="English" Command="{Binding LangCommand}" CommandParameter="en-US"/>
                             </MenuItem>
                         </MenuItem>
-                        <MenuItem Header="{DynamicResource About}" Command="{Binding AboutCommand}"/>
+                        <MenuItem Header="{DynamicResource Help}">
+                            <MenuItem Header="{DynamicResource Manual}" Command="{Binding ManualCommand}"/>
+                            <MenuItem Header="{DynamicResource About}" Command="{Binding AboutCommand}"/>
+                        </MenuItem>
                     </Menu>
 
                 </ToolBarPanel>

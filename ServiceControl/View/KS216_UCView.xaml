@@ -17,6 +17,7 @@
 
         <conv:StabilModeConverter x:Key="StabilModeConverter"/>
         <conv:StabModeVisibleConverter x:Key="StabModeVisibleConverter"/>
+        <!--<conv:ValidateValue x:Key="ValidateValue"/>-->
         <!--<conv:StatusDKConverter x:Key="StatusDKConverter"/>-->
 
         <Style TargetType="GroupBox">
@@ -145,12 +146,21 @@
                                     <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="250" />
                                     
                                     <TextBox Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="64" 
-                                        Margin="4,0" ToolTip="{Binding Register1.ToolTip}"  />
+                                        Margin="4,0" ToolTip="{Binding Register1.ToolTip}" />
                                     
                                     <TextBlock Text="{Binding Register1.Measure}" Width="20" Margin="2,2,0,0"/>
 
-                                    <TextBox Text="{Binding Register2.Value, StringFormat=0.00, TargetNullValue=--, UpdateSourceTrigger=PropertyChanged}" Width="64" 
-                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}">
+                                    <TextBox Width="64" TabIndex="1"
+                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" 
+                                             >
+                                        <TextBox.Text>
+                                            <Binding Path="Register2.Value" UpdateSourceTrigger="PropertyChanged" >
+                                                <!--<Binding.ValidationRules>
+                                                    <conv:ValidateValue/>
+                                                </Binding.ValidationRules>-->
+                                            </Binding>
+                                        </TextBox.Text>
+                                       
                                         <TextBox.InputBindings>
                                             <KeyBinding Gesture="Enter" 
                                                         CommandParameter="{Binding Register2}"
@@ -230,7 +240,8 @@
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
                                     <TextBox Text="{Binding Register2.Value, TargetNullValue=--, UpdateSourceTrigger=PropertyChanged}" Width="64" 
-                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" >
+                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" 
+                                             TabIndex="2">
                                         <TextBox.InputBindings>
                                             <KeyBinding Gesture="Enter" 
                                                         CommandParameter="{Binding Register2}"

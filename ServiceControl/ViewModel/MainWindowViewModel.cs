@@ -400,6 +400,17 @@ namespace ServiceControl.ViewModel
             win.ShowDialog();
         }
 
+        //--------------------------------------------------------------------------------
+        // Команда Руководство
+        //--------------------------------------------------------------------------------
+        public ICommand ManualCommand => new LambdaCommand(OnManualCommandExecuted, CanManualCommand);
+        private bool CanManualCommand(object p) => winLog == null;
+        private void OnManualCommandExecuted(object p)
+        {
+            ManualWindow win = new ManualWindow();
+            win.ShowDialog();
+        }
+
         #endregion
 
     }

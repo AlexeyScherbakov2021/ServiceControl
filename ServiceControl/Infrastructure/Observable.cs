@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace ServiceControl.Infrastructure
 {
@@ -27,5 +29,6 @@ namespace ServiceControl.Infrastructure
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
     }
 }

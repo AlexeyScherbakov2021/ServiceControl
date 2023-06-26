@@ -17,6 +17,7 @@ namespace ServiceControl.Modbus.Devices
         //public const int CountDK = 10;
         public const int CountMS = 12;
         public const int CountBI = 10;
+        public bool IsOldVersion = true;
 
         public RegisterFloat NaprSeti1;
         public RegisterFloat CountEE1;
@@ -95,6 +96,10 @@ namespace ServiceControl.Modbus.Devices
         //----------------------------------------------------------------------------------------------
         public Device356(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
+            InfoReg = new RegisterInfo() { Name = "Информация", NameRes = "" };
+            //ReadInfoRegister(InfoReg);
+
+
             // список входных регистров
             //--------------------------------------------------------------------------------------------------------------------------------------
             ListInput = new List<Register>();
@@ -204,7 +209,7 @@ namespace ServiceControl.Modbus.Devices
                 Description = "СВЗ",
                 MinValue = 0,
                 MaxValue = 999999
-            };
+            }; 
             ListInput.Add(TimeProtect);
 
             CurrOutput = new RegisterFloat()
@@ -299,187 +304,193 @@ namespace ServiceControl.Modbus.Devices
                 ListInput.Add(MS[i]);
             }
 
-            SpeedDK = new RegisterFloat[CountBI];
-            DeepDK = new RegisterFloat[CountBI];
-            BI_SummPot = new RegisterFloat[CountBI];
-            BI_PolPot = new RegisterFloat[CountBI];
-            BI_CurrPol = new RegisterFloat[CountBI];
-            BI_OutVoltage = new RegisterFloat[CountBI];
-            BI_OutCurrent = new RegisterFloat[CountBI];
-            BI_IndVoltage = new RegisterFloat[CountBI];
-            BI_FreqVoltage = new RegisterInt[CountBI];
-            BI_Temper = new RegisterFloat[CountBI];
+            int.TryParse(InfoReg.VersionPO, out int version);
+            int.TryParse(InfoReg.Year,  out int year);
 
-
-            int adr = 0;
-            for (int i = 0; i < CountBI; i++, adr += 2)
+            if ((year >= 2020 && version <= 3) || (year >= 2023 && version >= 4))
             {
-                SpeedDK[i] = new RegisterFloat()
-                {
-                    Address = (ushort)(0x1D + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Скорость коррозии {i + 1}",
-                    NameRes = "SpeedCorrDK",
-                    Measure = "мм/год",
-                    MeasureRes = "MMYEAR",
-                    Description = $"СК_ИКП{i + 1}",
-                    Scale = 0.001f,
-                    MinValue = 0,
-                    MaxValue = 65.535f,
-                    Number = i + 1
-                };
-                ListInput.Add(SpeedDK[i]);
+                IsOldVersion = false;
+                SpeedDK = new RegisterFloat[CountBI];
+                DeepDK = new RegisterFloat[CountBI];
+                BI_SummPot = new RegisterFloat[CountBI];
+                BI_PolPot = new RegisterFloat[CountBI];
+                BI_CurrPol = new RegisterFloat[CountBI];
+                BI_OutVoltage = new RegisterFloat[CountBI];
+                BI_OutCurrent = new RegisterFloat[CountBI];
+                BI_IndVoltage = new RegisterFloat[CountBI];
+                BI_FreqVoltage = new RegisterInt[CountBI];
+                BI_Temper = new RegisterFloat[CountBI];
 
-                DeepDK[i] = new RegisterFloat()
-                {
-                    Address = (ushort)(0x1E + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Глубина коррозии ИКП {i + 1}",
-                    NameRes = "DeepCorrDK",
-                    Measure = "мм",
-                    MeasureRes = "MM",
-                    Description = $"ГК_ИКП{i + 1}",
-                    Scale = 0.001f,
-                    MinValue = 0,
-                    MaxValue = 65.535f,
-                    Number = i + 1
-                };
-                ListInput.Add(DeepDK[i]);
 
+                int adr = 0;
+                for (int i = 0; i < CountBI; i++, adr += 2)
+                {
+                    SpeedDK[i] = new RegisterFloat()
+                    {
+                        Address = (ushort)(0x1D + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Скорость коррозии {i + 1}",
+                        NameRes = "SpeedCorrDK",
+                        Measure = "мм/год",
+                        MeasureRes = "MMYEAR",
+                        Description = $"СК_ИКП{i + 1}",
+                        Scale = 0.001f,
+                        MinValue = 0,
+                        MaxValue = 65.535f,
+                        Number = i + 1
+                    };
+                    ListInput.Add(SpeedDK[i]);
+
+                    DeepDK[i] = new RegisterFloat()
+                    {
+                        Address = (ushort)(0x1E + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Глубина коррозии ИКП {i + 1}",
+                        NameRes = "DeepCorrDK",
+                        Measure = "мм",
+                        MeasureRes = "MM",
+                        Description = $"ГК_ИКП{i + 1}",
+                        Scale = 0.001f,
+                        MinValue = 0,
+                        MaxValue = 65.535f,
+                        Number = i + 1
+                    };
+                    ListInput.Add(DeepDK[i]);
+
+                }
+
+                ListInputBI = new List<Register>();
+                adr = 0;
+                for (int i = 0; i < CountBI; i++, adr += 8)
+                {
+                    BI_SummPot[i] = new RegisterFloat()
+                    {
+                        Address = (ushort)(0x51 + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Сумм. пот. БИ{i + 1}",
+                        NameRes = "SummPot",
+                        Measure = "В",
+                        MeasureRes = "Volt",
+                        Description = $"Uсп_БИ{i + 1}",
+                        Scale = 0.01f,
+                        MinValue = -5,
+                        MaxValue = 5,
+                        Number = i + 1
+                    };
+                    ListInputBI.Add(BI_SummPot[i]);
+
+                    BI_PolPot[i] = new RegisterFloat()
+                    {
+                        Address = (ushort)(0x52 + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Пол. пот. БИ{i + 1}",
+                        NameRes = "PolPot",
+                        Measure = "В",
+                        MeasureRes = "Volt",
+                        Description = $"Uпп_БИ{i + 1}",
+                        Scale = 0.01f,
+                        MinValue = -5,
+                        MaxValue = 5,
+                        Number = i + 1
+                    };
+                    ListInputBI.Add(BI_PolPot[i]);
+
+                    BI_CurrPol[i] = new RegisterFloat()
+                    {
+                        Address = (ushort)(0x53 + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Ток полр. БИ{i + 1}",
+                        NameRes = "CurrPol",
+                        Measure = "мА",
+                        MeasureRes = "MAmp",
+                        Description = $"Iпол_БИ{i + 1}",
+                        Scale = 0.01f,
+                        MinValue = -5,
+                        MaxValue = 5,
+                        Number = i + 1
+                    };
+                    ListInputBI.Add(BI_CurrPol[i]);
+
+                    BI_OutVoltage[i] = new RegisterFloat()
+                    {
+                        Address = (ushort)(0x54 + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Вых напр. БИ{i + 1}",
+                        NameRes = "OutNapr",
+                        Measure = "В",
+                        MeasureRes = "Volt",
+                        Description = $"Uвых_БИ{i + 1}",
+                        Scale = 0.01f,
+                        MinValue = 0,
+                        MaxValue = 100,
+                        Number = i + 1
+                    };
+                    ListInputBI.Add(BI_OutVoltage[i]);
+
+                    BI_OutCurrent[i] = new RegisterFloat()
+                    {
+                        Address = (ushort)(0x55 + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Вых напр. БИ{i + 1}",
+                        NameRes = "OutCur",
+                        Measure = "А",
+                        MeasureRes = "Amp",
+                        Description = $"Iвых_БИ{i + 1}",
+                        Scale = 0.01f,
+                        MinValue = 0,
+                        MaxValue = 150,
+                        Number = i + 1
+                    };
+                    ListInputBI.Add(BI_OutCurrent[i]);
+
+                    BI_IndVoltage[i] = new RegisterFloat()
+                    {
+                        Address = (ushort)(0x56 + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Наведенное напр. БИ{i + 1}",
+                        NameRes = "IndVoltage",
+                        Measure = "В",
+                        MeasureRes = "Volt",
+                        Description = $"Uнав_БИ{i + 1}",
+                        Scale = 0.01f,
+                        MinValue = 0,
+                        MaxValue = 100,
+                        Number = i + 1
+                    };
+                    ListInputBI.Add(BI_IndVoltage[i]);
+
+                    BI_FreqVoltage[i] = new RegisterInt()
+                    {
+                        Address = (ushort)(0x57 + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Частота нав. напр. БИ{i + 1}",
+                        NameRes = "FreqIndVoltage",
+                        Measure = "Гц",
+                        MeasureRes = "Hertz",
+                        Description = $"F_БИ{i + 1}",
+                        MinValue = 0,
+                        MaxValue = 100,
+                        Number = i + 1
+                    };
+                    ListInputBI.Add(BI_FreqVoltage[i]);
+
+                    BI_Temper[i] = new RegisterFloat()
+                    {
+                        Address = (ushort)(0x58 + adr),
+                        CodeFunc = ModbusFunc.InputRegister,
+                        Name = $"Температура БИ{i + 1}",
+                        NameRes = "Temper",
+                        Measure = "°C",
+                        Scale = 0.01f,
+                        Description = $"T_БИ{i + 1}",
+                        MinValue = -45,
+                        MaxValue = 100,
+                        Number = i + 1
+                    };
+                    ListInputBI.Add(BI_Temper[i]);
+
+                }
             }
-
-            ListInputBI = new List<Register>();
-            adr = 0;
-            for (int i = 0; i < CountBI; i++, adr += 8)
-            {
-                BI_SummPot[i] = new RegisterFloat()
-                {
-                    Address = (ushort)(0x51 + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Сумм. пот. БИ{i + 1}",
-                    NameRes = "SummPot",
-                    Measure = "В",
-                    MeasureRes = "Volt",
-                    Description = $"Uсп_БИ{i + 1}",
-                    Scale = 0.01f,
-                    MinValue = -5,
-                    MaxValue = 5,
-                    Number = i + 1
-                };
-                ListInputBI.Add(BI_SummPot[i]);
-
-                BI_PolPot[i] = new RegisterFloat()
-                {
-                    Address = (ushort)(0x52 + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Пол. пот. БИ{i + 1}",
-                    NameRes = "PolPot",
-                    Measure = "В",
-                    MeasureRes = "Volt",
-                    Description = $"Uпп_БИ{i + 1}",
-                    Scale = 0.01f,
-                    MinValue = -5,
-                    MaxValue = 5,
-                    Number = i + 1
-                };
-                ListInputBI.Add(BI_PolPot[i]);
-
-                BI_CurrPol[i] = new RegisterFloat()
-                {
-                    Address = (ushort)(0x53 + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Ток полр. БИ{i + 1}",
-                    NameRes = "CurrPol",
-                    Measure = "мА",
-                    MeasureRes = "MAmp",
-                    Description = $"Iпол_БИ{i + 1}",
-                    Scale = 0.01f,
-                    MinValue = -5,
-                    MaxValue = 5,
-                    Number = i + 1
-                };
-                ListInputBI.Add(BI_CurrPol[i]);
-
-                BI_OutVoltage[i] = new RegisterFloat()
-                {
-                    Address = (ushort)(0x54 + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Вых напр. БИ{i + 1}",
-                    NameRes = "OutNapr",
-                    Measure = "В",
-                    MeasureRes = "Volt",
-                    Description = $"Uвых_БИ{i + 1}",
-                    Scale = 0.01f,
-                    MinValue = 0,
-                    MaxValue = 100,
-                    Number = i + 1
-                };
-                ListInputBI.Add(BI_OutVoltage[i]);
-
-                BI_OutCurrent[i] = new RegisterFloat()
-                {
-                    Address = (ushort)(0x55 + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Вых напр. БИ{i + 1}",
-                    NameRes = "OutCur",
-                    Measure = "А",
-                    MeasureRes = "Amp",
-                    Description = $"Iвых_БИ{i + 1}",
-                    Scale = 0.01f,
-                    MinValue = 0,
-                    MaxValue = 150,
-                    Number = i + 1
-                };
-                ListInputBI.Add(BI_OutCurrent[i]);
-
-                BI_IndVoltage[i] = new RegisterFloat()
-                {
-                    Address = (ushort)(0x56 + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Наведенное напр. БИ{i + 1}",
-                    NameRes = "IndVoltage",
-                    Measure = "В",
-                    MeasureRes = "Volt",
-                    Description = $"Uнав_БИ{i + 1}",
-                    Scale = 0.01f,
-                    MinValue = 0,
-                    MaxValue = 100,
-                    Number = i + 1
-                };
-                ListInputBI.Add(BI_IndVoltage[i]);
-
-                BI_FreqVoltage[i] = new RegisterInt()
-                {
-                    Address = (ushort)(0x57 + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Частота нав. напр. БИ{i + 1}",
-                    NameRes = "FreqIndVoltage",
-                    Measure = "Гц",
-                    MeasureRes = "Hertz",
-                    Description = $"F_БИ{i + 1}",
-                    MinValue = 0,
-                    MaxValue = 100,
-                    Number = i + 1
-                };
-                ListInputBI.Add(BI_FreqVoltage[i]);
-
-                BI_Temper[i] = new RegisterFloat()
-                {
-                    Address = (ushort)(0x58 + adr),
-                    CodeFunc = ModbusFunc.InputRegister,
-                    Name = $"Температура БИ{i + 1}",
-                    NameRes = "Temper",
-                    Measure = "°C",
-                    Scale = 0.01f,
-                    Description = $"T_БИ{i + 1}",
-                    MinValue = -45,
-                    MaxValue = 100,
-                    Number = i + 1
-                };
-                ListInputBI.Add(BI_Temper[i]);
-
-            }
-
 
             // список регистров статусов
             //--------------------------------------------------------------------------------------------------------------------------------------
@@ -924,7 +935,6 @@ namespace ServiceControl.Modbus.Devices
                 ResultText1Res = "On",
             };
 
-            InfoReg = new RegisterInfo() { Name = "Информация", NameRes = "" };
 
         }
 
@@ -995,7 +1005,7 @@ namespace ServiceControl.Modbus.Devices
         public override void ChangeLangRegister()
         {
             ListInput.ForEach(n => n.SetLanguage());
-            ListInputBI.ForEach(n => n.SetLanguage());
+            ListInputBI?.ForEach(n => n.SetLanguage());
             ListStatus.ForEach(n => n.SetLanguage());
             ListWriteControl.ForEach(n => n.SetLanguage());
 #if !CLIENT

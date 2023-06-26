@@ -320,6 +320,9 @@ namespace ServiceControl.Modbus.Registers
         //----------------------------------------------------------------------------------------------
         protected void CheckReg(IEnumerable<RegisterBase> ListReg)
         {
+            if (ListReg == null)
+                return;
+
             ushort StartAddress = 0;
             ModbusFunc PrevFunc = ModbusFunc.None;
             foreach (var it in ListReg)

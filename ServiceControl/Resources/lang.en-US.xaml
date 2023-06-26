@@ -137,6 +137,8 @@
     <sys:String x:Key="Lower">lower</sys:String>
     <sys:String x:Key="Upper">upper</sys:String>
     <sys:String x:Key="BI">BI</sys:String>
+    <sys:String x:Key="Help">Help</sys:String>
+    <sys:String x:Key="Manual">Manual</sys:String>
 
 
 </ResourceDictionary>

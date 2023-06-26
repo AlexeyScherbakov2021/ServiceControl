@@ -1,0 +1,67 @@
+﻿<Window x:Class="ServiceControl.View.ManualWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ServiceControl.View"
+        mc:Ignorable="d"
+        Title="Краткое руководство" Height="800" Width="800" WindowStartupLocation="CenterScreen" Background="#FFF1F1F1">
+    <StackPanel Margin="25,10">
+        <TextBlock VerticalAlignment="Stretch" TextAlignment="Center" Text="Краткое руководство" FontWeight="Bold" FontSize="20" Margin="0,10,0,10"/>
+        <TextBlock VerticalAlignment="Stretch" TextAlignment="Center" Text="Настройка соединения" FontWeight="Bold" FontSize="16" Margin="0,10,0,6"/>
+        <TextBlock TextWrapping="Wrap" TextAlignment="Left" VerticalAlignment="Stretch" FontSize="16">
+            <Run Text="После запуска программы в меню"/>
+            <Run Text="Настройка – Настройка соединения" FontWeight="Bold"/>
+            <Run Text="нужно указать необходимые параметры подключения. После нажатия"/>
+            <Run Text="ОК" FontWeight="Bold"/>
+            <Run Text="они сохранятся. Далее с помощью кнопки "/>
+            <Run Text="Подключиться" FontWeight="Bold"/>
+            <Run Text="происходит соединение с устройством."/>
+            <LineBreak/>
+            <Run Text="Параметры обновляются приблизительно 1 раз в секунду."/>
+            <LineBreak/>
+        </TextBlock>
+        <TextBlock VerticalAlignment="Stretch" TextAlignment="Center" Text="Запись регистров" FontWeight="Bold" FontSize="16" Margin="0,10,0,4"/>
+        <TextBlock TextAlignment="Justify" TextWrapping="Wrap" FontSize="16">
+            <Run Text="Запись в регистры устройства производиться с помощью кнопок "/>
+            <InlineUIContainer>
+                <Image Source="/Resources/Logout.png" Height="16"/>
+            </InlineUIContainer>
+            <Run Text=". Если эти кнопки отключены, значит устройство не находится в режиме дистанционного управления."/>
+            <LineBreak/>
+        </TextBlock>
+        <TextBlock VerticalAlignment="Stretch" TextAlignment="Center" Text="Установка режима стабилизации" FontWeight="Bold" FontSize="16" Margin="0,10,0,4"/>
+        <TextBlock TextAlignment="Justify" TextWrapping="Wrap" FontSize="16">
+        <Run Text="Режим стабилизации устанавливается кнопками "/>
+            <InlineUIContainer>
+                <Image Source="/Resources/StabOK.JPG" Height="26"/>
+            </InlineUIContainer>
+            <Run Text=". Значок"/><Run/>
+            <InlineUIContainer>
+                <Image Source="/Resources/bullet_lightning.png" Height="16"/>
+            </InlineUIContainer>
+            <Run Text="означает текущий режим стабилизации на устройстве. Зеленый фон кнопки означает, по какому параметру был послан сигнал стабилизации."/>
+            <LineBreak/>
+        </TextBlock>
+        <TextBlock VerticalAlignment="Stretch" TextAlignment="Center" Text="Статус соединения" FontWeight="Bold" FontSize="16" Margin="0,10,0,4"/>
+        <TextBlock TextAlignment="Justify" TextWrapping="Wrap" FontSize="16">
+            <Run Text="В нижней части программы отображается статус подключения."/>
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="подключено" FontWeight="Bold" Foreground="#FF0DD611"/>
+            <Run Text=" - есть соединение с устройством, идет обмен данными."/>
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="оборудование не отвечает" FontWeight="Bold" Foreground="#FFFF7A7A"/>
+            <Run Text=" - обмен данными с устройством прекратился, потеряна связь. Опрос оборудования продолжается и в случае восстановления связи статус изменится."/>
+            <LineBreak/>
+            <LineBreak/>
+            <Run Text="не подключено" FontWeight="Bold" Foreground="#FFFF7A7A"/>
+            <Run Text=" - не было подключения к устройству. Для соединения нужно подключиться с помощью кнопки"/>
+            <Run Text="Подключиться." FontWeight="Bold"/>
+            <Run Text=""/>
+        </TextBlock>
+
+        
+    </StackPanel>
+</Window>
