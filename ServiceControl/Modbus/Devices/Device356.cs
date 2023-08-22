@@ -97,8 +97,7 @@ namespace ServiceControl.Modbus.Devices
         public Device356(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
             InfoReg = new RegisterInfo() { Name = "Информация", NameRes = "" };
-            //ReadInfoRegister(InfoReg);
-
+            ReadInfoRegister(InfoReg);
 
             // список входных регистров
             //--------------------------------------------------------------------------------------------------------------------------------------

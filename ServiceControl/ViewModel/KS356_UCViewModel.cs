@@ -112,7 +112,7 @@ namespace ServiceControl.ViewModel
 
             // добавление в список датчиков коррозии
             //ListInputDK = new List<TwoRegister>();
-            //for (int i = 0; i < 1/*Device356.CountDK*/; i++)
+            //for (int i = 0; i < Device356.CountBI; i++)
             //{
             //    ListInputDK.Add(new TwoRegister() { Register1 = device.SpeedDK[i], Register2 = device.DeepDK[i] });
             //}

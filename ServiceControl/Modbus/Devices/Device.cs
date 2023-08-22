@@ -298,13 +298,16 @@ namespace ServiceControl.Modbus.Registers
             //{
             //    TimerWork = true;
 
-                if (IsReadAllRegisters)
-                {
-                    IsReadAllRegisters = false;
-                    await Task.Run(() => StartRequestValue());
-                }
-                else
-                    await Task.Run(() => RequestValue());
+            if (IsReadAllRegisters)
+            {
+                IsReadAllRegisters = false;
+                await Task.Run(() => StartRequestValue());
+            }
+            else
+            {
+                await Task.Run(() => RequestValue());
+
+            }
 
                 //TimerWork = false;
                 EndRead?.Invoke(null, null);

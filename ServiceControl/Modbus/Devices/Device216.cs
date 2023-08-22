@@ -150,7 +150,7 @@ namespace ServiceControl.Modbus.Registers
                 NameRes = "OutCur",
                 Measure = "A",
                 Description = "Iвых", 
-                Scale = 0.01f, MinValue = 0, MaxValue = 150 };
+                Scale = 0.01f, MinValue = -150, MaxValue = 150 };
             ListInput.Add(CurrOutput);
 
             NaprOutput = new RegisterFloat() { Address = 0x0D, CodeFunc = ModbusFunc.InputRegister, Size = 1, 
@@ -159,7 +159,7 @@ namespace ServiceControl.Modbus.Registers
                 Measure = "В",
                 MeasureRes = "Volt",
                 Description = "Uвых", 
-                Scale = 0.01f, MinValue = 0, MaxValue = 100 };
+                Scale = 0.01f, MinValue = -100, MaxValue = 100 };
             ListInput.Add(NaprOutput);
 
             ProtectPotenSumm = new RegisterFloat() { Address = 0x0E, CodeFunc = ModbusFunc.InputRegister, Size = 1, 

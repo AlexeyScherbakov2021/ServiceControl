@@ -183,6 +183,7 @@ namespace ServiceControl.Modbus
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
+
                 return null;
             }
         }
