@@ -581,9 +581,10 @@
                         <TextBox Text="{Binding regBI.reg[0].Value, StringFormat=0.###}" Margin="4,0"
                                    ToolTip="{Binding regBI.reg[0].ToolTip}" Width="60"/>
                         <TextBlock Text="{Binding regBI.reg[0].Measure}" Margin="0,0,8,0" />
-                        <TextBox Text="{Binding regBI.reg[0].Value, StringFormat=0.###}" Margin="6,0,2,0"
-                                   ToolTip="{Binding regBI.reg[0].ToolTip}" Width="60"/>
-                        <TextBlock Text="{Binding regBI.reg[0].Measure}" />
+                       
+                        <TextBox Text="{Binding regBI.reg[1].Value, StringFormat=0.###}" Margin="6,0,2,0"
+                                   ToolTip="{Binding regBI.reg[1].ToolTip}" Width="60"/>
+                        <TextBlock Text="{Binding regBI.reg[1].Measure}" />
                      </StackPanel>
 
 

@@ -76,8 +76,8 @@
     <sys:String x:Key="Volt">V</sys:String>
     <sys:String x:Key="KVT">kW*h</sys:String>
     <sys:String x:Key="Hour">h</sys:String>
-    <sys:String x:Key="MMYEAR">mm/y</sys:String>
-    <sys:String x:Key="MM">mm</sys:String>
+    <sys:String x:Key="MMYEAR">mkm/y</sys:String>
+    <sys:String x:Key="MM">mkm</sys:String>
     <sys:String x:Key="SEC">sec</sys:String>
     <sys:String x:Key="Ohm">Ohm</sys:String>
     <sys:String x:Key="MAmp">mA</sys:String>

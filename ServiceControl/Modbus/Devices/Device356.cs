@@ -330,12 +330,12 @@ namespace ServiceControl.Modbus.Devices
                         CodeFunc = ModbusFunc.InputRegister,
                         Name = $"Скорость коррозии {i + 1}",
                         NameRes = "SpeedCorrDK",
-                        Measure = "мм/год",
+                        Measure = "мкм/год",
                         MeasureRes = "MMYEAR",
                         Description = $"СК_ИКП{i + 1}",
-                        Scale = 0.001f,
+                        Scale = 1f,
                         MinValue = 0,
-                        MaxValue = 65.535f,
+                        MaxValue = 65535f,
                         Number = i + 1
                     };
                     ListInput.Add(SpeedDK[i]);
@@ -346,12 +346,12 @@ namespace ServiceControl.Modbus.Devices
                         CodeFunc = ModbusFunc.InputRegister,
                         Name = $"Глубина коррозии ИКП {i + 1}",
                         NameRes = "DeepCorrDK",
-                        Measure = "мм",
+                        Measure = "мкм",
                         MeasureRes = "MM",
                         Description = $"ГК_ИКП{i + 1}",
-                        Scale = 0.001f,
+                        Scale = 1f,
                         MinValue = 0,
-                        MaxValue = 65.535f,
+                        MaxValue = 65535f,
                         Number = i + 1
                     };
                     ListInput.Add(DeepDK[i]);

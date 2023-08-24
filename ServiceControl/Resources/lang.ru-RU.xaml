@@ -76,8 +76,8 @@
     <sys:String x:Key="Volt">В</sys:String>
     <sys:String x:Key="KVT">кВт*ч</sys:String>
     <sys:String x:Key="Hour">ч</sys:String>
-    <sys:String x:Key="MMYEAR">мм/г</sys:String>
-    <sys:String x:Key="MM">мм</sys:String>
+    <sys:String x:Key="MMYEAR">мкм/г</sys:String>
+    <sys:String x:Key="MM">мкм</sys:String>
     <sys:String x:Key="SEC">сек</sys:String>
     <sys:String x:Key="Ohm">Ом</sys:String>
     <sys:String x:Key="MAmp">мА</sys:String>
@@ -137,7 +137,7 @@
     <sys:String x:Key="StatusVoltage">Состояние сети ~220В</sys:String>
     <sys:String x:Key="Lower">понижено</sys:String>
     <sys:String x:Key="Upper">повышено</sys:String>
-    <sys:String x:Key="BI">БИ</sys:String>
+    <sys:String x:Key="BI">УСИКП</sys:String>
     <sys:String x:Key="Help">Помощь</sys:String>
     <sys:String x:Key="Manual">Руководство</sys:String>
 
