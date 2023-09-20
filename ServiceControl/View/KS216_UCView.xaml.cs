@@ -32,5 +32,31 @@ namespace ServiceControl.View
         //        var res = BindingOperations.GetBinding((DependencyObject)sender, TextBox.TextProperty);
         //    }
         //}
+
+        //private void validationError(object sender, ValidationErrorEventArgs e)
+        //{
+        //    if (e.Action == ValidationErrorEventAction.Added)
+        //    {
+
+        //        if(e.Source is TextBox tb)
+        //        {
+        //            tb.Text = "1,2";
+        //            var bind = tb.GetBindingExpression(TextBox.TextProperty);
+        //            Validation.ClearInvalid(bind);
+        //        }
+
+        //        //MessageBox.Show(e.Error.ErrorContent.ToString());
+        //    }
+        //    else
+        //    {
+        //        if (e.Source is TextBox tb)
+        //        {
+        //            tb.Text = "2,2";
+        //            var bind = tb.GetBindingExpression(TextBox.TextProperty);
+        //            bind.UpdateTarget();
+
+        //        }
+        //    }
+        //}
     }
 }

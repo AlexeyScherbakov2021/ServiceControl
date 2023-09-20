@@ -114,8 +114,8 @@ namespace ServiceControl.Modbus.Devices
                 Size = 2,
                 Name = "Время защиты сооружения",
                 NameRes = "TimeProtect",
-                Measure = "ч",
-                MeasureRes = "Hour",
+                Measure = "сек.",
+                MeasureRes = "SEC",
                 MinValue = 0,
                 MaxValue = 999999
             };

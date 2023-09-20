@@ -6,6 +6,7 @@ using ServiceControl.Modbus.Registers;
 using ServiceControl.View;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,8 +20,43 @@ using System.Windows.Threading;
 
 namespace ServiceControl.ViewModel
 {
-    internal class KS216_UCViewModel : Observable
+    internal class KS216_UCViewModel : Observable //, IDataErrorInfo
     {
+        //private Dictionary<string, string> _errors = new Dictionary<string, string>();
+        //public virtual bool HasErrors => _errors.Count > 0;
+        //{
+        //    get
+        //    {
+        //        return _errors.Count > 0;
+        //    }
+        //}
+
+
+        //#region IDataErrorInfo Members
+        //public string Error
+        //{
+        //    get
+        //    {
+        //        if (this.HasErrors)
+        //            return this._errors.First().Value;
+        //        return null;
+        //    }
+        //}
+        //public string this[string columnName]
+        //{
+        //    get
+        //    {
+        //        if (this._errors.ContainsKey(columnName))
+        //        {
+        //            return this._errors[columnName];
+        //        }
+        //        return string.Empty;
+        //    }
+        //}
+        //#endregion
+
+
+
         public class TwoRegister
         {
             public Register Register1 { get; set; }
@@ -77,6 +113,8 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         public KS216_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
         {
+
+
             //mainVM = mainViewModel;
             device = new Device216(mainViewModel, work, Slave);
             //device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;

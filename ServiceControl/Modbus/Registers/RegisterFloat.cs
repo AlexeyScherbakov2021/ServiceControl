@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace ServiceControl.Modbus.Registers
 {
-    internal class RegisterFloat : Register, IDataErrorInfo
+    internal class RegisterFloat : Register //, IDataErrorInfo
     {
         public float Scale = 1;
         public float MinValue = float.MinValue;
@@ -17,30 +17,32 @@ namespace ServiceControl.Modbus.Registers
         private float? _ValueDouble;
         public float? Value 
         { 
-            get => _ValueDouble;  
-            set  
-            { 
-                Set(ref _ValueDouble, value);
-            } 
-        }
-
-
-        public string Error => null;
-
-        public string this[string columnName]
-        {
-            get
+            get => _ValueDouble;
+            set
             {
-                if(columnName == "Value")
+                if(Set(ref _ValueDouble, value))
                 {
-
-                    if (Value == null)
-                        return "NULL";
-
+                       
                 }
-                return null;
             }
         }
+
+        //public string Error => null;
+
+        //public string this[string columnName]
+        //{
+        //    get
+        //    {
+        //        if (columnName == "Value")
+        //        {
+
+        //            if (Value == null)
+        //                return "NULL";
+
+        //        }
+        //        return null;
+        //    }
+        //}
 
 
 

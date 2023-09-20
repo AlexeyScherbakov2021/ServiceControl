@@ -228,7 +228,7 @@
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"/>
                                     <TextBox Text="{Binding Value, TargetNullValue=--}" Width="64"
                                         Margin="4,0" ToolTip="{Binding ToolTip}"/>
-                                    <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0" TextAlignment="Left"/>
+                                    <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Width="34" Margin="2,2,0,0" TextAlignment="Left"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

@@ -24,5 +24,6 @@ namespace ServiceControl.View
         {
             InitializeComponent();
         }
+
     }
 }

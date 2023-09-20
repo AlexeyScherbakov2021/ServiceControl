@@ -38,7 +38,7 @@ namespace ServiceControl.Modbus.Registers
 
         public override void SetResultValues(ushort[] val)
         {
-            if (val.Length < 1) return;
+            if (val == null || val.Length < 1) return;
             Value = val[0];
 
             switch(Value)

@@ -142,7 +142,7 @@
                     <ItemsControl ItemsSource="{Binding ListWriteControl}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" >
                                     <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="250" />
                                     
                                     <TextBox Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="64" 
@@ -150,16 +150,14 @@
                                     
                                     <TextBlock Text="{Binding Register1.Measure}" Width="20" Margin="2,2,0,0"/>
 
-                                    <TextBox Width="64" TabIndex="1"
-                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" 
-                                             >
-                                        <TextBox.Text>
+                                    <TextBox Width="64" TabIndex="1" 
+                                        Text="{Binding Register2.Value, Mode=TwoWay}"
+                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" InputScope="PersonalFullName" >
+                                        
+                                        <!--<TextBox.Text>
                                             <Binding Path="Register2.Value" UpdateSourceTrigger="PropertyChanged" >
-                                                <!--<Binding.ValidationRules>
-                                                    <conv:ValidateValue/>
-                                                </Binding.ValidationRules>-->
                                             </Binding>
-                                        </TextBox.Text>
+                                        </TextBox.Text>-->
                                        
                                         <TextBox.InputBindings>
                                             <KeyBinding Gesture="Enter" 
@@ -239,7 +237,7 @@
                                         Margin="4,0" ToolTip="{Binding Register1.ToolTip}"/>
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
-                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--, UpdateSourceTrigger=PropertyChanged}" Width="64" 
+                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--}" Width="64" 
                                         Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" 
                                              TabIndex="2">
                                         <TextBox.InputBindings>

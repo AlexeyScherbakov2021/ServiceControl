@@ -150,7 +150,7 @@
                                         TextAlignment="Right" Background="White" />
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
-                                    <TextBox Text="{Binding Register2.Value, Mode=TwoWay, TargetNullValue=--, UpdateSourceTrigger=PropertyChanged}" Width="64" VerticalAlignment="Top"
+                                    <TextBox Text="{Binding Register2.Value, Mode=TwoWay, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
                                         Margin="4,0" Padding="2,1" ToolTip="{Binding Register2.ToolTip}" FontWeight="Bold" IsReadOnly="False"
                                         TextAlignment="Right" Background="WhiteSmoke" TabIndex="1">
                                         <TextBox.InputBindings>
@@ -233,7 +233,7 @@
                                         TextAlignment="Right" Background="White" />
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
-                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--, UpdateSourceTrigger=PropertyChanged}" Width="64" VerticalAlignment="Top"
+                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--}" Width="64" VerticalAlignment="Top"
                                         Margin="4,0" Padding="2,1" ToolTip="{Binding Register2.ToolTip}" FontWeight="Bold" IsReadOnly="False"
                                         TextAlignment="Right" Background="WhiteSmoke" TabIndex="2">
                                         <TextBox.InputBindings>

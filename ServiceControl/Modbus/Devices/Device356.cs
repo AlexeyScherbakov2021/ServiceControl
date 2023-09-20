@@ -404,8 +404,8 @@ namespace ServiceControl.Modbus.Devices
                         MeasureRes = "MAmp",
                         Description = $"Iпол_БИ{i + 1}",
                         Scale = 0.01f,
-                        MinValue = -5,
-                        MaxValue = 5,
+                        MinValue = -50,
+                        MaxValue = 50,
                         Number = i + 1
                     };
                     ListInputBI.Add(BI_CurrPol[i]);
@@ -420,7 +420,7 @@ namespace ServiceControl.Modbus.Devices
                         MeasureRes = "Volt",
                         Description = $"Uвых_БИ{i + 1}",
                         Scale = 0.01f,
-                        MinValue = 0,
+                        MinValue = -100,
                         MaxValue = 100,
                         Number = i + 1
                     };
@@ -436,8 +436,8 @@ namespace ServiceControl.Modbus.Devices
                         MeasureRes = "Amp",
                         Description = $"Iвых_БИ{i + 1}",
                         Scale = 0.01f,
-                        MinValue = 0,
-                        MaxValue = 150,
+                        MinValue = -320,
+                        MaxValue = 320,
                         Number = i + 1
                     };
                     ListInputBI.Add(BI_OutCurrent[i]);
@@ -468,7 +468,7 @@ namespace ServiceControl.Modbus.Devices
                         MeasureRes = "Hertz",
                         Description = $"F_БИ{i + 1}",
                         MinValue = 0,
-                        MaxValue = 100,
+                        MaxValue = 150,
                         Number = i + 1
                     };
                     ListInputBI.Add(BI_FreqVoltage[i]);
