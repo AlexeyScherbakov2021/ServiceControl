@@ -17,7 +17,7 @@ namespace ServiceControl.Modbus.Devices
         public RegisterFloat VoltOutput;
         public RegisterFloat Potencial;
         public RegisterFloat PolPotencial;
-        public RegisterInt TimeProtect;
+        public RegisterFloat TimeProtect;
         public RegisterFloat NaprSeti;
         public RegisterFloat Temper;
 
@@ -107,15 +107,16 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(Potencial);
 
-            TimeProtect = new RegisterInt()
+            TimeProtect = new RegisterFloat()
             {
                 Address = 2003,
                 CodeFunc = ModbusFunc.HoldingRegister,
                 Size = 2,
                 Name = "Время защиты сооружения",
                 NameRes = "TimeProtect",
-                Measure = "сек.",
-                MeasureRes = "SEC",
+                Measure = "ч",
+                MeasureRes = "Hour",
+                Scale = 1/3600f,
                 MinValue = 0,
                 MaxValue = 999999
             };

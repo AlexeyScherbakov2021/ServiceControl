@@ -218,7 +218,7 @@
                 <GroupBox.Header>
                     <TextBlock Text="{DynamicResource CtrlParam}" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <StackPanel Margin="8,0" Orientation="Vertical">
+                <StackPanel Margin="0,0" Orientation="Vertical">
 
                     <!--Время работы и защиты-->
                     <ItemsControl ItemsSource="{Binding ListReg}" Margin="0,8,0,0" >
@@ -226,7 +226,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200"/>
-                                    <TextBox Text="{Binding Value, TargetNullValue=--}" Width="64"
+                                    <TextBox Text="{Binding Value, StringFormat=0.##, TargetNullValue=--}" Width="84"
                                         Margin="4,0" ToolTip="{Binding ToolTip}"/>
                                     <TextBlock Text="{Binding Measure}" VerticalAlignment="Top" Width="34" Margin="2,2,0,0" TextAlignment="Left"/>
                                 </StackPanel>
