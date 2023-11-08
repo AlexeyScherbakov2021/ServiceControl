@@ -339,6 +339,16 @@ namespace ServiceControl.ViewModel
                         (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
                     CurrentDevice.ChangeLangRegister();
                     break;
+
+                case DevType.BI_M_Slave:
+                    SControl = new BI_M_UCView();
+                    var vmBIM = new BI_M_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vmBIM;
+                    CurrentDevice = vmBIM.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                    CurrentDevice.ChangeLangRegister();
+                    break;
             }
 
         }

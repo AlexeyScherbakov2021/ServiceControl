@@ -87,6 +87,7 @@
     <Compile Include="Infrastructure\ListExt.cs" />
     <Compile Include="Modbus\Devices\Device131.cs" />
     <Compile Include="Modbus\Devices\Device356.cs" />
+    <Compile Include="Modbus\Devices\DeviceBIMSlave.cs" />
     <Compile Include="Modbus\Devices\DeviceType.cs" />
     <Compile Include="Modbus\Registers\Register.cs" />
     <Compile Include="Modbus\Registers\RegisterBase.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Modbus\Registers\RegisterStatusDC.cs" />
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
     <Compile Include="ViewModel\KS131_UCViewModel.cs" />
+    <Compile Include="ViewModel\BI_M_UCViewModel.cs" />
     <Compile Include="ViewModel\KS216_UCViewModel.cs" />
     <Compile Include="ViewModel\KS261_UCViewModel.cs" />
     <Compile Include="ViewModel\KS356_UCViewModel.cs" />
@@ -114,6 +116,9 @@
     </Compile>
     <Compile Include="View\KS131_UCView.xaml.cs">
       <DependentUpon>KS131_UCView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BI_M_UCView.xaml.cs">
+      <DependentUpon>BI_M_UCView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KS216_UCView.xaml.cs">
       <DependentUpon>KS216_UCView.xaml</DependentUpon>
@@ -158,6 +163,10 @@
     <Page Include="View\KS131_UCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BI_M_UCView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\KS261_UCView.xaml">
       <SubType>Designer</SubType>

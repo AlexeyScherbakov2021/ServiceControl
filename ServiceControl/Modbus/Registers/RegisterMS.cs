@@ -18,6 +18,8 @@ namespace ServiceControl.Modbus.Registers
         {
             base.SetResultValues(val);
 
+            if (Value == null) return;
+
             switch ((StatusMS)Value)
             {
                 case StatusMS.On:

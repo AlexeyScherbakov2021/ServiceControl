@@ -15,7 +15,6 @@ namespace ServiceControl.Modbus.Registers
 {
     public enum StatusConnect { Disconnected, Connected, Answer, NotAnswer };
 
-
     internal abstract class Device
     {
         private bool _IsTimeout;

@@ -127,13 +127,15 @@ namespace ServiceControl.Modbus.Registers
                 MinValue = -45, MaxValue = 100 };
             ListInput.Add(Temper);
 
-            TimeWork = new RegisterInt() { Address = 0x08, CodeFunc = ModbusFunc.InputRegister, Size = 2, 
+            TimeWork = new RegisterInt() { 
+                Address = 0x08, CodeFunc = ModbusFunc.InputRegister, Size = 2, 
                 Name = "Время наработки",
                 NameRes = "TimeWork",
                 Measure = "ч",
                 MeasureRes = "Hour",
                 Description = "СВН", 
-                MinValue = 0, MaxValue = 999999 };
+                MinValue = 0, MaxValue = 999999 
+            };
             ListInput.Add(TimeWork);
 
             TimeProtect = new RegisterInt() { Address = 0x0A, CodeFunc = ModbusFunc.InputRegister, Size = 2, 

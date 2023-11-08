@@ -52,6 +52,7 @@ namespace ServiceControl.ViewModel
                 new DeviceType() { Name = "ДЕШК.301411.216 (KS216)", deviceType = DevType.KS216},
                 new DeviceType() { Name = "ДЕШК.301411.356 (KS356)", deviceType = DevType.KS356},
                 new DeviceType() { Name = "ДЕШК.301411.261 (KS261)", deviceType = DevType.KS261},
+                new DeviceType() { Name = "БИ-М slave (вн.изм.)", deviceType = DevType.BI_M_Slave},
         };
 
         public List<string> ListCOM { get; set; } // = new List<string>()
