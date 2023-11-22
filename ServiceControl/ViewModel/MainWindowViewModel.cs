@@ -35,7 +35,7 @@ namespace ServiceControl.ViewModel
         MbWork work;
         Device CurrentDevice;
 
-        public List<DeviceType> ListDeviceType { get; set; }
+        //public List<DeviceType> ListDeviceType { get; set; }
         
 
 
@@ -49,6 +49,9 @@ namespace ServiceControl.ViewModel
         public int TimeOutCOM { get => _TimeOutCOM; set { Set(ref _TimeOutCOM, value); } }
         
         public Visibility VisibleTCP => IsSelectTCP ? Visibility.Visible : Visibility.Hidden;
+
+        public DeviceType _SelectDevice;
+        public DeviceType SelectDevice { get => _SelectDevice; set { Set(ref _SelectDevice, value); } }
 
         private DevType _deviceType;
         public DevType deviceType { get => _deviceType; set { Set(ref _deviceType, value); } }
@@ -88,6 +91,8 @@ namespace ServiceControl.ViewModel
         //    set => Set(ref _IsConnected, value);
         //}
 
+        private bool isWaiting = true;
+
         private string _ConnectedString; // = "не подключено";
         public string ConnectedString { get => _ConnectedString; set { Set(ref _ConnectedString, value); } }
 
@@ -103,13 +108,13 @@ namespace ServiceControl.ViewModel
         public MainWindowViewModel()
         {
             LoadFromIni();
-            ListDeviceType = new List<DeviceType>()
-            {
-                new DeviceType() { Name = "ДЕШК.301411.131", deviceType = DevType.KS131},
-                new DeviceType() { Name = "ДЕШК.301411.216", deviceType = DevType.KS216},
-                new DeviceType() { Name = "ДЕШК.301411.356", deviceType = DevType.KS356},
-                new DeviceType() { Name = "ДЕШК.301411.261", deviceType = DevType.KS261},
-            };
+            //ListDeviceType = new List<DeviceType>()
+            //{
+            //    new DeviceType() { Name = "ДЕШК.301411.131", deviceType = DevType.KS131},
+            //    new DeviceType() { Name = "ДЕШК.301411.216", deviceType = DevType.KS216},
+            //    new DeviceType() { Name = "ДЕШК.301411.356", deviceType = DevType.KS356},
+            //    new DeviceType() { Name = "ДЕШК.301411.261", deviceType = DevType.KS261},
+            //};
         }
 
         //--------------------------------------------------------------------------------------------
@@ -121,6 +126,7 @@ namespace ServiceControl.ViewModel
             {
                 case StatusConnect.Connected:
                     IsConnected = true;
+                    isWaiting = false;
                     break;
 
                 case StatusConnect.Disconnected:
@@ -135,6 +141,12 @@ namespace ServiceControl.ViewModel
                 case StatusConnect.Answer:
                     IsTimeOutStatus = false;
                     break;
+
+                case StatusConnect.Waiting:
+                    isWaiting = true;
+                    //IsConnected = false;
+                    break;
+
             }
 
             SetStringConnection();
@@ -146,12 +158,17 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         public void SetStringConnection()
         {
-            if(IsTimeOutStatus)
+            if (IsTimeOutStatus)
             {
                 ConnectedString = App.Current.Resources["NotAnswer"].ToString();
                 ConnectedColor = Brushes.Red;
             }
-            else if(IsConnected)
+            else if (isWaiting)
+            {
+                ConnectedString = "ожидание";
+                ConnectedColor = Brushes.Red;
+            }
+            else if (IsConnected)
             {
                 ConnectedString = App.Current.Resources["Connected"].ToString();
                 ConnectedColor = Brushes.Green;
@@ -192,6 +209,10 @@ namespace ServiceControl.ViewModel
             Port = resInt;
 
             bool.TryParse(iniFile.GetPrivateString("TCP", "RTU"), out IsRTU);
+
+            var setting = new SettingConnectViewModel();
+            SelectDevice = setting.ListDeviceType.FirstOrDefault(it => it.deviceType == deviceType);
+
 
             string lang = iniFile.GetPrivateString("Main", "Lang");
             if (string.IsNullOrEmpty(lang)) 
@@ -258,7 +279,8 @@ namespace ServiceControl.ViewModel
                 TimeOutCOM = vm.TimeOut;
                 Slave = vm.Slave;
                 IsSelectTCP = vm.IsSelectTCP;
-                deviceType = (DevType)vm.DeviceIndex;
+                deviceType = vm.SelectedDevice.deviceType; /*(DevType)vm.DeviceIndex;*/
+                SelectDevice = vm.SelectedDevice;
 
                 iniFile.WritePrivateString("Main", "NumberDevice", Slave.ToString());
                 string SelectConnect = vm.IsSelectTCP ? "tcp" : "com";
@@ -282,15 +304,23 @@ namespace ServiceControl.ViewModel
         // Команда Кнопка Соединение
         //--------------------------------------------------------------------------------
         public ICommand ConnectCommand => new LambdaCommand(OnConnectCommandExecuted, CanConnectCommand);
-        private bool CanConnectCommand(object p) => !IsConnected;
+        private bool CanConnectCommand(object p) => !IsConnected && SelectDevice != null;
         private void OnConnectCommandExecuted(object p)
         {
+            bool res;
+
             if (IsSelectTCP)
                 work = new MbWork(HostName, Port, Protocol.TCP, IsRTU);
             else
                 work = new MbWork(ComPort, TimeOutCOM, Protocol.COM);
 
-            if (work.CreateConnect())
+
+            if(SelectDevice.isSlave)
+                res = work.CreateConnectSlave();
+            else
+                res = work.CreateConnect();
+
+            if (res)
                 SetStatusConnection(StatusConnect.Connected);
             else
             {
@@ -300,7 +330,7 @@ namespace ServiceControl.ViewModel
 
             //if (!IsConnected) return;
 
-            switch(deviceType)
+            switch(SelectDevice.deviceType)
             {
                 case DevType.KS131:
                     SControl = new KS131_UCView();
@@ -349,6 +379,46 @@ namespace ServiceControl.ViewModel
                         (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
                     CurrentDevice.ChangeLangRegister();
                     break;
+
+                case DevType.KIP_M5:
+                    SControl = new KIPM5_UCView();
+                    var vmKIPM5 = new KIPM5_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vmKIPM5;
+                    CurrentDevice = vmKIPM5.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                    CurrentDevice.ChangeLangRegister();
+                    break;
+
+                case DevType.KSSM:
+                    SControl = new KSSM_UCView();
+                    var vmKSSM = new KSSM_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vmKSSM;
+                    CurrentDevice = vmKSSM.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                    CurrentDevice.ChangeLangRegister();
+                    break;
+
+                case DevType.KIP_LC:
+                    SControl = new KIPLC_UCView();
+                    var vmKIPLC = new KIPLC_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vmKIPLC;
+                    CurrentDevice = vmKIPLC.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                    CurrentDevice.ChangeLangRegister();
+                    break;
+
+                case DevType.KIP_UDZ:
+                    SControl = new KIPUDZ_UCView();
+                    var vmKIPUDZ = new KIPUDZ_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vmKIPUDZ;
+                    CurrentDevice = vmKIPUDZ.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                    CurrentDevice.ChangeLangRegister();
+                    break;
             }
 
         }
@@ -360,7 +430,8 @@ namespace ServiceControl.ViewModel
         private bool CanDisconnectCommand(object p) => IsConnected || IsTimeOutStatus;
         private void OnDisconnectCommandExecuted(object p)
         {
-            CurrentDevice.Stop();
+            if(CurrentDevice is DeviceSlave)
+                (CurrentDevice as DeviceSlave).Stop();
             Thread.Sleep(1000);
             work.Disconnect();
             SControl = null;

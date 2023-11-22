@@ -1,4 +1,5 @@
-﻿using ServiceControl.ViewModel;
+﻿using ServiceControl.Modbus.Registers;
+using ServiceControl.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +8,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace ServiceControl.Modbus.Registers
+namespace ServiceControl.Modbus.Devices
 {
 
-    internal class Device216 : Device
+    internal class Device216 : DeviceSlave
     {
         public const int CountDK = 8;
         public const int CountMS = 12;

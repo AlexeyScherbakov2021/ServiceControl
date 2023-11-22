@@ -17,12 +17,13 @@ using System.Windows.Media;
 
 namespace ServiceControl.Modbus
 {
-    public enum ModbusFunc { None, Coil, InputDiscrete, HoldingRegister, InputRegister };
+    public enum ModbusFunc { None, Coil, InputDiscrete, HoldingRegister, InputRegister, WriteMultiple = 0x10 };
     public enum Protocol { COM, TCP};
 
     internal class MbWork
     {
         public ModbusMaster master { get; private set; }
+        public ModbusSlave slave { get; private set; }
         TcpClient tcp;
         SerialPort com;
         private string Host;
@@ -54,6 +55,49 @@ namespace ServiceControl.Modbus
         public bool IsWorked()
         {
             return master != null;
+        }
+
+
+
+        public bool CreateConnectSlave()
+        {
+            try
+            {
+                if (Port != 0)
+                {
+                    tcp = new TcpClient();
+                    tcp.Connect(Host, Port);
+                    tcp.ReceiveTimeout = 1000;
+                    tcp.SendTimeout= 1000;
+                    if (!tcp.Connected)
+                        return false;
+
+                    master = IsTCPoverRTU 
+                        ? (ModbusMaster)ModbusSerialMaster.CreateRtu(tcp)
+                        : (ModbusMaster)ModbusIpMaster.CreateIp(tcp);
+                }
+                else
+                {
+                    //string[] ports = SerialPort.GetPortNames();
+                    com = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
+                    if(TimeOut != 0)
+                        com.ReadTimeout = TimeOut;
+
+                    com.Open();
+                    if (!com.IsOpen)
+                        return false;
+
+                    slave = ModbusSerialSlave.CreateRtu(1, com);
+                    //master.Transport.EventLogEvent += Transport_EventLogEvent;
+                }
+
+                return true;
+            }
+            catch(Exception )
+            {
+                return false;
+            }
+
         }
 
 
@@ -115,8 +159,11 @@ namespace ServiceControl.Modbus
                 com.Dispose();
             }
 
-            master.Dispose();
+            master?.Dispose();
             master = null;
+
+            slave?.Dispose(); 
+            slave = null;
         }
 
 

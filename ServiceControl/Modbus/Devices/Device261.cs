@@ -1,13 +1,14 @@
-﻿using ServiceControl.ViewModel;
+﻿using ServiceControl.Modbus.Registers;
+using ServiceControl.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceControl.Modbus.Registers
+namespace ServiceControl.Modbus.Devices
 {
-    internal class Device261 : Device
+    internal class Device261 : DeviceSlave
     {
         public static readonly int CountKIP = 32;
         public List<RegisterStatus> ListStatus { get; set; }

@@ -20,7 +20,7 @@ using System.Windows.Threading;
 
 namespace ServiceControl.ViewModel
 {
-    internal class BI_M_UCViewModel : Observable //, IDataErrorInfo
+    internal class KIPM5_UCViewModel : Observable //, IDataErrorInfo
     {
 
         public class TwoRegister
@@ -36,7 +36,7 @@ namespace ServiceControl.ViewModel
         private Visibility _IsAvarModeVisible = Visibility.Hidden;
         public Visibility IsAvarModeVisible { get => _IsAvarModeVisible; set { Set(ref _IsAvarModeVisible, value); } }
 
-        public DeviceBIMSlave device { get; set; }
+        public DeviceKIPM5 device { get; set; }
 
         public List<Register> ListInput { get; set; }
         public List<Register> ListInput2 { get; set; }
@@ -64,24 +64,17 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         // конструктор
         //--------------------------------------------------------------------------------------------
-        public BI_M_UCViewModel()
+        public KIPM5_UCViewModel()
         {
         }
 
         //--------------------------------------------------------------------------------------------
         // конструктор
         //--------------------------------------------------------------------------------------------
-        public BI_M_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
+        public KIPM5_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
         {
-            isDoor = new RegisterBool() { Name = "Геркон двери", ValueString = "норм", CodeFunc= ModbusFunc.InputRegister, Address = 1};
-            isDK1 = new RegisterBool() { Name = "ДК1", ValueString = "норм", CodeFunc = ModbusFunc.InputRegister, Address = 1 };
-            isDK2 = new RegisterBool() { Name = "ДК2", ValueString = "норм", CodeFunc = ModbusFunc.InputRegister, Address = 1 };
-            isDK3 = new RegisterBool() { Name = "ДК3", ValueString = "норм", CodeFunc = ModbusFunc.InputRegister, Address = 1 };
-            isUSIKP = new RegisterBool() { Name = "УС ИКП", ValueString = "норм", CodeFunc = ModbusFunc.InputRegister, Address = 1 };
-            ListStatus = new List<RegisterBool>() { isDoor, isDK1, isDK2, isDK3, isUSIKP };
 
-
-            device = new DeviceBIMSlave(mainViewModel, work, Slave);
+            device = new DeviceKIPM5(mainViewModel, work, Slave);
             device.EndRead += OnReadFinish;
             device.EndStartRead += OnEndStartRead; 
             device.Start();
@@ -93,22 +86,21 @@ namespace ServiceControl.ViewModel
             // добавление в список входных параметров
             ListInput = new List<Register>()
             {
-                device.SummPot, device.PolPot,
-                device.CurrPot,device.VoltOut, device.CurrOut, device.VoltNaveden,
+                device.VoltPower, device.CurrOut,device.VoltOut,
+                device.SummPot, device.PolPot, device.CurrPot,  device.VoltNaveden,
                 device.FreqVoltNaveden, device.TemperBoard, 
-                device.SummPot2, device.PolPot2, device.CurrPot2, device.VoltNaveden2,
-                device.FreqVoltNaveden2, device.VoltCurrOtkosL, device.VoltCurrOtkosR,
-                device.DataCurrBIT_L, device.DataCurrBIT_R,device.VoltPower
-            };
+                device.Power, device.CountPower, device.PeriodADC, device.UpLimitCurr,
+                device.DownLimitCurr, device.UpLimitVolt, device.DownLimitVolt,
+                device.UpLimitVoltSP, device.DownLimitVoltSP,device.OutUpLimitCurr,
+                device.OutDownLimitCurr, device.OutUpLimitVolt, device.OutDownLimitVolt,
+                device.OutUpLimitVoltSP,device.OutDownLimitVoltSP,device.SummPotRMS         };
 
             // добавление в список регистров управления
             ListWriteControl = new List<TwoRegister>() { 
-                new TwoRegister() { Register1 = device.Bi_addr, 
-                    Register2 = device.Bi_addr, },
-                //new TwoRegister() { Register1 = device.RealTime, 
-                //    Register2 = device.TimeNow, },
-                new TwoRegister() { Register1 = device.NominalShunt, 
-                    Register2 = device.K_shunt,},
+                new TwoRegister() { Register1 = device.K_shunt, 
+                    Register2 = device.K_shunt, },
+                new TwoRegister() { Register1 = device.VoltControl, 
+                    Register2 = device.VoltControl,},
             };
 
             // добавление в список целых регистров управления
@@ -142,60 +134,6 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------
         private void OnReadFinish(object sender, EventArgs e)
         {
-            if((device.Status.Value.Value & 1) == 1)
-            {
-                isDoor.IsAlarm = true;
-                isDoor.ValueString = "не норм.";
-            }
-            else
-            {
-                isDoor.IsAlarm = false;
-                isDoor.ValueString = "норм";
-            }
-
-            if((device.Status.Value.Value & 2) == 2)
-            {
-                isDK1.IsAlarm = true;
-                isDK1.ValueString = "не норм.";
-            }
-            else
-            {
-                isDK1.IsAlarm = false;
-                isDK1.ValueString = "норм";
-            }
-
-            if((device.Status.Value.Value & 4) == 4)
-            {
-                isDK2.IsAlarm = true;
-                isDK2.ValueString = "не норм.";
-            }
-            else
-            {
-                isDK2.IsAlarm = false;
-                isDK2.ValueString = "норм";
-            }
-
-            if((device.Status.Value.Value & 8) == 8)
-            {
-                isDK3.IsAlarm = true;
-                isDK3.ValueString = "не норм.";
-            }
-            else
-            {
-                isDK3.IsAlarm = false;
-                isDK3.ValueString = "норм";
-            }
-
-            if((device.Status.Value.Value & 16) == 16)
-            {
-                isUSIKP.IsAlarm = true;
-                isUSIKP.ValueString = "не норм.";
-            }
-            else
-            {
-                isUSIKP.IsAlarm = false;
-                isUSIKP.ValueString = "норм";
-            }
 
         }
 
@@ -236,8 +174,8 @@ namespace ServiceControl.ViewModel
         private bool CanWriteTimeModeCommand(object p) => device != null ;
         private void OnWriteTimeModeCommandExecuted(object p)
         {
-            device.TimeNow.RealTimeValue = DateTime.Now;
-            device.WriteRegister(device.TimeNow);
+            device.RealTime.RealTimeValue = DateTime.Now;
+            device.WriteRegister(device.RealTime);
         }
 
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace ServiceControl.Modbus.Devices
 {
 
-    internal class Device131 : Device
+    internal class Device131 : DeviceSlave
     {
         public const int CountKIP = 32;
 

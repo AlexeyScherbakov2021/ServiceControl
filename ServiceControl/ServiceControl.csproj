@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\ColorFlagConverter.cs" />
     <Compile Include="Converters\StabilMode131Converter.cs" />
     <Compile Include="Converters\StabilMode131VisibleConverter.cs" />
     <Compile Include="Converters\StabilModeConverter.cs" />
@@ -87,7 +88,13 @@
     <Compile Include="Infrastructure\ListExt.cs" />
     <Compile Include="Modbus\Devices\Device131.cs" />
     <Compile Include="Modbus\Devices\Device356.cs" />
+    <Compile Include="Modbus\Devices\DeviceKIPLC.cs" />
+    <Compile Include="Modbus\Devices\DeviceKIPUDZ.cs" />
+    <Compile Include="Modbus\Devices\DeviceKSSM.cs" />
+    <Compile Include="Modbus\Devices\DeviceKIPM5.cs" />
     <Compile Include="Modbus\Devices\DeviceBIMSlave.cs" />
+    <Compile Include="Modbus\Devices\DeviceMaster.cs" />
+    <Compile Include="Modbus\Devices\DeviceSlave.cs" />
     <Compile Include="Modbus\Devices\DeviceType.cs" />
     <Compile Include="Modbus\Registers\Register.cs" />
     <Compile Include="Modbus\Registers\RegisterBase.cs" />
@@ -101,6 +108,10 @@
     <Compile Include="Modbus\Registers\RegisterStatus131.cs" />
     <Compile Include="Modbus\Registers\RegisterStatusDC.cs" />
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
+    <Compile Include="ViewModel\KIPLC_UCViewModel.cs" />
+    <Compile Include="ViewModel\KIPUDZ_UCViewModel.cs" />
+    <Compile Include="ViewModel\KSSM_UCViewModel.cs" />
+    <Compile Include="ViewModel\KIPM5_UCViewModel.cs" />
     <Compile Include="ViewModel\KS131_UCViewModel.cs" />
     <Compile Include="ViewModel\BI_M_UCViewModel.cs" />
     <Compile Include="ViewModel\KS216_UCViewModel.cs" />
@@ -113,6 +124,18 @@
     </Compile>
     <Compile Include="View\BIWindow.xaml.cs">
       <DependentUpon>BIWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KIPLC_UCView.xaml.cs">
+      <DependentUpon>KIPLC_UCView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KIPUDZ_UCView.xaml.cs">
+      <DependentUpon>KIPUDZ_UCView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KSSM_UCView.xaml.cs">
+      <DependentUpon>KSSM_UCView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KIPM5_UCView.xaml.cs">
+      <DependentUpon>KIPM5_UCView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KS131_UCView.xaml.cs">
       <DependentUpon>KS131_UCView.xaml</DependentUpon>
@@ -159,6 +182,22 @@
     <Page Include="View\BIWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\KIPLC_UCView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\KIPUDZ_UCView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\KSSM_UCView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\KIPM5_UCView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\KS131_UCView.xaml">
       <SubType>Designer</SubType>

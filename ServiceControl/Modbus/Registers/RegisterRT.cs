@@ -14,22 +14,48 @@ namespace ServiceControl.Modbus.Registers
 
         public override void SetResultValues(ushort[] val)
         {
-            if (val == null || val.Length < 4)
+            if (val == null)
             {
                 Value = null;
                 return;
             }
+
             long res = (ushort)val[0];
 
-            for (int i = 1; i < val.Length; i++)
+            if (val.Length == 2)
             {
-                long res2 = val[i];
-                res2 <<= 16 * i;
-                res |= res2;
+                for (int i = 1; i < val.Length; i++)
+                {
+                    res <<= 16;
+                    res |= val[i];
+                }
+                Value = res;
             }
-            Value = res;
+            else if (val.Length == 4)
+            {
+                for (int i = 1; i < val.Length; i++)
+                {
+                    long res2 = val[i];
+                    res2 <<= 16 * i;
+                    res |= res2;
+                }
+                Value = res;
+            }
+            else
+            {
+                Value = null;
+                return;
+            }
 
-            RealTimeValue = new DateTime(1970, 01, 01).AddSeconds(Value.Value);
+            try
+            {
+                RealTimeValue = new DateTime(1970, 01, 01).AddSeconds(Value.Value);
+            }
+            catch
+            {
+
+            }
+
             ValueString = RealTimeValue.ToString("dd.MM.yyyy HH:mm:ss");
         }
 
@@ -42,12 +68,20 @@ namespace ServiceControl.Modbus.Registers
             ushort[] res = new ushort[Size];
             long val = (long)span.TotalSeconds;
 
-            for (int i = 0; i < Size; i++)
+            if (Size == 2)
             {
-                res[i] = (ushort)val;
-                val >>= 16;
+                res[0] = (ushort)(val >> 16);
+                res[1] = (ushort)(val );
             }
 
+            else if (Size == 4)
+            {
+                for (int i = 0; i < Size; i++)
+                {
+                    res[i] = (ushort)val;
+                    val >>= 16;
+                }
+            }
             return res;
         }
 

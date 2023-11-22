@@ -27,6 +27,7 @@ namespace ServiceControl.ViewModel
         }
 
         //private MainWindowViewModel mainVM;
+        //public int SetModeNapr { get; set; } = -1;
 
         private bool IsProcessOnOff = false;
         private BIWindow win;

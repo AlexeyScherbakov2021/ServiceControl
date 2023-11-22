@@ -12,7 +12,7 @@ using System.Windows.Interop;
 
 namespace ServiceControl.Modbus.Devices
 {
-    internal class Device356 : Device
+    internal class Device356 : DeviceSlave
     {
         //public const int CountDK = 10;
         public const int CountMS = 12;
@@ -88,6 +88,7 @@ namespace ServiceControl.Modbus.Devices
         List<Register> ListWriteControl2;
         List<Register> ListServices;
         List<Register> ListDop;
+
 #endif
 
 
@@ -942,6 +943,7 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
+
             ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
 #if !CLIENT

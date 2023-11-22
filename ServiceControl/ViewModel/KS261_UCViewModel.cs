@@ -1,7 +1,7 @@
 ﻿using ServiceControl.Commands;
 using ServiceControl.Infrastructure;
 using ServiceControl.Modbus;
-using ServiceControl.Modbus.Registers;
+using ServiceControl.Modbus.Devices;
 using System;
 using System.Collections.Generic;
 using System.Linq;

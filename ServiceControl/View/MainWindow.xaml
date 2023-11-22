@@ -8,7 +8,7 @@
         xmlns:vm="clr-namespace:ServiceControl.ViewModel"
         mc:Ignorable="d"
         Background="{DynamicResource Win.Background}" SizeToContent="Width"
-        Title="Service Control" Height="640" Width="1200" WindowStartupLocation="CenterScreen">
+        Title="Service Control" Height="680" Width="1200" WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -63,7 +63,7 @@
                             <Grid >
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{DynamicResource Type}" FontSize="18"/>
-                                    <TextBlock Text="{Binding deviceType}" Margin="4,0,18,0"  FontSize="18" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding SelectDevice.Name}" Margin="4,0,18,0"  FontSize="18" FontWeight="Bold"/>
                                     <TextBlock Text="{DynamicResource Address}" FontSize="18"/>
                                     <TextBlock Text="{Binding Slave}"  Margin="4,0,18,0" FontSize="18" FontWeight="Bold"/>
                                     <TextBlock Text="{DynamicResource Port2}" FontSize="18"/>

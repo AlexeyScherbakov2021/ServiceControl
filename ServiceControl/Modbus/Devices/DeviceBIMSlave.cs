@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace ServiceControl.Modbus.Devices
 {
-    internal class DeviceBIMSlave : Device
+    internal class DeviceBIMSlave : DeviceSlave
     {
         public RegisterInt Status { get; set; }         // Флаги состояний
         public RegisterRT RealTime { get; set; }        // Текущее системное время
@@ -471,7 +471,7 @@ namespace ServiceControl.Modbus.Devices
                 MeasureRes = "",
                 Size = 1,
                 Description = "K_shunt",
-                Scale = 1f,
+                Scale = 0.01f,
                 MinValue = 0f,
                 MaxValue = 65535f
             };
@@ -492,6 +492,7 @@ namespace ServiceControl.Modbus.Devices
         {
             ReadRegisters(ListInput);
             ReadRegisters(ListInput2);
+            ReadRegisters(ListWriteControl);
             return Task.CompletedTask;
         }
 
