@@ -35,18 +35,19 @@ namespace ServiceControl.Modbus.Devices
 
         public class Archive
         {
-            public int time;
-            public RegisterFloat VoltageTRa;                // Напряжение труба/рельс
-            public RegisterFloat CurrTRa;                   // Ток труба/рельс
-            public RegisterFloat IndicBITLefta;             // Данные с индикатора тока БИТ (левый)
-            public RegisterFloat IndicBITRighta;            // Данные с индикатора тока БИТ (правый)
+            //public int time { get; set; }
+            public string time { get; set; }
+            public RegisterFloat VoltageTRa { get; set; }                // Напряжение труба/рельс
+            public RegisterFloat CurrTRa { get; set; }                   // Ток труба/рельс
+            public RegisterFloat IndicBITLefta { get; set; }             // Данные с индикатора тока БИТ (левый)
+            public RegisterFloat IndicBITRighta { get; set; }            // Данные с индикатора тока БИТ (правый)
         }
 
 
 
         public RegisterRT RealTime { get; set; }        // Текущее системное время
         public RegisterInt WakeUp;                      // Время до следующего пробуждения в минутах
-        public RegisterInt FlagsAlarm;                  // Регистр флагов сигнализации выхода за уставки
+        public RegisterInt FlagsAlarm { get; set; }     // Регистр флагов сигнализации выхода за уставки
         public RegisterFloat PowerMax;                  // Уставка по максимальному напряжению питания 
         public RegisterFloat PowerMin;                  // Уставка по минимальному напряжению питания
         public RegisterFloat SummPotMax;                // Уставка по максимальному сумм.потенциалу
@@ -66,10 +67,10 @@ namespace ServiceControl.Modbus.Devices
 
         public RegisterInt Number;                      // Номер пакета
         public RegisterRT TimeNow;                      // временной маркер пакета, старшие 2 байта
-        public RegisterInt Flags;                       // Флаги сработавших уставок
+        public RegisterInt Flags { get; set; }          // Флаги сработавших уставок
         public RegisterFloat Voltage;                   // Напряжение питания
         public RegisterFloat VoltageInduct;             // Наведенное напряжение
-        public RegisterInt FreqInduct;                // Частота наведенного напряжения
+        public RegisterInt FreqInduct;                  // Частота наведенного напряжения
         public RegisterFloat SummPot;                   // Суммарный потенциал
         public RegisterFloat PolPot;                    // Поляризационный потенциал
         public RegisterFloat CurrPol;                   // Ток поляризации
@@ -84,7 +85,7 @@ namespace ServiceControl.Modbus.Devices
         public RegisterFloat IndicBITLeft;              // Данные с индикатора тока БИТ (левый)
         public RegisterFloat IndicBITRight;             // Данные с индикатора тока БИТ (правый)
 
-        List<Archive> listArchive = new List<Archive>();
+        public List<Archive> listArchive { get; set; } = new List<Archive>();
         Archive dayArchive;
         //public Archive[] listArchive = new Archive[25];
 
@@ -734,7 +735,7 @@ namespace ServiceControl.Modbus.Devices
             // добавление суточного среднего значения
             dayArchive = new Archive()
             {
-                time = -1,
+                time = "текущее",
                 VoltageTRa = new RegisterFloat()
                 {
                     Address = 0x1A1,
@@ -804,7 +805,7 @@ namespace ServiceControl.Modbus.Devices
                 ushort locAddr = address;
                 Archive arc = new Archive()
                 {
-                    time = i,
+                    time = $"{i-1:00}-{i:00}",
 
                     VoltageTRa = new RegisterFloat()
                     {
@@ -872,16 +873,9 @@ namespace ServiceControl.Modbus.Devices
                 ListAll.Add(arc.IndicBITRighta);
                 address += 0x10;
             }
+            listArchive.Last().time = "сутки";
 
-m2:
-            try
-            {
-                modb.slave.ListenAsync();
-            }
-            catch
-            {
-                goto m2;
-            }
+            //modb.slave.ListenAsync();
         }
 
         protected override void CheckListRegister()

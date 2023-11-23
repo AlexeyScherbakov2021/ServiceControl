@@ -37,7 +37,7 @@
         </Style>
 
 
-        <!--<Style TargetType="Image" x:Key="OutImageStyle">
+        <Style TargetType="Image" x:Key="OutImageStyle">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding DataContext.device.DistanceMode.ValueBool, ElementName=mainControl}" Value="false">
                     <Setter Property="Opacity" Value="0.2"/>
@@ -46,7 +46,7 @@
                     <Setter Property="Opacity" Value="1"/>
                 </DataTrigger>
             </Style.Triggers>
-        </Style>-->
+        </Style>
 
 
         <!--<Style TargetType="fa:ImageAwesome" x:Key="faStyle">

@@ -97,6 +97,7 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         public KIPUDZ_UCViewModel()
         {
+            
         }
 
         //--------------------------------------------------------------------------------------------
@@ -142,12 +143,11 @@ namespace ServiceControl.ViewModel
 
             };
 
-
-
-
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += _timer_Tick;
             _timer.Start();
+
+            device.Start();
         }
 
 

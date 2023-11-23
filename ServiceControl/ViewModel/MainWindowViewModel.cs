@@ -357,6 +357,8 @@ namespace ServiceControl.ViewModel
                     var vm356 = new KS356_UCViewModel(this, work, Slave);
                     SControl.DataContext = vm356;
                     CurrentDevice = vm356.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
                     CurrentDevice.ChangeLangRegister();
                     break;
 
@@ -406,7 +408,7 @@ namespace ServiceControl.ViewModel
                     SControl.DataContext = vmKIPLC;
                     CurrentDevice = vmKIPLC.device;
                     if (winLog != null)
-                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.slave);
                     CurrentDevice.ChangeLangRegister();
                     break;
 
@@ -416,7 +418,7 @@ namespace ServiceControl.ViewModel
                     SControl.DataContext = vmKIPUDZ;
                     CurrentDevice = vmKIPUDZ.device;
                     if (winLog != null)
-                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.slave);
                     CurrentDevice.ChangeLangRegister();
                     break;
             }
@@ -430,10 +432,10 @@ namespace ServiceControl.ViewModel
         private bool CanDisconnectCommand(object p) => IsConnected || IsTimeOutStatus;
         private void OnDisconnectCommandExecuted(object p)
         {
-            if(CurrentDevice is DeviceSlave)
-                (CurrentDevice as DeviceSlave).Stop();
+            if(CurrentDevice is Device)
+                (CurrentDevice as Device).Stop();
             Thread.Sleep(1000);
-            work.Disconnect();
+            work?.Disconnect();
             SControl = null;
             work = null;
             SetStatusConnection(StatusConnect.Disconnected);
@@ -459,9 +461,12 @@ namespace ServiceControl.ViewModel
         private bool CanLogCommand(object p) => winLog == null /* && work != null*/;
         private void OnLogCommandExecuted(object p)
         {
-
-            winLog = new LogWindow();
             LogWindowViewModel vm = new LogWindowViewModel(work?.master);
+            winLog = new LogWindow();
+            if(work?.master != null)
+                vm = new LogWindowViewModel(work?.master);
+            if (work?.slave != null)
+                vm = new LogWindowViewModel(work?.slave);
             //vm.listBox = winLog.lb;
             winLog.DataContext = vm;
             winLog.Closed += (sender, e) => { winLog = null; vm.Dispose(); };

@@ -27,18 +27,13 @@ namespace ServiceControl.Modbus.Devices
                 if (_IsTimeout == value) return;
                 _IsTimeout = value;
                 mainVM.SetStatusConnection(_IsTimeout ? StatusConnect.NotAnswer : StatusConnect.Answer);
-                //mainVM.IsConnected = !_IsTimeout;
             }
         }
 
         protected bool IsReadAllRegisters = false;
-        //private bool TimerWork = false;
         protected byte Slave;
         protected MbWork modbus;
         protected IEnumerable<List<RegisterBase>> ListList;
-        //public event EventHandler<EventArgs> EndStartRead;
-        //public event EventHandler<EventArgs> EndRead;
-        //private DispatcherTimer timer;
         protected MainWindowViewModel mainVM;
 
         //----------------------------------------------------------------------------------------------
@@ -50,11 +45,7 @@ namespace ServiceControl.Modbus.Devices
             ListList = new List<List<RegisterBase>>();
             modbus = modb;
             Slave = (byte)slave;
-            //timer = new DispatcherTimer();
         }
-
-
-
 
         //----------------------------------------------------------------------------------------------
         // проверка регистров на однотипность и последовательность
@@ -84,6 +75,9 @@ namespace ServiceControl.Modbus.Devices
         protected abstract void CheckListRegister();
 
         public virtual void ChangeLangRegister() { }
+
+        public abstract void Start();
+        public abstract void Stop();
 
     }
 }

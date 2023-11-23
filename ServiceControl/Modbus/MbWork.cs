@@ -47,16 +47,10 @@ namespace ServiceControl.Modbus
             }
         }
 
-        //public MbWork(string comPort)
-        //{
-        //    ComPort = comPort;
-        //}
-
         public bool IsWorked()
         {
             return master != null;
         }
-
 
 
         public bool CreateConnectSlave()
@@ -139,12 +133,12 @@ namespace ServiceControl.Modbus
             {
                 return false;
             }
-
         }
 
-        //private void Transport_EventLogEvent(string header, byte[] message)
-        //{
-        //}
+        public void FlushBufferCOM()
+        {
+            com.ReadExisting();
+        }
 
         public void Disconnect()
         {

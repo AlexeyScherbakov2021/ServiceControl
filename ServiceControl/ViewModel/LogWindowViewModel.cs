@@ -19,7 +19,8 @@ namespace ServiceControl.ViewModel
 
         public ConsoleControl.WPF.ConsoleControl conCtrl { get; set; }
 
-        ModbusMaster master;
+        ModbusDevice modbusDevice;
+        //ModbusSlave slave;
         //public ListBox listBox;
         private bool _IsPause;
         public bool IsPause
@@ -27,12 +28,22 @@ namespace ServiceControl.ViewModel
             get => _IsPause;
             set
             {
-                if (_IsPause == value || master.Transport == null) return;
+                if (_IsPause == value || modbusDevice.Transport == null) return;
                 _IsPause = value;
-                if(_IsPause)
-                    master.Transport.EventLogEvent -= Transport_EventLogEvent;
+                if (_IsPause)
+                {
+                    if(modbusDevice != null)
+                        modbusDevice.Transport.EventLogEvent -= Transport_EventLogEvent;
+                    //if(slave != null)
+                    //    slave.Transport.EventLogEvent -= Transport_EventLogEvent;
+                }
                 else
-                    master.Transport.EventLogEvent += Transport_EventLogEvent;
+                {
+                    if (modbusDevice != null)
+                        modbusDevice.Transport.EventLogEvent += Transport_EventLogEvent;
+                    //if (slave != null)
+                    //    slave.Transport.EventLogEvent += Transport_EventLogEvent;
+                }
             }
         }   
 
@@ -44,7 +55,7 @@ namespace ServiceControl.ViewModel
 
         }
 
-        public LogWindowViewModel(ModbusMaster mas)
+        public LogWindowViewModel(ModbusDevice mas)
         {
             conCtrl = new ConsoleControl.WPF.ConsoleControl();
             conCtrl.StartProcess("procNew", "7");
@@ -53,19 +64,37 @@ namespace ServiceControl.ViewModel
             //object lockitems = new object();
             //BindingOperations.EnableCollectionSynchronization(ListString, lockitems);
 
-            master = mas;
-            if(master != null)
-                master.Transport.EventLogEvent += Transport_EventLogEvent;
+            modbusDevice = mas;
+            if(modbusDevice != null)
+                modbusDevice.Transport.EventLogEvent += Transport_EventLogEvent;
 
         }
+
+        //public LogWindowViewModel(ModbusSlave slav)
+        //{
+        //    conCtrl = new ConsoleControl.WPF.ConsoleControl();
+        //    conCtrl.StartProcess("procNew", "7");
+
+        //    ListString = new ObservableCollection<string>();
+        //    //object lockitems = new object();
+        //    //BindingOperations.EnableCollectionSynchronization(ListString, lockitems);
+
+        //    slave = slav;
+        //    if (slave != null)
+        //        slave.Transport.EventLogEvent += Transport_EventLogEvent;
+
+        //}
+
 
         public void Dispose()
         {
             conCtrl.StopProcess();
 
-            if (master != null && master.Transport != null)
-                master.Transport.EventLogEvent -= Transport_EventLogEvent;
+            if (modbusDevice != null && modbusDevice.Transport != null)
+                modbusDevice.Transport.EventLogEvent -= Transport_EventLogEvent;
 
+            //if (slave != null && slave.Transport != null)
+            //    slave.Transport.EventLogEvent -= Transport_EventLogEvent;
         }
 
         private void Transport_EventLogEvent(string header, byte[] message)
@@ -86,10 +115,17 @@ namespace ServiceControl.ViewModel
             });
         }
 
-        public void StartLog(ModbusMaster mas)
+        public void StartLog(ModbusDevice mas)
         {
-            master = mas;
-            master.Transport.EventLogEvent += Transport_EventLogEvent;
+            modbusDevice = mas;
+            modbusDevice.Transport.EventLogEvent += Transport_EventLogEvent;
         }
+
+        //public void StartLog(ModbusSlave slav)
+        //{
+        //    slave = slav;
+        //    slave.Transport.EventLogEvent += Transport_EventLogEvent;
+        //}
+
     }
 }

@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -17,6 +18,7 @@ namespace ServiceControl.Modbus.Devices
     {
         public event EventHandler<EventArgs> EndRead;
         private readonly DispatcherTimer timer = new DispatcherTimer();
+        private bool isWorked;
 
         public DeviceMaster(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
@@ -24,10 +26,6 @@ namespace ServiceControl.Modbus.Devices
             modbus.slave.DataStore.DataStoreWrittenTo += DataStore_DataStoreWrittenTo;
             timer.Interval = new TimeSpan(0, 0, 2);
             timer.Tick += Timer_Tick;
-
-            //modb.slave.ModbusSlaveRequestReceived += Slave_ModbusSlaveRequestReceived;
-            //modb.slave.WriteComplete += Slave_WriteComplete;
-
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -37,15 +35,31 @@ namespace ServiceControl.Modbus.Devices
            
         }
 
-        //private void Slave_WriteComplete(object sender, global::Modbus.Device.ModbusSlaveRequestEventArgs e)
-        //{
-        //var data1 = modbus.slave.DataStore.HoldingRegisters[0];
-        //var data2 = modbus.slave.DataStore.HoldingRegisters[1];
-        //var data3 = modbus.slave.DataStore.HoldingRegisters[2];
-        //var data4 = modbus.slave.DataStore.HoldingRegisters[3];
-        //modbus.slave.DataStore.DataStoreWrittenTo += DataStore_DataStoreWrittenTo;
-        //modbus.slave.DataStore.InputRegisters[4] = 0;
-        //}
+
+        public override async void Start()
+        {
+    m2:
+            isWorked = true;
+            try
+            {
+                await modbus.slave.ListenAsync();
+            }
+            catch
+            {
+                modbus.FlushBufferCOM();
+                goto m2;
+            }
+
+            if (isWorked == true)
+            {
+                mainVM.SetStatusConnection(StatusConnect.NotAnswer);
+                //modbus.Disconnect();
+                //Thread.Sleep(1000);
+                //modbus.CreateConnectSlave();
+                //goto m2;
+            }
+
+        }
 
         private void DataStore_DataStoreWrittenTo(object sender, DataStoreEventArgs e)
         {
@@ -84,15 +98,12 @@ namespace ServiceControl.Modbus.Devices
             timer.Start();
         }
 
-        private void Slave_ModbusSlaveRequestReceived(object sender, global::Modbus.Device.ModbusSlaveRequestEventArgs e)
+        public override void Stop()
         {
-
-            //GetRegisterData(e.Message);
-
-            //e.Message.FunctionCode
+            isWorked = false;
         }
 
-        //protected abstract void GetRegisterData(IModbusMessage message);
+
         protected abstract void GetRegisterData(ushort StartAddr, ModbusFunc CodeFunc, ReadOnlyCollection<ushort> listData);
         public abstract void SetRegister(Register reg);
 

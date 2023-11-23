@@ -142,6 +142,9 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------
         private void OnReadFinish(object sender, EventArgs e)
         {
+            if (device.Status.Value == null)
+                return;
+
             if((device.Status.Value.Value & 1) == 1)
             {
                 isDoor.IsAlarm = true;
