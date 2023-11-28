@@ -23,11 +23,11 @@ namespace ServiceControl.ViewModel
     internal class KIPM5_UCViewModel : Observable //, IDataErrorInfo
     {
 
-        public class TwoRegister
-        {
-            public Register Register1 { get; set; }
-            public Register Register2 { get; set; }
-        }
+        //public class TwoRegister
+        //{
+        //    public Register Register1 { get; set; }
+        //    public Register Register2 { get; set; }
+        //}
 
 
 
@@ -53,6 +53,7 @@ namespace ServiceControl.ViewModel
 
         //public List<RegisterBool> ListCoil { get; set; }
         public List<TwoRegister> ListWriteControl { get; set; }
+        public List<TwoRegister> ListInputMM { get; set; }
         public List<Register> ListService { get; set; }
         //public List<TwoRegister> ListModeNapr { get; set; }
         public List<Register> ListRealTime { get; set; }
@@ -89,11 +90,7 @@ namespace ServiceControl.ViewModel
                 device.VoltPower, device.CurrOut,device.VoltOut,
                 device.SummPot, device.PolPot, device.CurrPot,  device.VoltNaveden,
                 device.FreqVoltNaveden, device.TemperBoard, 
-                device.Power, device.CountPower, device.PeriodADC, device.UpLimitCurr,
-                device.DownLimitCurr, device.UpLimitVolt, device.DownLimitVolt,
-                device.UpLimitVoltSP, device.DownLimitVoltSP,device.OutUpLimitCurr,
-                device.OutDownLimitCurr, device.OutUpLimitVolt, device.OutDownLimitVolt,
-                device.OutUpLimitVoltSP,device.OutDownLimitVoltSP,device.SummPotRMS         };
+                device.Power, device.CountPower, device.PeriodADC,device.SummPotRMS         };
 
             // добавление в список регистров управления
             ListWriteControl = new List<TwoRegister>() { 
@@ -102,6 +99,20 @@ namespace ServiceControl.ViewModel
                 new TwoRegister() { Register1 = device.VoltControl, 
                     Register2 = device.VoltControl,},
             };
+
+
+            ListInputMM = new List<TwoRegister>()
+            {
+                new TwoRegister() { Register1 = device.DownLimitCurr, Register2 = device.UpLimitCurr },
+                new TwoRegister() { Register1 = device.DownLimitVolt, Register2 = device.UpLimitVolt },
+                new TwoRegister() { Register1 = device.DownLimitVoltSP, Register2 = device.UpLimitVoltSP },
+                new TwoRegister() { Register1 = device.OutDownLimitCurr, Register2 = device.OutUpLimitCurr },
+                new TwoRegister() { Register1 = device.OutDownLimitVolt, Register2 = device.OutUpLimitVolt },
+                new TwoRegister() { Register1 = device.OutDownLimitVoltSP, Register2 = device.OutUpLimitVoltSP },
+            };
+
+
+
 
             // добавление в список целых регистров управления
 #if !CLIENT

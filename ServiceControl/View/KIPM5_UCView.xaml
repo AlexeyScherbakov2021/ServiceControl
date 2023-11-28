@@ -116,9 +116,9 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="450"/>
-            <ColumnDefinition Width="380"/>
-            <ColumnDefinition Width="330"/>
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="370"/>
+            <!--<ColumnDefinition Width="330"/>-->
         </Grid.ColumnDefinitions>
 
 
@@ -174,6 +174,28 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+
+                    <ItemsControl ItemsSource="{Binding ListInputMM}" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="260"/>
+                                    <TextBox Text="{Binding Register1.Value, TargetNullValue=--}" Width="64"
+                                                  Style="{DynamicResource TextBox.Control}"
+                                        Margin="4,0" ToolTip="{Binding Register1.ToolTip}"/>
+                                    <TextBlock Text="-" VerticalAlignment="Top" Width="10" Margin="2,2,0,0" TextAlignment="Center"/>
+
+                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--}" Width="64" 
+                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" 
+                                             TabIndex="2">
+                                    </TextBox>
+                                    <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="26"
+                                                   TextAlignment="Left" Margin="2,2,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
                 </StackPanel>
             </GroupBox>
 

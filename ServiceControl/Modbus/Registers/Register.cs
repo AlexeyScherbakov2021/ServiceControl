@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace ServiceControl.Modbus.Registers
 {
-    internal abstract class Register : RegisterBase
+    public abstract class Register : RegisterBase
     {
         private string _Measure;
         public string Measure { get => _Measure; set { Set(ref _Measure, value); } }
@@ -35,5 +35,11 @@ namespace ServiceControl.Modbus.Registers
             }
         }
 
+    }
+
+    public class TwoRegister
+    {
+        public Register Register1 { get; set; }
+        public Register Register2 { get; set; }
     }
 }

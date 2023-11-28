@@ -33,6 +33,7 @@ namespace ServiceControl.ViewModel
         public DeviceKSSM device { get; set; }
 
         public List<TwoRegister> ListWriteControl { get; set; }
+        public List<Register> ListControl { get; set; }
         public List<Register> ListRealTime { get; set; }
 
         private KIP_KSSM _SelectedKIP;
@@ -71,13 +72,17 @@ namespace ServiceControl.ViewModel
             };
 
             // добавление в список регистров управления
-            ListWriteControl = new List<TwoRegister>() { 
-                new TwoRegister() { Register1 = device.KIP_count, Register2 = device.KIP_countW, },
-                new TwoRegister() { Register1 = device.KIP_find, Register2 = device.KIP_findW,},
-                new TwoRegister() { Register1 = device.SD_check, Register2 = device.SD_checkW,},
-                new TwoRegister() { Register1 = device.ElectricMeter1, Register2 = device.ElectricMeter1W,},
-                new TwoRegister() { Register1 = device.ElectricMeter2, Register2 = device.ElectricMeter2W,},
-                //new TwoRegister() { Register1 = device.isDoor, Register2 = device.isDoorW,},
+            //ListWriteControl = new List<TwoRegister>() { 
+            //    new TwoRegister() { Register1 = device.KIP_count, Register2 = device.KIP_countW, },
+            //    new TwoRegister() { Register1 = device.KIP_find, Register2 = device.KIP_findW,},
+            //    new TwoRegister() { Register1 = device.SD_check, Register2 = device.SD_checkW,},
+            //    new TwoRegister() { Register1 = device.ElectricMeter1, Register2 = device.ElectricMeter1W,},
+            //    new TwoRegister() { Register1 = device.ElectricMeter2, Register2 = device.ElectricMeter2W,},
+            //    new TwoRegister() { Register1 = device.isDoor, Register2 = device.isDoorW,},
+            //};
+
+            ListControl = new List<Register>() { device.KIP_count, device.KIP_find,device.SD_check,device.ElectricMeter1, 
+                device.ElectricMeter2,device.isDoor
             };
 
         }
@@ -106,26 +111,26 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------
         // Команда Отправить значение
         //--------------------------------------------------------------------------------
-        public ICommand WriteValueCommand => new LambdaCommand(OnWriteValueCommandExecuted, CanWriteValueCommand);
-        private bool CanWriteValueCommand(object p) => device != null;
-        private void OnWriteValueCommandExecuted(object p)
-        {
-            if (p is Register reg)
-            {
-                try
-                {
-                    device.WriteRegister(reg);
-                    if (reg.GetType() == typeof(RegisterFloat))
-                    {
-                        //(reg as RegisterFloat).Value = 0;
-                    }
-                }
-                catch(TimeoutException)
-                {
+        //public ICommand WriteValueCommand => new LambdaCommand(OnWriteValueCommandExecuted, CanWriteValueCommand);
+        //private bool CanWriteValueCommand(object p) => device != null;
+        //private void OnWriteValueCommandExecuted(object p)
+        //{
+        //    if (p is Register reg)
+        //    {
+        //        try
+        //        {
+        //            device.WriteRegister(reg);
+        //            if (reg.GetType() == typeof(RegisterFloat))
+        //            {
+        //                //(reg as RegisterFloat).Value = 0;
+        //            }
+        //        }
+        //        catch(TimeoutException)
+        //        {
 
-                }
-            }
-        }
+        //        }
+        //    }
+        //}
 
 
 #if !CLIENT

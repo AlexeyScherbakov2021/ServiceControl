@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -22,6 +23,7 @@ namespace ServiceControl.ViewModel
 {
     internal class KIPLC_UCViewModel : Observable //, IDataErrorInfo
     {
+        private readonly DispatcherTimer _timer = new DispatcherTimer();
 
         public class TwoRegister
         {
@@ -35,9 +37,6 @@ namespace ServiceControl.ViewModel
         //public List<Register> ListInput2 { get; set; }
 
         public List<Register> ListRealTime { get; set; }
-
-#if !CLIENT
-#endif
 
 
         //--------------------------------------------------------------------------------------------
@@ -72,66 +71,80 @@ namespace ServiceControl.ViewModel
                 device.AddressBIMChange, device.SetID_BI,
             };
 
+            device.Start();
+
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += _timer_Tick;
+            _timer.Start();
+
         }
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            _timer.Stop();
+            device.RealTime.RealTimeValue = DateTime.Now;
+            device.SetRegister(device.RealTime);
+            _timer.Start();
+        }
+
+
         //--------------------------------------------------------------------------------
         // событие после чтения всех регистров при старте
         //--------------------------------------------------------------------------------
-        private void OnEndStartRead(object sender, EventArgs e)
-        {
-
-
-            CommandManager.InvalidateRequerySuggested();
-            //LastSetMode = device.SetMode.Value;
-        }
+        //private void OnEndStartRead(object sender, EventArgs e)
+        //{
+        //    CommandManager.InvalidateRequerySuggested();
+        //    //LastSetMode = device.SetMode.Value;
+        //}
 
         //--------------------------------------------------------------------------------
         // событие после чтения всех регистров
         //--------------------------------------------------------------------------------
-        private void OnReadFinish(object sender, EventArgs e)
-        {
+        //private void OnReadFinish(object sender, EventArgs e)
+        //{
 
-        }
+        //}
 
 
 
-#region Команды =================================
+        #region Команды =================================
 
         //--------------------------------------------------------------------------------
         // Команда Отправить значение
         //--------------------------------------------------------------------------------
-        public ICommand WriteValueCommand => new LambdaCommand(OnWriteValueCommandExecuted, CanWriteValueCommand);
-        private bool CanWriteValueCommand(object p) => device != null;
-        private void OnWriteValueCommandExecuted(object p)
-        {
-            //if (p is Register reg)
-            //{
-            //    try
-            //    {
-            //        device.WriteRegister(reg);
-            //        if (reg.GetType() == typeof(RegisterFloat))
-            //        {
-            //            //(reg as RegisterFloat).Value = 0;
-            //        }
-            //    }
-            //    catch(TimeoutException)
-            //    {
+        //public ICommand WriteValueCommand => new LambdaCommand(OnWriteValueCommandExecuted, CanWriteValueCommand);
+        //private bool CanWriteValueCommand(object p) => device != null;
+        //private void OnWriteValueCommandExecuted(object p)
+        //{
+        //    if (p is Register reg)
+        //    {
+        //        try
+        //        {
+        //            device.WriteRegister(reg);
+        //            if (reg.GetType() == typeof(RegisterFloat))
+        //            {
+        //                //(reg as RegisterFloat).Value = 0;
+        //            }
+        //        }
+        //        catch (TimeoutException)
+        //        {
 
-            //    }
-            //}
-        }
+        //        }
+        //    }
+        //}
 
 
 #if !CLIENT
         //--------------------------------------------------------------------------------
         // Команда Установить текущее время
         //--------------------------------------------------------------------------------
-        public ICommand WriteTimeCommand => new LambdaCommand(OnWriteTimeModeCommandExecuted, CanWriteTimeModeCommand);
-        private bool CanWriteTimeModeCommand(object p) => device != null ;
-        private void OnWriteTimeModeCommandExecuted(object p)
-        {
-            //device.RealTime.RealTimeValue = DateTime.Now;
-            //device.WriteRegister(device.RealTime);
-        }
+        //public ICommand WriteTimeCommand => new LambdaCommand(OnWriteTimeModeCommandExecuted, CanWriteTimeModeCommand);
+        //private bool CanWriteTimeModeCommand(object p) => device != null ;
+        //private void OnWriteTimeModeCommandExecuted(object p)
+        //{
+        //    device.RealTime.RealTimeValue = DateTime.Now;
+        //    device.WriteRegister(device.RealTime);
+        //}
 
 
 #endif
@@ -146,7 +159,7 @@ namespace ServiceControl.ViewModel
         //}
 
 
-#endregion
+        #endregion
 
 
 

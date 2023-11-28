@@ -121,7 +121,6 @@
             <ColumnDefinition Width="330"/>
         </Grid.ColumnDefinitions>
 
-
         <!-- Параметры -->
         <Border  Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="1">
             <GroupBox >
@@ -143,24 +142,20 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-
                     <!--Температура и Ток поляризации-->
                     <ItemsControl ItemsSource="{Binding ListRealTime}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200" />
-                                    <TextBox Text="{Binding Value, TargetNullValue=--}" Width="204" Margin="4,1" ToolTip="{Binding ToolTip}" />
-                                    <TextBlock Text="{Binding Measure}" Width="20" Margin="2,2,0,0"/>
+                                    <TextBox Text="{Binding RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" Width="204" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                    <!--<TextBlock Text="{Binding Measure}" Width="20" Margin="2,2,0,0"/>-->
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
             </GroupBox>
-
         </Border>
-
-
     </Grid>
 </UserControl>

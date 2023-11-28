@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace ServiceControl.Modbus.Registers
 {
-    internal abstract class RegisterBase : Observable
+    public abstract class RegisterBase : Observable
     {
         public int Number { get; set; }
         public ushort Address { get; set; }

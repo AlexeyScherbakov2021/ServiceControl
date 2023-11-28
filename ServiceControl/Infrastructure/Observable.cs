@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace ServiceControl.Infrastructure
 {
-    internal class Observable : INotifyPropertyChanged
+    public class Observable : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string PropertyName = null)

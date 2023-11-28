@@ -132,6 +132,7 @@ namespace ServiceControl.ViewModel
                 case StatusConnect.Disconnected:
                     IsTimeOutStatus= false;
                     IsConnected = false;
+                    isWaiting = false;
                     break;
 
                 case StatusConnect.NotAnswer:

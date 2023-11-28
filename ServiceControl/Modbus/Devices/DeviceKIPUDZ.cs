@@ -43,8 +43,6 @@ namespace ServiceControl.Modbus.Devices
             public RegisterFloat IndicBITRighta { get; set; }            // Данные с индикатора тока БИТ (правый)
         }
 
-
-
         public RegisterRT RealTime { get; set; }        // Текущее системное время
         public RegisterInt WakeUp;                      // Время до следующего пробуждения в минутах
         public RegisterInt FlagsAlarm { get; set; }     // Регистр флагов сигнализации выхода за уставки
@@ -91,8 +89,8 @@ namespace ServiceControl.Modbus.Devices
 
         List<Register> ListInput = new List<Register>();
         List<Register> ListHolding = new List<Register>();
-        List<Register> ListAllArchive = new List<Register>();
-        List<Register> ListAll = new List<Register>();
+        //List<Register> ListAllArchive = new List<Register>();
+        //List<Register> ListAll = new List<Register>();
 
         public DeviceKIPUDZ(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
@@ -796,8 +794,8 @@ namespace ServiceControl.Modbus.Devices
                 }
             };
 
-            ListAll.AddRange(ListInput);
-            ListAll.AddRange(ListHolding);
+            //ListAll.AddRange(ListInput);
+            //ListAll.AddRange(ListHolding);
 
             ushort address = 0x21;
             for(int i = 1; i <= cntArchive; ++i)
@@ -867,10 +865,10 @@ namespace ServiceControl.Modbus.Devices
                     }
                 };
                 listArchive.Add(arc);
-                ListAll.Add(arc.VoltageTRa);
-                ListAll.Add(arc.CurrTRa);
-                ListAll.Add(arc.IndicBITLefta);
-                ListAll.Add(arc.IndicBITRighta);
+                //ListAll.Add(arc.VoltageTRa);
+                //ListAll.Add(arc.CurrTRa);
+                //ListAll.Add(arc.IndicBITLefta);
+                //ListAll.Add(arc.IndicBITRighta);
                 address += 0x10;
             }
             listArchive.Last().time = "сутки";
@@ -885,74 +883,88 @@ namespace ServiceControl.Modbus.Devices
         }
 
 
-        protected override void GetRegisterData(ushort StartAddress, ModbusFunc CodeFunc, ReadOnlyCollection<ushort> listData)
+        protected override void SetAllRegister()
         {
-            Register reg;
-            int index = 0;
-            ushort currAddress = StartAddress;
+            ListAll.AddRange(ListInput);
+            ListAll.AddRange(ListHolding);
 
-            for (int n = 0; n < listData.Count; n++, currAddress++)
+            foreach(var arc in listArchive)
             {
-                reg = ListAll.FirstOrDefault(it => it.Address == currAddress && it.CodeFunc == CodeFunc);
-                if (reg != null)
-                {
-                    ushort[] data = new ushort[reg.Size];
-                    for (int i = 0; i < reg.Size; i++, index++)
-                    {
-                        data[i] = listData[index];
-                    }
-                    reg.SetResultValues(data);
-                }
+                ListAll.Add(arc.CurrTRa);
+                ListAll.Add(arc.VoltageTRa);
+                ListAll.Add(arc.CurrTRa);
+                ListAll.Add(arc.IndicBITLefta);
+                ListAll.Add(arc.IndicBITRighta);
             }
         }
 
+        //protected override void GetRegisterData(ushort StartAddress, ModbusFunc CodeFunc, ReadOnlyCollection<ushort> listData)
+        //{
+        //    Register reg;
+        //    int index = 0;
+        //    ushort currAddress = StartAddress;
 
-        public override void SetRegister(Register reg)
-        {
-            ModbusDataCollection<ushort> listReg;
-            ModbusDataCollection<bool> listRegBool;
+        //    for (int n = 0; n < listData.Count; n++, currAddress++)
+        //    {
+        //        reg = ListAll.FirstOrDefault(it => it.Address == currAddress && it.CodeFunc == CodeFunc);
+        //        if (reg != null)
+        //        {
+        //            ushort[] data = new ushort[reg.Size];
+        //            for (int i = 0; i < reg.Size; i++, index++)
+        //            {
+        //                data[i] = listData[index];
+        //            }
+        //            reg.SetResultValues(data);
+        //        }
+        //    }
+        //}
 
-            if (modbus.slave == null) return;
 
+        //public override void SetRegister(Register reg)
+        //{
+        //    ModbusDataCollection<ushort> listReg;
+        //    ModbusDataCollection<bool> listRegBool;
 
-            switch (reg.CodeFunc)
-            {
-                case ModbusFunc.InputRegister:
-                    listReg = modbus.slave.DataStore.InputRegisters;
-                    listRegBool = null;
-                    break;
-                case ModbusFunc.HoldingRegister:
-                    listReg = modbus.slave.DataStore.HoldingRegisters;
-                    listRegBool = null;
-                    break;
-                case ModbusFunc.Coil:
-                    listRegBool = modbus.slave.DataStore.CoilDiscretes;
-                    listReg = null;
-                    break;
-                case ModbusFunc.InputDiscrete:
-                    listRegBool = modbus.slave.DataStore.InputDiscretes;
-                    listReg = null;
-                    break;
-                default:
-                    listRegBool = null;
-                    listReg = null;
-                    break;
-            }
+        //    if (modbus.slave == null) return;
 
-            ushort[] values = reg.SetOutput();
+        //    switch (reg.CodeFunc)
+        //    {
+        //        case ModbusFunc.InputRegister:
+        //            listReg = modbus.slave.DataStore.InputRegisters;
+        //            listRegBool = null;
+        //            break;
+        //        case ModbusFunc.HoldingRegister:
+        //            listReg = modbus.slave.DataStore.HoldingRegisters;
+        //            listRegBool = null;
+        //            break;
+        //        case ModbusFunc.Coil:
+        //            listRegBool = modbus.slave.DataStore.CoilDiscretes;
+        //            listReg = null;
+        //            break;
+        //        case ModbusFunc.InputDiscrete:
+        //            listRegBool = modbus.slave.DataStore.InputDiscretes;
+        //            listReg = null;
+        //            break;
+        //        default:
+        //            listRegBool = null;
+        //            listReg = null;
+        //            break;
+        //    }
 
-            if (listReg != null)
-            {
-                for (int i = 0; i < values.Length; i++)
-                    listReg[reg.Address + i + 1] = values[i];
-            }
+        //    ushort[] values = reg.SetOutput();
 
-            if (listRegBool != null)
-            {
-                //for (int i = 0; i < values.Length; i++)
-                //    listRegBool[reg.Address + i + 1] = values[i];
-            }
-        }
+        //    if (listReg != null)
+        //    {
+        //        for (int i = 0; i < values.Length; i++)
+        //            listReg[reg.Address + i + 1] = values[i];
+        //    }
+
+        //    if (listRegBool != null)
+        //    {
+        //        //for (int i = 0; i < values.Length; i++)
+        //        //    listRegBool[reg.Address + i + 1] = values[i];
+        //    }
+        //}
 
         //protected override void GetRegisterData(IModbusMessage message)
         //{

@@ -279,7 +279,6 @@ namespace ServiceControl.Modbus.Devices
 
         }
 
-
         //public override Task RequestValue()
         //{
         //    ReadRegisters(ListInput);
@@ -306,13 +305,21 @@ namespace ServiceControl.Modbus.Devices
             CheckReg(ListHolding2);
         }
 
-        protected override void GetRegisterData(ushort StartAddress, ModbusFunc CodeFunc, ReadOnlyCollection<ushort> listData)
+        protected override void SetAllRegister()
         {
+            ListAll.AddRange(ListInput);
+            ListAll.AddRange(ListInput2);
+            ListAll.AddRange(ListHolding);
+            ListAll.AddRange(ListHolding2);
         }
 
-        public override void SetRegister(Register reg)
-        {
-            throw new NotImplementedException();
-        }
+        //protected override void GetRegisterData(ushort StartAddress, ModbusFunc CodeFunc, ReadOnlyCollection<ushort> listData)
+        //{
+        //}
+
+        //public override void SetRegister(Register reg)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

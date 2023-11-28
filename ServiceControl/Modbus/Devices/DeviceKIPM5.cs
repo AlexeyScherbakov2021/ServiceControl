@@ -329,7 +329,7 @@ namespace ServiceControl.Modbus.Devices
             {
                 Address = 0x12,
                 CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Нижняя уставка Iвых",
+                Name = "Уставка Iвых",
                 NameRes = "",
                 Measure = "А",
                 MeasureRes = "",
@@ -361,9 +361,9 @@ namespace ServiceControl.Modbus.Devices
             {
                 Address = 0x14,
                 CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Нижняя уставка Uвых",
+                Name = "Уставка Uвых",
                 NameRes = "",
-                Measure = "мВ",
+                Measure = "В",
                 MeasureRes = "",
                 Size = 1,
                 Description = "",
@@ -393,9 +393,9 @@ namespace ServiceControl.Modbus.Devices
             {
                 Address = 0x16,
                 CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Нижняя уставка Uсп",
+                Name = "Уставка Uсп",
                 NameRes = "",
-                Measure = "А",
+                Measure = "В",
                 MeasureRes = "",
                 Size = 1,
                 Description = "Bit_L",
@@ -425,7 +425,7 @@ namespace ServiceControl.Modbus.Devices
             {
                 Address = 0x18,
                 CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Выходы за нижнюю уставку Iвых",
+                Name = "Выходы за уставку Iвых",
                 NameRes = "",
                 Measure = "",
                 MeasureRes = "",
@@ -457,7 +457,7 @@ namespace ServiceControl.Modbus.Devices
             {
                 Address = 0x1A,
                 CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Выходы за нижнюю уставку Uвых",
+                Name = "Выходы за уставку Uвых",
                 NameRes = "",
                 Measure = "",
                 MeasureRes = "",
@@ -489,7 +489,7 @@ namespace ServiceControl.Modbus.Devices
             {
                 Address = 0x1C,
                 CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Выходы за нижнюю уставку Uсп",
+                Name = "Выходы за уставку Uсп",
                 NameRes = "",
                 Measure = "",
                 MeasureRes = "",
@@ -507,7 +507,7 @@ namespace ServiceControl.Modbus.Devices
                 CodeFunc = ModbusFunc.HoldingRegister,
                 Name = "Суммарный потенциал RMS",
                 NameRes = "",
-                Measure = "",
+                Measure = "В",
                 MeasureRes = "",
                 Size = 1,
                 Description = "",

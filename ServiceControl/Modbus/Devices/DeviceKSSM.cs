@@ -82,16 +82,16 @@ namespace ServiceControl.Modbus.Devices
         public RegisterInt ElectricMeter2;              // Показаания эл.счетчика 2
         public RegisterInt isDoor;                      // концевик двери
 
-        public RegisterRT RealTimeW;                    // Текущее системное время
-        public RegisterInt KIP_countW;                  // Установленное колоичество КИП
-        public RegisterInt KIP_findW;                   // Количество найденных КИП
-        public RegisterInt SD_checkW;                   // Свободный объем SD-карты
-        public RegisterInt ElectricMeter1W;             // Показаания эл.счетчика 1
-        public RegisterInt ElectricMeter2W;             // Показаания эл.счетчика 2
+        //public RegisterRT RealTimeW;                    // Текущее системное время
+        //public RegisterInt KIP_countW;                  // Установленное колоичество КИП
+        //public RegisterInt KIP_findW;                   // Количество найденных КИП
+        //public RegisterInt SD_checkW;                   // Свободный объем SD-карты
+        //public RegisterInt ElectricMeter1W;             // Показаания эл.счетчика 1
+        //public RegisterInt ElectricMeter2W;             // Показаания эл.счетчика 2
         //public RegisterInt isDoorW;                     // концевик двери
 
         public List<Register> ListHolding { get; set; } = new List<Register>();
-        public List<Register> ListWriteHolding = new List<Register>();
+        //public List<Register> ListWriteHolding = new List<Register>();
 
 
         //private List<KIP_KSSM> _listKIP = new List<KIP_KSSM>();
@@ -176,7 +176,7 @@ namespace ServiceControl.Modbus.Devices
                 CodeFunc = ModbusFunc.HoldingRegister,
                 Name = "Показаания эл.счетчика 2",
                 NameRes = "",
-                Measure = "мА",
+                Measure = "",
                 MeasureRes = "",
                 Size = 1,
                 Description = "",
@@ -187,97 +187,6 @@ namespace ServiceControl.Modbus.Devices
             {
                 Address = 0x08,
                 CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Наведенное напряжение",
-                NameRes = "",
-                Measure = "В",
-                MeasureRes = "",
-                Size = 1,
-                Description = "Uвых",
-            };
-            ListHolding.Add(isDoor);
-
-            RealTimeW = new RegisterRT()
-            {
-                Address = 0x401,
-                CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Текущее системное время",
-                NameRes = "",
-                Measure = "",
-                MeasureRes = "",
-                Size = 2,
-                Description = "",
-            };
-            ListWriteHolding.Add(RealTimeW);
-
-            KIP_countW = new RegisterInt()
-            {
-                Address = 0x403,
-                CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Установленное колоичество КИП",
-                NameRes = "",
-                Measure = "",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-            };
-            ListWriteHolding.Add(KIP_countW);
-
-            KIP_findW = new RegisterInt()
-            {
-                Address = 0x404,
-                CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Скорость коррозии",
-                NameRes = "",
-                Measure = "мкм/год",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-            };
-            ListWriteHolding.Add(KIP_findW);
-
-            SD_checkW = new RegisterInt()
-            {
-                Address = 0x405,
-                CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Свободный объем SD-карты",
-                NameRes = "",
-                Measure = "Мбайт",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-            };
-            ListWriteHolding.Add(SD_checkW);
-
-            ElectricMeter1W = new RegisterInt()
-            {
-                Address = 0x406,
-                CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Показаания эл.счетчика 1",
-                NameRes = "",
-                Measure = "кВт/ч",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-            };
-            ListWriteHolding.Add(ElectricMeter1W);
-
-            ElectricMeter2W = new RegisterInt()
-            {
-                Address = 0x407,
-                CodeFunc = ModbusFunc.HoldingRegister,
-                Name = "Показаания эл.счетчика 2",
-                NameRes = "",
-                Measure = "кВт/ч",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-            };
-            ListWriteHolding.Add(ElectricMeter2W);
-
-            isDoor = new RegisterInt()
-            {
-                Address = 0x408,
-                CodeFunc = ModbusFunc.HoldingRegister,
                 Name = "Концевик двери",
                 NameRes = "",
                 Measure = "",
@@ -285,7 +194,98 @@ namespace ServiceControl.Modbus.Devices
                 Size = 1,
                 Description = "",
             };
-            ListWriteHolding.Add(isDoor);
+            ListHolding.Add(isDoor);
+
+            //RealTimeW = new RegisterRT()
+            //{
+            //    Address = 0x401,
+            //    CodeFunc = ModbusFunc.HoldingRegister,
+            //    Name = "Текущее системное время",
+            //    NameRes = "",
+            //    Measure = "",
+            //    MeasureRes = "",
+            //    Size = 2,
+            //    Description = "",
+            //};
+            //ListWriteHolding.Add(RealTimeW);
+
+            //KIP_countW = new RegisterInt()
+            //{
+            //    Address = 0x403,
+            //    CodeFunc = ModbusFunc.HoldingRegister,
+            //    Name = "Установленное колоичество КИП",
+            //    NameRes = "",
+            //    Measure = "",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //};
+            //ListWriteHolding.Add(KIP_countW);
+
+            //KIP_findW = new RegisterInt()
+            //{
+            //    Address = 0x404,
+            //    CodeFunc = ModbusFunc.HoldingRegister,
+            //    Name = "Скорость коррозии",
+            //    NameRes = "",
+            //    Measure = "мкм/год",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //};
+            //ListWriteHolding.Add(KIP_findW);
+
+            //SD_checkW = new RegisterInt()
+            //{
+            //    Address = 0x405,
+            //    CodeFunc = ModbusFunc.HoldingRegister,
+            //    Name = "Свободный объем SD-карты",
+            //    NameRes = "",
+            //    Measure = "Мбайт",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //};
+            //ListWriteHolding.Add(SD_checkW);
+
+            //ElectricMeter1W = new RegisterInt()
+            //{
+            //    Address = 0x406,
+            //    CodeFunc = ModbusFunc.HoldingRegister,
+            //    Name = "Показаания эл.счетчика 1",
+            //    NameRes = "",
+            //    Measure = "кВт/ч",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //};
+            //ListWriteHolding.Add(ElectricMeter1W);
+
+            //ElectricMeter2W = new RegisterInt()
+            //{
+            //    Address = 0x407,
+            //    CodeFunc = ModbusFunc.HoldingRegister,
+            //    Name = "Показаания эл.счетчика 2",
+            //    NameRes = "",
+            //    Measure = "кВт/ч",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //};
+            //ListWriteHolding.Add(ElectricMeter2W);
+
+            //isDoorW = new RegisterInt()
+            //{
+            //    Address = 0x408,
+            //    CodeFunc = ModbusFunc.HoldingRegister,
+            //    Name = "Концевик двери",
+            //    NameRes = "",
+            //    Measure = "",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //};
+            //ListWriteHolding.Add(isDoorW);
 
 
         }
@@ -736,18 +736,18 @@ namespace ServiceControl.Modbus.Devices
         public override Task RequestValue()
         {
             ReadRegisters(ListHolding);
-            ReadRegisters(ListWriteHolding);
+            //ReadRegisters(ListWriteHolding);
 
             foreach (var kip in listKIP)
             {
                 ReadRegisters(kip.listInput);
                 //setFlags(kip);
             }
-            listKIP[2].isOpen = true;
-            listKIP[5].isError = true;
-            listKIP[17].isDK1 = true;
-            listKIP[22].isDK2 = true;
-            listKIP[29].isDK3 = true;
+            //listKIP[2].isOpen = true;
+            //listKIP[5].isError = true;
+            //listKIP[17].isDK1 = true;
+            //listKIP[22].isDK2 = true;
+            //listKIP[29].isDK3 = true;
 
             return Task.CompletedTask;
         }
@@ -759,8 +759,8 @@ namespace ServiceControl.Modbus.Devices
         public override Task StartRequestValue()
         {
             ReadRegisters(ListHolding);
-            ReadRegisters(ListWriteHolding);
-            KIP_find.Value = 32;
+            //ReadRegisters(ListWriteHolding);
+            //KIP_find.Value = 32;
 
             initKIP(KIP_find.Value ?? 0);
             foreach (var kip in listKIP)
@@ -777,7 +777,7 @@ namespace ServiceControl.Modbus.Devices
         protected override void CheckListRegister()
         {
             CheckReg(ListHolding);
-            CheckReg(ListWriteHolding);
+            //CheckReg(ListWriteHolding);
         }
     }
 }

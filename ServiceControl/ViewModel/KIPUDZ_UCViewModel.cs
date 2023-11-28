@@ -72,11 +72,11 @@ namespace ServiceControl.ViewModel
         public bool isTemperaturSet { get; set; }
 
 
-        public class TwoRegister
-        {
-            public Register Register1 { get; set; }
-            public Register Register2 { get; set; }
-        }
+        //public class TwoRegister
+        //{
+        //    public Register Register1 { get; set; }
+        //    public Register Register2 { get; set; }
+        //}
 
         //private int CountTimerSetMode;
 
@@ -140,14 +140,13 @@ namespace ServiceControl.ViewModel
                 new TwoRegister() { Register1 = device.CurrTRMin, Register2 = device.CurrTRMax },
                 new TwoRegister() { Register1 = device.ResistTRMin, Register2 = device.ResistTRMax },
                 new TwoRegister() { Register1 = device.TemperMin, Register2 = device.TemperMax },
-
             };
+
+            device.Start();
 
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += _timer_Tick;
             _timer.Start();
-
-            device.Start();
         }
 
 
@@ -163,12 +162,12 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------
         // событие после чтения всех регистров при старте
         //--------------------------------------------------------------------------------
-        private void OnEndStartRead(object sender, EventArgs e)
-        {
+        //private void OnEndStartRead(object sender, EventArgs e)
+        //{
 
-            CommandManager.InvalidateRequerySuggested();
-            //LastSetMode = device.SetMode.Value;
-        }
+        //    CommandManager.InvalidateRequerySuggested();
+        //    //LastSetMode = device.SetMode.Value;
+        //}
 
         //--------------------------------------------------------------------------------
         // событие после чтения всех регистров
