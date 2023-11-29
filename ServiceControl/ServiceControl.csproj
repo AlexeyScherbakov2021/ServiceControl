@@ -88,7 +88,9 @@
     <Compile Include="Infrastructure\ListExt.cs" />
     <Compile Include="Modbus\Devices\Device131.cs" />
     <Compile Include="Modbus\Devices\Device356.cs" />
+    <Compile Include="Modbus\Devices\DeviceBIMMaster.cs" />
     <Compile Include="Modbus\Devices\DeviceKIPLC.cs" />
+    <Compile Include="Modbus\Devices\DeviceKIPM5Ext.cs" />
     <Compile Include="Modbus\Devices\DeviceKIPUDZ.cs" />
     <Compile Include="Modbus\Devices\DeviceKSSM.cs" />
     <Compile Include="Modbus\Devices\DeviceKIPM5.cs" />
@@ -108,7 +110,9 @@
     <Compile Include="Modbus\Registers\RegisterStatus131.cs" />
     <Compile Include="Modbus\Registers\RegisterStatusDC.cs" />
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
+    <Compile Include="ViewModel\BI_MM_UCViewModel.cs" />
     <Compile Include="ViewModel\KIPLC_UCViewModel.cs" />
+    <Compile Include="ViewModel\KIPM5Ext_UCViewModel.cs" />
     <Compile Include="ViewModel\KIPUDZ_UCViewModel.cs" />
     <Compile Include="ViewModel\KSSM_UCViewModel.cs" />
     <Compile Include="ViewModel\KIPM5_UCViewModel.cs" />
@@ -125,8 +129,14 @@
     <Compile Include="View\BIWindow.xaml.cs">
       <DependentUpon>BIWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\BI_MM_UCView.xaml.cs">
+      <DependentUpon>BI_MM_UCView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\KIPLC_UCView.xaml.cs">
       <DependentUpon>KIPLC_UCView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KIPM5Ext_UCView.xaml.cs">
+      <DependentUpon>KIPM5Ext_UCView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KIPUDZ_UCView.xaml.cs">
       <DependentUpon>KIPUDZ_UCView.xaml</DependentUpon>
@@ -183,7 +193,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\BI_MM_UCView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\KIPLC_UCView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\KIPM5Ext_UCView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -25,11 +25,11 @@ namespace ServiceControl.ViewModel
     {
         private readonly DispatcherTimer _timer = new DispatcherTimer();
 
-        public class TwoRegister
-        {
-            public Register Register1 { get; set; }
-            public Register Register2 { get; set; }
-        }
+        //public class TwoRegister
+        //{
+        //    public Register Register1 { get; set; }
+        //    public Register Register2 { get; set; }
+        //}
 
         public DeviceKIPLC device { get; set; }
 

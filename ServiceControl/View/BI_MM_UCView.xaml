@@ -1,0 +1,415 @@
+﻿<UserControl x:Class="ServiceControl.View.BI_MM_UCView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:ServiceControl.ViewModel"
+             xmlns:conv="clr-namespace:ServiceControl.Converters"
+             xmlns:local="clr-namespace:ServiceControl.View"
+             mc:Ignorable="d" 
+             x:Name="mainControl" 
+             d:Width="1000" d:Height="595">
+    <!--<UserControl.DataContext>
+        <vm:BI_M_UCViewModel/>
+    </UserControl.DataContext>-->
+
+    <UserControl.Resources>
+
+        <conv:StabilModeConverter x:Key="StabilModeConverter"/>
+        <conv:StabModeVisibleConverter x:Key="StabModeVisibleConverter"/>
+        <!--<conv:ValidateValue x:Key="ValidateValue"/>-->
+        <!--<conv:StatusDKConverter x:Key="StatusDKConverter"/>-->
+
+        <Style TargetType="GroupBox">
+            <Style.Setters>
+                <Setter Property="BorderThickness" Value="1.5"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="FontSize" Value="15"/>
+            </Style.Setters>
+        </Style>
+        
+        
+        <Style TargetType="DataGridCell" x:Key="CellRight">
+            <Style.Setters>
+                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                <Setter Property="Background" Value="White"/>
+            </Style.Setters>
+        </Style>
+
+
+        <Style TargetType="Image" x:Key="OutImageStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding DataContext.device.DistanceMode.ValueBool, ElementName=mainControl}" Value="false">
+                    <Setter Property="Opacity" Value="0.2"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DataContext.device.DistanceMode.ValueBool, ElementName=mainControl}" Value="true">
+                    <Setter Property="Opacity" Value="1"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="120"/>
+            <RowDefinition Height="54"/>
+            <!--<RowDefinition Height="100"/>-->
+            <!--<RowDefinition Height="120"/>-->
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="800"/>
+            <ColumnDefinition Width="360"/>
+            <!--<ColumnDefinition Width="330"/>-->
+        </Grid.ColumnDefinitions>
+
+
+        <!-- Параметры -->
+        <Border  Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="1">
+            <GroupBox >
+                <GroupBox.Header>
+                    <TextBlock Text="Полученные значения" FontSize="16" FontWeight="Bold"/>
+                </GroupBox.Header>
+
+                <StackPanel Orientation="Horizontal">
+                
+                    <StackPanel Margin="8,0" Orientation="Vertical" >
+                        <ItemsControl ItemsSource="{Binding ListHolding}" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="220" />
+                                        <TextBox Text="{Binding Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                        <TextBlock Text="{Binding Measure}" Width="68" Margin="2,2,0,0" TextAlignment="Left"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!--Запись реального времени-->
+                        <ItemsControl ItemsSource="{Binding ListRealTime}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="190" TextAlignment="Right" 
+                               VerticalAlignment="Top"/>
+                                        <TextBox Text="{Binding RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
+                                 Width="158" ToolTip="{Binding ToolTip}" Margin="4,1" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                    
+                    <StackPanel Margin="0,0" Orientation="Vertical" >
+                        <ItemsControl ItemsSource="{Binding ListHoldingTwo}" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" >
+                                        <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="220" />
+                                        <TextBox Text="{Binding Register1.Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register1.ToolTip}" />
+                                        <TextBox Text="{Binding Register2.Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register2.ToolTip}" />
+                                        <TextBlock Text="{Binding Register1.Measure}" Width="34" Margin="2,2,0,0" TextAlignment="Left"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <ItemsControl ItemsSource="{Binding ListHoldingTwo2}" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="220" />
+                                        <TextBox Text="{Binding Register1.Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register1.ToolTip}" />
+                                        <TextBox Text="{Binding Register2.Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register2.ToolTip}" />
+                                        <TextBlock Text="{Binding Register1.Measure}" Width="34" Margin="2,2,0,0" TextAlignment="Left"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <GroupBox Margin="0,4,0,0" >
+                            <GroupBox.Header>
+                                <TextBlock Text="Калибровочные коэффициенты" FontSize="16" FontWeight="Bold"/>
+                            </GroupBox.Header>
+
+                            <StackPanel >
+                                <ItemsControl ItemsSource="{Binding ListHoldingTwoCal}" Margin="0,6,0,0">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" >
+                                                <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="214" />
+                                                <TextBox Text="{Binding Register1.Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register1.ToolTip}" />
+                                                <TextBox Text="{Binding Register2.Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register2.ToolTip}" />
+                                                <TextBlock Text="{Binding Register1.Measure}" Width="4" Margin="2,2,0,0" TextAlignment="Left"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <ItemsControl ItemsSource="{Binding ListHolding2}" >
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="214" />
+                                                <TextBox Text="{Binding Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                                <TextBlock Text="{Binding Measure}" Width="68" Margin="2,2,0,0" TextAlignment="Left"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+
+
+                        </GroupBox>
+                        
+
+                        <!--Температура и Ток поляризации-->
+                        <!--<ItemsControl ItemsSource="{Binding ListInput2}" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="250" />
+                                        <TextBox Text="{Binding Value,StringFormat=0.##, TargetNullValue=-}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                        <TextBlock Text="{Binding Measure}" Width="20" Margin="2,2,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>-->
+                    </StackPanel>
+
+                </StackPanel>
+            </GroupBox>
+
+        </Border>
+
+
+
+            <!--Управляемые параметры -->
+        <Border  Margin="4,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1" Visibility="Collapsed">
+            <!--<Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>-->
+            <GroupBox >
+                <GroupBox.Header>
+                    <TextBlock Text="{DynamicResource CtrlParam}" FontSize="16" FontWeight="Bold"/>
+                </GroupBox.Header>
+                <StackPanel Margin="8,0" Orientation="Vertical">
+
+                    <!--Время работы и защиты-->
+                    <ItemsControl ItemsSource="{Binding ListWriteControl}" Margin="0,8,0,0" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="130"/>
+                                    <TextBox Text="{Binding Register1.Value, TargetNullValue=--}" Width="64"
+                                        Margin="4,0" ToolTip="{Binding Register1.ToolTip}"/>
+                                    <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
+
+                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--}" Width="64" 
+                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" 
+                                             TabIndex="2">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Gesture="Enter" 
+                                                        CommandParameter="{Binding Register2}"
+                                                        Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+
+
+                                    <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource Set}" Style="{StaticResource ButtonStyle1}"
+                                            CommandParameter="{Binding Register2}" Padding="3"
+                                            Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}">
+                                        <!--<fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" Style="{StaticResource faStyle}">
+                                        </fa:ImageAwesome>-->
+                                        <Image Source="/Resources/Logout.png" Width="16" Height="16" Style="{StaticResource OutImageStyle}"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!--Запись реального времени-->
+                    <ItemsControl ItemsSource="{Binding ListRealTime}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="130" TextAlignment="Right" 
+                               VerticalAlignment="Top"/>
+                                    <TextBox Text="{Binding RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
+                                 Width="158" ToolTip="{Binding ToolTip}" Margin="4,1" />
+                                    <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource SetCurrTime}"
+                                 Style="{StaticResource ButtonStyle1}"
+                                            Padding="3" Command="{Binding DataContext.WriteTimeCommand, ElementName=mainControl}">
+                                        <Image Source="/Resources/Logout.png" Width="16" Height="16" Style="{StaticResource OutImageStyle}"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
+            </GroupBox>
+        </Border>
+
+
+
+        <!--Сигнализация-->
+        <Border  Margin="4,0" Grid.Column="1" Grid.RowSpan="4" Grid.Row="0" Grid.ColumnSpan="1" Visibility="Visible">
+            <GroupBox >
+                <GroupBox.Header>
+                    <TextBlock Text="Флаги состояния" FontSize="16" FontWeight="Bold"/>
+                </GroupBox.Header>
+                <ItemsControl ItemsSource="{Binding ListStatus}" Margin="0,8,0,0" >
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="140" VerticalAlignment="Center"/>
+                                <Border x:Name="border" Background="#c0FFc0" Margin="6,3,10,1" CornerRadius="8" BorderBrush="Black" 
+                                        BorderThickness="1">
+                                    <TextBlock Text="{Binding ValueString}" Width="120" VerticalAlignment="Center"
+                                                ToolTip="{Binding ToolTip}" Padding="2" TextAlignment="Center"/>
+                                </Border>
+                            </StackPanel>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsAlarm}" Value="true">
+                                    <Setter Property="Background" Value="#FFd0d0" TargetName="border"/>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+        </Border>
+
+
+        <!--Индикаторы скорости коррозии-->
+        <Border Margin="4,0" Grid.Column="1" Grid.Row="2"  Grid.RowSpan="1" Visibility="Collapsed">
+            <!--<Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="8" Opacity="0.5"/>
+            </Border.Effect>-->
+            <GroupBox >
+                <GroupBox.Header>
+                    <TextBlock Text="{DynamicResource SensorSpeedCorr}" FontSize="16" FontWeight="Bold"/>
+                </GroupBox.Header>
+                <StackPanel>
+                    <!--<ItemsControl ItemsSource="{Binding ListDK3}" Margin="0,10,0,0" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Height="22">
+                                    <TextBlock Text="{Binding Register1.Name}" Width="98" Padding="4,0"  />
+                                    <TextBox Text="{Binding Register1.Value, TargetNullValue=}" Width="60" ToolTip="{Binding Register1.ToolTip}"
+                                               Margin="0,0,8,0" />
+                                    <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,0,0"/>
+
+                                    <Image 
+                                        Width="18" Height="18" Margin="4,0" >
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Source" Value="../Resources/attention.png"/>
+                                                <Setter Property="ToolTip" Value="{DynamicResource Break}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Register3.ValueBool}" Value="True">
+                                                        <Setter Property="Source" Value="../Resources/greenLed.png"/>
+                                                        <Setter Property="ToolTip" Value="{DynamicResource Contact}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>-->
+
+                    <StackPanel Orientation="Horizontal" Margin="70,8,0,4">
+                        <TextBlock Text="{DynamicResource SpeedCorr}" Margin="26,0"/>
+                        <TextBlock Text="{DynamicResource DeepCorr}" Margin="40,0,0,0" />
+                    </StackPanel>
+                    <ItemsControl ItemsSource="{Binding ListInputDK}" Margin="50,0,0,0" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Height="22">
+                                    <TextBlock Text="{DynamicResource IKP}" />
+                                    <TextBlock Text="1" Margin="2,0"/>
+
+                                    <TextBox Text="{Binding Register1.Value, StringFormat=0.###}" Margin="4,0"
+                                               ToolTip="{Binding Register1.ToolTip}" Width="60"/>
+                                    <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,8,0" />
+
+                                    <TextBox Text="{Binding Register2.Value, StringFormat=0.###}" Margin="6,0,2,0"
+                                               ToolTip="{Binding Register2.ToolTip}" Width="60"/>
+                                    <TextBlock Text="{Binding Register2.Measure}" />
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
+
+                    <!--<StackPanel Orientation="Horizontal" Margin="8,18">
+                        
+                        <TextBlock Text="{Binding ListInputDK[0].Register1.Number, StringFormat=ИКП {0}}" Width="40"  VerticalAlignment="Center"/>
+                        <TextBlock Text="скорость" Width="48"  VerticalAlignment="Center"/>
+
+                        <TextBlock Text="{Binding ListInputDK[0].Register1.Value, StringFormat=0.###}" 
+                                               VerticalAlignment="Center" Background="White" Margin="2,0"
+                                               Width="50" TextAlignment="Center"/>
+                        
+                        <TextBlock Text="{Binding ListInputDK[0].Register1.Measure}" VerticalAlignment="Center"/>
+                        <TextBlock Text="глубина" Width="48"  VerticalAlignment="Center" Margin="10,0,0,0"/>
+
+                        <TextBlock Text="{Binding ListInputDK[0].Register2.Value, StringFormat=0.###}" 
+                                               VerticalAlignment="Center" Background="White" Margin="2,0"
+                                               Width="50" TextAlignment="Center"/>
+
+                        <TextBlock Text="{Binding ListInputDK[0].Register2.Measure}" VerticalAlignment="Center"/>
+
+                    </StackPanel>-->
+
+                    <!--<Border Margin="40,4" Height="20" BorderThickness="1" BorderBrush="Gray" CornerRadius="3"  Background="Transparent">
+                        <TextBlock Text="{DynamicResource Other}" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                        <Border.Resources>
+                            <Style TargetType="ToolTip">
+                                <Setter Property="Background" Value="Gainsboro"/>
+                            </Style>
+                        </Border.Resources>
+
+                        <Border.ToolTip>
+                            <ItemsControl ItemsSource="{Binding ListInputAllDK}" Margin="10" >
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Height="20">
+                                            <TextBlock Text="{DynamicResource IKP}" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding Register1.Number}" Margin="2,0" VerticalAlignment="Center"/>
+
+                                            <TextBlock Text="{Binding Register1.Value, StringFormat=0.###}" 
+                                               VerticalAlignment="Center" Background="White" Margin="4,0"
+                                               ToolTip="{Binding Register1.ToolTip}" FontWeight="Bold"
+                                               Width="60" TextAlignment="Center" Padding="6,0"/>
+                                            <TextBlock Text="{Binding Register1.Measure}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+
+                                            <TextBlock Text="{Binding Register2.Value, StringFormat=0.###}" 
+                                               VerticalAlignment="Center" Background="White" Margin="6,0,2,0"
+                                               ToolTip="{Binding Register2.ToolTip}" FontWeight="Bold"
+                                               Width="60" TextAlignment="Center" Padding="6,0"/>
+                                            <TextBlock Text="{Binding Register2.Measure}" VerticalAlignment="Center"/>
+
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border.ToolTip>
+                    </Border>-->
+
+                </StackPanel>
+
+            </GroupBox>
+        </Border>
+
+
+
+    </Grid>
+</UserControl>

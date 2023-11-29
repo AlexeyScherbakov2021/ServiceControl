@@ -373,6 +373,16 @@ namespace ServiceControl.ViewModel
                     CurrentDevice.ChangeLangRegister();
                     break;
 
+                case DevType.BI_M_Master:
+                    SControl = new BI_MM_UCView();
+                    var vmBIMM = new BI_MM_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vmBIMM;
+                    CurrentDevice = vmBIMM.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.slave);
+                    CurrentDevice.ChangeLangRegister();
+                    break;
+
                 case DevType.BI_M_Slave:
                     SControl = new BI_M_UCView();
                     var vmBIM = new BI_M_UCViewModel(this, work, Slave);
@@ -388,6 +398,16 @@ namespace ServiceControl.ViewModel
                     var vmKIPM5 = new KIPM5_UCViewModel(this, work, Slave);
                     SControl.DataContext = vmKIPM5;
                     CurrentDevice = vmKIPM5.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                    CurrentDevice.ChangeLangRegister();
+                    break;
+
+                case DevType.KIP_M5Ext:
+                    SControl = new KIPM5Ext_UCView();
+                    var vmKIPM5Ext = new KIPM5Ext_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vmKIPM5Ext;
+                    CurrentDevice = vmKIPM5Ext.device;
                     if (winLog != null)
                         (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
                     CurrentDevice.ChangeLangRegister();

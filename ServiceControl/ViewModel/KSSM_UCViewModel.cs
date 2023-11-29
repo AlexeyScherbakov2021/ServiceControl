@@ -24,11 +24,11 @@ namespace ServiceControl.ViewModel
     internal class KSSM_UCViewModel : Observable //, IDataErrorInfo
     {
 
-        public class TwoRegister
-        {
-            public Register Register1 { get; set; }
-            public Register Register2 { get; set; }
-        }
+        //public class TwoRegister
+        //{
+        //    public Register Register1 { get; set; }
+        //    public Register Register2 { get; set; }
+        //}
 
         public DeviceKSSM device { get; set; }
 
