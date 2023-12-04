@@ -60,8 +60,8 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="800"/>
-            <ColumnDefinition Width="360"/>
+            <ColumnDefinition Width="830"/>
+            <!--<ColumnDefinition Width="300"/>-->
             <!--<ColumnDefinition Width="330"/>-->
         </Grid.ColumnDefinitions>
 
@@ -101,9 +101,24 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding device.WakeUp.Name}" TextWrapping="Wrap" Width="220" />
+                            <TextBox Text="{Binding device.WakeUp.Value,StringFormat=0.##, TargetNullValue=--}" 
+                                     Width="64" Margin="4,1" ToolTip="{Binding device.WakeUp.ToolTip}" IsReadOnly="False"/>
+
+                            <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="Записать для отправки" Style="{StaticResource ButtonStyle1}"
+                                            CommandParameter="{Binding Register2}" Padding="3"
+                                            Command="{Binding WriteValueCommand}">
+                                <Image Source="/Resources/Logout.png" Width="16" Height="16" Style="{StaticResource OutImageStyle}"/>
+                            </Button>
+                            <TextBlock Text="{Binding device.WakeUp.Measure}" Width="68" Margin="2,2,0,0" TextAlignment="Left"/>
+
+                        </StackPanel>
+
                     </StackPanel>
                     
-                    <StackPanel Margin="0,0" Orientation="Vertical" >
+                    <StackPanel Margin="0,0" Orientation="Vertical">
                         <ItemsControl ItemsSource="{Binding ListHoldingTwo}" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -116,6 +131,7 @@
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+
 
                         <ItemsControl ItemsSource="{Binding ListHoldingTwo2}" >
                             <ItemsControl.ItemTemplate>
@@ -130,19 +146,43 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
 
-                        <GroupBox Margin="0,4,0,0" >
+                        <GroupBox Margin="20" Padding="10">
+                            <GroupBox.Header>
+                                <TextBlock Text="Флаги состояния" FontSize="16" FontWeight="Bold"/>
+                            </GroupBox.Header>
+                            <ItemsControl ItemsSource="{Binding ListStatus}" >
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="140" VerticalAlignment="Center"/>
+                                            <Border x:Name="border" Background="#c0FFc0" Margin="6,3,10,1" CornerRadius="8" BorderBrush="Black" 
+                                        BorderThickness="1">
+                                                <TextBlock Text="{Binding ValueString}" Width="120" VerticalAlignment="Center"
+                                                ToolTip="{Binding ToolTip}" Padding="2" TextAlignment="Center"/>
+                                            </Border>
+                                        </StackPanel>
+                                        <DataTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding IsAlarm}" Value="true">
+                                                <Setter Property="Background" Value="#FFd0d0" TargetName="border"/>
+                                            </DataTrigger>
+                                        </DataTemplate.Triggers>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+
+                        <!--<GroupBox Margin="0,4,0,0" >
                             <GroupBox.Header>
                                 <TextBlock Text="Калибровочные коэффициенты" FontSize="16" FontWeight="Bold"/>
                             </GroupBox.Header>
-
                             <StackPanel >
                                 <ItemsControl ItemsSource="{Binding ListHoldingTwoCal}" Margin="0,6,0,0">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" >
                                                 <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="214" />
-                                                <TextBox Text="{Binding Register1.Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register1.ToolTip}" />
-                                                <TextBox Text="{Binding Register2.Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register2.ToolTip}" />
+                                                <TextBox Text="{Binding Register1.Value,StringFormat=0.##, TargetNullValue=-}" Width="64" Margin="4,1" ToolTip="{Binding Register1.ToolTip}" />
+                                                <TextBox Text="{Binding Register2.Value,StringFormat=0.##, TargetNullValue=-}" Width="64" Margin="4,1" ToolTip="{Binding Register2.ToolTip}" />
                                                 <TextBlock Text="{Binding Register1.Measure}" Width="4" Margin="2,2,0,0" TextAlignment="Left"/>
                                             </StackPanel>
                                         </DataTemplate>
@@ -153,38 +193,21 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="214" />
-                                                <TextBox Text="{Binding Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                                <TextBox Text="{Binding Value,StringFormat=0.##, TargetNullValue=-}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
                                                 <TextBlock Text="{Binding Measure}" Width="68" Margin="2,2,0,0" TextAlignment="Left"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                             </StackPanel>
-
-
-                        </GroupBox>
+                        </GroupBox>-->
                         
-
-                        <!--Температура и Ток поляризации-->
-                        <!--<ItemsControl ItemsSource="{Binding ListInput2}" >
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="250" />
-                                        <TextBox Text="{Binding Value,StringFormat=0.##, TargetNullValue=-}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
-                                        <TextBlock Text="{Binding Measure}" Width="20" Margin="2,2,0,0"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>-->
                     </StackPanel>
 
                 </StackPanel>
             </GroupBox>
 
         </Border>
-
-
 
             <!--Управляемые параметры -->
         <Border  Margin="4,0" Grid.Row="0" Grid.Column="1" Grid.RowSpan="1" Grid.ColumnSpan="1" Visibility="Collapsed">
@@ -253,10 +276,8 @@
             </GroupBox>
         </Border>
 
-
-
         <!--Сигнализация-->
-        <Border  Margin="4,0" Grid.Column="1" Grid.RowSpan="4" Grid.Row="0" Grid.ColumnSpan="1" Visibility="Visible">
+        <!--<Border  Margin="4,0" Grid.Column="1" Grid.RowSpan="4" Grid.Row="0" Grid.ColumnSpan="1" Visibility="Visible">
             <GroupBox >
                 <GroupBox.Header>
                     <TextBlock Text="Флаги состояния" FontSize="16" FontWeight="Bold"/>
@@ -281,7 +302,7 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </GroupBox>
-        </Border>
+        </Border>-->
 
 
         <!--Индикаторы скорости коррозии-->

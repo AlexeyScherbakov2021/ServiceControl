@@ -22,11 +22,7 @@ namespace ServiceControl.ViewModel
 {
     internal class BI_MM_UCViewModel : Observable //, IDataErrorInfo
     {
-        //public class TwoRegister
-        //{
-        //    public Register Register1 { get; set; }
-        //    public Register Register2 { get; set; }
-        //}
+        private readonly DispatcherTimer _timer = new DispatcherTimer();
 
         private Visibility _IsAvarModeVisible = Visibility.Hidden;
         public Visibility IsAvarModeVisible { get => _IsAvarModeVisible; set { Set(ref _IsAvarModeVisible, value); } }
@@ -43,13 +39,13 @@ namespace ServiceControl.ViewModel
         public RegisterBool isDK1 { get; set; }
         public RegisterBool isDK2 { get; set; }
         public RegisterBool isDK3 { get; set; }
-        public RegisterBool isError { get; set; }
+        //public RegisterBool isError { get; set; }
 
         public List<Register> ListHolding { get; set; }
         public List<Register> ListHolding2 { get; set; }
         public List<TwoRegister> ListHoldingTwo { get; set; }
         public List<TwoRegister> ListHoldingTwo2 { get; set; }
-        public List<TwoRegister> ListHoldingTwoCal { get; set; }
+        //public List<TwoRegister> ListHoldingTwoCal { get; set; }
         public List<Register> ListRealTime { get; set; }
 
 
@@ -69,9 +65,9 @@ namespace ServiceControl.ViewModel
             isDK1 = new RegisterBool() { Name = "ДК1", ValueString = "норм", CodeFunc = ModbusFunc.InputRegister, Address = 1 };
             isDK2 = new RegisterBool() { Name = "ДК2", ValueString = "норм", CodeFunc = ModbusFunc.InputRegister, Address = 1 };
             isDK3 = new RegisterBool() { Name = "ДК3", ValueString = "норм", CodeFunc = ModbusFunc.InputRegister, Address = 1 };
-            isError = new RegisterBool() { Name = "Системная ошибка", ValueString = "норм", CodeFunc = ModbusFunc.InputRegister, Address = 1 };
+            //isError = new RegisterBool() { Name = "Системная ошибка", ValueString = "норм", CodeFunc = ModbusFunc.InputRegister, Address = 1 };
             
-            ListStatus = new List<RegisterBool>() { isDoor, isDK1, isDK2, isDK3, isError };
+            ListStatus = new List<RegisterBool>() { isDoor, isDK1, isDK2, isDK3 };
 
 
             device = new DeviceBIMMaster(mainViewModel, work, Slave);
@@ -80,7 +76,7 @@ namespace ServiceControl.ViewModel
 
             ListRealTime = new List<Register>
             {
-                device.RealTime, device.TimeAwak,
+                device.TimeAwak, device.RealTime,
 
             };
             // добавление в список входных параметров
@@ -89,9 +85,9 @@ namespace ServiceControl.ViewModel
                 device.Status, device.ID, device.NumPacket,device.VoltPower, 
                 device.VoltCurrOtnosL, device.VoltCurrOtnosR,
                 device.DataCurrBIT_L, device.DataCurrBIT_R, 
-                device.SpeedKorr, device.DeepKorr, device.SlaveID, device.WakeUp,
+                device.SpeedKorr, device.DeepKorr, /*device.SlaveID, device.WakeUp,*/
                 device.VoltOut, device.CurrOut, device.TemperBoard,
-                device.NominalShunt, device.CntWriteEEPROM
+                device.NominalShunt/*, device.CntWriteEEPROM*/
             };
 
             ListHolding2 = new List<Register>()
@@ -114,11 +110,11 @@ namespace ServiceControl.ViewModel
                 new TwoRegister() { Register1 = device.FreqVoltNaveden, Register2 = device.FreqVoltNaveden2,},
             };
 
-            ListHoldingTwoCal = new List<TwoRegister>() {
-                new TwoRegister() { Register1 = device.SummPotC,  Register2 = device.SummPotC2, },
-                new TwoRegister() { Register1 = device.PolPotC, Register2 = device.PolPotC2,},
-                new TwoRegister() { Register1 = device.CurrPotC, Register2 = device.CurrPotC2,},
-            };
+            //ListHoldingTwoCal = new List<TwoRegister>() {
+            //    new TwoRegister() { Register1 = device.SummPotC,  Register2 = device.SummPotC2, },
+            //    new TwoRegister() { Register1 = device.PolPotC, Register2 = device.PolPotC2,},
+            //    new TwoRegister() { Register1 = device.CurrPotC, Register2 = device.CurrPotC2,},
+            //};
 
             // добавление в список целых регистров управления
 #if !CLIENT
@@ -131,6 +127,20 @@ namespace ServiceControl.ViewModel
 #endif
             device.Start();
 
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += _timer_Tick;
+            _timer.Start();
+
+
+        }
+
+
+        private void _timer_Tick(object sender, EventArgs e)
+        {
+            _timer.Stop();
+            device.RealTime.RealTimeValue = DateTime.Now;
+            device.SetRegister(device.RealTime);
+            _timer.Start();
         }
 
 
@@ -197,16 +207,16 @@ namespace ServiceControl.ViewModel
                 isDK3.ValueString = "норм";
             }
 
-            if((device.Status.Value.Value & 16) == 16)
-            {
-                isError.IsAlarm = true;
-                isError.ValueString = "не норм.";
-            }
-            else
-            {
-                isError.IsAlarm = false;
-                isError.ValueString = "норм";
-            }
+            //if((device.Status.Value.Value & 16) == 16)
+            //{
+            //    isError.IsAlarm = true;
+            //    isError.ValueString = "не норм.";
+            //}
+            //else
+            //{
+            //    isError.IsAlarm = false;
+            //    isError.ValueString = "норм";
+            //}
 
         }
 
@@ -221,21 +231,7 @@ namespace ServiceControl.ViewModel
         private bool CanWriteValueCommand(object p) => device != null;
         private void OnWriteValueCommandExecuted(object p)
         {
-            //if (p is Register reg)
-            //{
-            //    try
-            //    {
-            //        device.WriteRegister(reg);
-            //        if (reg.GetType() == typeof(RegisterFloat))
-            //        {
-            //            //(reg as RegisterFloat).Value = 0;
-            //        }
-            //    }
-            //    catch(TimeoutException)
-            //    {
-
-            //    }
-            //}
+            device.SetRegister(device.WakeUp);
         }
 
 

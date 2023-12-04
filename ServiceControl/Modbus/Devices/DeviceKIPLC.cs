@@ -175,107 +175,107 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(RealTime);
 
-            Register reserv = new RegisterInt()
-            {
-                Address = 0x32,
-                CodeFunc = ModbusFunc.InputRegister,
-                Size = 1,
-            };
-            ListInput.Add(reserv);
+            //Register reserv = new RegisterInt()
+            //{
+            //    Address = 0x32,
+            //    CodeFunc = ModbusFunc.InputRegister,
+            //    Size = 1,
+            //};
+            //ListInput.Add(reserv);
 
 
-            KoefSummPot1 = new RegisterFloat()
-            {
-                Address = 0x33,
-                CodeFunc = ModbusFunc.InputRegister,
-                Name = "Калибровочный коэффициент сумм. потенциала",
-                NameRes = "",
-                Measure = "",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-                Scale = 0.0001f,
-                MinValue = 0f,
-                MaxValue = 65535f
-            };
-            ListInput.Add(KoefSummPot1);
+            //KoefSummPot1 = new RegisterFloat()
+            //{
+            //    Address = 0x33,
+            //    CodeFunc = ModbusFunc.InputRegister,
+            //    Name = "Калибровочный коэффициент сумм. потенциала",
+            //    NameRes = "",
+            //    Measure = "",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //    Scale = 0.0001f,
+            //    MinValue = 0f,
+            //    MaxValue = 65535f
+            //};
+            //ListInput.Add(KoefSummPot1);
 
-            KoefPolPot1 = new RegisterFloat()
-            {
-                Address = 0x34,
-                CodeFunc = ModbusFunc.InputRegister,
-                Name = "Калибровочный коэффициент пол. потенциала",
-                NameRes = "",
-                Measure = "",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-                Scale = 0.0001f,
-                MinValue = 0f,
-                MaxValue = 65535f
-            };
-            ListInput.Add(KoefPolPot1);
+            //KoefPolPot1 = new RegisterFloat()
+            //{
+            //    Address = 0x34,
+            //    CodeFunc = ModbusFunc.InputRegister,
+            //    Name = "Калибровочный коэффициент пол. потенциала",
+            //    NameRes = "",
+            //    Measure = "",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //    Scale = 0.0001f,
+            //    MinValue = 0f,
+            //    MaxValue = 65535f
+            //};
+            //ListInput.Add(KoefPolPot1);
 
-            KoCurrPot1 = new RegisterFloat()
-            {
-                Address = 0x35,
-                CodeFunc = ModbusFunc.InputRegister,
-                Name = "Калибровочный коэффициент тока поляризации",
-                NameRes = "",
-                Measure = "",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-                Scale = 0.0001f,
-                MinValue = 0f,
-                MaxValue = 65535f
-            };
-            ListInput.Add(KoCurrPot1);
+            //KoCurrPot1 = new RegisterFloat()
+            //{
+            //    Address = 0x35,
+            //    CodeFunc = ModbusFunc.InputRegister,
+            //    Name = "Калибровочный коэффициент тока поляризации",
+            //    NameRes = "",
+            //    Measure = "",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //    Scale = 0.0001f,
+            //    MinValue = 0f,
+            //    MaxValue = 65535f
+            //};
+            //ListInput.Add(KoCurrPot1);
 
-            AddressBIM = new RegisterInt()
-            {
-                Address = 0x3F,
-                CodeFunc = ModbusFunc.InputRegister,
-                Name = "Slave-ID",
-                NameRes = "",
-                Measure = "",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-                MinValue = 0,
-                MaxValue = 254
-            };
-            ListInput2.Add(AddressBIM);
+            //AddressBIM = new RegisterInt()
+            //{
+            //    Address = 0x3F,
+            //    CodeFunc = ModbusFunc.InputRegister,
+            //    Name = "Slave-ID",
+            //    NameRes = "",
+            //    Measure = "",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //    MinValue = 0,
+            //    MaxValue = 254
+            //};
+            //ListInput2.Add(AddressBIM);
 
-            AddressBIMChange = new RegisterInt()
-            {
-                Address = 0x40,
-                CodeFunc = ModbusFunc.InputRegister,
-                Name = "Смена адреса Slave-ID",
-                NameRes = "",
-                Measure = "",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-                MinValue = 0,
-                MaxValue = 65535
-            };
-            ListInput2.Add(AddressBIMChange);
+            //AddressBIMChange = new RegisterInt()
+            //{
+            //    Address = 0x40,
+            //    CodeFunc = ModbusFunc.InputRegister,
+            //    Name = "Смена адреса Slave-ID",
+            //    NameRes = "",
+            //    Measure = "",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //    MinValue = 0,
+            //    MaxValue = 65535
+            //};
+            //ListInput2.Add(AddressBIMChange);
 
-            SetID_BI = new RegisterInt()
-            {
-                Address = 0x41,
-                CodeFunc = ModbusFunc.InputRegister,
-                Name = "Установка ID БИ",
-                NameRes = "",
-                Measure = "",
-                MeasureRes = "",
-                Size = 1,
-                Description = "",
-                MinValue = 0,
-                MaxValue = 65535
-            };
-            ListInput2.Add(SetID_BI);
+            //SetID_BI = new RegisterInt()
+            //{
+            //    Address = 0x41,
+            //    CodeFunc = ModbusFunc.InputRegister,
+            //    Name = "Установка ID БИ",
+            //    NameRes = "",
+            //    Measure = "",
+            //    MeasureRes = "",
+            //    Size = 1,
+            //    Description = "",
+            //    MinValue = 0,
+            //    MaxValue = 65535
+            //};
+            //ListInput2.Add(SetID_BI);
 
         }
 
@@ -300,7 +300,7 @@ namespace ServiceControl.Modbus.Devices
         protected override void CheckListRegister()
         {
             CheckReg(ListInput);
-            CheckReg(ListInput2);
+            //CheckReg(ListInput2);
             CheckReg(ListHolding);
             CheckReg(ListHolding2);
         }
@@ -308,7 +308,7 @@ namespace ServiceControl.Modbus.Devices
         protected override void SetAllRegister()
         {
             ListAll.AddRange(ListInput);
-            ListAll.AddRange(ListInput2);
+            //ListAll.AddRange(ListInput2);
             ListAll.AddRange(ListHolding);
             ListAll.AddRange(ListHolding2);
         }

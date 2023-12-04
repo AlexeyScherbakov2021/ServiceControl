@@ -48,10 +48,10 @@ namespace ServiceControl.ViewModel
 
         public List<DeviceType> ListDeviceType { get; set; } = new List<DeviceType>()
         {
-                new DeviceType() { Name = "ДЕШК.301411.131 (KS131)", deviceType = DevType.KS131, isSlave = false},
-                new DeviceType() { Name = "ДЕШК.301411.216 (KS216)", deviceType = DevType.KS216, isSlave = false},
-                new DeviceType() { Name = "ДЕШК.301411.356 (KS356)", deviceType = DevType.KS356},
-                new DeviceType() { Name = "ДЕШК.301411.261 (KS261)", deviceType = DevType.KS261, isSlave = false},
+                new DeviceType() { Name = "KS 131", deviceType = DevType.KS131, isSlave = false},
+                new DeviceType() { Name = "KS 216", deviceType = DevType.KS216, isSlave = false},
+                new DeviceType() { Name = "KS 356", deviceType = DevType.KS356},
+                new DeviceType() { Name = "KS 261", deviceType = DevType.KS261, isSlave = false},
                 new DeviceType() { Name = "БИ-М master", deviceType = DevType.BI_M_Master, isSlave = true},
                 new DeviceType() { Name = "БИ-М slave (вн.изм.)", deviceType = DevType.BI_M_Slave, isSlave = false},
                 new DeviceType() { Name = "КИП-М5", deviceType = DevType.KIP_M5, isSlave = false},

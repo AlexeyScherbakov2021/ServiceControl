@@ -66,9 +66,9 @@ namespace ServiceControl.ViewModel
             {
                 device.NumberPacket, device.VoltPower,device.SummPot1,
                 device.PolPot1, device.CurrPot1, device.VoltNaveden1,  device.FreqVoltNaveden1,
-                device.KoefSummPot1, device.KoefPolPot1,
-                device.KoCurrPot1, device.AddressBIM,
-                device.AddressBIMChange, device.SetID_BI,
+                //device.KoefSummPot1, device.KoefPolPot1,
+                //device.KoCurrPot1, device.AddressBIM,
+                //device.AddressBIMChange, device.SetID_BI,
             };
 
             device.Start();

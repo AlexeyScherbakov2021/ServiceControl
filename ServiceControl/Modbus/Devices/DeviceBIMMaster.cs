@@ -31,7 +31,7 @@ namespace ServiceControl.Modbus.Devices
         public RegisterInt DeepKorr;                    // глубина коррозии
         public RegisterInt SlaveID;                     // сетевой адрес slave устройства
         public RegisterRT RealTime { get; set; }        // Текущее системное время
-        public RegisterInt WakeUp;                      // время до следующего пробуждения
+        public RegisterInt WakeUp { get; set; }         // время до следующего пробуждения
         public RegisterRT TimeAwak { get; set; }        // время последнего пробуждения
         public RegisterFloat VoltOut;                   // Напряжение на выходе СКЗ
         public RegisterFloat CurrOut;                   // Ток на выходе СКЗ
@@ -65,6 +65,7 @@ namespace ServiceControl.Modbus.Devices
         List<Register> ListHolding2 = new List<Register>();
         List<Register> ListHolding3 = new List<Register>();
         List<Register> ListHolding4 = new List<Register>();
+        List<Register> ListHolding41 = new List<Register>();
         List<Register> ListHolding5 = new List<Register>();
         List<Register> ListHolding6 = new List<Register>();
 
@@ -335,7 +336,7 @@ namespace ServiceControl.Modbus.Devices
                 MinValue = 0,
                 MaxValue = 254
             };
-            ListHolding4.Add(SlaveID);
+            ListHolding41.Add(SlaveID);
 
             RealTime = new RegisterRT()
             {
@@ -348,7 +349,7 @@ namespace ServiceControl.Modbus.Devices
                 Size = 2,
                 Description = "РВ",
             };
-            ListHolding4.Add(RealTime);
+            ListHolding41.Add(RealTime);
 
             WakeUp = new RegisterInt()
             {
@@ -364,7 +365,7 @@ namespace ServiceControl.Modbus.Devices
                 MaxValue = 65535,
                 Value = 0,
             };
-            ListHolding4.Add(WakeUp);
+            ListHolding41.Add(WakeUp);
 
             RegisterInt reserv = new RegisterInt()
             {
@@ -373,7 +374,7 @@ namespace ServiceControl.Modbus.Devices
                 Name = "Резерв",
                 Size = 1,
             };
-            ListHolding4.Add(reserv);
+            ListHolding41.Add(reserv);
 
             TimeAwak = new RegisterRT()
             {
@@ -824,6 +825,7 @@ namespace ServiceControl.Modbus.Devices
             CheckReg(ListHolding2);
             CheckReg(ListHolding3);
             CheckReg(ListHolding4);
+            CheckReg(ListHolding41);
             CheckReg(ListHolding5);
             CheckReg(ListHolding6);
         }
