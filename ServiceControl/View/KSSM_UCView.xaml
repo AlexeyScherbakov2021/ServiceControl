@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:ServiceControl.View"
              mc:Ignorable="d" 
              x:Name="mainControl" 
-             Width="1160" d:Height="595">
+             Width="1200" d:Height="595">
     <!--<UserControl.DataContext>
         <vm:KIPM5_UCViewModel/>
     </UserControl.DataContext>-->
@@ -103,8 +103,6 @@
             <ColumnDefinition Width="460"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-
 
 
             <!--Управляемые параметры -->
@@ -264,29 +262,58 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                         
-                        
-                        
                     </ListBox>
 
-                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="3" Margin="8,8,8,8">
+                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="3" Margin="8,8,8,8" >
                         <DockPanel>
                             <Border CornerRadius="3" Background="LightGray" DockPanel.Dock="Top" Margin="0,0,0,10" 
                                     BorderThickness="1" BorderBrush="Gray">
                                 <TextBlock Text="{Binding SelectedKIP.Number,StringFormat=БИ {0}}" TextAlignment="Center"
                                            FontWeight="Bold"/>
                             </Border>
+                            
+                            <!--<TextBox Text="{Binding SelectedKIP.TimeBI.ValueString, TargetNullValue=-}" 
+                                 Width="148" ToolTip="{Binding ToolTip}" Margin="4,1" />-->
                             <ScrollViewer>
-                                <ItemsControl ItemsSource="{Binding SelectedKIP.listInput}"  >
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="260" />
-                                                <TextBox Text="{Binding Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
-                                                <TextBlock Text="{Binding Measure}" Width="40" Margin="2,2,0,0" TextAlignment="Left"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+
+                                <StackPanel>
+                                    <ItemsControl ItemsSource="{Binding SelectedKIP.listInput1}"  >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="260" />
+                                                    <TextBox Text="{Binding Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                                    <TextBlock Text="{Binding Measure}" Width="40" Margin="2,2,0,0" TextAlignment="Left"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <ItemsControl ItemsSource="{Binding SelectedKIP.listRT}"  >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="260" />
+                                                    <TextBox Text="{Binding ValueString, TargetNullValue=--}" Width="154" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                                    <TextBlock Text="{Binding Measure}" Width="40" Margin="2,2,0,0" TextAlignment="Left"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+
+                                    <ItemsControl ItemsSource="{Binding SelectedKIP.listInput2}"  >
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="260" />
+                                                    <TextBox Text="{Binding Value,StringFormat=0.##, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                                    <TextBlock Text="{Binding Measure}" Width="40" Margin="2,2,0,0" TextAlignment="Left"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
                             </ScrollViewer>
                         </DockPanel>
                         

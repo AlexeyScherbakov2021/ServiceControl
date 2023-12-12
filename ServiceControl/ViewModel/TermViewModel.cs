@@ -20,27 +20,18 @@ using System.Windows.Threading;
 
 namespace ServiceControl.ViewModel
 {
-    internal class KIPM5Ext_UCViewModel : Observable //, IDataErrorInfo
+    internal class TermViewModel : Observable //, IDataErrorInfo
     {
-
-        public class ThreeRegister
-        {
-            public Register Register1 { get; set; }
-            public Register Register2 { get; set; }
-            public Register Register3 { get; set; }
-        }
 
         public DeviceKIPM5Ext device { get; set; }
 
         public List<Register> ListHolding { get; set; }
-        public List<ThreeRegister> ListHolding2 { get; set; }
-        public List<TwoRegister> ListHolding3 { get; set; }
 
 
         //--------------------------------------------------------------------------------------------
         // конструктор
         //--------------------------------------------------------------------------------------------
-        public KIPM5Ext_UCViewModel()
+        public TermViewModel()
         {
 
         }
@@ -48,7 +39,7 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         // конструктор
         //--------------------------------------------------------------------------------------------
-        public KIPM5Ext_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
+        public TermViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
         {
 
             device = new DeviceKIPM5Ext(mainViewModel, work, Slave);
@@ -59,22 +50,6 @@ namespace ServiceControl.ViewModel
             ListHolding = new List<Register>()
             {
                device.Flags, device.CurrOut, device.VoltOut, 
-            };
-
-            // добавление в список целых регистров управления
-            ListHolding2 = new List<ThreeRegister>()
-            {
-                new ThreeRegister() { Register1 = device.SummPotRMS, Register2 = device.SummPotRMS2, Register3 = device.SummPotRMS3 },
-                new ThreeRegister() { Register1 = device.SummPot, Register2 = device.SummPot2, Register3 = device.SummPot3 },
-                new ThreeRegister() { Register1 = device.PolPot, Register2 = device.PolPot2, Register3 = device.PolPot3 },
-                new ThreeRegister() { Register1 = device.CurrPot, Register2 = device.CurrPot2, Register3 = device.CurrPot3 },
-                new ThreeRegister() { Register1 = device.VoltNaveden, Register2 = device.VoltNaveden2, Register3 = device.VoltNaveden3 },
-                new ThreeRegister() { Register1 = device.FreqVoltNaveden, Register2 = device.FreqVoltNaveden2, Register3 = device.FreqVoltNaveden3 },
-            };
-
-            ListHolding3 = new List<TwoRegister>()
-            {
-                new TwoRegister() { Register1 =  device.Address, Register2 = device.AddressSet}
             };
 
             device.Start();

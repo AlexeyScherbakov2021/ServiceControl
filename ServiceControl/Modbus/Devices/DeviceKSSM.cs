@@ -62,6 +62,9 @@ namespace ServiceControl.Modbus.Devices
         public bool isDK3 { get => _isDK3; set { Set(ref _isDK3, value); } }
 
         public ObservableCollection<Register> listInput { get; set; } = new ObservableCollection<Register>();
+        public ObservableCollection<Register> listInput1 { get; set; } = new ObservableCollection<Register>();
+        public ObservableCollection<Register> listInput2 { get; set; } = new ObservableCollection<Register>();
+        public ObservableCollection<Register> listRT { get; set; } = new ObservableCollection<Register>();
     }
 
 
@@ -306,8 +309,6 @@ namespace ServiceControl.Modbus.Devices
             ushort currAddress;
 
             for (int num = 1; num <= count; ++num)
-
-                //while (count-- > 0)
             {
                 KIP_KSSM kip = new KIP_KSSM();
                 currAddress = startAddress;
@@ -325,6 +326,7 @@ namespace ServiceControl.Modbus.Devices
                     Description = "",
                 };
                 kip.listInput.Add(kip.AddresBI);
+                kip.listInput1.Add(kip.AddresBI);
 
                 kip.StatusFlags = new RegisterInt()
                 {
@@ -337,6 +339,7 @@ namespace ServiceControl.Modbus.Devices
                     Description = "",
                 };
                 kip.listInput.Add(kip.StatusFlags);
+                kip.listInput1.Add(kip.StatusFlags);
 
 
                 kip.TimeBI = new RegisterRT()
@@ -351,7 +354,9 @@ namespace ServiceControl.Modbus.Devices
                     Description = "",
                 };
                 kip.listInput.Add(kip.TimeBI);
+                kip.listRT.Add(kip.TimeBI);
 
+                ++currAddress;
 
                 kip.PeriodRead = new RegisterInt()
                 {
@@ -365,6 +370,7 @@ namespace ServiceControl.Modbus.Devices
                     Description = "",
                 };
                 kip.listInput.Add(kip.PeriodRead);
+                kip.listInput2.Add(kip.PeriodRead);
 
 
                 kip.Shunt = new RegisterInt()
@@ -379,6 +385,7 @@ namespace ServiceControl.Modbus.Devices
                     Description = "",
                 };
                 kip.listInput.Add(kip.Shunt);
+                kip.listInput2.Add(kip.Shunt);
 
 
                 kip.TemperBoard = new RegisterFloat()
@@ -396,6 +403,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 125,
                 };
                 kip.listInput.Add(kip.TemperBoard);
+                kip.listInput2.Add(kip.TemperBoard);
 
 
                 kip.CurrProtect = new RegisterFloat()
@@ -413,6 +421,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 320,
                 };
                 kip.listInput.Add(kip.CurrProtect);
+                kip.listInput2.Add(kip.CurrProtect);
 
 
                 kip.VoltOut = new RegisterFloat()
@@ -430,6 +439,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 100,
                 };
                 kip.listInput.Add(kip.VoltOut);
+                kip.listInput2.Add(kip.VoltOut);
 
 
                 kip.CurrPol1 = new RegisterFloat()
@@ -447,6 +457,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 50,
                 };
                 kip.listInput.Add(kip.CurrPol1);
+                kip.listInput2.Add(kip.CurrPol1);
 
 
                 kip.PolPot1 = new RegisterFloat()
@@ -464,6 +475,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 10,
                 };
                 kip.listInput.Add(kip.PolPot1);
+                kip.listInput2.Add(kip.PolPot1);
 
 
                 kip.SummPot1 = new RegisterFloat()
@@ -481,6 +493,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 10,
                 };
                 kip.listInput.Add(kip.SummPot1);
+                kip.listInput2.Add(kip.SummPot1);
 
 
                 kip.VoltNaveden1 = new RegisterFloat()
@@ -498,6 +511,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 150,
                 };
                 kip.listInput.Add(kip.VoltNaveden1);
+                kip.listInput2.Add(kip.VoltNaveden1);
 
 
                 kip.FreqVoltNaveden1 = new RegisterInt()
@@ -512,6 +526,7 @@ namespace ServiceControl.Modbus.Devices
                     Description = "",
                 };
                 kip.listInput.Add(kip.FreqVoltNaveden1);
+                kip.listInput2.Add(kip.FreqVoltNaveden1);
 
 
                 kip.CurrPol2 = new RegisterFloat()
@@ -529,6 +544,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 50,
                 };
                 kip.listInput.Add(kip.CurrPol2);
+                kip.listInput2.Add(kip.CurrPol2);
 
 
                 kip.PolPot2 = new RegisterFloat()
@@ -546,6 +562,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 10,
                 };
                 kip.listInput.Add(kip.PolPot2);
+                kip.listInput2.Add(kip.PolPot2);
 
 
                 kip.SummPot2 = new RegisterFloat()
@@ -563,6 +580,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 10,
                 };
                 kip.listInput.Add(kip.SummPot2);
+                kip.listInput2.Add(kip.SummPot2);
 
 
                 kip.VoltNaveden2 = new RegisterFloat()
@@ -580,6 +598,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 150,
                 };
                 kip.listInput.Add(kip.VoltNaveden2);
+                kip.listInput2.Add(kip.VoltNaveden2);
 
 
                 kip.FreqVoltNaveden2 = new RegisterInt()
@@ -594,6 +613,7 @@ namespace ServiceControl.Modbus.Devices
                     Description = "",
                 };
                 kip.listInput.Add(kip.FreqVoltNaveden2);
+                kip.listInput2.Add(kip.FreqVoltNaveden2);
 
 
                 kip.VoltOtnos1 = new RegisterFloat()
@@ -611,6 +631,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 100,
                 };
                 kip.listInput.Add(kip.VoltOtnos1);
+                kip.listInput2.Add(kip.VoltOtnos1);
 
 
                 kip.VoltOtnos2 = new RegisterFloat()
@@ -628,6 +649,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 100,
                 };
                 kip.listInput.Add(kip.VoltOtnos2);
+                kip.listInput2.Add(kip.VoltOtnos2);
 
 
                 kip.BIT1 = new RegisterFloat()
@@ -645,6 +667,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 320,
                 };
                 kip.listInput.Add(kip.BIT1);
+                kip.listInput2.Add(kip.BIT1);
 
 
                 kip.BIT2 = new RegisterFloat()
@@ -662,6 +685,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 320,
                 };
                 kip.listInput.Add(kip.BIT2);
+                kip.listInput2.Add(kip.BIT2);
 
 
                 kip.VoltagePower = new RegisterFloat()
@@ -679,6 +703,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 65535,
                 };
                 kip.listInput.Add(kip.VoltagePower);
+                kip.listInput2.Add(kip.VoltagePower);
 
 
                 kip.SpeedKorr = new RegisterInt()
@@ -693,6 +718,7 @@ namespace ServiceControl.Modbus.Devices
                     Description = "",
                 };
                 kip.listInput.Add(kip.SpeedKorr);
+                kip.listInput2.Add(kip.SpeedKorr);
 
 
                 kip.DeepKorr = new RegisterInt()
@@ -707,6 +733,7 @@ namespace ServiceControl.Modbus.Devices
                     Description = "",
                 };
                 kip.listInput.Add(kip.DeepKorr);
+                kip.listInput2.Add(kip.DeepKorr);
 
 
                 Application.Current.Dispatcher.Invoke((Action)(() =>
@@ -738,10 +765,14 @@ namespace ServiceControl.Modbus.Devices
             ReadRegisters(ListHolding);
             //ReadRegisters(ListWriteHolding);
 
+            if(KIP_find.Value != listKIP.Count)
+                initKIP(KIP_find.Value ?? 0);
+
             foreach (var kip in listKIP)
             {
                 ReadRegisters(kip.listInput);
-                //setFlags(kip);
+                ReadRegisters(kip.listInput2);
+                setFlags(kip);
             }
             //listKIP[2].isOpen = true;
             //listKIP[5].isError = true;
@@ -766,6 +797,7 @@ namespace ServiceControl.Modbus.Devices
             foreach (var kip in listKIP)
             {
                 ReadRegisters(kip.listInput);
+                ReadRegisters(kip.listInput2);
                 setFlags(kip);
             }
             return Task.CompletedTask;

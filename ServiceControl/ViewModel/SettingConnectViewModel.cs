@@ -59,6 +59,7 @@ namespace ServiceControl.ViewModel
                 new DeviceType() { Name = "КССМ(Н)", deviceType = DevType.KSSM, isSlave = false},
                 new DeviceType() { Name = "КИП-LC", deviceType = DevType.KIP_LC, isSlave = true},
                 new DeviceType() { Name = "КИП-М(УДЗ)", deviceType = DevType.KIP_UDZ, isSlave = true},
+                new DeviceType() { Name = "Терминал", deviceType = DevType.TERMINAL, isSlave = false},
         };
 
         public List<string> ListCOM { get; set; } // = new List<string>()

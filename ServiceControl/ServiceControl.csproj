@@ -112,6 +112,7 @@
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
     <Compile Include="ViewModel\BI_MM_UCViewModel.cs" />
     <Compile Include="ViewModel\KIPLC_UCViewModel.cs" />
+    <Compile Include="ViewModel\TermViewModel.cs" />
     <Compile Include="ViewModel\KIPM5Ext_UCViewModel.cs" />
     <Compile Include="ViewModel\KIPUDZ_UCViewModel.cs" />
     <Compile Include="ViewModel\KSSM_UCViewModel.cs" />
@@ -164,6 +165,9 @@
     </Compile>
     <Compile Include="View\SettingConnect.xaml.cs">
       <DependentUpon>SettingConnect.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TermView.xaml.cs">
+      <DependentUpon>TermView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\lang.en-US.xaml">
       <SubType>Designer</SubType>
@@ -271,6 +275,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\SettingConnect.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TermView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

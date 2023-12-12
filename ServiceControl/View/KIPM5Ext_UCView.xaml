@@ -74,19 +74,19 @@
                     <Image.Style>
                         <Style TargetType="Image">
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding Value}" Value="0">
+                                <DataTrigger Binding="{Binding Value, StringFormat=0.00}" Value="0">
                                     <Setter Property="ToolTip" Value="{DynamicResource On}"/>
                                     <Setter Property="Source" Value="../Resources/greenLed.png"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding Value}" Value="1">
+                                <DataTrigger Binding="{Binding Value,StringFormat=0.00}" Value="1">
                                     <Setter Property="ToolTip" Value="{DynamicResource Off}"/>
                                     <Setter Property="Source" Value="../Resources/blackLed.png"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding Value}" Value="2">
+                                <DataTrigger Binding="{Binding Value, StringFormat=0.00}" Value="2">
                                     <Setter Property="ToolTip" Value="{DynamicResource Absent}"/>
                                     <Setter Property="Source" Value="../Resources/Absent.png"/>
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding Value}" Value="3">
+                                <DataTrigger Binding="{Binding Value, StringFormat=0.00}" Value="3">
                                     <Setter Property="ToolTip" Value="{DynamicResource Crash}"/>
                                     <Setter Property="Source" Value="../Resources/attention.png"/>
                                 </DataTrigger>
@@ -130,13 +130,44 @@
                 </GroupBox.Header>
                 <StackPanel Margin="8,0" Orientation="Vertical">
 
+                    <ItemsControl ItemsSource="{Binding ListHolding3}" Margin="0,8,0,0" >
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="280"/>
+                                    <TextBox Text="{Binding Register1.Value, TargetNullValue=--}" Width="64"
+                                        Margin="4,0" ToolTip="{Binding Register1.ToolTip}"/>
+                                    <!--<TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="10" Margin="2,2,0,0"/>-->
+
+                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--}" Width="64" 
+                                        Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" 
+                                             TabIndex="2">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Gesture="Enter" 
+                                                        CommandParameter="{Binding Register2}"
+                                                        Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}"/>
+                                        </TextBox.InputBindings>
+                                    </TextBox>
+
+
+                                    <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource Set}" Style="{StaticResource ButtonStyle1}"
+                                            CommandParameter="{Binding Register2}" Padding="3"
+                                            Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}">
+                                        <Image Source="/Resources/Logout.png" Width="16" Height="16" Style="{StaticResource OutImageStyle}"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
 
                     <ItemsControl ItemsSource="{Binding ListHolding}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="280" />
-                                    <TextBox Text="{Binding Value, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                    <TextBox Text="{Binding Value,StringFormat=0.00, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
                                     <TextBlock Text="{Binding Measure}" Width="40" Margin="2,2,0,0" TextAlignment="Left"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -150,9 +181,9 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="280" />
-                                    <TextBox Text="{Binding Register1.Value, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register1.ToolTip}" />
-                                    <TextBox Text="{Binding Register2.Value, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register2.ToolTip}" />
-                                    <TextBox Text="{Binding Register3.Value, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register3.ToolTip}" />
+                                    <TextBox Text="{Binding Register1.Value,StringFormat=0.00, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register1.ToolTip}" />
+                                    <TextBox Text="{Binding Register2.Value,StringFormat=0.00, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register2.ToolTip}" />
+                                    <TextBox Text="{Binding Register3.Value,StringFormat=0.00, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding Register3.ToolTip}" />
                                     <TextBlock Text="{Binding Register1.Measure}" Width="20" Margin="2,2,0,0" TextAlignment="Left"/>
                                 </StackPanel>
                             </DataTemplate>

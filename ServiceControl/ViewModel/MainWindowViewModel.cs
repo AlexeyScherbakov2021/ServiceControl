@@ -442,6 +442,16 @@ namespace ServiceControl.ViewModel
                         (winLog.DataContext as LogWindowViewModel).StartLog(work.slave);
                     CurrentDevice.ChangeLangRegister();
                     break;
+
+                case DevType.TERMINAL:
+                    SControl = new TermView();
+                    var vmTerm = new TermViewModel(this, work, Slave);
+                    SControl.DataContext = vmTerm;
+                    //CurrentDevice = vmTerm.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.slave);
+                    //CurrentDevice.ChangeLangRegister();
+                    break;
             }
 
         }
