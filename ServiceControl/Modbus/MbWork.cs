@@ -17,7 +17,8 @@ using System.Windows.Media;
 
 namespace ServiceControl.Modbus
 {
-    public enum ModbusFunc { None, Coil, InputDiscrete, HoldingRegister, InputRegister, WriteMultiple = 0x10 };
+    public enum ModbusFunc { None, Coil, InputDiscrete, HoldingRegister, InputRegister, 
+        WriteCoil, WriteRegister, WriteMultiCoils = 0x0F, WriteMultiple = 0x10 };
     public enum Protocol { COM, TCP};
 
     internal class MbWork
@@ -31,6 +32,7 @@ namespace ServiceControl.Modbus
         private string ComPort;
         private bool IsTCPoverRTU;
         private int TimeOut = 1000;
+        public bool isTCP => tcp != null;
 
         public MbWork(string connect, int val, Protocol proto, bool IsRTU = false)
         {

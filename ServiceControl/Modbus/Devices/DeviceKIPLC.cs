@@ -24,12 +24,12 @@ namespace ServiceControl.Modbus.Devices
         public RegisterFloat VoltNaveden1;              // Переменное наведенное напряжение на сооружении
         public RegisterInt FreqVoltNaveden1;            // Частота наведенного напряжение
         public RegisterRT RealTime { get; set; }        // Текущее системное время сервера
-        public RegisterFloat KoefSummPot1;              // Калибровочный коэффициент канала измерения суммарного потенциала
-        public RegisterFloat KoefPolPot1;               // Калибровочный коэффициент канала измерения поляризационного потенциала
-        public RegisterFloat KoCurrPot1;                // Калибровочный коэффициент канала измерения тока поляризации
-        public RegisterInt AddressBIM;                  // Сетевой адрес подключенного Slave-устройства сбора данных (БИ-М) 
-        public RegisterInt AddressBIMChange;            // Смена адреса подключенного Slave-устройства сбора данных (1 - сохранение адреса) 
-        public RegisterInt SetID_BI;                    // Установка идентификатора БИ 
+        //public RegisterFloat KoefSummPot1;              // Калибровочный коэффициент канала измерения суммарного потенциала
+        //public RegisterFloat KoefPolPot1;               // Калибровочный коэффициент канала измерения поляризационного потенциала
+        //public RegisterFloat KoCurrPot1;                // Калибровочный коэффициент канала измерения тока поляризации
+        //public RegisterInt AddressBIM;                  // Сетевой адрес подключенного Slave-устройства сбора данных (БИ-М) 
+        //public RegisterInt AddressBIMChange;            // Смена адреса подключенного Slave-устройства сбора данных (1 - сохранение адреса) 
+        //public RegisterInt SetID_BI;                    // Установка идентификатора БИ 
 
         List<Register> ListInput = new List<Register>();
         List<Register> ListInput2 = new List<Register>();

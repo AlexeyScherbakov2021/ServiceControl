@@ -3,10 +3,193 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:ServiceControl.ViewModel"
              xmlns:local="clr-namespace:ServiceControl.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+    <UserControl.DataContext>
+        <vm:TermViewModel/>
+    </UserControl.DataContext>
+    
+    <DockPanel>
+        <DockPanel.Resources>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin" Value="4,1"/>
+                <Setter Property="TextAlignment" Value="Right"/>
+            </Style>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Margin" Value="4,1"/>
+            </Style>
+        </DockPanel.Resources>
+
+        <!--<Grid DockPanel.Dock="Top">
+            <StackPanel Orientation="Horizontal">
+                <UniformGrid Margin="4,8" Rows="2" Columns="1">
+                    <RadioButton Content="COM" VerticalAlignment="Center" IsChecked="True"/>
+                    <RadioButton Content="TCP" VerticalAlignment="Center"/>
+                </UniformGrid>
+
+                <Grid>
+                    <Grid Margin="4,2" Visibility="Hidden">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="Сервер" Grid.Row="0" Grid.Column="0"/>
+                        <TextBox Text="" Grid.Row="0" Grid.Column="1"/>
+                        <TextBlock Text="Порт" Grid.Row="1" Grid.Column="0"/>
+                        <TextBox Text=""  Grid.Row="1" Grid.Column="1"/>
+                        <CheckBox Content="RTU"  Grid.Row="3" Grid.Column="1" Margin="4,2"/>
+                    </Grid>
+
+                    <Grid Margin="4,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="COM порт" Grid.Row="0" Grid.Column="0"/>
+                        <ComboBox Text="" Grid.Row="0" Grid.Column="1" Margin="4,2"/>
+                        <TextBlock Text="Таймаут" Grid.Row="1" Grid.Column="0"/>
+                        <TextBox Text=""  Grid.Row="1" Grid.Column="1"/>
+                    </Grid>
+
+                </Grid>
+
+                <Button Content="Соединиться" Margin="20,0,0,0" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>-->
+        <Grid >
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <GridSplitter Grid.Column="1" Width="2" Background="LightGray" HorizontalAlignment="Left" />
+
+            <GroupBox Header="Отправка" Margin="6" BorderBrush="Gray">
+                <Grid Margin="4,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Slave адрес" Grid.Row="0" Grid.Column="0"/>
+                    <TextBox Text="{Binding SlaveAddress}" Grid.Row="0" Grid.Column="1"/>
+
+                    <TextBlock Text="Функция" Grid.Row="1" Grid.Column="0"/>
+                    <!--<TextBox Text="{Binding function}" Grid.Row="1" Grid.Column="1"/>-->
+                    <ComboBox ItemsSource="{Binding listFunction}" DisplayMemberPath="name"
+                              SelectedValue="{Binding function}" SelectedValuePath="type"
+                              Grid.Row="1" Grid.Column="1" Margin="4,0" Grid.ColumnSpan="2"/>
+
+                    <TextBlock Text="Адрес" Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Text="{Binding AddressReg}" Grid.Row="2" Grid.Column="1"/>
+
+                    <TextBlock Text="{Binding nameParam}" Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Text="{Binding countRegister}" Grid.Row="3" Grid.Column="1"/>
+
+                    <TextBlock Text="Контрольная сумма" Grid.Row="4" Grid.Column="0"/>
+                    <TextBox Text="{Binding checkSumma, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" IsReadOnly="True"/>
+
+                    <TextBlock Text="Пакет" Grid.Row="7" Grid.Column="0"/>
+                    <TextBox Text="{Binding packetSend}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" 
+                             IsReadOnly="True" Grid.RowSpan="3"/>
+
+                    <Button Content="Отправить" Grid.Row="12" Grid.ColumnSpan="3" Margin="60,1" 
+                            Command="{Binding SendCommand}" Style="{DynamicResource ButtonStyle1}"/>
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Header="Ответ" Grid.Column="1" Margin="8,6,6,6"  BorderBrush="Gray" >
+                <Grid Margin="4,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="24"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Slave адрес" Grid.Row="0" Grid.Column="0"/>
+                    <TextBox Text="{Binding SlaveAddressR}" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
+
+                    <TextBlock Text="Функция" Grid.Row="1" Grid.Column="0"/>
+                    <TextBox Text="{Binding functionR}" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                    <!--<ComboBox ItemsSource="{Binding listFunction}" DisplayMemberPath="name"
+                              SelectedValue="{Binding functionR,Mode=TwoWay}" SelectedValuePath="type"
+                              IsReadOnly="True"
+                              Grid.Row="1" Grid.Column="1" Margin="4,0" Grid.ColumnSpan="1"/>-->
+
+                    <TextBlock Text="Число байт" Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Text="{Binding countByte}" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+
+                    <TextBlock Text="Данные" Grid.Row="3" Grid.Column="0"/>
+                    <TextBox Text="{Binding dataString}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True" />
+
+                    <!--<TextBlock Text="Данные" Grid.Row="4" Grid.Column="0"/>-->
+                    <TextBox Text="{Binding dataIntString}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" IsReadOnly="True" />
+
+                    <TextBlock Text="Контрольная сумма" Grid.Row="5" Grid.Column="0"/>
+                    <TextBox Text="{Binding checkSummaR, Mode=TwoWay}" Grid.Row="5" Grid.Column="1" IsReadOnly="True"/>
+
+                    <TextBlock Text="Пакет" Grid.Row="7" Grid.Column="0"/>
+                    <TextBox Text="{Binding packetSendR}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3"
+                             TextWrapping="Wrap" IsReadOnly="True" 
+                             />
+
+                    <TextBlock Text="Ошибка" Grid.Row="12"/>
+                    <TextBox IsReadOnly="True" Text="{Binding packetError}" Grid.Row="13" Grid.ColumnSpan="3"
+                             Grid.RowSpan="2" TextWrapping="Wrap"/>
+                </Grid>
+
+            </GroupBox>
+
+        </Grid>
+    </DockPanel>
 </UserControl>
