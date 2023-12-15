@@ -111,6 +111,7 @@
     <Compile Include="Modbus\Registers\RegisterStatusDC.cs" />
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
     <Compile Include="ViewModel\BI_MM_UCViewModel.cs" />
+    <Compile Include="ViewModel\ConfigKIPUDZ_WindowVM.cs" />
     <Compile Include="ViewModel\KIPLC_UCViewModel.cs" />
     <Compile Include="ViewModel\TermViewModel.cs" />
     <Compile Include="ViewModel\KIPM5Ext_UCViewModel.cs" />
@@ -132,6 +133,9 @@
     </Compile>
     <Compile Include="View\BI_MM_UCView.xaml.cs">
       <DependentUpon>BI_MM_UCView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ConfigKIPUDZ_Window.xaml.cs">
+      <DependentUpon>ConfigKIPUDZ_Window.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KIPLC_UCView.xaml.cs">
       <DependentUpon>KIPLC_UCView.xaml</DependentUpon>
@@ -200,6 +204,10 @@
     <Page Include="View\BI_MM_UCView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ConfigKIPUDZ_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\KIPLC_UCView.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -330,6 +338,7 @@
     <Resource Include="Resources\blackLed.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\flash_disk.png" />
     <Resource Include="Resources\greenLed.png" />
   </ItemGroup>
   <ItemGroup>

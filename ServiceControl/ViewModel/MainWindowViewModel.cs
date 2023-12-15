@@ -35,10 +35,6 @@ namespace ServiceControl.ViewModel
         MbWork work;
         Device CurrentDevice;
 
-        //public List<DeviceType> ListDeviceType { get; set; }
-        
-
-
         private bool IsSelectTCP { get; set; }
 
         #endregion
@@ -108,13 +104,6 @@ namespace ServiceControl.ViewModel
         public MainWindowViewModel()
         {
             LoadFromIni();
-            //ListDeviceType = new List<DeviceType>()
-            //{
-            //    new DeviceType() { Name = "ДЕШК.301411.131", deviceType = DevType.KS131},
-            //    new DeviceType() { Name = "ДЕШК.301411.216", deviceType = DevType.KS216},
-            //    new DeviceType() { Name = "ДЕШК.301411.356", deviceType = DevType.KS356},
-            //    new DeviceType() { Name = "ДЕШК.301411.261", deviceType = DevType.KS261},
-            //};
         }
 
         //--------------------------------------------------------------------------------------------

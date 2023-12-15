@@ -129,8 +129,18 @@
                     <TextBlock Text="Отправляемые параметры" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <DockPanel>
-                    <Button Content="Записать для передачи" DockPanel.Dock="Top" Background="Bisque" Style="{StaticResource ButtonStyle1}"
+
+                    <DockPanel DockPanel.Dock="Top" >
+                        <Button Style="{StaticResource ButtonStyle1}" ToolTip="Записать файл конфигурации"
+                                Width="28" Command="{Binding WriteConfigCommand}"
+                                DockPanel.Dock="Right" Margin="4">
+                            <Image Source="/Resources/flash_disk.png"/>
+                        </Button>
+                        <Button Content="Записать для передачи" Background="Bisque" 
+                            Style="{StaticResource ButtonStyle1}" ToolTip="Записанные данные будут переданы при следующем сеансе связи"
                             VerticalAlignment="Center" Margin="4" Command="{Binding WriteValueCommand}"/>
+                    </DockPanel>
+                    
                     <Border DockPanel.Dock="Bottom">
                         <GroupBox Header="Регистр флагов" ToolTip="{Binding device.FlagsAlarm.ToolTip}">
                             <UniformGrid Margin="10,10">

@@ -74,8 +74,8 @@
                             <Setter Property="RenderTransform" TargetName="border">
                                 <Setter.Value>
                                     <TransformGroup>
-                                        <ScaleTransform ScaleX="0.96"/>
-                                        <ScaleTransform ScaleY="0.96"/>
+                                        <ScaleTransform ScaleX="0.98"/>
+                                        <ScaleTransform ScaleY="0.98"/>
                                     </TransformGroup>
                                 </Setter.Value>
                             </Setter>

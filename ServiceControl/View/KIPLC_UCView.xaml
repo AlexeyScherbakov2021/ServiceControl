@@ -107,25 +107,25 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="180"/>
-            <RowDefinition Height="200"/>
-            <RowDefinition Height="120"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="120"/>
+            <RowDefinition Height="auto"/>
+            <!--<RowDefinition Height="200"/>-->
+            <!--<RowDefinition Height="120"/>-->
+            <!--<RowDefinition Height="50"/>-->
+            <!--<RowDefinition Height="100"/>-->
+            <!--<RowDefinition Height="120"/>-->
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="490"/>
-            <ColumnDefinition Width="380"/>
-            <ColumnDefinition Width="330"/>
+            <ColumnDefinition Width="*"/>
+            <!--<ColumnDefinition Width="330"/>-->
         </Grid.ColumnDefinitions>
 
         <!-- Параметры -->
-        <Border  Margin="4,0" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="1">
+        <Border  Margin="4,14" Grid.Row="0" Grid.Column="0" Grid.RowSpan="1" Grid.ColumnSpan="1">
             <GroupBox >
                 <GroupBox.Header>
-                    <TextBlock Text="{DynamicResource Param}" FontSize="16" FontWeight="Bold"/>
+                    <TextBlock Text="Полученные параметры" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel Margin="8,0" Orientation="Vertical">
 
@@ -157,5 +157,30 @@
                 </StackPanel>
             </GroupBox>
         </Border>
+
+        <GroupBox Grid.Column="1" Margin="0,14,6,0">
+            <GroupBox.Header>
+                <TextBlock Text="Параметры для записи в файл" FontSize="16" FontWeight="Bold"/>
+            </GroupBox.Header>
+            <DockPanel >
+                <Border DockPanel.Dock="Right" Margin="4,8" BorderThickness="0" CornerRadius="4" BorderBrush="Gray" >
+                    <Button Margin="10,20" Style="{StaticResource ButtonStyle1}" Padding="4"
+                        Command="{Binding WriteConfigCommand}" VerticalAlignment="Top">
+                        <StackPanel>
+                            <Image Source="/Resources/flash_disk.png" Width="32"/>
+                            <TextBlock Text="Сохранить"/>
+                        </StackPanel>
+                    </Button>
+                </Border>
+
+                <DataGrid ItemsSource="{Binding listLCParam}" Style="{StaticResource DataGridStyle}" Margin="8">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Наименование параметра" Binding="{Binding name}" Width="250" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Параметр" Binding="{Binding valueString}" Width="170"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </GroupBox>
+
     </Grid>
 </UserControl>

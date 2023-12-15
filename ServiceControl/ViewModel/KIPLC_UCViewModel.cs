@@ -1,4 +1,5 @@
-﻿using ServiceControl.Commands;
+﻿using Microsoft.Win32;
+using ServiceControl.Commands;
 using ServiceControl.Infrastructure;
 using ServiceControl.Modbus;
 using ServiceControl.Modbus.Devices;
@@ -18,6 +19,8 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml;
+using static ServiceControl.ViewModel.ConfigKIPUDZ_WindowVM;
 
 namespace ServiceControl.ViewModel
 {
@@ -25,11 +28,17 @@ namespace ServiceControl.ViewModel
     {
         private readonly DispatcherTimer _timer = new DispatcherTimer();
 
-        //public class TwoRegister
-        //{
-        //    public Register Register1 { get; set; }
-        //    public Register Register2 { get; set; }
-        //}
+        public class StringLC
+        {
+            public string name { get; set; }
+            //public double? value { get; set; }
+            public string valueString { get; set; }
+
+            public string paramName;
+        }
+        public List<StringLC> listLCParam { get; set; }
+
+
 
         public DeviceKIPLC device { get; set; }
 
@@ -51,6 +60,19 @@ namespace ServiceControl.ViewModel
         //--------------------------------------------------------------------------------------------
         public KIPLC_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
         {
+
+            listLCParam = new List<StringLC>()
+            {
+                new StringLC() { name = "Modbus адрес получателя", valueString = "1", paramName = "ModBus_addr"},
+                new StringLC() { name = "APN", valueString = " ", paramName = "APN"},
+                new StringLC() { name = "IP адрес", valueString = "188.120.226.199", paramName = "MQTT_ip_addr"},
+                new StringLC() { name = "Порт", valueString = "1883", paramName = "MQTT_port"},
+                new StringLC() { name = "Логин", valueString = "mqtt", paramName = "MQTT_login"},
+                new StringLC() { name = "Пароль", valueString = "12345", paramName = "MQTT_pass"},
+                new StringLC() { name = "Время сна устройства", valueString = "1", paramName = "sleep"},
+                new StringLC() { name = "Тест", valueString = "TEST", paramName = "test"},
+            };
+
 
             device = new DeviceKIPLC(mainViewModel, work, Slave);
             //device.EndRead += OnReadFinish;
@@ -110,6 +132,40 @@ namespace ServiceControl.ViewModel
         #region Команды =================================
 
         //--------------------------------------------------------------------------------
+        // Команда Сохранить файл конфигурации
+        //--------------------------------------------------------------------------------
+        public ICommand WriteConfigCommand => new LambdaCommand(OnWriteConfigCommandExecuted, CanWriteConfigCommand);
+        private bool CanWriteConfigCommand(object p) => true;
+        private void OnWriteConfigCommandExecuted(object p)
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            sd.FileName = "Config_BI_LC.xml";
+            sd.Filter = "XML файлы|*.xml";
+
+            if (sd.ShowDialog() == false) return;
+
+
+            XmlNode userNode;
+
+            XmlDocument xmlDoc = new XmlDocument();
+            var decl = xmlDoc.CreateXmlDeclaration("1.0", "utf-8", "");
+            xmlDoc.AppendChild(decl);
+
+            XmlNode rootNode = xmlDoc.CreateElement("BI_LC");
+            xmlDoc.AppendChild(rootNode);
+
+            foreach (var item in listLCParam)
+            {
+                userNode = xmlDoc.CreateElement(item.paramName);
+                userNode.InnerText = item.valueString.Trim();
+                rootNode.AppendChild(userNode);
+            }
+
+            xmlDoc.Save(sd.FileName);
+        }
+
+
+        //--------------------------------------------------------------------------------
         // Команда Отправить значение
         //--------------------------------------------------------------------------------
         //public ICommand WriteValueCommand => new LambdaCommand(OnWriteValueCommandExecuted, CanWriteValueCommand);
@@ -133,21 +189,6 @@ namespace ServiceControl.ViewModel
         //    }
         //}
 
-
-#if !CLIENT
-        //--------------------------------------------------------------------------------
-        // Команда Установить текущее время
-        //--------------------------------------------------------------------------------
-        //public ICommand WriteTimeCommand => new LambdaCommand(OnWriteTimeModeCommandExecuted, CanWriteTimeModeCommand);
-        //private bool CanWriteTimeModeCommand(object p) => device != null ;
-        //private void OnWriteTimeModeCommandExecuted(object p)
-        //{
-        //    device.RealTime.RealTimeValue = DateTime.Now;
-        //    device.WriteRegister(device.RealTime);
-        //}
-
-
-#endif
         //--------------------------------------------------------------------------------
         // Команда Записать в регистр Bool
         //--------------------------------------------------------------------------------

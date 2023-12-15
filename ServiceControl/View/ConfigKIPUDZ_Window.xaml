@@ -1,0 +1,119 @@
+﻿<Window x:Class="ServiceControl.View.ConfigKIPUDZ_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ServiceControl.View"
+        xmlns:vm="clr-namespace:ServiceControl.ViewModel"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Background="Gainsboro"
+        Title="Конфигурация" Height="824" Width="800">
+    <Window.DataContext>
+        <vm:ConfigKIPUDZ_WindowVM/>
+    </Window.DataContext>
+    <Grid>
+        <DockPanel>
+            <Border DockPanel.Dock="Right" BorderThickness="1" BorderBrush="Gray" Margin="4,8" CornerRadius="4">
+                <Button Margin="10,20" Style="{StaticResource ButtonStyle1}" Padding="4"
+                        Command="{Binding WriteConfigCommand}" VerticalAlignment="Top">
+                    <StackPanel>
+                        <Image Source="/Resources/flash_disk.png" Width="32"/>
+                        <TextBlock Text="Сохранить"/>
+                    </StackPanel>
+                </Button>
+            </Border>
+            
+            
+            <StackPanel Orientation="Vertical" Margin="6">
+
+                <DataGrid ItemsSource="{Binding listUDZParam}" Style="{StaticResource DataGridStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Наименование параметра" Binding="{Binding name}" Width="450" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Параметр" Binding="{Binding value}" CellStyle="{StaticResource CellRight}" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Text="Активация аварийных событий - принудительная передача данных на сервер"
+                       Margin="10,8,0,2" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                <DataGrid ItemsSource="{Binding listUDZParamAvar}" Style="{StaticResource DataGridStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Наименование параметра" Binding="{Binding name}" Width="450" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Параметр" Binding="{Binding value}" CellStyle="{StaticResource CellRight}" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Text="Уставки"
+                       Margin="10,8,0,2" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                <DataGrid ItemsSource="{Binding listUDZParamUst}" Style="{StaticResource DataGridStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Наименование параметра" Binding="{Binding name}" Width="450" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Мин." Binding="{Binding value}" CellStyle="{StaticResource CellRight}" Width="100"/>
+                        <DataGridTextColumn Header="Макс." Binding="{Binding max_value}" CellStyle="{StaticResource CellRight}" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <TextBlock Text="Коэффициенты"
+                       Margin="10,8,0,2" HorizontalAlignment="Left" FontWeight="Bold"/>
+
+                <DataGrid ItemsSource="{Binding listUDZParamKoef}" Style="{StaticResource DataGridStyle}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Наименование параметра" Binding="{Binding name}" Width="450" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Параметр" Binding="{Binding value}" CellStyle="{StaticResource CellRight}" Width="100"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+            </StackPanel>
+
+        </DockPanel>
+        
+        
+        <!--<Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="6,1"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Margin" Value="2,1"/>
+            </Style>
+        </Grid.Resources>-->
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="24"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Адрес УДЗ" Grid.Column="0" Grid.Row="0"/>
+        <TextBox Text=""  Grid.Column="1" Grid.Row="0"/>
+
+        <TextBlock Text="Включение BlueTooth" Grid.Column="0" Grid.Row="1"/>
+        <TextBox Text=""  Grid.Column="1" Grid.Row="1"/>
+
+        <TextBlock Text="периодичность замеров параметров (сек.)" Grid.Column="0" Grid.Row="2"/>
+        <TextBox Text=""  Grid.Column="1" Grid.Row="2"/>
+
+        <TextBlock Text="периодичность передачи данных (мин.)" Grid.Column="0" Grid.Row="3"/>
+        <TextBox Text=""  Grid.Column="1" Grid.Row="3"/>-->
+
+    </Grid>
+</Window>

@@ -117,7 +117,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="500"/>
-            <ColumnDefinition Width="370"/>
+            <ColumnDefinition Width="470"/>
             <!--<ColumnDefinition Width="330"/>-->
         </Grid.ColumnDefinitions>
 
@@ -219,7 +219,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="130"/>
+                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="230"/>
                                     <TextBox Text="{Binding Register1.Value, TargetNullValue=--}" Width="64"
                                         Margin="4,0" ToolTip="{Binding Register1.ToolTip}"/>
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
@@ -281,7 +281,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="130" TextAlignment="Right" 
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="230" TextAlignment="Right" 
                                VerticalAlignment="Top"/>
                                     <TextBox Text="{Binding RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
                                  Width="158" ToolTip="{Binding ToolTip}" Margin="4,1" />

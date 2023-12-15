@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml;
 
 namespace ServiceControl.ViewModel
 {
@@ -211,6 +212,19 @@ namespace ServiceControl.ViewModel
 
             foreach (var reg in ListInput)
                 device.SetRegister(reg);
+        }
+
+        //--------------------------------------------------------------------------------
+        // Команда Отправить значение
+        //--------------------------------------------------------------------------------
+        public ICommand WriteConfigCommand => new LambdaCommand(OnWriteConfigCommandExecuted, CanWriteConfigCommand);
+        private bool CanWriteConfigCommand(object p) => device != null;
+        private void OnWriteConfigCommandExecuted(object p)
+        {
+            ConfigKIPUDZ_Window win = new ConfigKIPUDZ_Window();
+
+            win.ShowDialog();
+
         }
 #endregion
 
