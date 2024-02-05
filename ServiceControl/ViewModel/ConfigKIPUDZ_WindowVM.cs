@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
 using ServiceControl.Commands;
-using ServiceControl.Infrastructure;
+using ServiceControl.Based;
 using ServiceControl.Modbus.Devices;
 using System;
 using System.Collections.Generic;

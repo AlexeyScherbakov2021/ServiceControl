@@ -1,5 +1,5 @@
 ﻿using ServiceControl.Commands;
-using ServiceControl.Infrastructure;
+using ServiceControl.Based;
 using ServiceControl.Modbus;
 using ServiceControl.Modbus.Devices;
 using ServiceControl.Modbus.Registers;

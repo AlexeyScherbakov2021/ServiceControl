@@ -1,4 +1,4 @@
-﻿using ServiceControl.Infrastructure;
+﻿using ServiceControl.Based;
 using ServiceControl.Modbus.Registers;
 using ServiceControl.Modbus;
 using System;
@@ -32,7 +32,7 @@ namespace ServiceControl.ViewModel
         LogWindow winLog;
         INIManager iniFile;
         public Device device { get; set; }
-        MbWork work;
+        IBasedProto workProto;
         Device CurrentDevice;
 
         private bool IsSelectTCP { get; set; }
@@ -299,11 +299,36 @@ namespace ServiceControl.ViewModel
         {
             bool res;
 
+            if(SelectDevice.deviceType == DevType.IP24)
+            {
+                ComWork wrkCom = new ComWork(ComPort, TimeOutCOM);
+
+                SControl = new IP24View();
+                var vmIP24 = new IP24ViewModel(this, wrkCom);
+                SControl.DataContext = vmIP24;
+                res = wrkCom.CreateConnect();
+
+                if (res)
+                    SetStatusConnection(StatusConnect.Connected);
+                else
+                {
+                    SetStatusConnection(StatusConnect.Disconnected);
+                    return;
+                }
+
+                workProto = wrkCom;
+                return;
+            }
+
+            MbWork work;
+
+
             if (IsSelectTCP)
                 work = new MbWork(HostName, Port, Protocol.TCP, IsRTU);
             else
                 work = new MbWork(ComPort, TimeOutCOM, Protocol.COM);
 
+            workProto = work;
 
             if(SelectDevice.isSlave)
                 res = work.CreateConnectSlave();
@@ -441,6 +466,7 @@ namespace ServiceControl.ViewModel
                         (winLog.DataContext as LogWindowViewModel).StartLog(work.slave);
                     //CurrentDevice.ChangeLangRegister();
                     break;
+
             }
 
         }
@@ -455,9 +481,9 @@ namespace ServiceControl.ViewModel
             if(CurrentDevice is Device)
                 (CurrentDevice as Device).Stop();
             Thread.Sleep(1000);
-            work?.Disconnect();
+            workProto?.Disconnect();
             SControl = null;
-            work = null;
+            workProto = null;
             SetStatusConnection(StatusConnect.Disconnected);
         }
 
@@ -481,16 +507,19 @@ namespace ServiceControl.ViewModel
         private bool CanLogCommand(object p) => winLog == null /* && work != null*/;
         private void OnLogCommandExecuted(object p)
         {
-            LogWindowViewModel vm = new LogWindowViewModel(work?.master);
-            winLog = new LogWindow();
-            if(work?.master != null)
-                vm = new LogWindowViewModel(work?.master);
-            if (work?.slave != null)
-                vm = new LogWindowViewModel(work?.slave);
-            //vm.listBox = winLog.lb;
-            winLog.DataContext = vm;
-            winLog.Closed += (sender, e) => { winLog = null; vm.Dispose(); };
-            winLog.Show();
+            if( workProto is MbWork work)
+            {
+                LogWindowViewModel vm = new LogWindowViewModel(work?.master);
+                winLog = new LogWindow();
+                if (work?.master != null)
+                    vm = new LogWindowViewModel(work?.master);
+                if (work?.slave != null)
+                    vm = new LogWindowViewModel(work?.slave);
+                //vm.listBox = winLog.lb;
+                winLog.DataContext = vm;
+                winLog.Closed += (sender, e) => { winLog = null; vm.Dispose(); };
+                winLog.Show();
+            }
         }
 
         //--------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-﻿using ServiceControl.Infrastructure;
+﻿using ServiceControl.Based;
 using ServiceControl.Modbus.Registers;
 using ServiceControl.ViewModel;
 using System;

@@ -78,6 +78,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Based\IBasedProto.cs" />
     <Compile Include="Converters\ColorFlagConverter.cs" />
     <Compile Include="Converters\StabilMode131Converter.cs" />
     <Compile Include="Converters\StabilMode131VisibleConverter.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Infrastructure\ConsoleManager.cs" />
     <Compile Include="Infrastructure\INIManager.cs" />
     <Compile Include="Infrastructure\ListExt.cs" />
+    <Compile Include="Modbus\ComWork.cs" />
     <Compile Include="Modbus\Devices\Device131.cs" />
     <Compile Include="Modbus\Devices\Device356.cs" />
     <Compile Include="Modbus\Devices\DeviceBIMMaster.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
     <Compile Include="ViewModel\BI_MM_UCViewModel.cs" />
     <Compile Include="ViewModel\ConfigKIPUDZ_WindowVM.cs" />
+    <Compile Include="ViewModel\IP24ViewModel.cs" />
     <Compile Include="ViewModel\KIPLC_UCViewModel.cs" />
     <Compile Include="ViewModel\TermViewModel.cs" />
     <Compile Include="ViewModel\KIPM5Ext_UCViewModel.cs" />
@@ -136,6 +139,9 @@
     </Compile>
     <Compile Include="View\ConfigKIPUDZ_Window.xaml.cs">
       <DependentUpon>ConfigKIPUDZ_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\IP24View.xaml.cs">
+      <DependentUpon>IP24View.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\KIPLC_UCView.xaml.cs">
       <DependentUpon>KIPLC_UCView.xaml</DependentUpon>
@@ -209,6 +215,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\IP24View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\KIPLC_UCView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -260,7 +270,7 @@
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\LambdaCommand.cs" />
     <Compile Include="Infrastructure\KIPData.cs" />
-    <Compile Include="Infrastructure\Observable.cs" />
+    <Compile Include="Based\Observable.cs" />
     <Compile Include="Modbus\Registers\RegisterStab.cs" />
     <Compile Include="Modbus\Registers\RegisterInt.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

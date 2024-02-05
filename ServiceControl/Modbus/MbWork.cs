@@ -2,6 +2,7 @@
 using Modbus.Extensions.Enron;
 using Modbus.IO;
 using Modbus.Message;
+using ServiceControl.Based;
 using ServiceControl.Modbus.Registers;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace ServiceControl.Modbus
         WriteCoil, WriteRegister, WriteMultiCoils = 0x0F, WriteMultiple = 0x10 };
     public enum Protocol { COM, TCP};
 
-    internal class MbWork
+    internal class MbWork : IBasedProto
     {
         public ModbusMaster master { get; private set; }
         public ModbusSlave slave { get; private set; }

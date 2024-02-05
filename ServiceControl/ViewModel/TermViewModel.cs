@@ -1,6 +1,6 @@
 ﻿using Modbus.Utility;
 using ServiceControl.Commands;
-using ServiceControl.Infrastructure;
+using ServiceControl.Based;
 using ServiceControl.Modbus;
 using ServiceControl.Modbus.Devices;
 using ServiceControl.Modbus.Registers;
@@ -56,7 +56,6 @@ namespace ServiceControl.ViewModel
             { 11, "11 - Slave устройства нет в сети или от него нет ответа." },
         };
 
-
         private readonly MbWork work;
 
         //----------------------------------------------------------------------------------------------
@@ -101,8 +100,6 @@ namespace ServiceControl.ViewModel
 
 
         #endregion
-
-
 
         //----------------------------------------------------------------------------------------------
         #region Экранные переменные для получения

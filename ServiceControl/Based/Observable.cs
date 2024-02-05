@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace ServiceControl.Infrastructure
+namespace ServiceControl.Based
 {
     public class Observable : INotifyPropertyChanged
     {

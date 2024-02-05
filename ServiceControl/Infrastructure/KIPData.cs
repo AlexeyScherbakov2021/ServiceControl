@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceControl.Infrastructure
+namespace ServiceControl.Based
 {
     internal class KIPData
     {

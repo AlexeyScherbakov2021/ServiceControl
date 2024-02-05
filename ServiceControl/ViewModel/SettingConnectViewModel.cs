@@ -1,5 +1,5 @@
 ﻿using ServiceControl.Commands;
-using ServiceControl.Infrastructure;
+using ServiceControl.Based;
 using ServiceControl.Modbus.Devices;
 using ServiceControl.View;
 using System;
@@ -59,7 +59,8 @@ namespace ServiceControl.ViewModel
                 new DeviceType() { Name = "КССМ(Н)", deviceType = DevType.KSSM, isSlave = false},
                 new DeviceType() { Name = "КИП-LC", deviceType = DevType.KIP_LC, isSlave = true},
                 new DeviceType() { Name = "КИП-М(УДЗ)", deviceType = DevType.KIP_UDZ, isSlave = true},
-                new DeviceType() { Name = "Терминал", deviceType = DevType.TERMINAL, isSlave = false},
+                new DeviceType() { Name = "Терминал Modbus", deviceType = DevType.TERMINAL, isSlave = false},
+                new DeviceType() { Name = "НГК ИП(24)", deviceType = DevType.IP24, isSlave = false},
         };
 
         public List<string> ListCOM { get; set; } // = new List<string>()

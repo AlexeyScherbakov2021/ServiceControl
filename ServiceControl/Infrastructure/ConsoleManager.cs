@@ -8,7 +8,7 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceControl.Infrastructure
+namespace ServiceControl.Based
 {
     [SuppressUnmanagedCodeSecurity]
     public static class ConsoleManager
