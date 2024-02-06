@@ -10,14 +10,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using ServiceControl.Modbus.Devices;
 
 namespace ServiceControl.ViewModel
 {
     internal class IP24ViewModel : Observable
     {
+        private readonly MainWindowViewModel mainWindow;
         private readonly ComWork work;
         private Stopwatch sw = new Stopwatch();
         private bool IsStart = true;
+        private string TempString;
 
         private string _resString;
         public string ResString
@@ -30,10 +33,10 @@ namespace ServiceControl.ViewModel
         }
 
         public bool IsPause { get; set; }
+
         public int BU { get; set; }
         public int Imax { get; set; }
         public int Umax { get; set; }
-
 
 
         public IP24ViewModel()
@@ -43,18 +46,46 @@ namespace ServiceControl.ViewModel
 
         public IP24ViewModel(MainWindowViewModel mainViewModel, ComWork wrk)
         {
+            mainWindow = mainViewModel;
             work = wrk;
             work.setReadEvent(Read);
+            work.SetEventConnection(EventFailConnection);
+            sw.Start();
         }
+
+        public void EventFailConnection()
+        {
+            if (!work.CreateConnect())
+            {
+                mainWindow.SetStatusConnection(StatusConnect.Disconnected);
+            }
+            else
+            {
+                sw.Restart();
+                IsStart = true;
+                mainWindow.SetStatusConnection(StatusConnect.Connected);
+            }
+
+        }
+
 
         public void Read(string readString)
         {
+            if (IsPause)
+            {
+                IsStart = true;
+                sw.Restart();
+                return;
+            }
+
             long ms = sw.ElapsedMilliseconds;
+
             if (ms < 2500 && !IsStart)
-                ResString += readString;
+                TempString += readString;
             else if( ms >= 2500)
             {
-                ResString = readString;
+                ResString = TempString;
+                TempString = readString;
                 IsStart = false;
             }
             sw.Restart();
@@ -87,7 +118,9 @@ namespace ServiceControl.ViewModel
                         return;
                 }
 
+                IsStart = true;
                 work.Send(cmd);
+                //IsStart = true;
             }
         }
 
