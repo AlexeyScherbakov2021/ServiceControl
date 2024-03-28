@@ -55,7 +55,7 @@ namespace ServiceControl.ViewModel
                 new DeviceType() { Name = "БИ-М master", deviceType = DevType.BI_M_Master, isSlave = true},
                 new DeviceType() { Name = "БИ-М slave (вн.изм.)", deviceType = DevType.BI_M_Slave, isSlave = false},
                 new DeviceType() { Name = "КИП-М5", deviceType = DevType.KIP_M5, isSlave = false},
-                new DeviceType() { Name = "КИП-М5 (мод.расш.)", deviceType = DevType.KIP_M5Ext, isSlave = false},
+                new DeviceType() { Name = "ДИ", deviceType = DevType.KIP_M5Ext, isSlave = false},
                 new DeviceType() { Name = "КССМ(Н)", deviceType = DevType.KSSM, isSlave = false},
                 new DeviceType() { Name = "КИП-LC", deviceType = DevType.KIP_LC, isSlave = true},
                 new DeviceType() { Name = "КИП-М(УДЗ)", deviceType = DevType.KIP_UDZ, isSlave = true},

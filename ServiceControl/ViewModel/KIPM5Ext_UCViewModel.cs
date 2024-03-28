@@ -34,6 +34,8 @@ namespace ServiceControl.ViewModel
 
         public List<Register> ListHolding { get; set; }
         public List<ThreeRegister> ListHolding2 { get; set; }
+        public List<ThreeRegister> ListHolding21 { get; set; }
+        public List<ThreeRegister> ListHolding22 { get; set; }
         public List<TwoRegister> ListHolding3 { get; set; }
 
 
@@ -62,15 +64,27 @@ namespace ServiceControl.ViewModel
             };
 
             // добавление в список целых регистров управления
+
+
+
             ListHolding2 = new List<ThreeRegister>()
             {
                 new ThreeRegister() { Register1 = device.SummPotRMS, Register2 = device.SummPotRMS2, Register3 = device.SummPotRMS3 },
+            };
+
+            ListHolding21 = new List<ThreeRegister>()
+            {
                 new ThreeRegister() { Register1 = device.SummPot, Register2 = device.SummPot2, Register3 = device.SummPot3 },
                 new ThreeRegister() { Register1 = device.PolPot, Register2 = device.PolPot2, Register3 = device.PolPot3 },
+            };
+
+            ListHolding22 = new List<ThreeRegister>()
+            {
                 new ThreeRegister() { Register1 = device.CurrPot, Register2 = device.CurrPot2, Register3 = device.CurrPot3 },
                 new ThreeRegister() { Register1 = device.VoltNaveden, Register2 = device.VoltNaveden2, Register3 = device.VoltNaveden3 },
                 new ThreeRegister() { Register1 = device.FreqVoltNaveden, Register2 = device.FreqVoltNaveden2, Register3 = device.FreqVoltNaveden3 },
             };
+
 
             ListHolding3 = new List<TwoRegister>()
             {
