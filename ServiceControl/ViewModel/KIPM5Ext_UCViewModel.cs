@@ -74,7 +74,8 @@ namespace ServiceControl.ViewModel
 
             ListHolding3 = new List<TwoRegister>()
             {
-                new TwoRegister() { Register1 =  device.Address, Register2 = device.AddressSet}
+                new TwoRegister() { Register1 =  device.Address, Register2 = device.AddressSet},
+                new TwoRegister() { Register1 =  device.Shunt, Register2 = device.ShuntSet}
             };
 
             device.Start();

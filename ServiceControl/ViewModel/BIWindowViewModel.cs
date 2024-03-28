@@ -50,6 +50,5 @@ namespace ServiceControl.ViewModel
                 ListBIRegisters.Add(listReg[i]);
 
         }
-
     }
 }

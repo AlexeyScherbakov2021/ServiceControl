@@ -15,6 +15,8 @@ namespace ServiceControl.Modbus.Devices
     {
         public RegisterInt Address;                     // установка адреса устройства
         public RegisterInt AddressSet;                  // установка адреса устройства
+        public RegisterFloat Shunt;                     // шунт
+        public RegisterFloat ShuntSet;                  // установка шунта
         public RegisterInt Flags;                       // Флаги работы КИП
         public RegisterFloat CurrOut;                   // Ток на выходе СКЗ
         public RegisterFloat VoltOut;                   // Напряжение на выходе СКЗ
@@ -56,7 +58,6 @@ namespace ServiceControl.Modbus.Devices
                 MaxValue = 255
             };
 
-
             Address = new RegisterInt()
             {
                 Address = 0x01,
@@ -71,6 +72,37 @@ namespace ServiceControl.Modbus.Devices
                 MaxValue = 255
             };
             ListHolding.Add(Address);
+
+            Shunt = new RegisterFloat()
+            {
+                Address = 0x02,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Name = "Номинал шунта",
+                NameRes = "",
+                Measure = "А",
+                MeasureRes = "",
+                Scale = 0.01f,
+                Size = 1,
+                Description = "",
+                MinValue = 0,
+                MaxValue = 1500
+            };
+            ListHolding.Add(Shunt);
+
+            ShuntSet = new RegisterFloat()
+            {
+                Address = 0x02,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Name = "Установка номинала шунта",
+                NameRes = "",
+                Measure = "А",
+                MeasureRes = "",
+                Size = 1,
+                Scale = 0.01f,
+                Description = "",
+                MinValue = 0,
+                MaxValue = 1500
+            };
 
             Flags = new RegisterInt()
             {
@@ -420,15 +452,16 @@ namespace ServiceControl.Modbus.Devices
         public override Task StartRequestValue()
         {
             ReadRegister(AddressSet);
+            ReadRegister(ShuntSet);
             ReadRegisters(ListHolding);
-            ReadRegisters(ListHolding);
+            ReadRegisters(ListHolding2);
             return Task.CompletedTask;
         }
 
         protected override void CheckListRegister()
         {
             CheckReg(ListHolding);
-            CheckReg(ListHolding);
+            CheckReg(ListHolding2);
         }
     }
 }

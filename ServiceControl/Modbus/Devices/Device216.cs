@@ -162,7 +162,7 @@ namespace ServiceControl.Modbus.Devices
                 Measure = "В",
                 MeasureRes = "Volt",
                 Description = "Uвых", 
-                Scale = 0.01f, MinValue = -100, MaxValue = 100 };
+                Scale = 0.01f, MinValue = -200, MaxValue = 200 };
             ListInput.Add(NaprOutput);
 
             ProtectPotenSumm = new RegisterFloat() { Address = 0x0E, CodeFunc = ModbusFunc.InputRegister, Size = 1, 
@@ -171,7 +171,7 @@ namespace ServiceControl.Modbus.Devices
                 Measure = "В",
                 MeasureRes = "Volt",
                 Description = "Uсп", 
-                Scale = 0.01f, MinValue = -5, MaxValue = 5 };
+                Scale = 0.01f, MinValue = -10, MaxValue = 10 };
             ListInput.Add(ProtectPotenSumm);
 
             ProtectPotenPol = new RegisterFloat() { Address = 0x0F, CodeFunc = ModbusFunc.InputRegister, Size = 1, 
@@ -180,7 +180,7 @@ namespace ServiceControl.Modbus.Devices
                 Measure = "В",
                 MeasureRes = "Volt",
                 Description = "Uпп", 
-                Scale = 0.01f, MinValue = -5, MaxValue = 5 };
+                Scale = 0.01f, MinValue = -10, MaxValue = 10 };
             ListInput.Add(ProtectPotenPol);
 
             Stabil = new RegisterStab() { Address = 0x10, CodeFunc = ModbusFunc.InputRegister, 

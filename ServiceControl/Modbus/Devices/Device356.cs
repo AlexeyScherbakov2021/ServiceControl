@@ -222,7 +222,7 @@ namespace ServiceControl.Modbus.Devices
                 Measure = "A",
                 Description = "Iвых",
                 Scale = 0.01f,
-                MinValue = 0,
+                MinValue = -150,
                 MaxValue = 150
             };
             ListInput.Add(CurrOutput);
@@ -238,8 +238,8 @@ namespace ServiceControl.Modbus.Devices
                 MeasureRes = "Volt",
                 Description = "Uвых",
                 Scale = 0.01f,
-                MinValue = 0,
-                MaxValue = 100
+                MinValue = -200,
+                MaxValue = 200
             };
             ListInput.Add(NaprOutput);
 
@@ -254,8 +254,8 @@ namespace ServiceControl.Modbus.Devices
                 MeasureRes = "Volt",
                 Description = "Uсп",
                 Scale = 0.01f,
-                MinValue = -5,
-                MaxValue = 5
+                MinValue = -10,
+                MaxValue = 10
             };
             ListInput.Add(ProtectPotenSumm);
 
@@ -270,8 +270,8 @@ namespace ServiceControl.Modbus.Devices
                 MeasureRes = "Volt",
                 Description = "Uпп",
                 Scale = 0.01f,
-                MinValue = -5,
-                MaxValue = 5
+                MinValue = -10,
+                MaxValue = 10
             };
             ListInput.Add(ProtectPotenPol);
 
@@ -943,6 +943,22 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
+            
+//   УДАЛИТЬ --------------------------------            
+            //ReadRegisters(ListInputBI);
+            //SpeedDK[0].Value = 103.123456789f;
+            //DeepDK[0].Value = 103.123456789f;
+            //BI_SummPot[0].Value = 103.123456789f;
+            //BI_PolPot[0].Value = 103.123456789f;
+            //BI_OutCurrent[0].Value = 103.123456789f;
+            //BI_OutVoltage[0].Value = 103.123456789f;
+            //BI_CurrPol[0].Value = 103.123456789f;
+            //BI_IndVoltage[0].Value = 103.123456789f;
+            //BI_FreqVoltage[0].Value = 103;
+            //BI_Temper[0].Value = 103.123456789f;
+
+            //return Task.CompletedTask;
+// ------------------------------------------
 
             ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
@@ -965,7 +981,6 @@ namespace ServiceControl.Modbus.Devices
             return Task.CompletedTask;
 
         }
-
 
         //-------------------------------------------------------------------------------------------
         // 
@@ -1020,8 +1035,6 @@ namespace ServiceControl.Modbus.Devices
             OnOffMS.SetLanguage();
             OnOffMSWrite.SetLanguage();
             SetMode.SetLanguage();
-
         }
-
     }
 }
