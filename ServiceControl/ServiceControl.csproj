@@ -91,6 +91,7 @@
     <Compile Include="Modbus\Devices\Device131.cs" />
     <Compile Include="Modbus\Devices\Device356.cs" />
     <Compile Include="Modbus\Devices\DeviceBIMMaster.cs" />
+    <Compile Include="Modbus\Devices\DeviceBIT.cs" />
     <Compile Include="Modbus\Devices\DeviceKIPLC.cs" />
     <Compile Include="Modbus\Devices\DeviceKIPM5Ext.cs" />
     <Compile Include="Modbus\Devices\DeviceKIPUDZ.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Modbus\Devices\DeviceType.cs" />
     <Compile Include="Modbus\Registers\Register.cs" />
     <Compile Include="Modbus\Registers\RegisterBase.cs" />
+    <Compile Include="Modbus\Registers\RegisterFloat.cs" />
     <Compile Include="Modbus\Registers\RegisterInfo.cs" />
     <Compile Include="Modbus\Registers\RegisterKIP.cs" />
     <Compile Include="Modbus\Registers\RegisterMode131.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="Modbus\Registers\RegisterStatus.cs" />
     <Compile Include="Modbus\Registers\RegisterStatus131.cs" />
     <Compile Include="Modbus\Registers\RegisterStatusDC.cs" />
+    <Compile Include="ViewModel\BIT_UCViewModel.cs" />
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
     <Compile Include="ViewModel\BI_MM_UCViewModel.cs" />
     <Compile Include="ViewModel\ConfigKIPUDZ_WindowVM.cs" />
@@ -178,6 +181,9 @@
     </Compile>
     <Compile Include="View\TermView.xaml.cs">
       <DependentUpon>TermView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BIT_UCView.xaml.cs">
+      <DependentUpon>BIT_UCView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\lang.en-US.xaml">
       <SubType>Designer</SubType>
@@ -300,6 +306,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\BIT_UCView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modbus\MbWork.cs" />
@@ -307,7 +317,7 @@
     <Compile Include="Modbus\Devices\Device.cs" />
     <Compile Include="Modbus\Devices\Device216.cs" />
     <Compile Include="Modbus\Devices\Device261.cs" />
-    <Compile Include="Modbus\Registers\RegisterFloat.cs" />
+    <Compile Include="Modbus\Registers\RegisterIntFloat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -16,12 +16,12 @@ namespace ServiceControl.Modbus.Devices
     internal class  DeviceKIPLC : DeviceMaster
     {
         public RegisterInt NumberPacket;                // Номер передаваемого пакета  
-        public RegisterFloat VoltPower;                 // Напряжение питания БИ
+        public RegisterIntFloat VoltPower;                 // Напряжение питания БИ
         public RegisterInt FlagsStatus;                 // Неисправность, вскрытие, обрыв цепей, ДК (датчики коррозии)
-        public RegisterFloat SummPot1;                  // Суммарный потенциал 1
-        public RegisterFloat PolPot1;                   // Поляризационный потенциал 1
-        public RegisterFloat CurrPot1;                  // Ток поляризации 1
-        public RegisterFloat VoltNaveden1;              // Переменное наведенное напряжение на сооружении
+        public RegisterIntFloat SummPot1;                  // Суммарный потенциал 1
+        public RegisterIntFloat PolPot1;                   // Поляризационный потенциал 1
+        public RegisterIntFloat CurrPot1;                  // Ток поляризации 1
+        public RegisterIntFloat VoltNaveden1;              // Переменное наведенное напряжение на сооружении
         public RegisterInt FreqVoltNaveden1;            // Частота наведенного напряжение
         public RegisterRT RealTime { get; set; }        // Текущее системное время сервера
         //public RegisterFloat KoefSummPot1;              // Калибровочный коэффициент канала измерения суммарного потенциала
@@ -54,7 +54,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(NumberPacket);
 
-            VoltPower = new RegisterFloat()
+            VoltPower = new RegisterIntFloat()
             {
                 Address = 0x02,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -83,7 +83,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(FlagsStatus);
 
-            SummPot1 = new RegisterFloat()
+            SummPot1 = new RegisterIntFloat()
             {
                 Address = 0x10,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -99,7 +99,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding2.Add(SummPot1);
 
-            PolPot1 = new RegisterFloat()
+            PolPot1 = new RegisterIntFloat()
             {
                 Address = 0x11,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -115,7 +115,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding2.Add(PolPot1);
 
-            CurrPot1 = new RegisterFloat()
+            CurrPot1 = new RegisterIntFloat()
             {
                 Address = 0x12,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -131,7 +131,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding2.Add(CurrPot1);
 
-            VoltNaveden1 = new RegisterFloat()
+            VoltNaveden1 = new RegisterIntFloat()
             {
                 Address = 0x13,
                 CodeFunc = ModbusFunc.HoldingRegister,

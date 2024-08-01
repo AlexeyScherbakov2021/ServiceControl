@@ -19,29 +19,29 @@ namespace ServiceControl.Modbus.Devices
         public const int CountBI = 10;
         public bool IsOldVersion = true;
 
-        public RegisterFloat NaprSeti1;
-        public RegisterFloat CountEE1;
-        public RegisterFloat NaprSeti2;
-        public RegisterFloat CountEE2;
-        public RegisterFloat Temper;
+        public RegisterIntFloat NaprSeti1;
+        public RegisterIntFloat CountEE1;
+        public RegisterIntFloat NaprSeti2;
+        public RegisterIntFloat CountEE2;
+        public RegisterIntFloat Temper;
         public RegisterInt TimeWork;
         public RegisterInt TimeProtect;
-        public RegisterFloat CurrOutput;
-        public RegisterFloat NaprOutput;
-        public RegisterFloat ProtectPotenSumm;
-        public RegisterFloat ProtectPotenPol;
+        public RegisterIntFloat CurrOutput;
+        public RegisterIntFloat NaprOutput;
+        public RegisterIntFloat ProtectPotenSumm;
+        public RegisterIntFloat ProtectPotenPol;
 
         public RegisterMS[] MS;
-        public RegisterFloat[] SpeedDK;
-        public RegisterFloat[] DeepDK;
-        public RegisterFloat[] BI_SummPot;
-        public RegisterFloat[] BI_PolPot;
-        public RegisterFloat[] BI_CurrPol;
-        public RegisterFloat[] BI_OutVoltage;
-        public RegisterFloat[] BI_OutCurrent;
-        public RegisterFloat[] BI_IndVoltage;
+        public RegisterIntFloat[] SpeedDK;
+        public RegisterIntFloat[] DeepDK;
+        public RegisterIntFloat[] BI_SummPot;
+        public RegisterIntFloat[] BI_PolPot;
+        public RegisterIntFloat[] BI_CurrPol;
+        public RegisterIntFloat[] BI_OutVoltage;
+        public RegisterIntFloat[] BI_OutCurrent;
+        public RegisterIntFloat[] BI_IndVoltage;
         public RegisterInt[] BI_FreqVoltage;
-        public RegisterFloat[] BI_Temper;
+        public RegisterIntFloat[] BI_Temper;
 
 
         public RegisterBool IllegalAccess;
@@ -56,11 +56,11 @@ namespace ServiceControl.Modbus.Devices
         public RegisterBool OnOffMSWrite { get; set; }
 
         public RegisterStab Stabil { get; set; }
-        public RegisterFloat SetCurrOutput;
-        public RegisterFloat SetSummPotOutput;
-        public RegisterFloat SetPolPotOutput;
+        public RegisterIntFloat SetCurrOutput;
+        public RegisterIntFloat SetSummPotOutput;
+        public RegisterIntFloat SetPolPotOutput;
         public RegisterStab SetMode { get; set; }
-        public RegisterFloat SetNaprOutput;
+        public RegisterIntFloat SetNaprOutput;
 
         public RegisterInfo InfoReg { get; set; }
 
@@ -79,7 +79,7 @@ namespace ServiceControl.Modbus.Devices
         public RegisterInt ResistPlast1;
         public RegisterInt ResistPlast2;
         public RegisterInt ResistPlast3;
-        public RegisterFloat CurrPolyar;
+        public RegisterIntFloat CurrPolyar;
         public RegisterInt TimeWorkWrite;
         public RegisterInt TimeProtectWrite;
         public RegisterInt TempCoolerOn;
@@ -104,7 +104,7 @@ namespace ServiceControl.Modbus.Devices
             //--------------------------------------------------------------------------------------------------------------------------------------
             ListInput = new List<Register>();
 
-            NaprSeti1 = new RegisterFloat()
+            NaprSeti1 = new RegisterIntFloat()
             {
                 Address = 0x01,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -120,7 +120,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(NaprSeti1);
 
-            CountEE1 = new RegisterFloat()
+            CountEE1 = new RegisterIntFloat()
             {
                 Address = 0x02,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -136,7 +136,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CountEE1);
 
-            NaprSeti2 = new RegisterFloat()
+            NaprSeti2 = new RegisterIntFloat()
             {
                 Address = 0x04,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -152,7 +152,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(NaprSeti2);
 
-            CountEE2 = new RegisterFloat()
+            CountEE2 = new RegisterIntFloat()
             {
                 Address = 0x05,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -168,7 +168,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CountEE2);
 
-            Temper = new RegisterFloat()
+            Temper = new RegisterIntFloat()
             {
                 Address = 0x07,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -212,7 +212,7 @@ namespace ServiceControl.Modbus.Devices
             }; 
             ListInput.Add(TimeProtect);
 
-            CurrOutput = new RegisterFloat()
+            CurrOutput = new RegisterIntFloat()
             {
                 Address = 0x0C,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -227,7 +227,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CurrOutput);
 
-            NaprOutput = new RegisterFloat()
+            NaprOutput = new RegisterIntFloat()
             {
                 Address = 0x0D,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -243,7 +243,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(NaprOutput);
 
-            ProtectPotenSumm = new RegisterFloat()
+            ProtectPotenSumm = new RegisterIntFloat()
             {
                 Address = 0x0E,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -259,7 +259,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(ProtectPotenSumm);
 
-            ProtectPotenPol = new RegisterFloat()
+            ProtectPotenPol = new RegisterIntFloat()
             {
                 Address = 0x0F,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -310,22 +310,22 @@ namespace ServiceControl.Modbus.Devices
             if ((year >= 2020 && version <= 3) || (year >= 2023 && version >= 4))
             {
                 IsOldVersion = false;
-                SpeedDK = new RegisterFloat[CountBI];
-                DeepDK = new RegisterFloat[CountBI];
-                BI_SummPot = new RegisterFloat[CountBI];
-                BI_PolPot = new RegisterFloat[CountBI];
-                BI_CurrPol = new RegisterFloat[CountBI];
-                BI_OutVoltage = new RegisterFloat[CountBI];
-                BI_OutCurrent = new RegisterFloat[CountBI];
-                BI_IndVoltage = new RegisterFloat[CountBI];
+                SpeedDK = new RegisterIntFloat[CountBI];
+                DeepDK = new RegisterIntFloat[CountBI];
+                BI_SummPot = new RegisterIntFloat[CountBI];
+                BI_PolPot = new RegisterIntFloat[CountBI];
+                BI_CurrPol = new RegisterIntFloat[CountBI];
+                BI_OutVoltage = new RegisterIntFloat[CountBI];
+                BI_OutCurrent = new RegisterIntFloat[CountBI];
+                BI_IndVoltage = new RegisterIntFloat[CountBI];
                 BI_FreqVoltage = new RegisterInt[CountBI];
-                BI_Temper = new RegisterFloat[CountBI];
+                BI_Temper = new RegisterIntFloat[CountBI];
 
 
                 int adr = 0;
                 for (int i = 0; i < CountBI; i++, adr += 2)
                 {
-                    SpeedDK[i] = new RegisterFloat()
+                    SpeedDK[i] = new RegisterIntFloat()
                     {
                         Address = (ushort)(0x1D + adr),
                         CodeFunc = ModbusFunc.InputRegister,
@@ -341,7 +341,7 @@ namespace ServiceControl.Modbus.Devices
                     };
                     ListInput.Add(SpeedDK[i]);
 
-                    DeepDK[i] = new RegisterFloat()
+                    DeepDK[i] = new RegisterIntFloat()
                     {
                         Address = (ushort)(0x1E + adr),
                         CodeFunc = ModbusFunc.InputRegister,
@@ -363,7 +363,7 @@ namespace ServiceControl.Modbus.Devices
                 adr = 0;
                 for (int i = 0; i < CountBI; i++, adr += 8)
                 {
-                    BI_SummPot[i] = new RegisterFloat()
+                    BI_SummPot[i] = new RegisterIntFloat()
                     {
                         Address = (ushort)(0x51 + adr),
                         CodeFunc = ModbusFunc.InputRegister,
@@ -379,7 +379,7 @@ namespace ServiceControl.Modbus.Devices
                     };
                     ListInputBI.Add(BI_SummPot[i]);
 
-                    BI_PolPot[i] = new RegisterFloat()
+                    BI_PolPot[i] = new RegisterIntFloat()
                     {
                         Address = (ushort)(0x52 + adr),
                         CodeFunc = ModbusFunc.InputRegister,
@@ -395,7 +395,7 @@ namespace ServiceControl.Modbus.Devices
                     };
                     ListInputBI.Add(BI_PolPot[i]);
 
-                    BI_CurrPol[i] = new RegisterFloat()
+                    BI_CurrPol[i] = new RegisterIntFloat()
                     {
                         Address = (ushort)(0x53 + adr),
                         CodeFunc = ModbusFunc.InputRegister,
@@ -411,7 +411,7 @@ namespace ServiceControl.Modbus.Devices
                     };
                     ListInputBI.Add(BI_CurrPol[i]);
 
-                    BI_OutVoltage[i] = new RegisterFloat()
+                    BI_OutVoltage[i] = new RegisterIntFloat()
                     {
                         Address = (ushort)(0x54 + adr),
                         CodeFunc = ModbusFunc.InputRegister,
@@ -427,7 +427,7 @@ namespace ServiceControl.Modbus.Devices
                     };
                     ListInputBI.Add(BI_OutVoltage[i]);
 
-                    BI_OutCurrent[i] = new RegisterFloat()
+                    BI_OutCurrent[i] = new RegisterIntFloat()
                     {
                         Address = (ushort)(0x55 + adr),
                         CodeFunc = ModbusFunc.InputRegister,
@@ -443,7 +443,7 @@ namespace ServiceControl.Modbus.Devices
                     };
                     ListInputBI.Add(BI_OutCurrent[i]);
 
-                    BI_IndVoltage[i] = new RegisterFloat()
+                    BI_IndVoltage[i] = new RegisterIntFloat()
                     {
                         Address = (ushort)(0x56 + adr),
                         CodeFunc = ModbusFunc.InputRegister,
@@ -474,7 +474,7 @@ namespace ServiceControl.Modbus.Devices
                     };
                     ListInputBI.Add(BI_FreqVoltage[i]);
 
-                    BI_Temper[i] = new RegisterFloat()
+                    BI_Temper[i] = new RegisterIntFloat()
                     {
                         Address = (ushort)(0x58 + adr),
                         CodeFunc = ModbusFunc.InputRegister,
@@ -623,7 +623,7 @@ namespace ServiceControl.Modbus.Devices
             //--------------------------------------------------------------------------------------------------------------------------------------
             ListWriteControl = new List<Register>();
 
-            SetCurrOutput = new RegisterFloat()
+            SetCurrOutput = new RegisterIntFloat()
             {
                 Address = 0x81,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -638,7 +638,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListWriteControl.Add(SetCurrOutput);
 
-            SetSummPotOutput = new RegisterFloat()
+            SetSummPotOutput = new RegisterIntFloat()
             {
                 Address = 0x82,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -654,7 +654,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListWriteControl.Add(SetSummPotOutput);
 
-            SetPolPotOutput = new RegisterFloat()
+            SetPolPotOutput = new RegisterIntFloat()
             {
                 Address = 0x83,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -682,7 +682,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListWriteControl.Add(SetMode);
 
-            SetNaprOutput = new RegisterFloat()
+            SetNaprOutput = new RegisterIntFloat()
             {
                 Address = 0x85,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -886,7 +886,7 @@ namespace ServiceControl.Modbus.Devices
                 MaxValue = 1404
             };
             ListDop.Add(ResistPlast3);
-            CurrPolyar = new RegisterFloat()
+            CurrPolyar = new RegisterIntFloat()
             {
                 Address = 0x48,
                 CodeFunc = ModbusFunc.InputRegister,

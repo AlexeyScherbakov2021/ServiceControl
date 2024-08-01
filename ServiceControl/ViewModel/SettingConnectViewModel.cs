@@ -18,7 +18,6 @@ namespace ServiceControl.ViewModel
     {
         SettingConnect setWindow;
 
-
         #region Экранные переменные
 
         private string _HostTCP;
@@ -61,6 +60,7 @@ namespace ServiceControl.ViewModel
                 new DeviceType() { Name = "КИП-М(УДЗ)", deviceType = DevType.KIP_UDZ, isSlave = true},
                 new DeviceType() { Name = "Терминал Modbus", deviceType = DevType.TERMINAL, isSlave = false},
                 new DeviceType() { Name = "НГК ИП(24)", deviceType = DevType.IP24, isSlave = false},
+                new DeviceType() { Name = "БИТ", deviceType = DevType.BIT, isSlave = false, isASCII = true},
         };
 
         public List<string> ListCOM { get; set; } // = new List<string>()

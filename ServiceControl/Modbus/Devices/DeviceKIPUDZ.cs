@@ -37,51 +37,51 @@ namespace ServiceControl.Modbus.Devices
         {
             //public int time { get; set; }
             public string time { get; set; }
-            public RegisterFloat VoltageTRa { get; set; }                // Напряжение труба/рельс
-            public RegisterFloat CurrTRa { get; set; }                   // Ток труба/рельс
-            public RegisterFloat IndicBITLefta { get; set; }             // Данные с индикатора тока БИТ (левый)
-            public RegisterFloat IndicBITRighta { get; set; }            // Данные с индикатора тока БИТ (правый)
+            public RegisterIntFloat VoltageTRa { get; set; }                // Напряжение труба/рельс
+            public RegisterIntFloat CurrTRa { get; set; }                   // Ток труба/рельс
+            public RegisterIntFloat IndicBITLefta { get; set; }             // Данные с индикатора тока БИТ (левый)
+            public RegisterIntFloat IndicBITRighta { get; set; }            // Данные с индикатора тока БИТ (правый)
         }
 
         public RegisterRT RealTime { get; set; }        // Текущее системное время
         public RegisterInt WakeUp;                      // Время до следующего пробуждения в минутах
         public RegisterInt FlagsAlarm { get; set; }     // Регистр флагов сигнализации выхода за уставки
-        public RegisterFloat PowerMax;                  // Уставка по максимальному напряжению питания 
-        public RegisterFloat PowerMin;                  // Уставка по минимальному напряжению питания
-        public RegisterFloat SummPotMax;                // Уставка по максимальному сумм.потенциалу
-        public RegisterFloat SummPotMin;                // Уставка по минимальному сумм.потенциалу
-        public RegisterFloat PolPotMax;                 // Уставка по максимальному пол.потенциалу
-        public RegisterFloat PolPotMin;                 // Уставка по минимальному пол.потенциалу
-        public RegisterFloat CurrPotMax;                // Уставка по максимальному току поляризации
-        public RegisterFloat CurrPotMin;                // Уставка по минимальному току поляризации
-        public RegisterFloat VoltTRMax;                 // Уставка по максимальному напряжению труба/рельс
-        public RegisterFloat VoltTRMin;                 // Уставка по минимальному напряжению труба/рельс
-        public RegisterFloat CurrTRMax;                 // Уставка по максимальному току труба/рельс
-        public RegisterFloat CurrTRMin;                 // Уставка по минимальному току труба/рельс
-        public RegisterFloat ResistTRMax;               // Уставка по максимальному сопротивлению труба/рельс
-        public RegisterFloat ResistTRMin;               // Уставка по минимальному сопротивлению труба/рельс
-        public RegisterFloat TemperMax;                 // Уставка по максимальной температуре в корпусе
-        public RegisterFloat TemperMin;                 // Уставка по минимальной температуре в корпусе
+        public RegisterIntFloat PowerMax;                  // Уставка по максимальному напряжению питания 
+        public RegisterIntFloat PowerMin;                  // Уставка по минимальному напряжению питания
+        public RegisterIntFloat SummPotMax;                // Уставка по максимальному сумм.потенциалу
+        public RegisterIntFloat SummPotMin;                // Уставка по минимальному сумм.потенциалу
+        public RegisterIntFloat PolPotMax;                 // Уставка по максимальному пол.потенциалу
+        public RegisterIntFloat PolPotMin;                 // Уставка по минимальному пол.потенциалу
+        public RegisterIntFloat CurrPotMax;                // Уставка по максимальному току поляризации
+        public RegisterIntFloat CurrPotMin;                // Уставка по минимальному току поляризации
+        public RegisterIntFloat VoltTRMax;                 // Уставка по максимальному напряжению труба/рельс
+        public RegisterIntFloat VoltTRMin;                 // Уставка по минимальному напряжению труба/рельс
+        public RegisterIntFloat CurrTRMax;                 // Уставка по максимальному току труба/рельс
+        public RegisterIntFloat CurrTRMin;                 // Уставка по минимальному току труба/рельс
+        public RegisterIntFloat ResistTRMax;               // Уставка по максимальному сопротивлению труба/рельс
+        public RegisterIntFloat ResistTRMin;               // Уставка по минимальному сопротивлению труба/рельс
+        public RegisterIntFloat TemperMax;                 // Уставка по максимальной температуре в корпусе
+        public RegisterIntFloat TemperMin;                 // Уставка по минимальной температуре в корпусе
 
         public RegisterInt Number;                      // Номер пакета
         public RegisterRT TimeNow;                      // временной маркер пакета, старшие 2 байта
         public RegisterInt Flags { get; set; }          // Флаги сработавших уставок
-        public RegisterFloat Voltage;                   // Напряжение питания
-        public RegisterFloat VoltageInduct;             // Наведенное напряжение
+        public RegisterIntFloat Voltage;                   // Напряжение питания
+        public RegisterIntFloat VoltageInduct;             // Наведенное напряжение
         public RegisterInt FreqInduct;                  // Частота наведенного напряжения
-        public RegisterFloat SummPot;                   // Суммарный потенциал
-        public RegisterFloat PolPot;                    // Поляризационный потенциал
-        public RegisterFloat CurrPol;                   // Ток поляризации
-        public RegisterFloat ResistTR;                  // сопротивление труба/рельс (65535 Ом - обрыв)
-        public RegisterFloat Temper1;                   // Температурный датчик №1
-        public RegisterFloat Temper2;                   // Температурный датчик №2
+        public RegisterIntFloat SummPot;                   // Суммарный потенциал
+        public RegisterIntFloat PolPot;                    // Поляризационный потенциал
+        public RegisterIntFloat CurrPol;                   // Ток поляризации
+        public RegisterIntFloat ResistTR;                  // сопротивление труба/рельс (65535 Ом - обрыв)
+        public RegisterIntFloat Temper1;                   // Температурный датчик №1
+        public RegisterIntFloat Temper2;                   // Температурный датчик №2
         public RegisterInt SpeedKorr;                   // Скорость коррозии
         public RegisterInt DeepKorr;                    // Глубина коррозии
 
-        public RegisterFloat VoltageTR;                 // Напряжение труба/рельс
-        public RegisterFloat CurrTR;                    // Ток труба/рельс
-        public RegisterFloat IndicBITLeft;              // Данные с индикатора тока БИТ (левый)
-        public RegisterFloat IndicBITRight;             // Данные с индикатора тока БИТ (правый)
+        public RegisterIntFloat VoltageTR;                 // Напряжение труба/рельс
+        public RegisterIntFloat CurrTR;                    // Ток труба/рельс
+        public RegisterIntFloat IndicBITLeft;              // Данные с индикатора тока БИТ (левый)
+        public RegisterIntFloat IndicBITRight;             // Данные с индикатора тока БИТ (правый)
 
         public List<Archive> listArchive { get; set; } = new List<Archive>();
         Archive dayArchive;
@@ -138,7 +138,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(FlagsAlarm);
 
-            PowerMax = new RegisterFloat()
+            PowerMax = new RegisterIntFloat()
             {
                 Address = 0x05,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -155,7 +155,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(PowerMax);
 
-            PowerMin = new RegisterFloat()
+            PowerMin = new RegisterIntFloat()
             {
                 Address = 0x06,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -172,7 +172,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(PowerMin);
 
-            SummPotMax = new RegisterFloat()
+            SummPotMax = new RegisterIntFloat()
             {
                 Address = 0x07,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -189,7 +189,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(SummPotMax);
 
-            SummPotMin = new RegisterFloat()
+            SummPotMin = new RegisterIntFloat()
             {
                 Address = 0x08,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -207,7 +207,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(SummPotMin);
 
-            PolPotMax = new RegisterFloat()
+            PolPotMax = new RegisterIntFloat()
             {
                 Address = 0x09,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -224,7 +224,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(PolPotMax);
 
-            PolPotMin = new RegisterFloat()
+            PolPotMin = new RegisterIntFloat()
             {
                 Address = 0x0A,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -241,7 +241,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(PolPotMin);
 
-            CurrPotMax = new RegisterFloat()
+            CurrPotMax = new RegisterIntFloat()
             {
                 Address = 0x0B,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -258,7 +258,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CurrPotMax);
 
-            CurrPotMin = new RegisterFloat()
+            CurrPotMin = new RegisterIntFloat()
             {
                 Address = 0x0C,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -275,7 +275,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CurrPotMin);
 
-            VoltTRMax = new RegisterFloat()
+            VoltTRMax = new RegisterIntFloat()
             {
                 Address = 0x0D,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -292,7 +292,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(VoltTRMax);
 
-            VoltTRMin = new RegisterFloat()
+            VoltTRMin = new RegisterIntFloat()
             {
                 Address = 0x0E,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -309,7 +309,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(VoltTRMin);
 
-            CurrTRMax = new RegisterFloat()
+            CurrTRMax = new RegisterIntFloat()
             {
                 Address = 0x0F,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -326,7 +326,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CurrTRMax);
 
-            CurrTRMin = new RegisterFloat()
+            CurrTRMin = new RegisterIntFloat()
             {
                 Address = 0x10,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -343,7 +343,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CurrTRMin);
 
-            ResistTRMax = new RegisterFloat()
+            ResistTRMax = new RegisterIntFloat()
             {
                 Address = 0x11,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -360,7 +360,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(ResistTRMax);
 
-            ResistTRMin = new RegisterFloat()
+            ResistTRMin = new RegisterIntFloat()
             {
                 Address = 0x12,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -377,7 +377,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(ResistTRMin);
 
-            TemperMax = new RegisterFloat()
+            TemperMax = new RegisterIntFloat()
             {
                 Address = 0x13,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -394,7 +394,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(TemperMax);
 
-            TemperMin = new RegisterFloat()
+            TemperMin = new RegisterIntFloat()
             {
                 Address = 0x14,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -455,7 +455,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(Flags);
 
-            Voltage = new RegisterFloat()
+            Voltage = new RegisterIntFloat()
             {
                 Address = 0x05,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -471,7 +471,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(Voltage);
 
-            VoltageInduct = new RegisterFloat()
+            VoltageInduct = new RegisterIntFloat()
             {
                 Address = 0x06,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -502,7 +502,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(FreqInduct);
 
-            SummPot = new RegisterFloat()
+            SummPot = new RegisterIntFloat()
             {
                 Address = 0x08,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -518,7 +518,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(SummPot);
 
-            PolPot = new RegisterFloat()
+            PolPot = new RegisterIntFloat()
             {
                 Address = 0x09,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -534,7 +534,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(PolPot);
 
-            CurrPol = new RegisterFloat()
+            CurrPol = new RegisterIntFloat()
             {
                 Address = 0x0A,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -550,7 +550,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(CurrPol);
 
-            VoltageTR = new RegisterFloat()
+            VoltageTR = new RegisterIntFloat()
             {
                 Address = 0x0B,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -566,7 +566,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(VoltageTR);
 
-            CurrTR = new RegisterFloat()
+            CurrTR = new RegisterIntFloat()
             {
                 Address = 0x0C,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -582,7 +582,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(CurrTR);
 
-            ResistTR = new RegisterFloat()
+            ResistTR = new RegisterIntFloat()
             {
                 Address = 0x0D,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -598,7 +598,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(ResistTR);
 
-            Temper1 = new RegisterFloat()
+            Temper1 = new RegisterIntFloat()
             {
                 Address = 0x0E,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -644,7 +644,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(DeepKorr);
 
-            IndicBITLeft = new RegisterFloat()
+            IndicBITLeft = new RegisterIntFloat()
             {
                 Address = 0x11,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -660,7 +660,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListHolding.Add(IndicBITLeft);
 
-            IndicBITRight = new RegisterFloat()
+            IndicBITRight = new RegisterIntFloat()
             {
                 Address = 0x12,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -713,7 +713,7 @@ namespace ServiceControl.Modbus.Devices
             ListHolding.Add(reserv);
 
 
-            Temper2 = new RegisterFloat()
+            Temper2 = new RegisterIntFloat()
             {
                 Address = 0x17,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -734,7 +734,7 @@ namespace ServiceControl.Modbus.Devices
             dayArchive = new Archive()
             {
                 time = "текущее",
-                VoltageTRa = new RegisterFloat()
+                VoltageTRa = new RegisterIntFloat()
                 {
                     Address = 0x1A1,
                     CodeFunc = ModbusFunc.HoldingRegister,
@@ -749,7 +749,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 250f
                 },
 
-                CurrTRa = new RegisterFloat()
+                CurrTRa = new RegisterIntFloat()
                 {
                     Address = 0x1A2,
                     CodeFunc = ModbusFunc.HoldingRegister,
@@ -763,7 +763,7 @@ namespace ServiceControl.Modbus.Devices
                     MinValue = -500f,
                     MaxValue = 500f
                 },
-                IndicBITLefta = new RegisterFloat()
+                IndicBITLefta = new RegisterIntFloat()
                 {
                     Address = 0x1A3,
                     CodeFunc = ModbusFunc.HoldingRegister,
@@ -778,7 +778,7 @@ namespace ServiceControl.Modbus.Devices
                     MaxValue = 320f
                 },
 
-                IndicBITRighta = new RegisterFloat()
+                IndicBITRighta = new RegisterIntFloat()
                 {
                     Address = 0x1A4,
                     CodeFunc = ModbusFunc.HoldingRegister,
@@ -805,7 +805,7 @@ namespace ServiceControl.Modbus.Devices
                 {
                     time = $"{i-1:00}-{i:00}",
 
-                    VoltageTRa = new RegisterFloat()
+                    VoltageTRa = new RegisterIntFloat()
                     {
                         Address = locAddr++,
                         CodeFunc = ModbusFunc.HoldingRegister,
@@ -820,7 +820,7 @@ namespace ServiceControl.Modbus.Devices
                         MaxValue = 250f
                     },
 
-                    CurrTRa = new RegisterFloat()
+                    CurrTRa = new RegisterIntFloat()
                     {
                         Address = locAddr++,
                         CodeFunc = ModbusFunc.HoldingRegister,
@@ -834,7 +834,7 @@ namespace ServiceControl.Modbus.Devices
                         MinValue = -500f,
                         MaxValue = 500f
                     },
-                    IndicBITLefta = new RegisterFloat()
+                    IndicBITLefta = new RegisterIntFloat()
                     {
                         Address = locAddr++,
                         CodeFunc = ModbusFunc.HoldingRegister,
@@ -849,7 +849,7 @@ namespace ServiceControl.Modbus.Devices
                         MaxValue = 320f
                     },
 
-                    IndicBITRighta = new RegisterFloat()
+                    IndicBITRighta = new RegisterIntFloat()
                     {
                         Address = locAddr,
                         CodeFunc = ModbusFunc.HoldingRegister,

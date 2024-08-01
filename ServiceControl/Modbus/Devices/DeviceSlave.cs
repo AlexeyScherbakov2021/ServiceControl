@@ -254,6 +254,31 @@ namespace ServiceControl.Modbus.Devices
             }
         }
 
+        public void WriteRegisterAsync(Register Reg)
+        {
+            if (Reg.Size > 1)
+            {
+                ushort[] data = Reg.SetOutput();
+                if (data != null)
+                    modbus.WriteRegisterAsync(Reg.Address, data, Slave);
+            }
+            else
+            {
+                ushort[] val = Reg.SetOutput();
+                if (val != null)
+                    modbus.WriteRegisterAsync(Reg.Address, val[0], Slave);
+            }
+
+            //await Task.Run(() => 
+            //{
+            //    try
+            //    {
+            //        WriteRegister(Reg);
+            //    }
+            //    catch { }
+            //});
+
+        }
 
         //----------------------------------------------------------------------------------------------
         // событие таймера для чтения

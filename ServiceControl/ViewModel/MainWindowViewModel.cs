@@ -331,9 +331,9 @@ namespace ServiceControl.ViewModel
             workProto = work;
 
             if(SelectDevice.isSlave)
-                res = work.CreateConnectSlave();
+                res = work.CreateConnectSlave(SelectDevice.isASCII);
             else
-                res = work.CreateConnect();
+                res = work.CreateConnect(SelectDevice.isASCII);
 
             if (res)
                 SetStatusConnection(StatusConnect.Connected);
@@ -466,6 +466,17 @@ namespace ServiceControl.ViewModel
                         (winLog.DataContext as LogWindowViewModel).StartLog(work.slave);
                     //CurrentDevice.ChangeLangRegister();
                     break;
+
+                case DevType.BIT:
+                    SControl = new BIT_UCView();
+                    var vmBIT = new BIT_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vmBIT;
+                    CurrentDevice = vmBIT.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.slave);
+                    CurrentDevice.ChangeLangRegister();
+                    break;
+
 
             }
 

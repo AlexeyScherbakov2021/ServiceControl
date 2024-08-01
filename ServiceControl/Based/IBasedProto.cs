@@ -8,7 +8,7 @@ namespace ServiceControl.Based
 {
     internal interface IBasedProto
     {
-        bool CreateConnect();
+        //bool CreateConnect();
         void Disconnect();
 
     }

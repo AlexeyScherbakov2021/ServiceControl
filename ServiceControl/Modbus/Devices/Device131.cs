@@ -13,22 +13,22 @@ namespace ServiceControl.Modbus.Devices
     {
         public const int CountKIP = 32;
 
-        public RegisterFloat CurrOutput;
-        public RegisterFloat VoltOutput;
-        public RegisterFloat Potencial;
-        public RegisterFloat PolPotencial;
-        public RegisterFloat TimeProtect;
-        public RegisterFloat NaprSeti;
-        public RegisterFloat Temper;
+        public RegisterIntFloat CurrOutput;
+        public RegisterIntFloat VoltOutput;
+        public RegisterIntFloat Potencial;
+        public RegisterIntFloat PolPotencial;
+        public RegisterIntFloat TimeProtect;
+        public RegisterIntFloat NaprSeti;
+        public RegisterIntFloat Temper;
 
         public RegisterStatusDC StatDC1 { get; set; }
         public RegisterStatusDC StatDC2 { get; set; }
         public RegisterStatus131 StatDK { get; set; }
 
         public RegisterRT RealTime { get; set; }
-        public RegisterFloat SetCurrOutput;
-        public RegisterFloat SetPotOutput;
-        public RegisterFloat SetVoltageOutput;
+        public RegisterIntFloat SetCurrOutput;
+        public RegisterIntFloat SetPotOutput;
+        public RegisterIntFloat SetVoltageOutput;
         public RegisterMode131 Mode { get; set; }
         public RegisterInfo InfoReg { get; set; }
 
@@ -46,7 +46,7 @@ namespace ServiceControl.Modbus.Devices
 
             ListInput = new List<Register>();
 
-            CurrOutput = new RegisterFloat()
+            CurrOutput = new RegisterIntFloat()
             {
                 Address = 2000,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -60,7 +60,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CurrOutput);
 
-            VoltOutput = new RegisterFloat()
+            VoltOutput = new RegisterIntFloat()
             {
                 Address = 2001,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -77,7 +77,7 @@ namespace ServiceControl.Modbus.Devices
             ListInput.Add(VoltOutput);
 
 
-            PolPotencial = new RegisterFloat()
+            PolPotencial = new RegisterIntFloat()
             {
                 Address = 2002,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -92,7 +92,7 @@ namespace ServiceControl.Modbus.Devices
             };
 
 
-            Potencial = new RegisterFloat()
+            Potencial = new RegisterIntFloat()
             {
                 Address = 2002,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -107,7 +107,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(Potencial);
 
-            TimeProtect = new RegisterFloat()
+            TimeProtect = new RegisterIntFloat()
             {
                 Address = 2003,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -122,7 +122,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(TimeProtect);
 
-            NaprSeti = new RegisterFloat()
+            NaprSeti = new RegisterIntFloat()
             {
                 Address = 2005,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -138,7 +138,7 @@ namespace ServiceControl.Modbus.Devices
             ListInput.Add(NaprSeti);
 
 
-            Temper = new RegisterFloat()
+            Temper = new RegisterIntFloat()
             {
                 Address = 2006,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -202,7 +202,7 @@ namespace ServiceControl.Modbus.Devices
 
             ListOutput = new List<Register>();
 
-            SetCurrOutput = new RegisterFloat()
+            SetCurrOutput = new RegisterIntFloat()
             {
                 Address = 2014,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -223,7 +223,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListOutput.Add(reserv);
 
-            SetVoltageOutput = new RegisterFloat()
+            SetVoltageOutput = new RegisterIntFloat()
             {
                 Address = 2016,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -238,7 +238,7 @@ namespace ServiceControl.Modbus.Devices
             };
 
 
-            SetPotOutput = new RegisterFloat()
+            SetPotOutput = new RegisterIntFloat()
             {
                 Address = 2016,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -265,7 +265,7 @@ namespace ServiceControl.Modbus.Devices
             ListKIP = new List<Register>();
             for(int i = 0; i < CountKIP; i++)
             {
-                ListKIP.Add( new RegisterFloat()
+                ListKIP.Add( new RegisterIntFloat()
                 {
                     Address = (ushort)(2018 + i),
                     CodeFunc = ModbusFunc.HoldingRegister,

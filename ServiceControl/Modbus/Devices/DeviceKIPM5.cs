@@ -13,38 +13,38 @@ namespace ServiceControl.Modbus.Devices
 {
     internal class DeviceKIPM5 : DeviceSlave
     {
-        public RegisterFloat VoltPower;                 // Напряжение сети 
-        public RegisterFloat CurrOut;                   // Ток на выходе СКЗ
-        public RegisterFloat VoltOut;                   // Напряжение на выходе СКЗ
-        public RegisterFloat SummPot;                   // Суммарный потенциал
-        public RegisterFloat PolPot;                    // Поляризационный потенциал
-        public RegisterFloat CurrPot;                   // Ток поляризации
-        public RegisterFloat VoltNaveden;               // Наведенное напряжение
-        public RegisterFloat FreqVoltNaveden;           // Частота наведенного напряжение
-        public RegisterFloat TemperBoard;               // Температура внутри КИП
-        public RegisterFloat SpeedKorr;                 // Скорость коррозии
-        public RegisterFloat DeepKorr;                  // Глубина коррозии
-        public RegisterFloat Power;                     // Потребляемая мощность
-        public RegisterFloat CountPower;                // Счетчик эл.энергии
-        public RegisterFloat isDoor;                    // Геркон двери
-        public RegisterFloat FlagsWork;                 // Флаги работы КИП
-        public RegisterFloat PeriodADC;                 // Период измерений АЦП
-        public RegisterFloat UpLimitCurr;               // Верхняя уставка Iвых
-        public RegisterFloat DownLimitCurr;             // Нижняя уставка Iвых
-        public RegisterFloat UpLimitVolt;               // Верхняя уставка Uвых
-        public RegisterFloat DownLimitVolt;             // Нижняя уставка Uвых
-        public RegisterFloat UpLimitVoltSP;             // Верхняя уставка Uсп
-        public RegisterFloat DownLimitVoltSP;           // Нижняя уставка Uсп
-        public RegisterFloat OutUpLimitCurr;            // Выходы за верхнюю уставку Iвых
-        public RegisterFloat OutDownLimitCurr;          // Выходы за нижнюю уставку Iвых
-        public RegisterFloat OutUpLimitVolt;            // Выходы за верхнюю уставку Uвых
-        public RegisterFloat OutDownLimitVolt;          // Выходы за нижнюю уставку Uвых
-        public RegisterFloat OutUpLimitVoltSP;          // Выходы за верхнюю уставку Uсп
-        public RegisterFloat OutDownLimitVoltSP;        // Выходы за нижнюю уставку Uсп
-        public RegisterFloat SummPotRMS;                // Суммарный потенциал RMS
+        public RegisterIntFloat VoltPower;                 // Напряжение сети 
+        public RegisterIntFloat CurrOut;                   // Ток на выходе СКЗ
+        public RegisterIntFloat VoltOut;                   // Напряжение на выходе СКЗ
+        public RegisterIntFloat SummPot;                   // Суммарный потенциал
+        public RegisterIntFloat PolPot;                    // Поляризационный потенциал
+        public RegisterIntFloat CurrPot;                   // Ток поляризации
+        public RegisterIntFloat VoltNaveden;               // Наведенное напряжение
+        public RegisterIntFloat FreqVoltNaveden;           // Частота наведенного напряжение
+        public RegisterIntFloat TemperBoard;               // Температура внутри КИП
+        public RegisterIntFloat SpeedKorr;                 // Скорость коррозии
+        public RegisterIntFloat DeepKorr;                  // Глубина коррозии
+        public RegisterIntFloat Power;                     // Потребляемая мощность
+        public RegisterIntFloat CountPower;                // Счетчик эл.энергии
+        public RegisterIntFloat isDoor;                    // Геркон двери
+        public RegisterIntFloat FlagsWork;                 // Флаги работы КИП
+        public RegisterIntFloat PeriodADC;                 // Период измерений АЦП
+        public RegisterIntFloat UpLimitCurr;               // Верхняя уставка Iвых
+        public RegisterIntFloat DownLimitCurr;             // Нижняя уставка Iвых
+        public RegisterIntFloat UpLimitVolt;               // Верхняя уставка Uвых
+        public RegisterIntFloat DownLimitVolt;             // Нижняя уставка Uвых
+        public RegisterIntFloat UpLimitVoltSP;             // Верхняя уставка Uсп
+        public RegisterIntFloat DownLimitVoltSP;           // Нижняя уставка Uсп
+        public RegisterIntFloat OutUpLimitCurr;            // Выходы за верхнюю уставку Iвых
+        public RegisterIntFloat OutDownLimitCurr;          // Выходы за нижнюю уставку Iвых
+        public RegisterIntFloat OutUpLimitVolt;            // Выходы за верхнюю уставку Uвых
+        public RegisterIntFloat OutDownLimitVolt;          // Выходы за нижнюю уставку Uвых
+        public RegisterIntFloat OutUpLimitVoltSP;          // Выходы за верхнюю уставку Uсп
+        public RegisterIntFloat OutDownLimitVoltSP;        // Выходы за нижнюю уставку Uсп
+        public RegisterIntFloat SummPotRMS;                // Суммарный потенциал RMS
         public RegisterRT RealTime { get; set; }        // Текущее системное время
-        public RegisterFloat K_shunt;                   // Номинал шунта в Амперах
-        public RegisterFloat VoltControl;               // Напряжение управления СКЗ 
+        public RegisterIntFloat K_shunt;                   // Номинал шунта в Амперах
+        public RegisterIntFloat VoltControl;               // Напряжение управления СКЗ 
 
 
         List<Register> ListInput = new List<Register>();
@@ -53,7 +53,7 @@ namespace ServiceControl.Modbus.Devices
         public DeviceKIPM5(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
 
-            VoltPower = new RegisterFloat()
+            VoltPower = new RegisterIntFloat()
             {
                 Address = 0x01,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -69,7 +69,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(VoltPower);
 
-            CurrOut = new RegisterFloat()
+            CurrOut = new RegisterIntFloat()
             {
                 Address = 0x02,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -85,7 +85,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CurrOut);
 
-            VoltOut = new RegisterFloat()
+            VoltOut = new RegisterIntFloat()
             {
                 Address = 0x03,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -101,7 +101,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(VoltOut);
 
-            SummPot = new RegisterFloat()
+            SummPot = new RegisterIntFloat()
             {
                 Address = 0x04,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -117,7 +117,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(SummPot);
 
-            PolPot = new RegisterFloat()
+            PolPot = new RegisterIntFloat()
             {
                 Address = 0x05,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -133,7 +133,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(PolPot);
 
-            CurrPot = new RegisterFloat()
+            CurrPot = new RegisterIntFloat()
             {
                 Address = 0x06,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -149,7 +149,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CurrPot);
 
-            VoltNaveden = new RegisterFloat()
+            VoltNaveden = new RegisterIntFloat()
             {
                 Address = 0x07,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -165,7 +165,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(VoltNaveden);
 
-            FreqVoltNaveden = new RegisterFloat()
+            FreqVoltNaveden = new RegisterIntFloat()
             {
                 Address = 0x08,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -181,7 +181,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(FreqVoltNaveden);
 
-            TemperBoard = new RegisterFloat()
+            TemperBoard = new RegisterIntFloat()
             {
                 Address = 0x09,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -197,7 +197,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(TemperBoard);
 
-            SpeedKorr = new RegisterFloat()
+            SpeedKorr = new RegisterIntFloat()
             {
                 Address = 0x0A,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -213,7 +213,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(SpeedKorr);
 
-            DeepKorr = new RegisterFloat()
+            DeepKorr = new RegisterIntFloat()
             {
                 Address = 0x0B,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -229,7 +229,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(DeepKorr);
 
-            Power = new RegisterFloat()
+            Power = new RegisterIntFloat()
             {
                 Address = 0x0C,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -245,7 +245,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(Power);
 
-            CountPower = new RegisterFloat()
+            CountPower = new RegisterIntFloat()
             {
                 Address = 0x0D,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -261,7 +261,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(CountPower);
 
-            isDoor = new RegisterFloat()
+            isDoor = new RegisterIntFloat()
             {
                 Address = 0x0E,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -277,7 +277,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(isDoor);
 
-            FlagsWork = new RegisterFloat()
+            FlagsWork = new RegisterIntFloat()
             {
                 Address = 0x0F,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -293,7 +293,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(FlagsWork);
 
-            PeriodADC = new RegisterFloat()
+            PeriodADC = new RegisterIntFloat()
             {
                 Address = 0x10,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -309,7 +309,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(PeriodADC);
 
-            UpLimitCurr = new RegisterFloat()
+            UpLimitCurr = new RegisterIntFloat()
             {
                 Address = 0x11,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -325,7 +325,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(UpLimitCurr);
 
-            DownLimitCurr = new RegisterFloat()
+            DownLimitCurr = new RegisterIntFloat()
             {
                 Address = 0x12,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -341,7 +341,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(DownLimitCurr);
 
-            UpLimitVolt = new RegisterFloat()
+            UpLimitVolt = new RegisterIntFloat()
             {
                 Address = 0x13,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -357,7 +357,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(UpLimitVolt);
 
-            DownLimitVolt = new RegisterFloat()
+            DownLimitVolt = new RegisterIntFloat()
             {
                 Address = 0x14,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -373,7 +373,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(DownLimitVolt);
 
-            UpLimitVoltSP = new RegisterFloat()
+            UpLimitVoltSP = new RegisterIntFloat()
             {
                 Address = 0x15,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -389,7 +389,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(UpLimitVoltSP);
 
-            DownLimitVoltSP = new RegisterFloat()
+            DownLimitVoltSP = new RegisterIntFloat()
             {
                 Address = 0x16,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -405,7 +405,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(DownLimitVoltSP);
 
-            OutUpLimitCurr = new RegisterFloat()
+            OutUpLimitCurr = new RegisterIntFloat()
             {
                 Address = 0x17,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -421,7 +421,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(OutUpLimitCurr);
 
-            OutDownLimitCurr = new RegisterFloat()
+            OutDownLimitCurr = new RegisterIntFloat()
             {
                 Address = 0x18,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -437,7 +437,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(OutDownLimitCurr);
 
-            OutUpLimitVolt = new RegisterFloat()
+            OutUpLimitVolt = new RegisterIntFloat()
             {
                 Address = 0x19,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -453,7 +453,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(OutUpLimitVolt);
 
-            OutDownLimitVolt = new RegisterFloat()
+            OutDownLimitVolt = new RegisterIntFloat()
             {
                 Address = 0x1A,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -469,7 +469,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(OutDownLimitVolt);
 
-            OutUpLimitVoltSP = new RegisterFloat()
+            OutUpLimitVoltSP = new RegisterIntFloat()
             {
                 Address = 0x1B,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -485,7 +485,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(OutUpLimitVoltSP);
 
-            OutDownLimitVoltSP = new RegisterFloat()
+            OutDownLimitVoltSP = new RegisterIntFloat()
             {
                 Address = 0x1C,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -501,7 +501,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(OutDownLimitVoltSP);
 
-            SummPotRMS = new RegisterFloat()
+            SummPotRMS = new RegisterIntFloat()
             {
                 Address = 0x1D,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -531,7 +531,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListWriteControl.Add(RealTime);
 
-            K_shunt = new RegisterFloat()
+            K_shunt = new RegisterIntFloat()
             {
                 Address = 0x22,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -547,7 +547,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListWriteControl.Add(K_shunt);
 
-            VoltControl = new RegisterFloat()
+            VoltControl = new RegisterIntFloat()
             {
                 Address = 0x23,
                 CodeFunc = ModbusFunc.HoldingRegister,

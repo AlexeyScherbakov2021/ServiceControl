@@ -25,24 +25,24 @@ namespace ServiceControl.Modbus.Devices
         public RegisterRT TimeBI { get; set; }                        // Время БИ
         public RegisterInt PeriodRead { get; set; }                   // Период опроса
         public RegisterInt Shunt { get; set; }                        // Номинал шунта в Амперах
-        public RegisterFloat TemperBoard { get; set; }                // Температура на плате
-        public RegisterFloat CurrProtect { get; set; }                // Ток защиты
-        public RegisterFloat VoltOut { get; set; }                    // Напряжение на выходе СКЗ
-        public RegisterFloat CurrPol1 { get; set; }                   // Ток поляризации 1
-        public RegisterFloat PolPot1 { get; set; }                    // Поляризационный потенциал 1
-        public RegisterFloat SummPot1 { get; set; }                   // Суммарный потенциал 1
-        public RegisterFloat VoltNaveden1 { get; set; }               // Наведенное напряжение 1
+        public RegisterIntFloat TemperBoard { get; set; }                // Температура на плате
+        public RegisterIntFloat CurrProtect { get; set; }                // Ток защиты
+        public RegisterIntFloat VoltOut { get; set; }                    // Напряжение на выходе СКЗ
+        public RegisterIntFloat CurrPol1 { get; set; }                   // Ток поляризации 1
+        public RegisterIntFloat PolPot1 { get; set; }                    // Поляризационный потенциал 1
+        public RegisterIntFloat SummPot1 { get; set; }                   // Суммарный потенциал 1
+        public RegisterIntFloat VoltNaveden1 { get; set; }               // Наведенное напряжение 1
         public RegisterInt FreqVoltNaveden1 { get; set; }             // Частота наведенного напряжения 1
-        public RegisterFloat CurrPol2 { get; set; }                   // Ток поляризации 2
-        public RegisterFloat PolPot2 { get; set; }                    // Поляризационный потенциал 2
-        public RegisterFloat SummPot2 { get; set; }                   // Суммарный потенциал 2
-        public RegisterFloat VoltNaveden2 { get; set; }               // Наведенное напряжение 2
+        public RegisterIntFloat CurrPol2 { get; set; }                   // Ток поляризации 2
+        public RegisterIntFloat PolPot2 { get; set; }                    // Поляризационный потенциал 2
+        public RegisterIntFloat SummPot2 { get; set; }                   // Суммарный потенциал 2
+        public RegisterIntFloat VoltNaveden2 { get; set; }               // Наведенное напряжение 2
         public RegisterInt FreqVoltNaveden2 { get; set; }             // Частота наведенного напряжение 2
-        public RegisterFloat VoltOtnos1 { get; set; }                 // Напряжение на токовом относе 1
-        public RegisterFloat VoltOtnos2 { get; set; }                 // Напряжение на токовом относе 2
-        public RegisterFloat BIT1 { get; set; }                       // Данные с индикатора тока БИТ 1
-        public RegisterFloat BIT2 { get; set; }                       // Данные с индикатора тока БИТ 2
-        public RegisterFloat VoltagePower { get; set; }               // Напряжение питания
+        public RegisterIntFloat VoltOtnos1 { get; set; }                 // Напряжение на токовом относе 1
+        public RegisterIntFloat VoltOtnos2 { get; set; }                 // Напряжение на токовом относе 2
+        public RegisterIntFloat BIT1 { get; set; }                       // Данные с индикатора тока БИТ 1
+        public RegisterIntFloat BIT2 { get; set; }                       // Данные с индикатора тока БИТ 2
+        public RegisterIntFloat VoltagePower { get; set; }               // Напряжение питания
         public RegisterInt SpeedKorr { get; set; }                    // Скорость коррозии
         public RegisterInt DeepKorr { get; set; }                     // Глубина коррозии
 
@@ -388,7 +388,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.Shunt);
 
 
-                kip.TemperBoard = new RegisterFloat()
+                kip.TemperBoard = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -406,7 +406,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.TemperBoard);
 
 
-                kip.CurrProtect = new RegisterFloat()
+                kip.CurrProtect = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -424,7 +424,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.CurrProtect);
 
 
-                kip.VoltOut = new RegisterFloat()
+                kip.VoltOut = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -442,7 +442,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.VoltOut);
 
 
-                kip.CurrPol1 = new RegisterFloat()
+                kip.CurrPol1 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -460,7 +460,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.CurrPol1);
 
 
-                kip.PolPot1 = new RegisterFloat()
+                kip.PolPot1 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -478,7 +478,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.PolPot1);
 
 
-                kip.SummPot1 = new RegisterFloat()
+                kip.SummPot1 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -496,7 +496,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.SummPot1);
 
 
-                kip.VoltNaveden1 = new RegisterFloat()
+                kip.VoltNaveden1 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -529,7 +529,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.FreqVoltNaveden1);
 
 
-                kip.CurrPol2 = new RegisterFloat()
+                kip.CurrPol2 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -547,7 +547,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.CurrPol2);
 
 
-                kip.PolPot2 = new RegisterFloat()
+                kip.PolPot2 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -565,7 +565,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.PolPot2);
 
 
-                kip.SummPot2 = new RegisterFloat()
+                kip.SummPot2 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -583,7 +583,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.SummPot2);
 
 
-                kip.VoltNaveden2 = new RegisterFloat()
+                kip.VoltNaveden2 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -616,7 +616,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.FreqVoltNaveden2);
 
 
-                kip.VoltOtnos1 = new RegisterFloat()
+                kip.VoltOtnos1 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -634,7 +634,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.VoltOtnos1);
 
 
-                kip.VoltOtnos2 = new RegisterFloat()
+                kip.VoltOtnos2 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -652,7 +652,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.VoltOtnos2);
 
 
-                kip.BIT1 = new RegisterFloat()
+                kip.BIT1 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -670,7 +670,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.BIT1);
 
 
-                kip.BIT2 = new RegisterFloat()
+                kip.BIT2 = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,
@@ -688,7 +688,7 @@ namespace ServiceControl.Modbus.Devices
                 kip.listInput2.Add(kip.BIT2);
 
 
-                kip.VoltagePower = new RegisterFloat()
+                kip.VoltagePower = new RegisterIntFloat()
                 {
                     Address = ++currAddress,
                     CodeFunc = ModbusFunc.InputRegister,

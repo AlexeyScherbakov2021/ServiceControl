@@ -22,8 +22,8 @@ namespace ServiceControl.Modbus.Registers
                 Value = null;
                 return;
             }
-            uint res = (ushort)val[0];
 
+            uint res = (ushort)val[0];
             for (int i = 1; i < val.Length; i++)
             {
                 uint res2 = val[i];

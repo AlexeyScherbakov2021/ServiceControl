@@ -277,7 +277,7 @@ namespace ServiceControl.ViewModel
                 try
                 {
                     device.WriteRegister(reg);
-                    if (reg.GetType() == typeof(RegisterFloat))
+                    if (reg.GetType() == typeof(RegisterIntFloat))
                     {
                         //(reg as RegisterFloat).Value = 0;
                     }

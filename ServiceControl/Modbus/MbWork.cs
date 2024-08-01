@@ -56,7 +56,7 @@ namespace ServiceControl.Modbus
         }
 
 
-        public bool CreateConnectSlave()
+        public bool CreateConnectSlave(bool isASCII = false)
         {
             try
             {
@@ -77,14 +77,20 @@ namespace ServiceControl.Modbus
                 {
                     //string[] ports = SerialPort.GetPortNames();
                     com = new SerialPort(ComPort, 9600, Parity.None, 8, StopBits.One);
-                    if(TimeOut != 0)
+                    if (TimeOut != 0)
+                    {
                         com.ReadTimeout = TimeOut;
+                        com.WriteTimeout = TimeOut;
+                    }
 
                     com.Open();
                     if (!com.IsOpen)
                         return false;
 
-                    slave = ModbusSerialSlave.CreateRtu(1, com);
+                    if (isASCII)
+                        slave = ModbusSerialSlave.CreateAscii(1, com);
+                    else
+                        slave = ModbusSerialSlave.CreateRtu(1, com);
                     //master.Transport.EventLogEvent += Transport_EventLogEvent;
                 }
 
@@ -98,7 +104,7 @@ namespace ServiceControl.Modbus
         }
 
 
-        public bool CreateConnect()
+        public bool CreateConnect(bool isASCII = false)
         {
             try
             {
@@ -126,7 +132,10 @@ namespace ServiceControl.Modbus
                     if (!com.IsOpen)
                         return false;
 
-                    master = ModbusSerialMaster.CreateRtu(com);
+                    if (isASCII)
+                        master = ModbusSerialMaster.CreateAscii(com);
+                    else
+                        master = ModbusSerialMaster.CreateRtu(com);
                     //master.Transport.EventLogEvent += Transport_EventLogEvent;
                 }
 
@@ -298,11 +307,46 @@ namespace ServiceControl.Modbus
             }
         }
 
+        public void WriteRegisterAsync(ushort Address, ushort val, byte Slave)
+        {
+            try
+            {
+                master?.WriteSingleRegisterAsync(Slave, Address, val);
+            }
+            catch (TimeoutException te)
+            {
+                throw te;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+            }
+        }
+
+
         public void WriteRegister(ushort Address, ushort[] val, byte Slave)
         {
             try
             {
                 master?.WriteMultipleRegisters(Slave, Address, val);
+            }
+            catch (TimeoutException te)
+            {
+                throw te;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+            }
+        }
+
+
+        public void WriteRegisterAsync(ushort Address, ushort[] val, byte Slave)
+        {
+            try
+            {
+                master?.WriteMultipleRegistersAsync(Slave, Address, val);
             }
             catch (TimeoutException te)
             {

@@ -15,31 +15,31 @@ namespace ServiceControl.Modbus.Devices
     {
         public RegisterInt Status { get; set; }         // Флаги состояний
         public RegisterRT RealTime { get; set; }        // Текущее системное время
-        public RegisterFloat NominalShunt;              // Номинал шунта
-        public RegisterFloat SummPot;                   // Суммарный потенциал
-        public RegisterFloat PolPot;                    // Поляризационный потенциал
-        public RegisterFloat CurrPot;                   // Ток поляризации
-        public RegisterFloat VoltOut;                   // Напряжение на выходе СКЗ
-        public RegisterFloat CurrOut;                   // Ток на выходе СКЗ
-        public RegisterFloat VoltNaveden;               // Наведенное напряжение
-        public RegisterFloat FreqVoltNaveden;           // Частота наведенного напряжение
-        public RegisterFloat TemperBoard;               // Температура на плате
-        public RegisterFloat SpeedKorr;                 // Скорость коррозии
-        public RegisterFloat DeepKorr;                  // Глубина коррозии
-        public RegisterFloat SummPot2;                  // Суммарный потенциал 2
-        public RegisterFloat PolPot2;                   // Поляризационный потенциал 2
-        public RegisterFloat CurrPot2;                  // Ток поляризации 2
-        public RegisterFloat VoltNaveden2;              // Наведенное напряжение 2
-        public RegisterFloat FreqVoltNaveden2;          // Частота наведенного напряжение 2
-        public RegisterFloat VoltCurrOtkosL;            // Напряжение на токовом относе лев.
-        public RegisterFloat VoltCurrOtkosR;            // Напряжение на токовом относе прав.
-        public RegisterFloat DataCurrBIT_L;             // Данные с индикатора тока БИТ лев.
-        public RegisterFloat DataCurrBIT_R;             // Данные с индикатора тока БИТ прав.
-        public RegisterFloat VoltPower;                 // Напряжение питания БИ
+        public RegisterIntFloat NominalShunt;              // Номинал шунта
+        public RegisterIntFloat SummPot;                   // Суммарный потенциал
+        public RegisterIntFloat PolPot;                    // Поляризационный потенциал
+        public RegisterIntFloat CurrPot;                   // Ток поляризации
+        public RegisterIntFloat VoltOut;                   // Напряжение на выходе СКЗ
+        public RegisterIntFloat CurrOut;                   // Ток на выходе СКЗ
+        public RegisterIntFloat VoltNaveden;               // Наведенное напряжение
+        public RegisterIntFloat FreqVoltNaveden;           // Частота наведенного напряжение
+        public RegisterIntFloat TemperBoard;               // Температура на плате
+        public RegisterIntFloat SpeedKorr;                 // Скорость коррозии
+        public RegisterIntFloat DeepKorr;                  // Глубина коррозии
+        public RegisterIntFloat SummPot2;                  // Суммарный потенциал 2
+        public RegisterIntFloat PolPot2;                   // Поляризационный потенциал 2
+        public RegisterIntFloat CurrPot2;                  // Ток поляризации 2
+        public RegisterIntFloat VoltNaveden2;              // Наведенное напряжение 2
+        public RegisterIntFloat FreqVoltNaveden2;          // Частота наведенного напряжение 2
+        public RegisterIntFloat VoltCurrOtkosL;            // Напряжение на токовом относе лев.
+        public RegisterIntFloat VoltCurrOtkosR;            // Напряжение на токовом относе прав.
+        public RegisterIntFloat DataCurrBIT_L;             // Данные с индикатора тока БИТ лев.
+        public RegisterIntFloat DataCurrBIT_R;             // Данные с индикатора тока БИТ прав.
+        public RegisterIntFloat VoltPower;                 // Напряжение питания БИ
 
-        public RegisterFloat Bi_addr;                   // Сетевой адрес БИ
+        public RegisterIntFloat Bi_addr;                   // Сетевой адрес БИ
         public RegisterRT TimeNow;                   // Текущее время сервера
-        public RegisterFloat K_shunt;                   // Номинал шунта в Амперах
+        public RegisterIntFloat K_shunt;                   // Номинал шунта в Амперах
 
         List<Register> ListInput = new List<Register>();
         List<Register> ListInput2 = new List<Register>();
@@ -79,7 +79,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(RealTime);
 
-            NominalShunt = new RegisterFloat()
+            NominalShunt = new RegisterIntFloat()
             {
                 Address = 0x04,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -95,7 +95,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(NominalShunt);
 
-            SummPot = new RegisterFloat()
+            SummPot = new RegisterIntFloat()
             {
                 Address = 0x0B,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -111,7 +111,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(SummPot);
             
-            PolPot = new RegisterFloat()
+            PolPot = new RegisterIntFloat()
             {
                 Address = 0x0C,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -127,7 +127,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(PolPot);
 
-            CurrPot = new RegisterFloat()
+            CurrPot = new RegisterIntFloat()
             {
                 Address = 0x0D,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -143,7 +143,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(CurrPot);
 
-            VoltOut = new RegisterFloat()
+            VoltOut = new RegisterIntFloat()
             {
                 Address = 0x0E,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -159,7 +159,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(VoltOut);
 
-            CurrOut = new RegisterFloat()
+            CurrOut = new RegisterIntFloat()
             {
                 Address = 0x0F,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -175,7 +175,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(CurrOut);
 
-            VoltNaveden = new RegisterFloat()
+            VoltNaveden = new RegisterIntFloat()
             {
                 Address = 0x10,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -191,7 +191,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(VoltNaveden);
 
-            FreqVoltNaveden = new RegisterFloat()
+            FreqVoltNaveden = new RegisterIntFloat()
             {
                 Address = 0x11,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -207,7 +207,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(FreqVoltNaveden);
 
-            TemperBoard = new RegisterFloat()
+            TemperBoard = new RegisterIntFloat()
             {
                 Address = 0x12,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -223,7 +223,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(TemperBoard);
 
-            RegisterFloat reserv = new RegisterFloat()
+            RegisterIntFloat reserv = new RegisterIntFloat()
             {
                 Address = 0x13,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -239,7 +239,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(reserv);
 
-            SpeedKorr = new RegisterFloat()
+            SpeedKorr = new RegisterIntFloat()
             {
                 Address = 0x14,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -255,7 +255,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(SpeedKorr);
 
-            DeepKorr = new RegisterFloat()
+            DeepKorr = new RegisterIntFloat()
             {
                 Address = 0x15,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -271,7 +271,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(DeepKorr);
 
-            SummPot2 = new RegisterFloat()
+            SummPot2 = new RegisterIntFloat()
             {
                 Address = 0x16,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -287,7 +287,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(SummPot2);
 
-            PolPot2 = new RegisterFloat()
+            PolPot2 = new RegisterIntFloat()
             {
                 Address = 0x17,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -303,7 +303,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(PolPot2);
 
-            CurrPot2 = new RegisterFloat()
+            CurrPot2 = new RegisterIntFloat()
             {
                 Address = 0x18,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -319,7 +319,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(CurrPot2);
 
-            VoltNaveden2 = new RegisterFloat()
+            VoltNaveden2 = new RegisterIntFloat()
             {
                 Address = 0x19,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -335,7 +335,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(VoltNaveden2);
 
-            FreqVoltNaveden2 = new RegisterFloat()
+            FreqVoltNaveden2 = new RegisterIntFloat()
             {
                 Address = 0x1A,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -351,39 +351,39 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(FreqVoltNaveden2);
 
-            VoltCurrOtkosL = new RegisterFloat()
+            VoltCurrOtkosL = new RegisterIntFloat()
             {
                 Address = 0x1B,
                 CodeFunc = ModbusFunc.InputRegister,
                 Name = "Напряжение на токовом относе лев.",
                 NameRes = "",
-                Measure = "мВ",
+                Measure = "В",
                 MeasureRes = "",
                 Size = 1,
                 Description = "V_относ_L",
-                Scale = 0.1f,
+                Scale = 0.01f,
                 MinValue = -2000f,
                 MaxValue = 2000f
             };
             ListInput2.Add(VoltCurrOtkosL);
 
-            VoltCurrOtkosR = new RegisterFloat()
+            VoltCurrOtkosR = new RegisterIntFloat()
             {
                 Address = 0x1C,
                 CodeFunc = ModbusFunc.InputRegister,
                 Name = "Напряжение на токовом относе пр.",
                 NameRes = "",
-                Measure = "мВ",
+                Measure = "В",
                 MeasureRes = "",
                 Size = 1,
                 Description = "V_относ_R",
-                Scale = 0.1f,
+                Scale = 0.01f,
                 MinValue = -2000f,
                 MaxValue = 2000f
             };
             ListInput2.Add(VoltCurrOtkosR);
 
-            DataCurrBIT_L = new RegisterFloat()
+            DataCurrBIT_L = new RegisterIntFloat()
             {
                 Address = 0x1D,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -399,7 +399,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(DataCurrBIT_L);
 
-            DataCurrBIT_R = new RegisterFloat()
+            DataCurrBIT_R = new RegisterIntFloat()
             {
                 Address = 0x1E,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -415,7 +415,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput2.Add(DataCurrBIT_R);
 
-            VoltPower = new RegisterFloat()
+            VoltPower = new RegisterIntFloat()
             {
                 Address = 0x1F,
                 CodeFunc = ModbusFunc.InputRegister,
@@ -432,7 +432,7 @@ namespace ServiceControl.Modbus.Devices
             ListInput2.Add(VoltPower);
 
 
-            Bi_addr = new RegisterFloat()
+            Bi_addr = new RegisterIntFloat()
             {
                 Address = 0x1001,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -461,7 +461,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListWriteControl.Add(TimeNow);
 
-            K_shunt = new RegisterFloat()
+            K_shunt = new RegisterIntFloat()
             {
                 Address = 0x1004,
                 CodeFunc = ModbusFunc.HoldingRegister,
