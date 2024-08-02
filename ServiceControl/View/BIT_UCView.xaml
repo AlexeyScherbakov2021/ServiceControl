@@ -44,9 +44,9 @@
                                     <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="170" VerticalAlignment="Center"/>
                                     <TextBox Text="{Binding Register1.Value, StringFormat=0.###, TargetNullValue=--}" Width="80"
                                         Margin="4,0" ToolTip="{Binding Register2.ToolTip}" IsReadOnly="False"/>
-                                    <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" 
+                                    <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Center" Width="20" 
                                                TextAlignment="Left" Margin="2,2,4,0"/>
-                                    <TextBlock Text="{Binding Register2.Description}" VerticalAlignment="Top" Width="20" Margin="2,2,4,0"/>
+                                    <TextBlock Text="{Binding Register2.Description}" VerticalAlignment="Center" Width="20" Margin="2,2,4,0"/>
 
                                     <!--<TextBox Text="{Binding Register2.Value, StringFormat=0.###, TargetNullValue=-}" Width="64" 
                                         Margin="4,0" ToolTip="{Binding Register2.ToolTip}" Style="{DynamicResource TextBox.Control}" 

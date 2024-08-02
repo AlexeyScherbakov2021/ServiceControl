@@ -163,7 +163,7 @@ namespace ServiceControl.Modbus.Devices
                 Measure = "",
                 MeasureRes = "",
                 Description = "K2",
-                Scale = 1000f,
+                Scale = 2000f,
                 MinValue = -1000,
                 MaxValue = 1000
             };

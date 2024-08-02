@@ -35,10 +35,10 @@ namespace ServiceControl.ViewModel
         {
             regRadius = new RegisterFloat()
             {
-                Name = "Радиус трубы",
+                Name = "Диаметр трубы",
                 CodeFunc = ModbusFunc.HoldingRegister,
                 Measure = "мм.",
-                Value = 55
+                Value = 110
             };
 
             regCorrect = new RegisterFloat()
@@ -104,6 +104,7 @@ namespace ServiceControl.ViewModel
                     else
                         regFloat.Value = (reg.Register1 as RegisterFloat).Value;
 
+                    Debug.WriteLine("Отправка команды.");
                     device.WriteRegister(regFloat);
                 }
                 catch (TimeoutException)
