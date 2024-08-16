@@ -44,6 +44,8 @@ namespace ServiceControl.Modbus.Registers
 
         public override ushort[] SetOutput()
         {
+            if (Value == null)
+                return null;
             float val = (float)Value / Scale;
             byte[] values = BitConverter.GetBytes(val);
 

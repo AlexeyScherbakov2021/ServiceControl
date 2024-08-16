@@ -6,11 +6,8 @@ using ServiceControl.Modbus.Registers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ServiceControl.ViewModel
@@ -28,7 +25,7 @@ namespace ServiceControl.ViewModel
 
         public BIT_UCViewModel()
         {
-            
+
         }
 
         public BIT_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
@@ -65,7 +62,7 @@ namespace ServiceControl.ViewModel
             };
 
             // добавление в список регистров управления
-            ListWriteControl = new List<TwoRegister>() 
+            ListWriteControl = new List<TwoRegister>()
             {
                 new TwoRegister() { Register1 = device.Gauss,
                     Register2 = device.K1, },
@@ -91,9 +88,9 @@ namespace ServiceControl.ViewModel
             {
                 try
                 {
-                    RegisterFloat regFloat =  reg.Register2 as RegisterFloat;
+                    RegisterFloat regFloat = reg.Register2 as RegisterFloat;
 
-                    if (regFloat.Address == 0x05)
+                    if (regFloat?.Address == 0x05)
                     {
                         Task.Run(() =>
                         {
@@ -102,10 +99,21 @@ namespace ServiceControl.ViewModel
                         return;
                     }
                     else
-                        regFloat.Value = (reg.Register1 as RegisterFloat).Value;
+                    {
+                        if (regFloat != null)
+                        {
+                            regFloat.Value = (reg.Register1 as RegisterFloat).Value;
+                            device.WriteRegister(regFloat);
+                        }
+                        else
+                        {
+                            RegisterInt regInt = reg.Register2 as RegisterInt;
+                            regInt.Value = (reg.Register1 as RegisterInt).Value;
+                            device.WriteRegister(regInt);
+                        }
+                    }
 
                     Debug.WriteLine("Отправка команды.");
-                    device.WriteRegister(regFloat);
                 }
                 catch (TimeoutException)
                 {
