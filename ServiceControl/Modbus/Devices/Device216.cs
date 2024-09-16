@@ -540,7 +540,7 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
-            //ReadInfoRegister(InfoReg);
+            ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
 #if !CLIENT
             ReadRegisters(ListWriteControl2);

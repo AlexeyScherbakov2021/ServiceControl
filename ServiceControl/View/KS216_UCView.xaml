@@ -13,7 +13,7 @@
         <vm:KS216_UCViewModel/>
     </UserControl.DataContext>
 
-    <UserControl.Resources>
+     <UserControl.Resources>
 
         <conv:StabilModeConverter x:Key="StabilModeConverter"/>
         <conv:StabModeVisibleConverter x:Key="StabModeVisibleConverter"/>
@@ -225,10 +225,10 @@
                 <GroupBox.Header>
                     <TextBlock Text="{DynamicResource CtrlParam}" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
-                <StackPanel Margin="8,0" Orientation="Vertical">
+                <StackPanel Margin="10,0,6,0" Orientation="Vertical">
 
                     <!--Время работы и защиты-->
-                    <ItemsControl ItemsSource="{Binding ListWriteControl2}" Margin="0,8,0,0" >
+                    <ItemsControl ItemsSource="{Binding ListWriteControl2}" Margin="0,8,0,0">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

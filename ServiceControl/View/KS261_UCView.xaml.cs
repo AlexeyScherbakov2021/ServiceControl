@@ -44,5 +44,6 @@ namespace ServiceControl.View
                 CurrentColumn.CellStyle = (Style)dataGrid.Resources["SelectedColumnStyle"];
             }
         }
+
     }
 }
