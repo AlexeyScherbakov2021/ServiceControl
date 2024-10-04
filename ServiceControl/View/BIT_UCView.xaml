@@ -13,13 +13,13 @@
     </UserControl.DataContext>
 
     <Grid>
-        <Border  Margin="14" Grid.Row="0" Grid.Column="0" Height="200" Width="500" VerticalAlignment="Top">
-            <GroupBox >
+        <Border  Margin="14" Grid.Row="0" Grid.Column="0" Height="210" Width="500" VerticalAlignment="Top">
+            <GroupBox Margin="0,0,0,-35" >
                 <GroupBox.Header>
                     <TextBlock Text="Установки кстройства" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel Margin="8" Orientation="Vertical">
-                   
+
                     <!--Регистры управления-->
                     <ItemsControl ItemsSource="{Binding ListInput}" >
                         <ItemsControl.ItemTemplate>
@@ -87,9 +87,12 @@
                         <TextBox Text="{Binding CorrKoeff}" Width="164" VerticalAlignment="Top"
                                         Margin="4,0" Padding="2,1" FontWeight="Bold" ToolTip="{Binding Register1.ToolTip}" IsReadOnly="True"
                                         TextAlignment="Right" Background="White" />
-                        --><!--<TextBlock Text="" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>--><!--
+                        -->
+                    <!--<TextBlock Text="" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>-->
+                    <!--
                     </StackPanel>
                     <Button Content="Отправить Gauss" Command="{Binding GaussCommand}"/>-->
+                    <Button Content="Сброс" Command="{Binding ResetCommand}" Margin="0,20" Width="60" Height="19"/>
 
                 </StackPanel>
             </GroupBox>

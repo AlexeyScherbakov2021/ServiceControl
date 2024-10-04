@@ -8,25 +8,29 @@ namespace ServiceControl.Modbus.Devices
 {
     internal class DeviceBIT : DeviceSlave
     {
+        public const float defK1 = 0;
+        public const float defK2 = 0.1f;
+        public const float defK3 = 1;
+
         public RegisterFloat Gauss;
         public RegisterFloat Gauss1;
         public RegisterFloat Gauss2;
         public RegisterFloat Amper;
         public RegisterFloat Celsius;
-        public RegisterFloat X1;
-        public RegisterFloat X2;
-        public RegisterFloat Y2;
-        public RegisterFloat Y1;
-        public RegisterFloat Z1;
-        public RegisterFloat Z2;
-        public RegisterFloat T1;
-        public RegisterFloat T2;
+        //public RegisterFloat X1;
+        //public RegisterFloat X2;
+        //public RegisterFloat Y2;
+        //public RegisterFloat Y1;
+        //public RegisterFloat Z1;
+        //public RegisterFloat Z2;
+        //public RegisterFloat T1;
+        //public RegisterFloat T2;
 
         public RegisterInt Address;
-        public RegisterFloat K1;
-        public RegisterFloat K2;
-        public RegisterFloat K3;
-        public RegisterFloat K4;
+        public RegisterFloat K1;        // по умолчанию 0
+        public RegisterFloat K2;        // по умолчанию 0.1
+        public RegisterFloat K3;        // по умолчанию 1
+        //public RegisterFloat K4;
 
         List<Register> ListInput;
         List<Register> ListCommandHolding;

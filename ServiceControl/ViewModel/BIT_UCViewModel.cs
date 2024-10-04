@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ServiceControl.ViewModel
@@ -58,7 +59,7 @@ namespace ServiceControl.ViewModel
 
             ListCommand = new List<Register>()
             {
-                device.Address, device.K1, device.K2, device.K3,  device.K4
+                device.Address, device.K1, device.K2, device.K3//,  device.K4
             };
 
             // добавление в список регистров управления
@@ -121,6 +122,31 @@ namespace ServiceControl.ViewModel
             }
         }
 
+        //--------------------------------------------------------------------------------
+        // Команда Сброс
+        //--------------------------------------------------------------------------------
+        public ICommand ResetCommand => new LambdaCommand(OnResetCommandExecuted, CanResetCommand);
+        private bool CanResetCommand(object p) => device != null;
+        private void OnResetCommandExecuted(object p)
+        {
+            Mouse.SetCursor(Cursors.Wait);
+
+            device.K1.Value = DeviceBIT.defK1;
+            device.WriteRegister(device.K1);
+            Thread.Sleep(2000);
+
+            device.K2.Value = DeviceBIT.defK2;
+            device.WriteRegister(device.K2);
+            Thread.Sleep(2000);
+
+            device.K3.Value = DeviceBIT.defK3;
+            device.WriteRegister(device.K3);
+
+            Mouse.SetCursor(Cursors.None);
+
+        }
+
+
         #endregion
 
         void SendWaitMessage(RegisterFloat regFloat)
@@ -137,7 +163,9 @@ namespace ServiceControl.ViewModel
             device.ReadRegister(device.Amper);
 
             Debug.WriteLine($"Измеренный ток для 1А: {device.Amper.Value}");
-            regFloat.Value = regCorrect.Value / device.Amper.Value;
+
+            regFloat.Value = device.Amper.Value == 0 ? 0 : regCorrect.Value / device.Amper.Value;
+            
             Debug.WriteLine($"Коэффициент: {regFloat.Value}");
 
             Debug.WriteLine("Отправка второй команды.");

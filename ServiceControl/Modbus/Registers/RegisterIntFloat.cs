@@ -46,8 +46,6 @@ namespace ServiceControl.Modbus.Registers
         //}
 
 
-
-
         public override void SetResultValues(ushort[] val)
         {
             if (val == null || val.Length < 1)
@@ -57,26 +55,37 @@ namespace ServiceControl.Modbus.Registers
             }
 
             int res = (short)val[0];
-
-            if(val.Length == 2)
+            for (int i = 1; i < val.Length; i++)
             {
-                int res2 = val[1];
-                res2 <<= 16;
-                res |= res2;
+                int res2 = val[i];
+                res2 <<= 16 * i;
+                res |= (int)(short)val[i];
             }
-
-            //for (int i = 1; i < val.Length; i++)
-            //{
-            //    int res2 = val[i];
-            //    res2 <<= 16 * i;
-            //    res |= res2;
-            //    //res |= (int)(short)val[i];
-            //}
-            Value = res * Scale;
-            //Value *= Scale;
-
+            Value = (int)res * Scale;
             if (Value > MaxValue || Value < MinValue) Value = null;
         }
+
+
+        //public override void SetResultValues(ushort[] val)
+        //{
+        //    if (val == null || val.Length < 1)
+        //    {
+        //        Value = null;
+        //        return;
+        //    }
+
+        //    int res = (short)val[0];
+
+        //    if(val.Length == 2)
+        //    {
+        //        int res2 = val[1];
+        //        res2 <<= 16;
+        //        res |= res2;
+        //    }
+
+        //    Value = res * Scale;
+        //    if (Value > MaxValue || Value < MinValue) Value = null;
+        //}
 
         public override ushort[] SetOutput()
         {
@@ -90,6 +99,7 @@ namespace ServiceControl.Modbus.Registers
             }
             return res;
         }
+
 
         public override void ChangeLang() 
         { 
