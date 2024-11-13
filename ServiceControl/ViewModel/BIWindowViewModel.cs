@@ -36,14 +36,17 @@ namespace ServiceControl.ViewModel
             {
                 listReg[0].reg[i] = device.SpeedDK[i];
                 listReg[1].reg[i] = device.DeepDK[i];
-                listReg[2].reg[i] = device.BI_SummPot[i];
-                listReg[3].reg[i] = device.BI_PolPot[i];
-                listReg[4].reg[i] = device.BI_OutCurrent[i];
-                listReg[5].reg[i] = device.BI_OutVoltage[i];
-                listReg[6].reg[i] = device.BI_CurrPol[i];
-                listReg[7].reg[i] = device.BI_IndVoltage[i];
-                listReg[8].reg[i] = device.BI_FreqVoltage[i];
-                listReg[9].reg[i] = device.BI_Temper[i];
+                if (device.BI_SummPot != null)
+                {
+                    listReg[2].reg[i] = device.BI_SummPot[i];
+                    listReg[3].reg[i] = device.BI_PolPot[i];
+                    listReg[4].reg[i] = device.BI_OutCurrent[i];
+                    listReg[5].reg[i] = device.BI_OutVoltage[i];
+                    listReg[6].reg[i] = device.BI_CurrPol[i];
+                    listReg[7].reg[i] = device.BI_IndVoltage[i];
+                    listReg[8].reg[i] = device.BI_FreqVoltage[i];
+                    listReg[9].reg[i] = device.BI_Temper[i];
+                }
             }
 
             for(int i = 0; i < 10; i++)

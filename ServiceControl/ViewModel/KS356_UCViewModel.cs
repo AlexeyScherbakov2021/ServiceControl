@@ -142,22 +142,23 @@ namespace ServiceControl.ViewModel
 
             regBI = new Reg10BI();
 
-            if (!device.IsOldVersion)
+            //if (!device.IsOldVersion)
+            //{
+            regBI.reg[0] = device.SpeedDK[0];
+            regBI.reg[1] = device.DeepDK[0];
+
+            if (device.BI_SummPot != null)
             {
-                if (device.SpeedDK.Count() > 0)
-                {
-                    regBI.reg[0] = device.SpeedDK[0];
-                    regBI.reg[1] = device.DeepDK[0];
-                    regBI.reg[2] = device.BI_SummPot[0];
-                    regBI.reg[3] = device.BI_PolPot[0];
-                    regBI.reg[4] = device.BI_OutCurrent[0];
-                    regBI.reg[5] = device.BI_OutVoltage[0];
-                    regBI.reg[6] = device.BI_CurrPol[0];
-                    regBI.reg[7] = device.BI_IndVoltage[0];
-                    regBI.reg[8] = device.BI_FreqVoltage[0];
-                    regBI.reg[9] = device.BI_Temper[0];
-                }
+                regBI.reg[2] = device.BI_SummPot[0];
+                regBI.reg[3] = device.BI_PolPot[0];
+                regBI.reg[4] = device.BI_OutCurrent[0];
+                regBI.reg[5] = device.BI_OutVoltage[0];
+                regBI.reg[6] = device.BI_CurrPol[0];
+                regBI.reg[7] = device.BI_IndVoltage[0];
+                regBI.reg[8] = device.BI_FreqVoltage[0];
+                regBI.reg[9] = device.BI_Temper[0];
             }
+            //}
             // добавление в список целых регистров управления
 #if !CLIENT
             ListWriteControl2 = new List<TwoRegister>() {

@@ -307,11 +307,48 @@ namespace ServiceControl.Modbus.Devices
             int.TryParse(InfoReg.VersionPO, out int version);
             int.TryParse(InfoReg.Year,  out int year);
 
+            SpeedDK = new RegisterIntFloat[CountBI];
+            DeepDK = new RegisterIntFloat[CountBI];
+
+            int adr = 0;
+            for (int i = 0; i < CountBI; i++, adr += 2)
+            {
+                SpeedDK[i] = new RegisterIntFloat()
+                {
+                    Address = (ushort)(0x1D + adr),
+                    CodeFunc = ModbusFunc.InputRegister,
+                    Name = $"Скорость коррозии {i + 1}",
+                    NameRes = "SpeedCorrDK",
+                    //Measure = "мкм/год",
+                    MeasureRes = "MMYEAR",
+                    Description = $"СК_ИКП{i + 1}",
+                    Scale = 1f,
+                    MinValue = 0,
+                    MaxValue = 65535f,
+                    Number = i + 1
+                };
+                ListInput.Add(SpeedDK[i]);
+
+                DeepDK[i] = new RegisterIntFloat()
+                {
+                    Address = (ushort)(0x1E + adr),
+                    CodeFunc = ModbusFunc.InputRegister,
+                    Name = $"Глубина коррозии ИКП {i + 1}",
+                    NameRes = "DeepCorrDK",
+                    //Measure = "мкм",
+                    MeasureRes = "MM",
+                    Description = $"ГК_ИКП{i + 1}",
+                    Scale = 1f,
+                    MinValue = 0,
+                    MaxValue = 65535f,
+                    Number = i + 1
+                };
+                ListInput.Add(DeepDK[i]);
+            }
+
             if ((year >= 2020 && version <= 3) || (year >= 2023 && version >= 4))
             {
                 IsOldVersion = false;
-                SpeedDK = new RegisterIntFloat[CountBI];
-                DeepDK = new RegisterIntFloat[CountBI];
                 BI_SummPot = new RegisterIntFloat[CountBI];
                 BI_PolPot = new RegisterIntFloat[CountBI];
                 BI_CurrPol = new RegisterIntFloat[CountBI];
@@ -320,43 +357,6 @@ namespace ServiceControl.Modbus.Devices
                 BI_IndVoltage = new RegisterIntFloat[CountBI];
                 BI_FreqVoltage = new RegisterInt[CountBI];
                 BI_Temper = new RegisterIntFloat[CountBI];
-
-                int adr = 0;
-                for (int i = 0; i < CountBI; i++, adr += 2)
-                {
-                    SpeedDK[i] = new RegisterIntFloat()
-                    {
-                        Address = (ushort)(0x1D + adr),
-                        CodeFunc = ModbusFunc.InputRegister,
-                        Name = $"Скорость коррозии {i + 1}",
-                        NameRes = "SpeedCorrDK",
-                        //Measure = "мкм/год",
-                        MeasureRes = "MMYEAR",
-                        Description = $"СК_ИКП{i + 1}",
-                        Scale = 1f,
-                        MinValue = 0,
-                        MaxValue = 65535f,
-                        Number = i + 1
-                    };
-                    ListInput.Add(SpeedDK[i]);
-
-                    DeepDK[i] = new RegisterIntFloat()
-                    {
-                        Address = (ushort)(0x1E + adr),
-                        CodeFunc = ModbusFunc.InputRegister,
-                        Name = $"Глубина коррозии ИКП {i + 1}",
-                        NameRes = "DeepCorrDK",
-                        //Measure = "мкм",
-                        MeasureRes = "MM",
-                        Description = $"ГК_ИКП{i + 1}",
-                        Scale = 1f,
-                        MinValue = 0,
-                        MaxValue = 65535f,
-                        Number = i + 1
-                    };
-                    ListInput.Add(DeepDK[i]);
-
-                }
 
                 ListInputBI = new List<Register>();
                 adr = 0;
