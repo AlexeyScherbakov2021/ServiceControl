@@ -321,7 +321,6 @@ namespace ServiceControl.Modbus.Devices
                 BI_FreqVoltage = new RegisterInt[CountBI];
                 BI_Temper = new RegisterIntFloat[CountBI];
 
-
                 int adr = 0;
                 for (int i = 0; i < CountBI; i++, adr += 2)
                 {
