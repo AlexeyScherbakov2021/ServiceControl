@@ -898,6 +898,11 @@ namespace ServiceControl.Modbus.Devices
             }
         }
 
+        public override void DumpRegisterValue(List<RegisterBase> list)
+        {
+            throw new NotImplementedException();
+        }
+
         //protected override void GetRegisterData(ushort StartAddress, ModbusFunc CodeFunc, ReadOnlyCollection<ushort> listData)
         //{
         //    Register reg;

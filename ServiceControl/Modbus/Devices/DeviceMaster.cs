@@ -17,7 +17,7 @@ namespace ServiceControl.Modbus.Devices
     internal abstract class DeviceMaster : Device
     {
         public event EventHandler<EventArgs> EndRead;
-        private readonly DispatcherTimer timer = new DispatcherTimer();
+        //private readonly DispatcherTimer timer = new DispatcherTimer();
         private bool isWorked;
         protected List<Register> ListAll = new List<Register>();
 

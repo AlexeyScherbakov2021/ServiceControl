@@ -143,9 +143,9 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" >
-                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="250" />
+                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="240" />
                                     
-                                    <TextBox Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="64" 
+                                    <TextBox Text="{Binding Register1.Value, StringFormat=0.00, TargetNullValue=--}" Width="76" 
                                         Margin="4,0" ToolTip="{Binding Register1.ToolTip}" />
                                     
                                     <TextBlock Text="{Binding Register1.Measure}" Width="20" Margin="2,2,0,0"/>
@@ -232,8 +232,8 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="250"/>
-                                    <TextBox Text="{Binding Register1.Value, TargetNullValue=--}" Width="64"
+                                    <TextBlock Text="{Binding Register1.Name}" TextWrapping="Wrap" Width="240"/>
+                                    <TextBox Text="{Binding Register1.ValueString, TargetNullValue=--}" Width="76"
                                         Margin="4,0" ToolTip="{Binding Register1.ToolTip}"/>
                                     <TextBlock Text="{Binding Register1.Measure}" VerticalAlignment="Top" Width="20" Margin="2,2,0,0"/>
 
@@ -251,8 +251,6 @@
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource Set}" Style="{StaticResource ButtonStyle1}"
                                             CommandParameter="{Binding Register2}" Padding="3"
                                             Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}">
-                                        <!--<fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14" Style="{StaticResource faStyle}">
-                                        </fa:ImageAwesome>-->
                                         <Image Source="/Resources/Logout.png" Width="16" Height="16" Style="{StaticResource OutImageStyle}"/>
                                     </Button>
                                 </StackPanel>
@@ -263,13 +261,13 @@
 
 
                     <!--Запись режима выходного напряжения-->
-                    <ItemsControl ItemsSource="{Binding ListModeNapr}">
+                    <!--<ItemsControl ItemsSource="{Binding ListModeNapr}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Register1.Name}" Width="250" />
-                                    <TextBox Text="{Binding Register1.ValueString, StringFormat=0.00, TargetNullValue=--}" 
-                                        Width="64" ToolTip="{Binding Register1.ToolTip}" Margin="4,1"  />
+                                    <TextBlock Text="{Binding Register1.Name}" Width="240" />
+                                    <TextBox Text="{Binding Register1.ValueString, StringFormat=0.00, TargetNullValue=}" 
+                                        Width="76" ToolTip="{Binding Register1.ToolTip}" Margin="4,1"  />
                                     <TextBlock Text="{Binding Register1.Measure}" Width="20" Margin="2,3,0,0"/>
 
                                     <ComboBox Width="64" SelectedIndex="{Binding Register2.Value}" Margin="4,1" Padding="8,1"
@@ -280,13 +278,12 @@
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource Set}" Style="{StaticResource ButtonStyle1}"
                                             CommandParameter="{Binding Register2}" Padding="3"
                                             Command="{Binding DataContext.WriteValueCommand, ElementName=mainControl}">
-                                        <!--<fa:ImageAwesome Icon="Solid_SignOutAlt" Height="14"  Style="{StaticResource faStyle}"/>-->
                                         <Image Source="/Resources/Logout.png" Width="16" Height="16" Style="{StaticResource OutImageStyle}"/>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    </ItemsControl>-->
 
 
                     <!--Запись реального времени-->
@@ -294,10 +291,10 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="250" TextAlignment="Right" 
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="240" TextAlignment="Right" 
                                VerticalAlignment="Top"/>
                                     <TextBox Text="{Binding RealTimeValue, StringFormat=\{0:G\}, TargetNullValue=--}" 
-                                 Width="158" ToolTip="{Binding ToolTip}" Margin="4,1" />
+                                 Width="170" ToolTip="{Binding ToolTip}" Margin="4,1" />
                                     <Button Width="30" Margin="1" VerticalAlignment="Top" ToolTip="{DynamicResource SetCurrTime}"
                                  Style="{StaticResource ButtonStyle1}"
                                             Padding="3" Command="{Binding DataContext.WriteTimeCommand, ElementName=mainControl}">
@@ -313,8 +310,8 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="250" />
-                                    <TextBox Text="{Binding Value, TargetNullValue=--}" Width="64" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                    <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="240" />
+                                    <TextBox Text="{Binding ValueString, TargetNullValue=--}" Width="76" Margin="4,1" ToolTip="{Binding ToolTip}" />
                                     <TextBlock Text="{Binding Measure}" Width="20" Margin="2,2,0,0"/>
                                 </StackPanel>
                             </DataTemplate>
@@ -407,7 +404,8 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="60"/>
-                        </Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="24"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="22"/>
                         <RowDefinition Height="22"/>
@@ -421,11 +419,15 @@
                     <TextBox Text="{Binding device.InfoReg.VersionPO}" Margin="8,0,0,0" Grid.Column="1" Grid.Row="1" />
 
                     <TextBlock Text="{DynamicResource Year}" TextAlignment="Right" Grid.Row="0" Grid.Column="2"/>
-                    <TextBox Text="{Binding device.InfoReg.Year}" Margin="8,0,0,0"  Grid.Row="0"  Grid.Column="3" />
+                    <TextBox Text="{Binding device.InfoReg.Year}" IsReadOnly="False" Margin="8,0,0,0"  Grid.Row="0"  Grid.Column="3" />
 
                     <TextBlock Text="№" TextAlignment="Right" Grid.Row="1" Grid.Column="2"/>
-                    <TextBox Text="{Binding device.InfoReg.NumberDev}" Margin="8,0,0,0"  Grid.Row="1" Grid.Column="3" />
-                    </Grid>
+                    <TextBox Text="{Binding device.InfoReg.NumberDev}" Margin="8,0,0,0"  Grid.Row="1" Grid.Column="3" IsReadOnly="False" />
+                    <Button Grid.Column="4" Grid.RowSpan="2" Command="{Binding WriteFWCommand}"
+                            Style="{StaticResource ButtonStyle1}">
+                        <Image Source="/Resources/Logout.png" Width="16" Height="16" Style="{StaticResource OutImageStyle}"/>
+                    </Button>
+                </Grid>
 
             </GroupBox>
         </Border>

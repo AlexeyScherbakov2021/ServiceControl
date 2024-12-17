@@ -87,7 +87,7 @@ namespace ServiceControl.ViewModel
         public List<RegisterBool> ListCoil { get; set; }
         public List<TwoRegister> ListWriteControl { get; set; }
         public List<Register> ListService { get; set; }
-        public List<TwoRegister> ListModeNapr { get; set; }
+        //public List<TwoRegister> ListModeNapr { get; set; }
         public List<Register> ListRealTime { get; set; }
 
 #if !CLIENT
@@ -131,13 +131,13 @@ namespace ServiceControl.ViewModel
 
             ListInput2 = new List<Register>()
             {
-#if CLIENT
+//#if CLIENT
                 device.TimeWork, device.TimeProtect,
-#endif
+//#endif
                 device.Temper,
-#if !CLIENT
-                device.CurrPolyar
-#endif
+//#if !CLIENT
+//                device.CurrPolyar
+//#endif
             };
 
             // добавление в список силовых модулей
@@ -195,8 +195,8 @@ namespace ServiceControl.ViewModel
             // добавление в список целых регистров управления
 #if !CLIENT
             ListWriteControl2 = new List<TwoRegister>() { 
-                new TwoRegister() { Register1 = device.TimeWork, Register2 = device.TimeWorkWrite },
-                new TwoRegister() { Register1 = device.TimeProtect, Register2 = device.TimeProtectWrite  },
+                //new TwoRegister() { Register1 = device.TimeWork, Register2 = device.TimeWorkWrite },
+                //new TwoRegister() { Register1 = device.TimeProtect, Register2 = device.TimeProtectWrite  },
                 new TwoRegister() { Register1 = device.TempCoolerOn, Register2 = device.TempCoolerOnWrite },
                 new TwoRegister() { Register1 = device.TempCoolerOff, Register2 = device.TempCoolerOffWrite },
             };
@@ -208,10 +208,10 @@ namespace ServiceControl.ViewModel
                 new TwoRegister() { Register1 = device.ResistPlast3, Register3 = device.SpeedCorr3 },
             };
 
-            ListModeNapr = new List<TwoRegister>() 
-            {
-                new TwoRegister() { Register1 = device.ModeNaprOutput, Register2 = device.ModeNaprOutputWrite },
-            };
+            //ListModeNapr = new List<TwoRegister>() 
+            //{
+            //    new TwoRegister() { Register1 = device.ModeNaprOutput, Register2 = device.ModeNaprOutputWrite },
+            //};
 
             ListRealTime = new List<Register>() { device.RealTime };
 
@@ -317,6 +317,30 @@ namespace ServiceControl.ViewModel
         {
             device.RealTimeWrite.RealTimeValue = DateTime.Now;
             device.WriteRegister(device.RealTimeWrite);
+        }
+
+
+        //--------------------------------------------------------------------------------
+        // Команда Установить Год и номер устройства
+        //--------------------------------------------------------------------------------
+        public ICommand WriteFWCommand => new LambdaCommand(OnWriteFWCommandExecuted, CanWriteFWCommand);
+        private bool CanWriteFWCommand(object p) => device != null && device.DistanceMode.ValueBool;
+        private void OnWriteFWCommandExecuted(object p)
+        {
+            if (int.TryParse(device.InfoReg.Year, out int year))
+            {
+                while (year > 2000) year -= 2000;
+                device.SetMadeYear.Value = year;
+                device.WriteRegister(device.SetMadeYear);
+            }
+
+            if (int.TryParse(device.InfoReg.NumberDev, out int number))
+            {
+                device.SetNumberDevice.Value = number;
+                device.WriteRegister(device.SetNumberDevice);
+            }
+
+            device.ReadInfoRegister(device.InfoReg);
         }
 
 

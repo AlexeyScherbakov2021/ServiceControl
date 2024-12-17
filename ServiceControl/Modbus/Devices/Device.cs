@@ -18,6 +18,7 @@ namespace ServiceControl.Modbus.Devices
 
     internal abstract class Device 
     {
+        protected readonly DispatcherTimer timer = new DispatcherTimer();
         private bool _IsTimeout;
         public bool IsTimeout 
         { 
@@ -78,6 +79,15 @@ namespace ServiceControl.Modbus.Devices
 
         public abstract void Start();
         public abstract void Stop();
+
+        public void DumpReg(List<RegisterBase> list)
+        {
+            timer.Stop();
+            DumpRegisterValue(list);
+            timer.Start();
+        }
+
+        public abstract void DumpRegisterValue(List<RegisterBase> list);
 
     }
 }

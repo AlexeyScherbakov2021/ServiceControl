@@ -40,6 +40,8 @@ namespace ServiceControl.Modbus.Registers
             Value = BitConverter.ToSingle(values, 0);
             Value *= Scale;
             if (Value > MaxValue || Value < MinValue) Value = null;
+
+            ValueString = $"{Value}";
         }
 
         public override ushort[] SetOutput()

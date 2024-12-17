@@ -111,6 +111,7 @@
     <Compile Include="Modbus\Devices\DeviceMaster.cs" />
     <Compile Include="Modbus\Devices\DeviceSlave.cs" />
     <Compile Include="Modbus\Devices\DeviceType.cs" />
+    <Compile Include="Modbus\Registers\RegisterTime.cs" />
     <Compile Include="Modbus\Registers\Register.cs" />
     <Compile Include="Modbus\Registers\RegisterBase.cs" />
     <Compile Include="Modbus\Registers\RegisterFloat.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
     <Compile Include="ViewModel\BI_MM_UCViewModel.cs" />
     <Compile Include="ViewModel\ConfigKIPUDZ_WindowVM.cs" />
+    <Compile Include="ViewModel\DumpRegWindowViewModel.cs" />
     <Compile Include="ViewModel\IP24ViewModel.cs" />
     <Compile Include="ViewModel\KIPLC_UCViewModel.cs" />
     <Compile Include="ViewModel\TermViewModel.cs" />
@@ -152,6 +154,9 @@
     </Compile>
     <Compile Include="View\ConfigKIPUDZ_Window.xaml.cs">
       <DependentUpon>ConfigKIPUDZ_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DumpRegWindow.xaml.cs">
+      <DependentUpon>DumpRegWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\IP24View.xaml.cs">
       <DependentUpon>IP24View.xaml</DependentUpon>
@@ -228,6 +233,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ConfigKIPUDZ_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DumpRegWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

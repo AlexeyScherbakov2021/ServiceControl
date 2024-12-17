@@ -19,8 +19,8 @@ namespace ServiceControl.Modbus.Registers
 
         public string Description { get; set; }
         
-        public ushort Size = 1;
-        public ModbusFunc CodeFunc;
+        public ushort Size { get;set; } = 1;
+        public ModbusFunc CodeFunc { get; set; }
 
         private string _ValueString;
         public string ValueString { get => _ValueString; set { Set(ref _ValueString, value); } }

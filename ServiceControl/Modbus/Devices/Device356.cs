@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -222,8 +223,8 @@ namespace ServiceControl.Modbus.Devices
                 Measure = "A",
                 Description = "Iвых",
                 Scale = 0.01f,
-                MinValue = -150,
-                MaxValue = 150
+                MinValue = -320,
+                MaxValue = 320
             };
             ListInput.Add(CurrOutput);
 
@@ -238,8 +239,8 @@ namespace ServiceControl.Modbus.Devices
                 MeasureRes = "Volt",
                 Description = "Uвых",
                 Scale = 0.01f,
-                MinValue = -200,
-                MaxValue = 200
+                MinValue = -320,
+                MaxValue = 320
             };
             ListInput.Add(NaprOutput);
 
@@ -349,6 +350,7 @@ namespace ServiceControl.Modbus.Devices
             if ((year >= 2020 && version <= 3) || (year >= 2023 && version >= 4))
             {
                 IsOldVersion = false;
+            }
                 BI_SummPot = new RegisterIntFloat[CountBI];
                 BI_PolPot = new RegisterIntFloat[CountBI];
                 BI_CurrPol = new RegisterIntFloat[CountBI];
@@ -489,7 +491,7 @@ namespace ServiceControl.Modbus.Devices
                     ListInputBI.Add(BI_Temper[i]);
 
                 }
-            }
+            
 
             // список регистров статусов
             //--------------------------------------------------------------------------------------------------------------------------------------
@@ -900,7 +902,6 @@ namespace ServiceControl.Modbus.Devices
             };
             ListDop.Add(CurrPolyar);
 
-
 #endif
 
             // список управляющих статусов
@@ -933,8 +934,6 @@ namespace ServiceControl.Modbus.Devices
                 ResultText0Res = "Off",
                 ResultText1Res = "On",
             };
-
-
         }
 
         //-------------------------------------------------------------------------------------------
@@ -942,8 +941,8 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
-            
-//   УДАЛИТЬ --------------------------------            
+
+            //   УДАЛИТЬ --------------------------------            
             //ReadRegisters(ListInputBI);
             //SpeedDK[0].Value = 103.123456789f;
             //DeepDK[0].Value = 103.123456789f;
@@ -957,7 +956,7 @@ namespace ServiceControl.Modbus.Devices
             //BI_Temper[0].Value = 103.123456789f;
 
             //return Task.CompletedTask;
-// ------------------------------------------
+            // ------------------------------------------
 
             ReadInfoRegister(InfoReg);
             ReadRegisters(ListWriteControl);
@@ -970,7 +969,8 @@ namespace ServiceControl.Modbus.Devices
             ReadRegister(SetMode);
 
             ReadRegisters(ListInput);
-            ReadRegisters(ListInputBI);
+            if(!IsOldVersion)
+                ReadRegisters(ListInputBI);
             ReadRegisters(ListStatus);
 #if !CLIENT
             ReadRegisters(ListServices);
@@ -986,7 +986,8 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task RequestValue()
         {
-            ReadRegisters(ListInputBI);
+            if (!IsOldVersion)
+                ReadRegisters(ListInputBI);
             ReadRegisters(ListStatus);
             ReadRegister(OnOffMS);
 #if !CLIENT
@@ -1035,5 +1036,76 @@ namespace ServiceControl.Modbus.Devices
             OnOffMSWrite.SetLanguage();
             SetMode.SetLanguage();
         }
+
+        public override void DumpRegisterValue(List<RegisterBase> list)
+        {
+            list.Add(NaprSeti1);
+            list.Add(CountEE1);
+            list.Add(NaprSeti2);
+            list.Add(CountEE2);
+            list.Add(Temper);
+            list.Add(TimeWork);
+            list.Add(TimeProtect);
+            list.Add(CurrOutput);
+            list.Add(NaprOutput);
+            list.Add(ProtectPotenSumm);
+            list.Add(ProtectPotenPol);
+            list.Add(Stabil);
+            for (int i = 0; i < CountMS; ++i)
+                list.Add(MS[i]);
+            for (int i = 0; i < CountBI; i++)
+            {
+                list.Add(SpeedDK[i]);
+                list.Add(DeepDK[i]);
+                list.Add(BI_SummPot[i]);
+                list.Add(BI_PolPot[i]);
+                list.Add(BI_CurrPol[i]);
+                list.Add(BI_OutVoltage[i]);
+                list.Add(BI_OutCurrent[i]);
+                list.Add(BI_IndVoltage[i]);
+                list.Add(BI_FreqVoltage[i]);
+                list.Add(BI_Temper[i]);
+            }
+            list.Add(IllegalAccess);
+            list.Add(DistanceMode);
+            list.Add(Fault);
+            list.Add(BreakCirc);
+            list.Add(OnMS);
+            list.Add(SpeedCorr1);
+            list.Add(SpeedCorr2);
+            list.Add(SpeedCorr3);
+            list.Add(SetCurrOutput);
+            list.Add(SetSummPotOutput);
+            list.Add(SetPolPotOutput);
+            list.Add(SetMode);
+            list.Add(SetNaprOutput);
+            list.Add(RealTimeWrite);
+            list.Add(TempCoolerOnWrite);
+            list.Add(TempCoolerOffWrite);
+            list.Add(TimeWorkWrite);
+            list.Add(TimeProtectWrite);
+            list.Add(ModeNaprOutputWrite);
+            list.Add(RealTime);
+            list.Add(TempCoolerOn);
+            list.Add(TempCoolerOff);
+            list.Add(ModeNaprOutput);
+            list.Add(ResistPlast1);
+            list.Add(ResistPlast2);
+            list.Add(ResistPlast3);
+            list.Add(CurrPolyar);
+            list.Add(OnOffMS);
+            list.Add(OnOffMSWrite);
+            list.Add(InfoReg);
+
+            foreach (var item in list)
+            {
+                if (item.GetType() == typeof(RegisterBool))
+                    ReadRegister((RegisterBool)item);
+                else
+                    ReadRegister((Register)item);
+            }
+        }
+
     }
 }
+

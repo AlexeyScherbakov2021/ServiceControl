@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Shapes;
-
-namespace ServiceControl.Modbus.Registers
+﻿namespace ServiceControl.Modbus.Registers
 {
     internal class RegisterIntFloat : Register //, IDataErrorInfo
     {
@@ -16,14 +8,14 @@ namespace ServiceControl.Modbus.Registers
         public float MaxValue = float.MaxValue;
 
         private float? _ValueDouble;
-        public float? Value 
-        { 
+        public float? Value
+        {
             get => _ValueDouble;
             set
             {
-                if(Set(ref _ValueDouble, value))
+                if (Set(ref _ValueDouble, value))
                 {
-                       
+
                 }
             }
         }
@@ -63,6 +55,7 @@ namespace ServiceControl.Modbus.Registers
             }
             Value = (int)res * Scale;
             if (Value > MaxValue || Value < MinValue) Value = null;
+            ValueString = $"{Value}";
         }
 
 
@@ -101,8 +94,8 @@ namespace ServiceControl.Modbus.Registers
         }
 
 
-        public override void ChangeLang() 
-        { 
+        public override void ChangeLang()
+        {
             Name = App.Current.Resources[NameRes].ToString();
         }
 

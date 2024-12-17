@@ -32,6 +32,7 @@ namespace ServiceControl.Modbus.Registers
             }
             Value = (int)res;
             if (Value > MaxValue || Value < MinValue) Value = null;
+            ValueString = $"{Value}";
 
         }
 

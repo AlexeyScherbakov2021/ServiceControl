@@ -191,6 +191,11 @@ namespace ServiceControl.Modbus.Devices
 
         }
 
+        public override void DumpRegisterValue(List<RegisterBase> list)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override Task RequestValue()
         {
             ReadRegisters(ListInput);

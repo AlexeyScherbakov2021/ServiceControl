@@ -840,6 +840,9 @@ namespace ServiceControl.Modbus.Devices
             ListAll.AddRange(ListHolding6);
         }
 
-
+        public override void DumpRegisterValue(List<RegisterBase> list)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

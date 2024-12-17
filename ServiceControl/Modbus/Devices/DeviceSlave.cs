@@ -11,13 +11,13 @@ namespace ServiceControl.Modbus.Devices
 {
     internal abstract class DeviceSlave : Device
     {
-        private DispatcherTimer timer;
+        //private DispatcherTimer timer;
         public event EventHandler<EventArgs> EndStartRead;
         public event EventHandler<EventArgs> EndRead;
 
         protected DeviceSlave(MainWindowViewModel vm, MbWork modb, int slave) : base(vm, modb, slave)
         {
-            timer = new DispatcherTimer();
+            //timer = new DispatcherTimer();
         }
 
 
@@ -36,7 +36,7 @@ namespace ServiceControl.Modbus.Devices
 
             timer.Interval = new TimeSpan(0, 0, 0, 0, 1);
             timer.Tick += Timer_Tick;
-            timer.Start();
+            timer.Start(); 
         }
 
         //----------------------------------------------------------------------------------------------
@@ -313,7 +313,6 @@ namespace ServiceControl.Modbus.Devices
 
         public abstract Task StartRequestValue();
         public abstract Task RequestValue();
-
 
     }
 }

@@ -584,5 +584,10 @@ namespace ServiceControl.Modbus.Devices
             CheckReg(ListInput);
             CheckReg(ListWriteControl);
         }
+
+        public override void DumpRegisterValue(List<RegisterBase> list)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

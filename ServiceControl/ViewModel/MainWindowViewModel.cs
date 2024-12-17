@@ -559,6 +559,19 @@ namespace ServiceControl.ViewModel
             win.ShowDialog();
         }
 
+        //--------------------------------------------------------------------------------
+        // Команда Опрос всех регистров
+        //--------------------------------------------------------------------------------
+        public ICommand DumpCommand => new LambdaCommand(OnDumpCommandExecuted, CanDumpCommand);
+        private bool CanDumpCommand(object p) => winLog == null;
+        private void OnDumpCommandExecuted(object p)
+        {
+            List<RegisterBase> registers = new List<RegisterBase>();
+            CurrentDevice?.DumpReg(registers);
+            DumpRegWindow win = new DumpRegWindow(registers);
+            //win.DataContext = new DumpRegWindowViewModel(null);
+            win.Show();
+        }
         #endregion
 
     }

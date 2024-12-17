@@ -441,6 +441,10 @@ namespace ServiceControl.Modbus.Devices
 
         }
 
+        public override void DumpRegisterValue(List<RegisterBase> list)
+        {
+            throw new NotImplementedException();
+        }
 
         public override Task RequestValue()
         {

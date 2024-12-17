@@ -337,5 +337,9 @@ namespace ServiceControl.Modbus.Devices
             PolPotencial.SetLanguage();
         }
 
+        public override void DumpRegisterValue(List<RegisterBase> list)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
