@@ -18,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using static ServiceControl.Modbus.ComWork;
 
 namespace ServiceControl.ViewModel
 {
@@ -25,7 +26,7 @@ namespace ServiceControl.ViewModel
     {
         public struct TypeFunction
         {
-            public string name { get;set; }
+            public string name { get; set; }
             public ModbusFunc type { get; set; }
         }
 
@@ -35,8 +36,8 @@ namespace ServiceControl.ViewModel
             new TypeFunction() { name = "InputDiscrete (0x02)", type = ModbusFunc.InputDiscrete },
             new TypeFunction() { name = "HoldingRegister (0x03)", type = ModbusFunc.HoldingRegister },
             new TypeFunction() { name = "InputRegister (0x04)", type = ModbusFunc.InputRegister },
-            new TypeFunction() { name = "WriteCoil (0x05)", type = ModbusFunc.WriteCoil },
-            new TypeFunction() { name = "WriteRegister (0x06)", type = ModbusFunc.WriteRegister },
+            new TypeFunction() { name = "WriteCoil (0x05 / 0x0F)", type = ModbusFunc.WriteCoil },
+            new TypeFunction() { name = "WriteRegister (0x06 / 0x10)", type = ModbusFunc.WriteRegister },
             //new TypeFunction() { name = "WriteMultiCoil (0x0F)", type = ModbusFunc.WriteMultiCoils },
             //new TypeFunction() { name = "WriteMultiRegister (0x10)", type = ModbusFunc.WriteMultiple },
         };
@@ -57,46 +58,65 @@ namespace ServiceControl.ViewModel
         };
 
         private readonly MbWork work;
+        private List<byte> listPacket = new List<byte>();
 
         //----------------------------------------------------------------------------------------------
         #region Экранные переменные для отправки
 
-        private byte _SlaveAddress  = 1;
+        private byte _SlaveAddress = 1;
         public byte SlaveAddress { get => _SlaveAddress; set { Set(ref _SlaveAddress, value); packetToString(); } }
 
         private ModbusFunc _function = ModbusFunc.HoldingRegister;
-        public ModbusFunc function 
-        { 
-            get => _function; 
-            set 
-            { 
+        public ModbusFunc function
+        {
+            get => _function;
+            set
+            {
                 Set(ref _function, value); packetToString();
-                if(_function == ModbusFunc.WriteCoil || _function == ModbusFunc.WriteRegister)
-                {
-                    nameParam = "Значение";
-                }
-                else
-                {
-                    nameParam = "Число регистров";
-                }
-            } 
+                //if (_function == ModbusFunc.WriteCoil
+                //    || _function == ModbusFunc.WriteMultiCoils
+                //    || _function == ModbusFunc.WriteRegister
+                //    || _function == ModbusFunc.WriteMultiple)
+                //{
+                //    nameParam = "Значение";
+                //}
+                //else
+                //{
+                //    nameParam = "Число регистров";
+                //}
+            }
         }
 
-        private ushort _AddressReg = 1;
-        public ushort AddressReg { get => _AddressReg; set { Set(ref _AddressReg, value); packetToString(); } }
+        private string _Address = "1";
+        public string Address { get => _Address; set { Set(ref _Address, value); packetToString(); } }
 
-        private short _countRegister = 1;
-        public short countRegister { get => _countRegister; set { Set(ref _countRegister, value); packetToString(); } } 
+
+        //private ushort _AddressReg = 1;
+        //public ushort AddressReg { get => _AddressReg; set { Set(ref _AddressReg, value); packetToString(); } }
+        private ushort AddressReg;
+
+        //public List<ushort> listCntReg { get; set; } = new List<ushort>()  {1, 2, 4};
+
+        private ushort _cntReg = 1;
+        public ushort cntReg { get => _cntReg; set { Set(ref _cntReg, value); packetToString(); } }
+
+        private int countRegister;
+
+        //private int _countRegister = 1;
+        //public int countRegister { get => _countRegister; set { Set(ref _countRegister, value); packetToString(); } } 
 
         private string _checkSumma;
         public string checkSumma { get => _checkSumma; set { Set(ref _checkSumma, value); } }
+
+        private string _valuesString;
+        public string valuesString { get => _valuesString; set { Set(ref _valuesString, value); ; packetToString(); } }
 
         private string _packetSend;
         public string packetSend { get => _packetSend; set { Set(ref _packetSend, value); } }
 
 
-        private string _nameParam = "Число регистров";
-        public string nameParam { get => _nameParam; set { Set(ref _nameParam, value); } }
+        //private string _nameParam = "Число регистров";
+        //public string nameParam { get => _nameParam; set { Set(ref _nameParam, value); } }
 
 
         #endregion
@@ -174,29 +194,122 @@ namespace ServiceControl.ViewModel
         //    checkSumma = ByteArrayToString(crc);
         //}
 
+        Int64 StringToValue(string valStr, ushort size = 1)
+        {
+            if (string.IsNullOrEmpty(valStr))
+                return 0;
+
+            Int64 value;
+            System.Globalization.NumberStyles styleDig = System.Globalization.NumberStyles.None;
+
+            string s = valStr.ToLower();
+            if (s.Length > 1 && s.StartsWith("0x"))
+            {
+                s = s.Substring(2);
+                styleDig = System.Globalization.NumberStyles.HexNumber;
+                int len = (size * 4) > s.Length ? s.Length : size * 4;
+                s = s.Substring(0, len);
+                Int64.TryParse(s, styleDig, null, out value);
+            }
+            else
+            {
+                Int64.TryParse(s, styleDig, null, out value);
+                if (size == 1)
+                    value &= 0xFFFF;
+                else if (size == 2)
+                    value &= 0xFFFFFFFF;
+            }
+
+            return value;
+        }
+
         //--------------------------------------------------------------------------
         // Преобразование всего пакета в строку
         //--------------------------------------------------------------------------
         private void packetToString()
         {
-            byte[] values = new byte[6];
+            listPacket.Clear();
+            //byte[] val = null;
+            //byte[] values = new byte[0];
 
-            values[0] = SlaveAddress;
-            values[1] = (byte)function;
-            values[2] = (byte)(AddressReg >> 8);
-            values[3] = (byte)(AddressReg & 0xFF);
-            values[4] = (byte)(countRegister >> 8);
-            values[5] = (byte)(countRegister & 0xFF);
+            AddressReg = (ushort)StringToValue(Address);
 
-            var crc = ModbusUtility.CalculateCrc(values);
+            if (cntReg > 1)
+            {
+                if (function == ModbusFunc.WriteRegister)
+                    _function = ModbusFunc.WriteMultiple;
+
+                if (function == ModbusFunc.WriteCoil)
+                    _function = ModbusFunc.WriteMultiCoils;
+            }
+            else
+            {
+                if(function == ModbusFunc.WriteMultiple) 
+                    _function = ModbusFunc.WriteRegister;
+
+                if (function == ModbusFunc.WriteMultiCoils)
+                    _function = ModbusFunc.WriteCoil;
+            }
+
+            Int64 values = StringToValue(valuesString, cntReg);
+
+            listPacket.Add(SlaveAddress);
+            listPacket.Add((byte)function);
+            listPacket.Add((byte)(AddressReg >> 8));
+            listPacket.Add((byte)(AddressReg & 0xFF));
+
+            switch(function)
+            {
+                case ModbusFunc.WriteMultiple:
+                    listPacket.Add((byte)(cntReg >> 8));
+                    listPacket.Add((byte)cntReg);
+                    listPacket.Add((byte)(cntReg * 2));
+                    goto m1;
+
+                case ModbusFunc.WriteRegister:
+m1:
+                    for (int i = 0; i < cntReg; i++)
+                    {
+                        listPacket.Add((byte)(values >> 8));
+                        listPacket.Add((byte)(values & 0xFF));
+                        values >>= 16;
+                    }
+                    break;
+
+                case ModbusFunc.HoldingRegister:
+                case ModbusFunc.InputRegister:
+                case ModbusFunc.InputDiscrete:
+                case ModbusFunc.Coil:
+                    listPacket.Add((byte)(cntReg >> 8));
+                    listPacket.Add((byte)cntReg);
+                    break;
+
+
+
+                case ModbusFunc.WriteMultiCoils:
+                    listPacket.Add((byte)(cntReg >> 8));
+                    listPacket.Add((byte)cntReg);
+                    int cntBytes = cntReg / 8 + (cntReg % 8) > 0 ? 1 : 0;
+                    listPacket.Add((byte)(cntBytes));
+                    break;
+
+                case ModbusFunc.WriteCoil:
+                    for (int i = 0; i < cntReg; i++)
+                    {
+                        listPacket.Add((byte)(values >> 8));
+                        listPacket.Add((byte)(values & 0xFF));
+                        values >>= 16;
+                    }
+                    break;
+            }
+
+            var crc = ModbusUtility.CalculateCrc(listPacket.ToArray());
             checkSumma = ByteArrayToString(crc);
 
-            byte[] values2 = new byte[8];
-            values.CopyTo(values2, 0);
-            values2[6] = crc[0];
-            values2[7] = crc[1];
+            listPacket.Add(crc[0]);
+            listPacket.Add(crc[1]);
 
-            packetSend = ByteArrayToString(values2);
+            packetSend = ByteArrayToString(listPacket.ToArray());
         }
 
 
@@ -293,28 +406,48 @@ namespace ServiceControl.ViewModel
                 switch (function)
                 {
                     case ModbusFunc.Coil:
-                        work.ReadRegisterCoil(AddressReg, (ushort)countRegister, SlaveAddress);
+                        work.ReadRegisterCoil(AddressReg, (ushort)cntReg, SlaveAddress);
                         break;
 
                     case ModbusFunc.InputDiscrete:
-                        work.ReadRegisterDiscret(AddressReg, (ushort)countRegister, SlaveAddress);
+                        work.ReadRegisterDiscret(AddressReg, (ushort)cntReg, SlaveAddress);
                         break;
 
                     case ModbusFunc.HoldingRegister:
-                        work.ReadRegisterHolding(AddressReg, (ushort)countRegister, SlaveAddress);
+                        work.ReadRegisterHolding(AddressReg, (ushort)cntReg, SlaveAddress);
                         break;
 
                     case ModbusFunc.InputRegister:
-                        work.ReadRegisterInput(AddressReg, (ushort)countRegister, SlaveAddress);
+                        work.ReadRegisterInput(AddressReg, (ushort)cntReg, SlaveAddress);
+                        break;
+
+                    case ModbusFunc.WriteMultiple:
+                        var listValues = listPacket.GetRange(7, cntReg * 2);
+                        ushort[] bytes = new ushort[listValues.Count / 2];
+                        for (int i = 0, n = 0; i < listValues.Count; i += 2, n++)
+                        {
+                            ushort shr = listValues[i];
+                            shr <<= 8;
+                            shr |= listValues[i + 1];
+                            bytes[n] = shr;
+                        }
+                        work.WriteRegister(AddressReg, bytes, SlaveAddress);
                         break;
 
                     case ModbusFunc.WriteRegister:
-                        work.WriteRegister(AddressReg, (ushort)countRegister, SlaveAddress);
+                        if (listPacket.Count < 7)
+                            return;
+                        ushort value = listPacket[4];
+                        value <<= 8;
+                        value |= listPacket[5];
+                        work.WriteRegister(AddressReg, value, SlaveAddress);
                         break;
 
                     case ModbusFunc.WriteCoil:
-                        bool val = countRegister != 0;
-                        work.WriteRegister(AddressReg, val, SlaveAddress);
+                        ushort boolValue = listPacket[4];
+                        boolValue <<= 8;
+                        boolValue |= listPacket[5];
+                        work.WriteRegister(AddressReg, boolValue, SlaveAddress);
                         break;
                 }
             }

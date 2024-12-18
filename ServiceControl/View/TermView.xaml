@@ -85,22 +85,19 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
-                        <RowDefinition Height="24"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
+                        <RowDefinition Height="26"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Slave адрес" Grid.Row="0" Grid.Column="0"/>
@@ -113,13 +110,18 @@
                               Grid.Row="1" Grid.Column="1" Margin="4,0" Grid.ColumnSpan="2"/>
 
                     <TextBlock Text="Адрес" Grid.Row="2" Grid.Column="0"/>
-                    <TextBox Text="{Binding AddressReg}" Grid.Row="2" Grid.Column="1"/>
+                    <TextBox Text="{Binding Address}" Grid.Row="2" Grid.Column="1"/>
 
-                    <TextBlock Text="{Binding nameParam}" Grid.Row="3" Grid.Column="0"/>
-                    <TextBox Text="{Binding countRegister}" Grid.Row="3" Grid.Column="1"/>
+                    <TextBlock Text="Число регистров" Grid.Row="3" Grid.Column="0"/>
+                    <!--<ComboBox Grid.Row="3" Grid.Column="1" SelectedItem="{Binding cntReg}" Margin="4,1"
+                              ItemsSource="{Binding listCntReg}"/>-->
+                    <TextBox Text="{Binding cntReg}" Grid.Row="3" Grid.Column="1"/>
 
-                    <TextBlock Text="Контрольная сумма" Grid.Row="4" Grid.Column="0"/>
-                    <TextBox Text="{Binding checkSumma, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" IsReadOnly="True"/>
+                    <TextBlock Text="Значение" Grid.Row="4" Grid.Column="0"/>
+                    <TextBox Text="{Binding valuesString, Mode=TwoWay}" Grid.Row="4" Grid.Column="1" IsReadOnly="False"/>
+
+                    <TextBlock Text="Контрольная сумма" Grid.Row="5" Grid.Column="0"/>
+                    <TextBox Text="{Binding checkSumma, Mode=TwoWay}" Grid.Row="5" Grid.Column="1" IsReadOnly="True"/>
 
                     <TextBlock Text="Пакет" Grid.Row="7" Grid.Column="0"/>
                     <TextBox Text="{Binding packetSend}" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" 

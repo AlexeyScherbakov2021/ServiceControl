@@ -424,7 +424,7 @@
                     <TextBlock Text="№" TextAlignment="Right" Grid.Row="1" Grid.Column="2"/>
                     <TextBox Text="{Binding device.InfoReg.NumberDev}" Margin="8,0,0,0"  Grid.Row="1" Grid.Column="3" IsReadOnly="False" />
                     <Button Grid.Column="4" Grid.RowSpan="2" Command="{Binding WriteFWCommand}"
-                            Style="{StaticResource ButtonStyle1}">
+                            Style="{StaticResource ButtonStyle1}" ToolTip="Установить Год и Номер">
                         <Image Source="/Resources/Logout.png" Width="16" Height="16" Style="{StaticResource OutImageStyle}"/>
                     </Button>
                 </Grid>
