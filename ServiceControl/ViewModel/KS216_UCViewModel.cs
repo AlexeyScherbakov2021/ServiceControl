@@ -66,6 +66,7 @@ namespace ServiceControl.ViewModel
         }
 
         //private MainWindowViewModel mainVM;
+        public bool isShunt500 { get; set; } = false;
 
         private bool IsProcessOnOff = false;
 
@@ -370,7 +371,38 @@ namespace ServiceControl.ViewModel
             CommandManager.InvalidateRequerySuggested();
         }
 
-#endregion
+        //--------------------------------------------------------------------------------
+        // Команда Шунт 500
+        //--------------------------------------------------------------------------------
+        public ICommand Shunt500Command => new LambdaCommand(WriteShunt500Command, CanShunt500Command);
+        private bool CanShunt500Command(object p) => true;
+        private void WriteShunt500Command(object p)
+        {
+            if (isShunt500)
+            {
+                device.CurrOutput.Scale = 0.1f;
+                device.CurrOutput.MaxValue = 650;
+                device.CurrOutput.MinValue = -650;
+                device.SetCurrOutput.Scale = 0.1f;
+                device.SetCurrOutput.MaxValue = 650;
+                device.SetCurrOutput.MinValue = 0;
+                device.SetCurrOutput.Value *= 10;
+
+            }
+            else
+            {
+                device.CurrOutput.Scale = 0.01f;
+                device.CurrOutput.MaxValue = 320;
+                device.CurrOutput.MinValue = -320;
+                device.SetCurrOutput.Scale = 0.01f;
+                device.SetCurrOutput.MaxValue = 320;
+                device.SetCurrOutput.MinValue = 0;
+                device.SetCurrOutput.Value /= 10;
+            }
+        }
+
+
+        #endregion
 
 
 

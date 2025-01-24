@@ -26,6 +26,8 @@ namespace ServiceControl.ViewModel
             public RezhStab stab { get; set; }
         }
 
+        public bool isShunt500 { get; set; } = false;
+
         //private MainWindowViewModel mainVM;
         //public int SetModeNapr { get; set; } = -1;
 
@@ -334,6 +336,37 @@ namespace ServiceControl.ViewModel
             else
                 win.Focus();
         }
+
+        //--------------------------------------------------------------------------------
+        // Команда Шунт 500
+        //--------------------------------------------------------------------------------
+        public ICommand Shunt500Command => new LambdaCommand(WriteShunt500Command, CanShunt500Command);
+        private bool CanShunt500Command(object p) => true;
+        private void WriteShunt500Command(object p)
+        {
+            if(isShunt500)
+            {
+                device.CurrOutput.Scale = 0.1f;
+                device.CurrOutput.MaxValue = 650;
+                device.CurrOutput.MinValue = -650;
+                device.SetCurrOutput.Scale = 0.1f;
+                device.SetCurrOutput.MaxValue = 650;
+                device.SetCurrOutput.MinValue = 0;
+                device.SetCurrOutput.Value *= 10;
+
+            }
+            else
+            {
+                device.CurrOutput.Scale = 0.01f;
+                device.CurrOutput.MaxValue = 320;
+                device.CurrOutput.MinValue = -320;
+                device.SetCurrOutput.Scale = 0.01f;
+                device.SetCurrOutput.MaxValue = 320;
+                device.SetCurrOutput.MinValue = 0;
+                device.SetCurrOutput.Value /= 10;
+            }
+        }
+
 
         #endregion
 

@@ -14,23 +14,26 @@ namespace ServiceControl.Modbus.Registers
     {
         ushort valueStat;
 
-        public StatusDK DK1 { get; set; }
-        
+        public StatusDK _DK1;
+        public StatusDK DK1 { get => _DK1; set { Set(ref _DK1, value); }  }
+
         private string _NameDK1;
         public string NameDK1 { get => _NameDK1; set { Set(ref _NameDK1, value); } }
         
         private string _ValueDK1String;
         public string ValueDK1String { get => _ValueDK1String; set { Set(ref _ValueDK1String, value); } }
 
-        public StatusDK DK2 { get; set; }
-        
+        public StatusDK _DK2;
+        public StatusDK DK2 { get => _DK2; set { Set(ref _DK2, value); } }
+
         private string _NameDK2;
         public string NameDK2 { get => _NameDK2; set { Set(ref _NameDK2, value); } }
 
         private string _ValueDK2String;
         public string ValueDK2String { get => _ValueDK2String; set { Set(ref _ValueDK2String, value); } }
 
-        public StatusDK DK3 { get; set; }
+        public StatusDK _DK3;
+        public StatusDK DK3 { get => _DK3; set { Set(ref _DK3, value); } }
 
         private string _NameDK3;
         public string NameDK3 { get => _NameDK3; set { Set(ref _NameDK3, value); } }
@@ -38,16 +41,18 @@ namespace ServiceControl.Modbus.Registers
         private string _ValueDK3String;
         public string ValueDK3String { get => _ValueDK3String; set { Set(ref _ValueDK3String, value); } }
 
-        public StatusDoor IsOpenedDoor { get; set; }
-        
+        public StatusDoor _IsOpenedDoor;
+        public StatusDoor IsOpenedDoor { get => _IsOpenedDoor; set { Set(ref _IsOpenedDoor, value); } }
+
         private string _NameDoor;
         public string NameDoor { get => _NameDoor; set { Set(ref _NameDoor, value); } }
 
         private string _ValueDoorString;
         public string ValueDoorString { get => _ValueDoorString; set { Set(ref _ValueDoorString, value); } }
 
-        public StatusPower Power { get; set; }
-        
+        private StatusPower _Power;
+        public StatusPower Power { get => _Power; set { Set(ref _Power, value); } }
+
         private string _NamePower;
         public string NamePower { get => _NamePower; set { Set(ref _NamePower, value); } }
 

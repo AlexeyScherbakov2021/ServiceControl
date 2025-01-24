@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceControl.Based;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,11 @@ namespace ServiceControl.Modbus.Registers
 {
     public enum StatusDC { Norma, Off, Absent, Avar };
 
-    public class ClassStatus
+    public class ClassStatus : Observable
     {
         public int Number { get; set;}
-        public StatusDC StatusDC { get; set;}
+        private StatusDC _StatusDC;
+        public StatusDC StatusDC { get => _StatusDC; set { Set(ref _StatusDC, value);  } }
     }
 
 

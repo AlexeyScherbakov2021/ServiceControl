@@ -157,22 +157,23 @@ namespace ServiceControl.Modbus.Devices
                 MaxValue = 100 };
             ListInput.Add(Temper);
 
-            TimeWork = new RegisterTime() { 
-                Address = 0x08, 
-                CodeFunc = ModbusFunc.InputRegister, 
-                Size = 2, 
+            TimeWork = new RegisterTime() {
+                Address = 0x08,
+                CodeFunc = ModbusFunc.InputRegister,
+                Size = 2,
                 Name = "Время наработки",
                 NameRes = "TimeWork",
                 Measure = "ч",
                 MeasureRes = "Hour",
-                Description = "СВН", 
-                MinValue = 0, 
+                Description = "СВН",
+                MinValue = 0,
                 //Scale = 1,//3600,
-                MaxValue = 999999 
+                MaxValue = int.MaxValue 
             };
             ListInput.Add(TimeWork);
 
-            TimeProtect = new RegisterTime() { 
+            TimeProtect = new RegisterTime() 
+            { 
                 Address = 0x0A, 
                 CodeFunc = ModbusFunc.InputRegister, 
                 Size = 2, 
@@ -183,7 +184,8 @@ namespace ServiceControl.Modbus.Devices
                 Description = "СВЗ",
                 //Scale = 1,// / 3600,
                 MinValue = 0,
-                MaxValue = 999999 };
+                MaxValue = int.MaxValue 
+            };
             ListInput.Add(TimeProtect);
 
             CurrOutput = new RegisterIntFloat() { 
@@ -195,8 +197,8 @@ namespace ServiceControl.Modbus.Devices
                 Measure = "A",
                 Description = "Iвых", 
                 Scale = 0.01f, 
-                MinValue = -150, 
-                MaxValue = 150 };
+                MinValue = -320, 
+                MaxValue = 320 };
             ListInput.Add(CurrOutput);
 
             NaprOutput = new RegisterIntFloat() { 
@@ -831,63 +833,63 @@ namespace ServiceControl.Modbus.Devices
 
         public override void DumpRegisterValue(List<RegisterBase> list)
        {
-            list.Add(NaprSeti1);
-            list.Add(CountEE1);
-            list.Add(NaprSeti2);
-            list.Add(CountEE2);
-            list.Add(Temper);
-            list.Add(TimeWork);
-            list.Add(TimeProtect);
-            list.Add(CurrOutput);
-            list.Add(NaprOutput);
-            list.Add(ProtectPotenSumm);
-            list.Add(ProtectPotenPol);
-            list.Add(Stabil);
-            for(int i = 0; i < CountMS; ++i)
-                list.Add(MS[i]);
-            for (int i = 0; i < CountDK; i++)
-            {
-                list.Add(SpeedDK[i]);
-                list.Add(DeepDK[i]);
-            }
-            list.Add(IllegalAccess);
-            list.Add(DistanceMode);
-            list.Add(Fault);
-            list.Add(BreakCirc);
-            list.Add(OnMS);
-            list.Add(SpeedCorr1);
-            list.Add(SpeedCorr2);
-            list.Add(SpeedCorr3);
-            list.Add(SetCurrOutput);
-            list.Add(SetSummPotOutput);
-            list.Add(SetPolPotOutput);
-            list.Add(SetMode);
-            list.Add(SetNaprOutput);
-            list.Add(RealTimeWrite);
-            list.Add(TempCoolerOnWrite);
-            list.Add(TempCoolerOffWrite);
-            //list.Add(TimeWorkWrite);
-            //list.Add(TimeProtectWrite);
-            //list.Add(ModeNaprOutputWrite);
-            list.Add(RealTime);
-            list.Add(TempCoolerOn);
-            list.Add(TempCoolerOff);
-            //list.Add(ModeNaprOutput);
-            list.Add(ResistPlast1);
-            list.Add(ResistPlast2);
-            list.Add(ResistPlast3);
-            //list.Add(CurrPolyar);
-            list.Add(OnOffMS);
-            list.Add(OnOffMSWrite);
-            list.Add(InfoReg);
+        //    list.Add(NaprSeti1);
+        //    list.Add(CountEE1);
+        //    list.Add(NaprSeti2);
+        //    list.Add(CountEE2);
+        //    list.Add(Temper);
+        //    list.Add(TimeWork);
+        //    list.Add(TimeProtect);
+        //    list.Add(CurrOutput);
+        //    list.Add(NaprOutput);
+        //    list.Add(ProtectPotenSumm);
+        //    list.Add(ProtectPotenPol);
+        //    list.Add(Stabil);
+        //    for(int i = 0; i < CountMS; ++i)
+        //        list.Add(MS[i]);
+        //    for (int i = 0; i < CountDK; i++)
+        //    {
+        //        list.Add(SpeedDK[i]);
+        //        list.Add(DeepDK[i]);
+        //    }
+        //    list.Add(IllegalAccess);
+        //    list.Add(DistanceMode);
+        //    list.Add(Fault);
+        //    list.Add(BreakCirc);
+        //    list.Add(OnMS);
+        //    list.Add(SpeedCorr1);
+        //    list.Add(SpeedCorr2);
+        //    list.Add(SpeedCorr3);
+        //    list.Add(SetCurrOutput);
+        //    list.Add(SetSummPotOutput);
+        //    list.Add(SetPolPotOutput);
+        //    list.Add(SetMode);
+        //    list.Add(SetNaprOutput);
+        //    list.Add(RealTimeWrite);
+        //    list.Add(TempCoolerOnWrite);
+        //    list.Add(TempCoolerOffWrite);
+        //    //list.Add(TimeWorkWrite);
+        //    //list.Add(TimeProtectWrite);
+        //    //list.Add(ModeNaprOutputWrite);
+        //    list.Add(RealTime);
+        //    list.Add(TempCoolerOn);
+        //    list.Add(TempCoolerOff);
+        //    //list.Add(ModeNaprOutput);
+        //    list.Add(ResistPlast1);
+        //    list.Add(ResistPlast2);
+        //    list.Add(ResistPlast3);
+        //    //list.Add(CurrPolyar);
+        //    list.Add(OnOffMS);
+        //    list.Add(OnOffMSWrite);
+        //    list.Add(InfoReg);
 
-            foreach (var item in list)
-            {
-                if(item.GetType() == typeof(RegisterBool))
-                    ReadRegister((RegisterBool)item);
-                else
-                    ReadRegister((Register)item);
-            }
+        //    foreach (var item in list)
+        //    {
+        //        if(item.GetType() == typeof(RegisterBool))
+        //            ReadRegister((RegisterBool)item);
+        //        else
+        //            ReadRegister((Register)item);
+        //    }
         }
     }
 }

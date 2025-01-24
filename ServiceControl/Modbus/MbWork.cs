@@ -298,7 +298,7 @@ namespace ServiceControl.Modbus
             }
             catch (TimeoutException te)
             {
-                throw te;
+                //throw te;
             }
             catch (Exception e)
             {

@@ -132,6 +132,10 @@
                 </GroupBox.Header>
                 <StackPanel Margin="8,0" Orientation="Vertical">
 
+                    <CheckBox Content="Шунт 500" HorizontalAlignment="Center" Command="{Binding Shunt500Command}"
+                              IsChecked="{Binding isShunt500}"
+                              Margin="0,10,0,-15" VerticalContentAlignment="Center"/>
+
                     <DockPanel LastChildFill="False" Margin="0,2">
                         <TextBlock Text="{DynamicResource Stab}" DockPanel.Dock="Right" Width="35" Style="{x:Null}"/>
                         <TextBlock Text="{DynamicResource Contr}" DockPanel.Dock="Right" Width="90" Style="{x:Null}"/>
@@ -227,7 +231,7 @@
                 </GroupBox.Header>
                 <StackPanel Margin="10,0,6,0" Orientation="Vertical">
 
-                    <!--Время работы и защиты-->
+                    <!-- температура включения и выключения вентилятора-->
                     <ItemsControl ItemsSource="{Binding ListWriteControl2}" Margin="0,8,0,0">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -305,13 +309,13 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <!--Температура и Ток поляризации-->
+                    <!--Температура и время звщиты и наработки-->
                     <ItemsControl ItemsSource="{Binding ListInput2}" >
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="240" />
-                                    <TextBox Text="{Binding ValueString, TargetNullValue=--}" Width="76" Margin="4,1" ToolTip="{Binding ToolTip}" />
+                                    <TextBox Text="{Binding ValueString, TargetNullValue=--}" Width="170" Margin="4,1" ToolTip="{Binding ToolTip}" />
                                     <TextBlock Text="{Binding Measure}" Width="20" Margin="2,2,0,0"/>
                                 </StackPanel>
                             </DataTemplate>

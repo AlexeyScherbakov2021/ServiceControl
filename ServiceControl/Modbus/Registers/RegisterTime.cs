@@ -17,7 +17,7 @@ namespace ServiceControl.Modbus.Registers
             }
 
             base.SetResultValues(val);
-            ValueString = $"{Value/3600:D2}:{(Value%3600)/60:D2}:{(Value%3600)%60:D2}";
+            ValueString = $"{Value/3600:0.##}:{(Value%3600)/60:D2}:{(Value%3600)%60:D2}";
 
         }
 

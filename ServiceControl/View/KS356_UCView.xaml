@@ -131,6 +131,10 @@
                     <TextBlock Text="{DynamicResource ControlStab}" FontSize="16" FontWeight="Bold"/>
                 </GroupBox.Header>
                 <StackPanel Margin="8,0" Orientation="Vertical">
+                    
+                    <CheckBox Content="Шунт 500" HorizontalAlignment="Center" Command="{Binding Shunt500Command}"
+                              IsChecked="{Binding isShunt500}"
+                              Margin="0,10,0,-15" VerticalContentAlignment="Center"/>
 
                     <DockPanel LastChildFill="False" Margin="0,2">
                         <TextBlock Text="{DynamicResource Stab}" DockPanel.Dock="Right" Width="35" Style="{x:Null}"/>

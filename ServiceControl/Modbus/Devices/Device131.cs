@@ -13,11 +13,20 @@ namespace ServiceControl.Modbus.Devices
     {
         public const int CountKIP = 32;
 
+        public RegisterInt CoolerOn;
+        public RegisterInt CoolerOff;
+        public RegisterInt UoutSlope;
+        public RegisterInt UsupplyOffset;
+        public RegisterInt IoutOffset;
+        public RegisterInt UoutOffset;
+        public RegisterInt LastRegister;
+        public RegisterInt NoName;
+
         public RegisterIntFloat CurrOutput;
         public RegisterIntFloat VoltOutput;
         public RegisterIntFloat Potencial;
         public RegisterIntFloat PolPotencial;
-        public RegisterIntFloat TimeProtect;
+        public RegisterTime TimeProtect;
         public RegisterIntFloat NaprSeti;
         public RegisterIntFloat Temper;
 
@@ -29,13 +38,22 @@ namespace ServiceControl.Modbus.Devices
         public RegisterIntFloat SetCurrOutput;
         public RegisterIntFloat SetPotOutput;
         public RegisterIntFloat SetVoltageOutput;
+        public RegisterInt SetCoolerOn;
+        public RegisterInt SetCoolerOff;
+        public RegisterInt SetUoutSlope;
+        public RegisterInt SetUsupplyOffset;
+        public RegisterInt SetIoutOffset;
+        public RegisterInt SetUoutOffset;
+
         public RegisterMode131 Mode { get; set; }
         public RegisterInfo InfoReg { get; set; }
 
         //public RegisterFloat[] ListKIP { get; set; }
 
         List<Register> ListInput;
+        List<Register> ListInputDop;
         List<Register> ListOutput;
+        List<Register> ListOutput2;
         public List<Register> ListKIP;
 
         //----------------------------------------------------------------------------------------------
@@ -45,6 +63,115 @@ namespace ServiceControl.Modbus.Devices
         {
 
             ListInput = new List<Register>();
+            ListInputDop = new List<Register>();
+
+            CoolerOn = new RegisterInt
+            {
+                Address = 1992,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "t° включения вентилятора",
+                NameRes = "",
+                Measure = "t°",
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListInputDop.Add(CoolerOn);
+
+            CoolerOff = new RegisterInt
+            {
+                Address = 1993,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "t° выключения вентилятора",
+                NameRes = "",
+                Measure = "t°",
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListInputDop.Add(CoolerOff);
+
+            UoutSlope = new RegisterInt
+            {
+                Address = 1994,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "U out slope",
+                NameRes = "",
+                Measure = "",
+                isNeg = true,
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListInputDop.Add(UoutSlope);
+
+            UsupplyOffset = new RegisterInt
+            {
+                Address = 1995,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "U suppply offset",
+                NameRes = "",
+                Measure = "",
+                isNeg = true,
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListInputDop.Add(UsupplyOffset);
+
+            IoutOffset = new RegisterInt
+            {
+                Address = 1996,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "I out offset",
+                NameRes = "",
+                Measure = "",
+                isNeg = true,
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListInputDop.Add(IoutOffset);
+
+            UoutOffset = new RegisterInt
+            {
+                Address = 1997,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "U out offset",
+                NameRes = "",
+                Measure = "",
+                isNeg = true,
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListInputDop.Add(UoutOffset);
+
+            LastRegister = new RegisterInt
+            {
+                Address = 1998,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "Последний записанный регистр",
+                NameRes = "",
+                Measure = "",
+                MinValue = 0,
+                MaxValue = int.MaxValue
+            };
+            ListInputDop.Add(LastRegister);
+
+            NoName = new RegisterInt
+            {
+                Address = 1999,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "",
+                NameRes = "",
+                Measure = "",
+                MinValue = 0,
+                MaxValue = int.MaxValue
+            };
+            ListInputDop.Add(NoName);
 
             CurrOutput = new RegisterIntFloat()
             {
@@ -55,8 +182,8 @@ namespace ServiceControl.Modbus.Devices
                 NameRes = "OutCur",
                 Measure = "A",
                 Scale = 0.01f,
-                MinValue = 0,
-                MaxValue = 100
+                MinValue = -320,
+                MaxValue = 320
             };
             ListInput.Add(CurrOutput);
 
@@ -71,8 +198,8 @@ namespace ServiceControl.Modbus.Devices
                 MeasureRes = "Volt",
                 Description = "Uвых",
                 Scale = 0.1f,
-                MinValue = 0,
-                MaxValue = 48
+                MinValue = -200,
+                MaxValue = 200
             };
             ListInput.Add(VoltOutput);
 
@@ -107,7 +234,7 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(Potencial);
 
-            TimeProtect = new RegisterIntFloat()
+            TimeProtect = new RegisterTime()
             {
                 Address = 2003,
                 CodeFunc = ModbusFunc.HoldingRegister,
@@ -116,9 +243,9 @@ namespace ServiceControl.Modbus.Devices
                 NameRes = "TimeProtect",
                 Measure = "ч",
                 MeasureRes = "Hour",
-                Scale = 1/3600f,
+                //Scale = 1/3600f,
                 MinValue = 0,
-                MaxValue = 999999
+                MaxValue = int.MaxValue
             };
             ListInput.Add(TimeProtect);
 
@@ -199,7 +326,6 @@ namespace ServiceControl.Modbus.Devices
             };
             ListInput.Add(RealTime);
 
-
             ListOutput = new List<Register>();
 
             SetCurrOutput = new RegisterIntFloat()
@@ -262,6 +388,91 @@ namespace ServiceControl.Modbus.Devices
             };
             //ListInput.Add(Mode);
 
+            ListOutput2 = new List<Register>();
+
+            SetCoolerOn = new RegisterInt
+            {
+                Address = 1992,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "t° включения вентилятора",
+                NameRes = "",
+                Measure = "t°",
+                MinValue = 0,
+                MaxValue = 200
+            };
+            ListOutput2.Add(SetCoolerOn);
+
+            SetCoolerOff = new RegisterInt
+            {
+                Address = 1993,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "t° выключения вентилятора",
+                NameRes = "",
+                Measure = "t°",
+                MinValue = 0,
+                MaxValue = 200
+            };
+            ListOutput2.Add(SetCoolerOff);
+
+            SetUoutSlope = new RegisterInt
+            {
+                Address = 1994,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "U out slope",
+                NameRes = "",
+                Measure = "",
+                isNeg = true,
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListOutput2.Add(SetUoutSlope);
+
+            SetUsupplyOffset = new RegisterInt
+            {
+                Address = 1995,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "U suppply offset",
+                NameRes = "",
+                Measure = "",
+                isNeg = true,
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListOutput2.Add(SetUsupplyOffset);
+
+            SetIoutOffset = new RegisterInt
+            {
+                Address = 1996,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "I out offset",
+                NameRes = "",
+                Measure = "",
+                isNeg = true,
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListOutput2.Add(SetIoutOffset);
+
+            SetUoutOffset = new RegisterInt
+            {
+                Address = 1997,
+                CodeFunc = ModbusFunc.HoldingRegister,
+                Size = 1,
+                Name = "U out offset",
+                NameRes = "",
+                Measure = "",
+                isNeg = true,
+                MinValue = -2000,
+                MaxValue = 2000
+            };
+            ListOutput2.Add(SetUoutOffset);
+
+
             ListKIP = new List<Register>();
             for(int i = 0; i < CountKIP; i++)
             {
@@ -292,8 +503,10 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task RequestValue()
         {
+            ReadRegisters(ListInputDop);
             ReadRegisters(ListInput);
             ReadRegisters(ListKIP);
+            //StatDC1.ValueStat[0].StatusDC = StatusDC.Off;
             ReadRegister(Mode);
             return Task.CompletedTask;
         }
@@ -303,9 +516,13 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task StartRequestValue()
         {
-            ReadInfoRegister(InfoReg);
+            //ReadInfoRegister(InfoReg);
+            LastRegister.Value = 0;
+            WriteRegister(LastRegister);
+            ReadRegisters(ListInputDop);
             ReadRegisters(ListInput);
             ReadRegisters(ListOutput);
+            ReadRegisters(ListOutput2);
             ReadRegisters(ListKIP);
             ReadRegister(Mode);
             return Task.CompletedTask;
@@ -316,11 +533,11 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         protected override void CheckListRegister()
         {
-            ReadInfoRegister(InfoReg);
-            ReadRegisters(ListInput);
-            ReadRegisters(ListOutput);
-            ReadRegisters(ListKIP);
+            CheckReg(ListInputDop);
             CheckReg(ListInput);
+            CheckReg(ListOutput);
+            CheckReg(ListOutput2);
+
         }
 
         //-------------------------------------------------------------------------------------------

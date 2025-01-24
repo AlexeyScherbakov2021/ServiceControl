@@ -10,6 +10,7 @@ namespace ServiceControl.Modbus.Registers
     {
         public int MinValue = int.MinValue;
         public int MaxValue = int.MaxValue;
+        public bool isNeg = false;
 
         private int? _ValueInt;
         public int? Value { get => _ValueInt; set { Set(ref _ValueInt, value); } }
@@ -23,14 +24,30 @@ namespace ServiceControl.Modbus.Registers
                 return;
             }
 
-            uint res = (ushort)val[0];
-            for (int i = 1; i < val.Length; i++)
+            if(isNeg)
             {
-                uint res2 = val[i];
-                res2 <<= 16 * i;
-                res |= res2;
+                int res = (short)val[0];
+                for (int i = 1; i < val.Length; i++)
+                {
+                    int res2 = val[i];
+                    res2 <<= 16 * i;
+                    res |= res2;
+                }
+                Value = (int)res;
+
             }
-            Value = (int)res;
+            else
+            {
+                uint res = (ushort)val[0];
+                for (int i = 1; i < val.Length; i++)
+                {
+                    uint res2 = val[i];
+                    res2 <<= 16 * i;
+                    res |= res2;
+                }
+                Value = (int)res;
+            }
+
             if (Value > MaxValue || Value < MinValue) Value = null;
             ValueString = $"{Value}";
 

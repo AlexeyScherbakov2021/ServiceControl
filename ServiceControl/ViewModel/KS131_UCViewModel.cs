@@ -29,9 +29,11 @@ namespace ServiceControl.ViewModel
         public Device131 device { get; set; }
 
         public List<TwoRegister> ListCtrlReg { get; set; }
+        public List<TwoRegister> ListCtrlCooler { get; set; }
         public List<Register> ListReg { get; set; }
         public List<Register> ListKIP { get; set; }
         public List<RegisterStatus131> ListStatus { get; set; }
+        public List<TwoRegister> ListSetter { get; set; }
 
         //--------------------------------------------------------------------------------------------
         // конструктор
@@ -54,6 +56,23 @@ namespace ServiceControl.ViewModel
                 new TwoRegister { Reg1 = device.Potencial, Reg2 = device.SetPotOutput, stab = RezhStab.StabSummPot},
                 new TwoRegister { Reg1 = device.PolPotencial, Reg2 = device.SetPotOutput, stab = RezhStab.StabPolPot},
             };
+
+            //ListCtrlCooler = new List<TwoRegister>
+            //{
+            //    new TwoRegister { Reg1 = device.CoolerOn, Reg2 = device.SetCoolerOn},
+            //    new TwoRegister { Reg1 = device.CoolerOff, Reg2 = device.SetCoolerOff},
+            //};
+
+            ListSetter = new List<TwoRegister>
+            {
+                new TwoRegister { Reg1 = device.CoolerOn, Reg2 = device.SetCoolerOn},
+                new TwoRegister { Reg1 = device.CoolerOff, Reg2 = device.SetCoolerOff},
+                new TwoRegister { Reg1 = device.UoutSlope, Reg2 = device.SetUoutSlope},
+                new TwoRegister { Reg1 = device.UsupplyOffset, Reg2 = device.SetUsupplyOffset},
+                new TwoRegister { Reg1 = device.IoutOffset, Reg2 = device.SetIoutOffset},
+                new TwoRegister { Reg1 = device.UoutOffset, Reg2 = device.SetUoutOffset},
+            };
+
 
             ListReg = new List<Register>() 
             {
@@ -108,6 +127,39 @@ namespace ServiceControl.ViewModel
             }
 
         }
+
+        //--------------------------------------------------------------------------------
+        // Команда Отправить значение с подтверждением и конторлем
+        //--------------------------------------------------------------------------------
+        public ICommand Write2ValueCommand => new LambdaCommand(OnWrite2ValueCommandExecuted, CanWrite2ValueCommand);
+        private bool CanWrite2ValueCommand(object p) => device != null && device.Mode.distMode == DistMode.Distance;
+        private void OnWrite2ValueCommandExecuted(object p)
+        {
+            if (p is RegisterInt reg)
+            {
+                try
+                {
+                    RegisterInt regTemp = new RegisterInt()
+                    {
+                        Address = 1998,
+                        Value = reg.Address,
+                        CodeFunc = ModbusFunc.HoldingRegister,
+                    };
+                    device.WriteRegister(regTemp);
+                    device.WriteRegister(reg);
+
+                    regTemp.Address = 1999;
+                    regTemp.Value |= 0x8000;
+                    device.WriteRegister(regTemp);
+                }
+                catch (TimeoutException)
+                {
+
+                }
+            }
+
+        }
+
 
         //--------------------------------------------------------------------------------
         // Команда Установить режим стабилизации

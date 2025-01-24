@@ -635,7 +635,7 @@ namespace ServiceControl.Modbus.Devices
                 Description = "Iуст",
                 Scale = 0.01f,
                 MinValue = 0,
-                MaxValue = 150
+                MaxValue = 320
             };
             ListWriteControl.Add(SetCurrOutput);
 
@@ -1039,71 +1039,71 @@ namespace ServiceControl.Modbus.Devices
 
         public override void DumpRegisterValue(List<RegisterBase> list)
         {
-            list.Add(NaprSeti1);
-            list.Add(CountEE1);
-            list.Add(NaprSeti2);
-            list.Add(CountEE2);
-            list.Add(Temper);
-            list.Add(TimeWork);
-            list.Add(TimeProtect);
-            list.Add(CurrOutput);
-            list.Add(NaprOutput);
-            list.Add(ProtectPotenSumm);
-            list.Add(ProtectPotenPol);
-            list.Add(Stabil);
-            for (int i = 0; i < CountMS; ++i)
-                list.Add(MS[i]);
-            for (int i = 0; i < CountBI; i++)
-            {
-                list.Add(SpeedDK[i]);
-                list.Add(DeepDK[i]);
-                list.Add(BI_SummPot[i]);
-                list.Add(BI_PolPot[i]);
-                list.Add(BI_CurrPol[i]);
-                list.Add(BI_OutVoltage[i]);
-                list.Add(BI_OutCurrent[i]);
-                list.Add(BI_IndVoltage[i]);
-                list.Add(BI_FreqVoltage[i]);
-                list.Add(BI_Temper[i]);
-            }
-            list.Add(IllegalAccess);
-            list.Add(DistanceMode);
-            list.Add(Fault);
-            list.Add(BreakCirc);
-            list.Add(OnMS);
-            list.Add(SpeedCorr1);
-            list.Add(SpeedCorr2);
-            list.Add(SpeedCorr3);
-            list.Add(SetCurrOutput);
-            list.Add(SetSummPotOutput);
-            list.Add(SetPolPotOutput);
-            list.Add(SetMode);
-            list.Add(SetNaprOutput);
-            list.Add(RealTimeWrite);
-            list.Add(TempCoolerOnWrite);
-            list.Add(TempCoolerOffWrite);
-            list.Add(TimeWorkWrite);
-            list.Add(TimeProtectWrite);
-            list.Add(ModeNaprOutputWrite);
-            list.Add(RealTime);
-            list.Add(TempCoolerOn);
-            list.Add(TempCoolerOff);
-            list.Add(ModeNaprOutput);
-            list.Add(ResistPlast1);
-            list.Add(ResistPlast2);
-            list.Add(ResistPlast3);
-            list.Add(CurrPolyar);
-            list.Add(OnOffMS);
-            list.Add(OnOffMSWrite);
-            list.Add(InfoReg);
+            //list.Add(NaprSeti1);
+            //list.Add(CountEE1);
+            //list.Add(NaprSeti2);
+            //list.Add(CountEE2);
+            //list.Add(Temper);
+            //list.Add(TimeWork);
+            //list.Add(TimeProtect);
+            //list.Add(CurrOutput);
+            //list.Add(NaprOutput);
+            //list.Add(ProtectPotenSumm);
+            //list.Add(ProtectPotenPol);
+            //list.Add(Stabil);
+            //for (int i = 0; i < CountMS; ++i)
+            //    list.Add(MS[i]);
+            //for (int i = 0; i < CountBI; i++)
+            //{
+            //    list.Add(SpeedDK[i]);
+            //    list.Add(DeepDK[i]);
+            //    list.Add(BI_SummPot[i]);
+            //    list.Add(BI_PolPot[i]);
+            //    list.Add(BI_CurrPol[i]);
+            //    list.Add(BI_OutVoltage[i]);
+            //    list.Add(BI_OutCurrent[i]);
+            //    list.Add(BI_IndVoltage[i]);
+            //    list.Add(BI_FreqVoltage[i]);
+            //    list.Add(BI_Temper[i]);
+            //}
+            //list.Add(IllegalAccess);
+            //list.Add(DistanceMode);
+            //list.Add(Fault);
+            //list.Add(BreakCirc);
+            //list.Add(OnMS);
+            //list.Add(SpeedCorr1);
+            //list.Add(SpeedCorr2);
+            //list.Add(SpeedCorr3);
+            //list.Add(SetCurrOutput);
+            //list.Add(SetSummPotOutput);
+            //list.Add(SetPolPotOutput);
+            //list.Add(SetMode);
+            //list.Add(SetNaprOutput);
+            //list.Add(RealTimeWrite);
+            //list.Add(TempCoolerOnWrite);
+            //list.Add(TempCoolerOffWrite);
+            //list.Add(TimeWorkWrite);
+            //list.Add(TimeProtectWrite);
+            //list.Add(ModeNaprOutputWrite);
+            //list.Add(RealTime);
+            //list.Add(TempCoolerOn);
+            //list.Add(TempCoolerOff);
+            //list.Add(ModeNaprOutput);
+            //list.Add(ResistPlast1);
+            //list.Add(ResistPlast2);
+            //list.Add(ResistPlast3);
+            //list.Add(CurrPolyar);
+            //list.Add(OnOffMS);
+            //list.Add(OnOffMSWrite);
+            //list.Add(InfoReg);
 
-            foreach (var item in list)
-            {
-                if (item.GetType() == typeof(RegisterBool))
-                    ReadRegister((RegisterBool)item);
-                else
-                    ReadRegister((Register)item);
-            }
+            //foreach (var item in list)
+            //{
+            //    if (item.GetType() == typeof(RegisterBool))
+            //        ReadRegister((RegisterBool)item);
+            //    else
+            //        ReadRegister((Register)item);
+            //}
         }
 
     }
