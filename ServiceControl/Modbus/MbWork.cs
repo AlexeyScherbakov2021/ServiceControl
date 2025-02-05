@@ -56,7 +56,7 @@ namespace ServiceControl.Modbus
         }
 
 
-        public bool CreateConnectSlave(bool isASCII = false)
+        public bool CreateConnectSlave(byte num, bool isASCII = false)
         {
             try
             {
@@ -88,9 +88,9 @@ namespace ServiceControl.Modbus
                         return false;
 
                     if (isASCII)
-                        slave = ModbusSerialSlave.CreateAscii(1, com);
+                        slave = ModbusSerialSlave.CreateAscii(num, com);
                     else
-                        slave = ModbusSerialSlave.CreateRtu(1, com);
+                        slave = ModbusSerialSlave.CreateRtu(num, com);
                     //master.Transport.EventLogEvent += Transport_EventLogEvent;
                 }
 

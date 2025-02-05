@@ -333,7 +333,7 @@ namespace ServiceControl.Modbus.Devices
                 MeasureRes = "",
                 Size = 1,
                 Description = "Bi_addr",
-                MinValue = 0,
+                MinValue = 1,
                 MaxValue = 254
             };
             ListHolding41.Add(SlaveID);
@@ -481,7 +481,7 @@ namespace ServiceControl.Modbus.Devices
                 Description = "F1",
                 Scale = 1f,
                 MinValue = 0f,
-                MaxValue = 160f
+                MaxValue = 300f
             };
             ListHolding5.Add(FreqVoltNaveden);
 
@@ -832,10 +832,12 @@ namespace ServiceControl.Modbus.Devices
 
         protected override void SetAllRegister()
         {
+            //ListAll.Add(SlaveID);
             ListAll.AddRange(ListHolding);
             ListAll.AddRange(ListHolding2);
             ListAll.AddRange(ListHolding3);
             ListAll.AddRange(ListHolding4);
+            ListAll.AddRange(ListHolding41);
             ListAll.AddRange(ListHolding5);
             ListAll.AddRange(ListHolding6);
         }

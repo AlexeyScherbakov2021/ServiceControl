@@ -331,7 +331,7 @@ namespace ServiceControl.ViewModel
             workProto = work;
 
             if(SelectDevice.isSlave)
-                res = work.CreateConnectSlave(SelectDevice.isASCII);
+                res = work.CreateConnectSlave((byte)Slave, SelectDevice.isASCII);
             else
                 res = work.CreateConnect(SelectDevice.isASCII);
 
@@ -391,7 +391,8 @@ namespace ServiceControl.ViewModel
                     SControl = new BI_MM_UCView();
                     var vmBIMM = new BI_MM_UCViewModel(this, work, Slave);
                     SControl.DataContext = vmBIMM;
-                    CurrentDevice = vmBIMM.device;
+                    //vmBIMM.device.SlaveID.Value = Slave;
+                    CurrentDevice = vmBIMM.device;                    
                     if (winLog != null)
                         (winLog.DataContext as LogWindowViewModel).StartLog(work.slave);
                     CurrentDevice.ChangeLangRegister();

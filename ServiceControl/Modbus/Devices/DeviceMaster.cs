@@ -1,16 +1,11 @@
 ﻿using Modbus.Data;
-using Modbus.Message;
 using ServiceControl.Modbus.Registers;
 using ServiceControl.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Threading;
+using System.Windows.Shapes;
 
 namespace ServiceControl.Modbus.Devices
 {
@@ -25,21 +20,27 @@ namespace ServiceControl.Modbus.Devices
         {
             mainVM.SetStatusConnection(StatusConnect.Waiting);
             modbus.slave.DataStore.DataStoreWrittenTo += DataStore_DataStoreWrittenTo;
+            //modbus.slave.DataStore.DataStoreReadFrom += DataStore_DataStoreReadFrom;
             timer.Interval = new TimeSpan(0, 0, 2);
             timer.Tick += Timer_Tick;
+            modbus.slave.DataStore.HoldingRegisters[0x31] = (ushort)slave;
         }
+
+        //private void DataStore_DataStoreReadFrom(object sender, DataStoreEventArgs e)
+        //{
+        //}
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             timer.Stop();
-            mainVM.SetStatusConnection(StatusConnect.Waiting);           
+            mainVM.SetStatusConnection(StatusConnect.Waiting);
         }
 
 
         public override async void Start()
         {
             SetAllRegister();
-    m2:
+        m2:
             isWorked = true;
             try
             {
@@ -69,7 +70,7 @@ namespace ServiceControl.Modbus.Devices
 
             ModbusFunc func;
 
-            switch(e.ModbusDataType)
+            switch (e.ModbusDataType)
             {
                 case ModbusDataType.Coil:
                     func = ModbusFunc.Coil;
@@ -88,7 +89,7 @@ namespace ServiceControl.Modbus.Devices
                     break;
             }
 
-            if(e.Data.B != null)
+            if (e.Data.B != null)
                 GetRegisterData(e.StartAddress, func, e.Data.B);
 
             //if (e.Data.A != null)
@@ -125,8 +126,6 @@ namespace ServiceControl.Modbus.Devices
             }
 
         }
-
-
 
 
         public void SetRegister(Register reg)
