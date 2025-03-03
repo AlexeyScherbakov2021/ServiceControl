@@ -44,6 +44,8 @@ namespace ServiceControl.Modbus.Devices
         //----------------------------------------------------------------------------------------------
         public override void Stop()
         {
+            EndStartRead = null;
+            EndRead = null;
             timer.Stop();
         }
 

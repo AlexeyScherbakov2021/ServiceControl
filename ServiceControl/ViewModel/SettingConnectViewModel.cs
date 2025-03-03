@@ -61,6 +61,7 @@ namespace ServiceControl.ViewModel
                 new DeviceType() { Name = "Терминал Modbus", deviceType = DevType.TERMINAL, isSlave = false},
                 new DeviceType() { Name = "НГК ИП(24)", deviceType = DevType.IP24, isSlave = false},
                 new DeviceType() { Name = "БИТ", deviceType = DevType.BIT, isSlave = false, isASCII = true},
+                new DeviceType() { Name = "БАВР(К)", deviceType = DevType.BAVR, isSlave = false},
         };
 
         public List<string> ListCOM { get; set; } // = new List<string>()

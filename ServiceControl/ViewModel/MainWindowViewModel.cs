@@ -478,6 +478,15 @@ namespace ServiceControl.ViewModel
                     CurrentDevice.ChangeLangRegister();
                     break;
 
+                case DevType.BAVR:
+                    SControl = new BAVR_UCView();
+                    var vmBAVR = new BAVR_UCViewModel(this, work, Slave);
+                    SControl.DataContext = vmBAVR;
+                    CurrentDevice = vmBAVR.device;
+                    if (winLog != null)
+                        (winLog.DataContext as LogWindowViewModel).StartLog(work.master);
+                    CurrentDevice.ChangeLangRegister();
+                    break;
 
             }
 

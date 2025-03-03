@@ -115,7 +115,6 @@ namespace ServiceControl.ViewModel
         public KS216_UCViewModel(MainWindowViewModel mainViewModel, MbWork work, int Slave)
         {
 
-
             //mainVM = mainViewModel;
             device = new Device216(mainViewModel, work, Slave);
             //device.InfoReg.PropertyChanged += InfoReg_PropertyChanged;

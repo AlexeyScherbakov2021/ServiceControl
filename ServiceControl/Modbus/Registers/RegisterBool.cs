@@ -36,6 +36,13 @@ namespace ServiceControl.Modbus.Registers
             IsAlarm = ValueBool != IsCorrectValue;
         }
 
+        public void SetResultValues(bool val)
+        {
+            ValueBool = val;
+            ValueString = ValueBool ? ResultText1 : ResultText0;
+            IsAlarm = ValueBool != IsCorrectValue;
+        }
+
         public bool SetOutput()
         {
             return ValueBool;

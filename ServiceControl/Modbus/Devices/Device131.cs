@@ -99,7 +99,6 @@ namespace ServiceControl.Modbus.Devices
                 Name = "U out slope",
                 NameRes = "",
                 Measure = "",
-                isNeg = true,
                 MinValue = -2000,
                 MaxValue = 2000
             };
@@ -113,7 +112,6 @@ namespace ServiceControl.Modbus.Devices
                 Name = "U suppply offset",
                 NameRes = "",
                 Measure = "",
-                isNeg = true,
                 MinValue = -2000,
                 MaxValue = 2000
             };
@@ -127,7 +125,6 @@ namespace ServiceControl.Modbus.Devices
                 Name = "I out offset",
                 NameRes = "",
                 Measure = "",
-                isNeg = true,
                 MinValue = -2000,
                 MaxValue = 2000
             };
@@ -141,7 +138,6 @@ namespace ServiceControl.Modbus.Devices
                 Name = "U out offset",
                 NameRes = "",
                 Measure = "",
-                isNeg = true,
                 MinValue = -2000,
                 MaxValue = 2000
             };
@@ -424,7 +420,6 @@ namespace ServiceControl.Modbus.Devices
                 Name = "U out slope",
                 NameRes = "",
                 Measure = "",
-                isNeg = true,
                 MinValue = -2000,
                 MaxValue = 2000
             };
@@ -438,7 +433,6 @@ namespace ServiceControl.Modbus.Devices
                 Name = "U suppply offset",
                 NameRes = "",
                 Measure = "",
-                isNeg = true,
                 MinValue = -2000,
                 MaxValue = 2000
             };
@@ -452,7 +446,6 @@ namespace ServiceControl.Modbus.Devices
                 Name = "I out offset",
                 NameRes = "",
                 Measure = "",
-                isNeg = true,
                 MinValue = -2000,
                 MaxValue = 2000
             };
@@ -466,7 +459,6 @@ namespace ServiceControl.Modbus.Devices
                 Name = "U out offset",
                 NameRes = "",
                 Measure = "",
-                isNeg = true,
                 MinValue = -2000,
                 MaxValue = 2000
             };

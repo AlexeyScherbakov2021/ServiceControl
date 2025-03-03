@@ -100,6 +100,7 @@
     <Compile Include="Modbus\ComWork.cs" />
     <Compile Include="Modbus\Devices\Device131.cs" />
     <Compile Include="Modbus\Devices\Device356.cs" />
+    <Compile Include="Modbus\Devices\DeviceBAVR.cs" />
     <Compile Include="Modbus\Devices\DeviceBIMMaster.cs" />
     <Compile Include="Modbus\Devices\DeviceBIT.cs" />
     <Compile Include="Modbus\Devices\DeviceKIPLC.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Modbus\Devices\DeviceMaster.cs" />
     <Compile Include="Modbus\Devices\DeviceSlave.cs" />
     <Compile Include="Modbus\Devices\DeviceType.cs" />
+    <Compile Include="Modbus\Registers\RegisterInt64.cs" />
     <Compile Include="Modbus\Registers\RegisterTime.cs" />
     <Compile Include="Modbus\Registers\Register.cs" />
     <Compile Include="Modbus\Registers\RegisterBase.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Modbus\Registers\RegisterStatus.cs" />
     <Compile Include="Modbus\Registers\RegisterStatus131.cs" />
     <Compile Include="Modbus\Registers\RegisterStatusDC.cs" />
+    <Compile Include="ViewModel\BAVR_UCViewModel.cs" />
     <Compile Include="ViewModel\BIT_UCViewModel.cs" />
     <Compile Include="ViewModel\BIWindowViewModel.cs" />
     <Compile Include="ViewModel\BI_MM_UCViewModel.cs" />
@@ -145,6 +148,9 @@
     <Compile Include="ViewModel\SettingConnectViewModel.cs" />
     <Compile Include="View\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BAVR_UCView.xaml.cs">
+      <DependentUpon>BAVR_UCView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\BIWindow.xaml.cs">
       <DependentUpon>BIWindow.xaml</DependentUpon>
@@ -221,6 +227,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BAVR_UCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

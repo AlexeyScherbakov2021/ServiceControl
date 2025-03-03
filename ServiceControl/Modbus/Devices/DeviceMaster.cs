@@ -23,7 +23,7 @@ namespace ServiceControl.Modbus.Devices
             //modbus.slave.DataStore.DataStoreReadFrom += DataStore_DataStoreReadFrom;
             timer.Interval = new TimeSpan(0, 0, 2);
             timer.Tick += Timer_Tick;
-            modbus.slave.DataStore.HoldingRegisters[0x31] = (ushort)slave;
+            //modbus.slave.DataStore.HoldingRegisters[0x31] = (ushort)slave;
         }
 
         //private void DataStore_DataStoreReadFrom(object sender, DataStoreEventArgs e)

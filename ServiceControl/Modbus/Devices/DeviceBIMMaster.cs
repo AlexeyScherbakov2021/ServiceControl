@@ -334,7 +334,8 @@ namespace ServiceControl.Modbus.Devices
                 Size = 1,
                 Description = "Bi_addr",
                 MinValue = 1,
-                MaxValue = 254
+                MaxValue = 254,
+                Value = Slave
             };
             ListHolding41.Add(SlaveID);
 
@@ -840,6 +841,7 @@ namespace ServiceControl.Modbus.Devices
             ListAll.AddRange(ListHolding41);
             ListAll.AddRange(ListHolding5);
             ListAll.AddRange(ListHolding6);
+            SetRegister(SlaveID);
         }
 
         public override void DumpRegisterValue(List<RegisterBase> list)

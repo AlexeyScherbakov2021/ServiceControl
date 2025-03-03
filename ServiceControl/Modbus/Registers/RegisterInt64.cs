@@ -6,13 +6,22 @@ using System.Threading.Tasks;
 
 namespace ServiceControl.Modbus.Registers
 {
-    internal class RegisterInt : Register
+    internal class RegisterInt64 : Register
     {
-        public int MinValue = int.MinValue;
-        public int MaxValue = int.MaxValue;
+        public long MinValue = long.MinValue;
+        public long MaxValue = long.MaxValue;
+        public bool isNeg = true;
 
-        private int? _ValueInt;
-        public int? Value { get => _ValueInt; set { Set(ref _ValueInt, value); } }
+        private long? _Value;
+        public long? Value 
+        { 
+            get => _Value; 
+            set 
+            {
+                Set(ref _Value, value);
+            } 
+        }
+
 
         public override void SetResultValues(ushort[] val)
         {
@@ -22,8 +31,6 @@ namespace ServiceControl.Modbus.Registers
                 return;
             }
 
-            //if(isNeg)
-            //{
             int res = (short)val[0];
             for (int i = 1; i < val.Length; i++)
             {
@@ -31,7 +38,10 @@ namespace ServiceControl.Modbus.Registers
                 res2 <<= 16 * i;
                 res |= res2;
             }
-            Value = (int)res;
+            if(isNeg)
+                Value =  (int)res;
+            else
+                Value = (uint)res;
 
             //}
             //else
@@ -58,7 +68,7 @@ namespace ServiceControl.Modbus.Registers
             if (Value != null)
             {
                 res = new ushort[Size];
-                int val = Value.Value;
+                int val = (int)Value.Value;
 
                 for (int i = 0; i < Size; i++)
                 {
