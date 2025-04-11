@@ -36,6 +36,10 @@ namespace ServiceControl.ViewModel
         private int CountTimerSetMode;
         private int? LastSetMode;
 
+        private Visibility _IsTimesVisible = Visibility.Hidden;
+        public Visibility IsTimesVisible { get => _IsTimesVisible; set { Set(ref _IsTimesVisible, value); } }
+
+
         private Visibility _IsAvarModeVisible = Visibility.Hidden;
         public Visibility IsAvarModeVisible { get => _IsAvarModeVisible; set { Set(ref _IsAvarModeVisible, value); } }
 
@@ -56,6 +60,7 @@ namespace ServiceControl.ViewModel
 
 #if !CLIENT
         public List<TwoRegister> ListWriteControl2 { get; set; }
+        public List<TwoRegister> ListWriteControl3 { get; set; }
         public List<TwoRegister> ListDK3 { get; set; }
 #endif
 
@@ -166,6 +171,9 @@ namespace ServiceControl.ViewModel
             ListWriteControl2 = new List<TwoRegister>() {
                 new TwoRegister() { Register1 = device.TimeWork, Register2 = device.TimeWorkWrite },
                 new TwoRegister() { Register1 = device.TimeProtect, Register2 = device.TimeProtectWrite  },
+            };
+
+            ListWriteControl3 = new List<TwoRegister>() {
                 new TwoRegister() { Register1 = device.TempCoolerOn, Register2 = device.TempCoolerOnWrite },
                 new TwoRegister() { Register1 = device.TempCoolerOff, Register2 = device.TempCoolerOffWrite },
             };
