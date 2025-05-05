@@ -54,7 +54,7 @@ namespace ServiceControl.Modbus.Devices
         List<Register> ListInputDop;
         List<Register> ListOutput;
         List<Register> ListOutput2;
-        public List<Register> ListKIP;
+        //public List<Register> ListKIP;
 
         //----------------------------------------------------------------------------------------------
         // Конструктор
@@ -465,26 +465,26 @@ namespace ServiceControl.Modbus.Devices
             ListOutput2.Add(SetUoutOffset);
 
 
-            ListKIP = new List<Register>();
-            for(int i = 0; i < CountKIP; i++)
-            {
-                ListKIP.Add( new RegisterIntFloat()
-                {
-                    Address = (ushort)(2018 + i),
-                    CodeFunc = ModbusFunc.HoldingRegister,
-                    Size = 1,
-                    Number = i + 1,
-                    Name = "КИП",
-                    NameRes = "KIP",
-                    Measure = "В",
-                    MeasureRes = "Volt",
-                    Scale = 0.01f,
-                    MinValue = -5,
-                    MaxValue = 5
-                }
-                );
-                //ListInput.Add(ListKIP[i]);
-            }
+            //ListKIP = new List<Register>();
+            //for(int i = 0; i < CountKIP; i++)
+            //{
+            //    ListKIP.Add( new RegisterIntFloat()
+            //    {
+            //        Address = (ushort)(2018 + i),
+            //        CodeFunc = ModbusFunc.HoldingRegister,
+            //        Size = 1,
+            //        Number = i + 1,
+            //        Name = "КИП",
+            //        NameRes = "KIP",
+            //        Measure = "В",
+            //        MeasureRes = "Volt",
+            //        Scale = 0.01f,
+            //        MinValue = -5,
+            //        MaxValue = 5
+            //    }
+            //    );
+            //    //ListInput.Add(ListKIP[i]);
+            //}
 
             InfoReg = new RegisterInfo() { Name = "Информация", NameRes = "" };
 
@@ -497,7 +497,7 @@ namespace ServiceControl.Modbus.Devices
         {
             ReadRegisters(ListInputDop);
             ReadRegisters(ListInput);
-            ReadRegisters(ListKIP);
+            //ReadRegisters(ListKIP);
             //StatDC1.ValueStat[0].StatusDC = StatusDC.Off;
             ReadRegister(Mode);
             return Task.CompletedTask;
@@ -515,7 +515,7 @@ namespace ServiceControl.Modbus.Devices
             ReadRegisters(ListInput);
             ReadRegisters(ListOutput);
             ReadRegisters(ListOutput2);
-            ReadRegisters(ListKIP);
+            //ReadRegisters(ListKIP);
             ReadRegister(Mode);
             return Task.CompletedTask;
         }
@@ -539,7 +539,7 @@ namespace ServiceControl.Modbus.Devices
         {
             ListInput.ForEach(n => n.SetLanguage());
             ListOutput.ForEach(n => n.SetLanguage());
-            ListKIP.ForEach(n => n.SetLanguage());
+            //ListKIP.ForEach(n => n.SetLanguage());
             InfoReg.SetLanguage();
             InfoReg.SetLanguage();
             Mode.SetLanguage();

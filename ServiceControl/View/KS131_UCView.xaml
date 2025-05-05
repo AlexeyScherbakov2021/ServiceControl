@@ -8,7 +8,7 @@
              xmlns:local="clr-namespace:ServiceControl.View"
              mc:Ignorable="d" 
              x:Name="mainControl"
-             d:DesignHeight="450" d:DesignWidth="1300">
+             d:DesignHeight="450" Width="900">
     <UserControl.DataContext>
         <vm:KS131_UCViewModel/>
     </UserControl.DataContext>
@@ -648,7 +648,7 @@
         </Border>
 
         <!--показания датчиков-->
-        <Border Margin="4,0" Grid.Column="2" Grid.Row="0"  Grid.RowSpan="8" Visibility="Visible">
+        <!--<Border Margin="4,0" Grid.Column="2" Grid.Row="0"  Grid.RowSpan="8" Visibility="Visible">
             <GroupBox >
                 <GroupBox.Header>
                     <TextBlock Text="{DynamicResource ValueSensor}" FontSize="16" FontWeight="Bold"/>
@@ -686,7 +686,7 @@
                     </ItemsControl>
                 </StackPanel>
             </GroupBox>
-        </Border>
+        </Border>-->
 
     </Grid>
 </UserControl>

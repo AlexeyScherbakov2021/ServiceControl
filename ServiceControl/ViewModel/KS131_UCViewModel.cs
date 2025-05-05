@@ -31,7 +31,7 @@ namespace ServiceControl.ViewModel
         public List<TwoRegister> ListCtrlReg { get; set; }
         public List<TwoRegister> ListCtrlCooler { get; set; }
         public List<Register> ListReg { get; set; }
-        public List<Register> ListKIP { get; set; }
+        //public List<Register> ListKIP { get; set; }
         public List<RegisterStatus131> ListStatus { get; set; }
         public List<TwoRegister> ListSetter { get; set; }
 
@@ -79,8 +79,8 @@ namespace ServiceControl.ViewModel
                 device.TimeProtect, device.NaprSeti, device.Temper
             };
 
-            ListKIP = new List<Register>();
-            ListKIP.AddRange(device.ListKIP);
+            //ListKIP = new List<Register>();
+            //ListKIP.AddRange(device.ListKIP);
 
 
             device.Start();

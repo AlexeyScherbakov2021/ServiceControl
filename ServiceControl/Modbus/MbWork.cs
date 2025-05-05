@@ -70,7 +70,10 @@ namespace ServiceControl.Modbus
                         return false;
 
                     master = IsTCPoverRTU 
-                        ? (ModbusMaster)ModbusSerialMaster.CreateRtu(tcp)
+                        ? 
+                            isASCII ? 
+                            (ModbusMaster)ModbusSerialMaster.CreateAscii(tcp) : 
+                            (ModbusMaster)ModbusSerialMaster.CreateRtu(tcp)
                         : (ModbusMaster)ModbusIpMaster.CreateIp(tcp);
                 }
                 else
@@ -118,7 +121,9 @@ namespace ServiceControl.Modbus
                         return false;
 
                     master = IsTCPoverRTU 
-                        ? (ModbusMaster)ModbusSerialMaster.CreateRtu(tcp)
+                        ? isASCII 
+                           ? (ModbusMaster)ModbusSerialMaster.CreateAscii(tcp)
+                           : (ModbusMaster)ModbusSerialMaster.CreateRtu(tcp)
                         : (ModbusMaster)ModbusIpMaster.CreateIp(tcp);
                 }
                 else
