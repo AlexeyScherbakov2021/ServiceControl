@@ -8,7 +8,6 @@
         Title="{DynamicResource About}" Height="330" Width="400" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
         <Image Source="/Resources/wp.png" Stretch="Fill"/>
-        <Image Source="/Resources/NGK.png" Margin="120,-38,20,162" />
         <TextBlock HorizontalAlignment="Left" Margin="210,137,0,0" TextWrapping="Wrap" Text="Service Control" 
                    VerticalAlignment="Top" FontSize="22" Foreground="White"/>
         <TextBlock x:Name="MajorVersion" HorizontalAlignment="Left" Margin="220,159,0,0"  Text="1.1" 
@@ -19,7 +18,7 @@
             <LineBreak/>
             <Run x:Name="NameVersion" Text="Version 1.1"/>
             <LineBreak/>
-            <Run Text="Copyright © 2023 «LLC SPA «Neftegazcomplex-EHZ»"/>
+            <Run Text="Copyright © 2025 "/>
             <LineBreak/>
             <Run Text="All right reserved."/>
         </TextBlock>

@@ -444,10 +444,10 @@ m1:
                         break;
 
                     case ModbusFunc.WriteCoil:
-                        ushort boolValue = listPacket[4];
-                        boolValue <<= 8;
-                        boolValue |= listPacket[5];
-                        work.WriteRegister(AddressReg, boolValue, SlaveAddress);
+                        bool boolValue = listPacket[5] > 0;
+                        //boolValue <<= 8;
+                        //boolValue |= listPacket[5];
+                        work.WriteCoilRegister(AddressReg, boolValue, SlaveAddress);
                         break;
                 }
             }

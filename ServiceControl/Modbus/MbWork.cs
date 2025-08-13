@@ -293,6 +293,27 @@ namespace ServiceControl.Modbus
         }
 
         //----------------------------------------------------------------------------------------------
+        // запись coil регистра
+        //----------------------------------------------------------------------------------------------
+        public void WriteCoilRegister(ushort Address, bool val, byte Slave)
+        {
+            try
+            {
+                master?.WriteSingleCoil(Slave, Address, val);
+            }
+            catch (TimeoutException te)
+            {
+                //throw te;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+
+            }
+        }
+
+
+        //----------------------------------------------------------------------------------------------
         // запись регистра
         //----------------------------------------------------------------------------------------------
         public void WriteRegister(ushort Address, ushort val, byte Slave)
