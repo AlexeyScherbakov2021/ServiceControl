@@ -18,7 +18,7 @@ namespace ServiceControl.Modbus.Devices
         //public const int CountDK = 10;
         public const int CountMS = 12;
         public const int CountBI = 10;
-        public bool IsOldVersion = true;
+        //public bool IsOldVersion = true;
 
         public RegisterIntFloat NaprSeti1;
         public RegisterIntFloat CountEE1;
@@ -347,11 +347,11 @@ namespace ServiceControl.Modbus.Devices
                 ListInput.Add(DeepDK[i]);
             }
 
-            if ((year >= 2020 && version <= 3) || (year >= 2023 && version >= 4))
-            {
-                IsOldVersion = false;
-            }
-                BI_SummPot = new RegisterIntFloat[CountBI];
+            //if ((year >= 2020 && version <= 3) || (year >= 2023 && version >= 4))
+            //{
+            //    IsOldVersion = false;
+            //}
+            BI_SummPot = new RegisterIntFloat[CountBI];
                 BI_PolPot = new RegisterIntFloat[CountBI];
                 BI_CurrPol = new RegisterIntFloat[CountBI];
                 BI_OutVoltage = new RegisterIntFloat[CountBI];
@@ -969,8 +969,8 @@ namespace ServiceControl.Modbus.Devices
             ReadRegister(SetMode);
 
             ReadRegisters(ListInput);
-            if(!IsOldVersion)
-                ReadRegisters(ListInputBI);
+            //if(!IsOldVersion)
+            ReadRegisters(ListInputBI);
             ReadRegisters(ListStatus);
 #if !CLIENT
             ReadRegisters(ListServices);
@@ -986,8 +986,8 @@ namespace ServiceControl.Modbus.Devices
         //-------------------------------------------------------------------------------------------
         public override Task RequestValue()
         {
-            if (!IsOldVersion)
-                ReadRegisters(ListInputBI);
+            //if (!IsOldVersion)
+            ReadRegisters(ListInputBI);
             ReadRegisters(ListStatus);
             ReadRegister(OnOffMS);
 #if !CLIENT
